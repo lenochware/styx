@@ -16,6 +16,7 @@ Styx.Game = class
 			case 'player': return new Styx.actors.Player(options);
 			case 'monster': return new Styx.actors.Monster(options);
 			case 'dungeon-base': return new Styx.DungeonBase;
+			case 'window-manager': return new Styx.ui.WindowManager;
 		}
 
 		return null;

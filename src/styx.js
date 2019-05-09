@@ -24,12 +24,15 @@ async function init()
 	level.set(5, 5, 'actor', player);
 
 	input = game.get('input-manager');
-
-	renderer = game.get('renderer');
-
 	input.on('keypress', gameLoop);
 
+	renderer = game.get('renderer');
 	renderer.render(level, 'game-container', {view: new Styx.Rectangle(0,0,50,20)});
+
+	wm = game.get('window-manager');
+	wm.render('status-bar', {container: "status-bar"});
+	wm.render('side-bar', {container: "side-bar"});
+	wm.render('messages', {container: "messages"});
 	
 };
 
@@ -38,6 +41,12 @@ init();
 function gameLoop(event)
 {
 	var command = input.getCommand(event); //keybindings file
+
+	if (command.category == 'wm-command') {
+		wm.execute(command);
+		return;
+	}
+
 	if (command.category != 'player-command') return;
 
 	player.execute(command);
