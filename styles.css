@@ -1,0 +1,31 @@
+body {
+  font-size: 18px;
+  font-family: monospace;
+  font-weight: bold;
+  line-height: initial;
+
+	background-color: #000000;
+	color: #afafaf;
+}
+
+.ui-green {
+	color: #00ff00;
+}
+
+.ui-yellow {
+	color: #ffff00;
+}
+.ui-brown {
+	color: #d7af5f;
+}
+
+.ui-pink {
+	color: #d7005f;
+}
+
+.ui-light-blue {
+	color: #5fffd7;
+}
+
+
+
