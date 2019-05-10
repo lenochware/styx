@@ -10,10 +10,18 @@ Styx.levels.LevelBuilder = class
 		level.size = param.size;
 		level.map = this.getRandomMap(param.size);
 
-		var m = game.get('monster', {id: "kobold"});
+		var m = this.spawn('monster', {id: "kobold"});
 		level.set(6, 6, 'actor', m);
 
 		return level;
+	}
+
+	spawn(id, options)
+	{
+		switch (id) {
+			case 'monster': return new Styx.actors.Monster(options);
+			default: throw `Unknown entity ${className}`;
+		}		
 	}
 
 	getRandomMap(size)

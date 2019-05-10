@@ -15,6 +15,7 @@ async function init()
 	await game.load('basic-types');
 
 
+	game.get('dungeon-base');
 	builder = game.get('level-builder');
 
 	level = builder.build({ size: new Styx.Rectangle(0,0,50,20) });
