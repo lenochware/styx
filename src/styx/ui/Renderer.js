@@ -5,6 +5,8 @@ Styx.ui.Renderer = class
 {
 	constructor()
 	{
+		this.game = game;
+		this.db = this.game.get('dungeon-base');
 	}
 
 	render(level, container, param)
@@ -31,8 +33,8 @@ Styx.ui.Renderer = class
 		var r = {char: "?", color: "white" };
 		var tile = level.get(x, y, 'tile-params');
 		if (tile.actor) r = tile.actor.getAttrib('render');
-		else if (tile.item)  r = tile.item.getAttrib('render').char;
-		else r.char = (tile.id == 'floor')? '.' : '#';
+		else if (tile.item)  r = tile.item.getAttrib('render');
+		else r = this.db.getAttrib('tiles', tile.id, 'render');
 
 		return `<span class=\"ui-${r.color}\">${r.char}</span>`;
 	}

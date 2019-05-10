@@ -48,14 +48,14 @@
 
 	"tiles": {
 		"wall": {
-			"render": {"char": "#", "color": "white" },
+			"render": {"char": "#", "color": "gray" },
 			"tags": ["wall"],
 			"name": "stone wallx",
 			"desc": "You see nothing interesting."
 		},
 
 		"fake_wall": {
-			"render": {"char": "#", "color": "white" },
+			"render": {"char": "#", "color": "gray" },
 			"tags": ["wall"],
 			"name": "stone wall",
 			"desc": "You see nothing interesting."
