@@ -11,6 +11,7 @@
 	</head>
 	<body>
 		<div id="game-container"></div>
+		<div id="messages"></div>
 		<script type="text/javascript" src="src/styx.js"></script>
 	</body>
 </html>

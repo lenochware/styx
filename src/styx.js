@@ -31,8 +31,6 @@ async function init()
 	renderer.render(level, 'game-container', {view: new Styx.Rectangle(0,0,50,20)});
 
 	wm = game.get('window-manager');
-	wm.render('status-bar', {container: "status-bar"});
-	wm.render('side-bar', {container: "side-bar"});
 	wm.render('messages', {container: "messages"});
 	
 };
@@ -54,4 +52,6 @@ function gameLoop(event)
 
 	level.update();
 	renderer.render(level, 'game-container', {view: new Styx.Rectangle(0,0,50,20)});
+	wm.render('messages', {container: "messages"});
+	
 }

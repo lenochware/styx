@@ -8,6 +8,39 @@ body {
 	color: #afafaf;
 }
 
+.ui-messages {
+	position: absolute;
+	bottom: 55px;
+	height: 58px;
+	pointer-events: none;
+	background-color: rgba(0,0,0,0.2);
+	overflow: hidden;
+
+	font-weight: bold;
+	font-size: 18px;
+	text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;  
+}
+
+.msg {
+	padding-left: 10px 
+}
+
+.msg-danger {
+	color: red;
+}
+
+.msg-warning {
+	color: yellow;
+}
+
+.msg-hilite {
+	color: #00ff00;
+}
+
 .ui-green {
 	color: #00ff00;
 }

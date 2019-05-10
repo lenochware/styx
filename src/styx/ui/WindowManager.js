@@ -6,27 +6,32 @@ Styx.ui.WindowManager = class
 	constructor()
 	{
 		this.game = game;
-		this.messages = [];
+		this.messages = "";
 	}
 
 	render(id, options)
 	{
-		var html = '';
-
 		switch (id) {
-			case 'status-bar': html = this._renderStatusBar(options); break;
-			case 'side-bar': html = this._renderSideBar(options); break;
-			case 'messages': html = this._renderMessages(options); break;
+			case 'status-bar': this._renderStatusBar(options); break;
+			case 'side-bar': this._renderSideBar(options); break;
+			case 'messages': this._renderMessages(options); break;
 			default: throw `Unknown window type: ${id}`;
 		}
-
-		$('#'+options.container).html(html);
 	}
 
 	execute(command) {}
 
+	message(m, cssClass)
+	{
+		this.messages += `<span class="${cssClass}">${m}</span>`;
+	}
 
 	_renderStatusBar(options) {}
 	_renderSideBar(options) {}
-	_renderMessages(options) {}
+
+	_renderMessages(options)
+	{
+		//this.messages.scrollTop = this.messages.scrollHeight;
+		$('#'+options.container).html(this.messages);
+	}
 }
