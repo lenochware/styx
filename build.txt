@@ -1,3 +1,4 @@
+src/styx/utils/String.js
 src/styx/Entity.js
 src/styx/actors/Actor.js
 src/styx/actors/Player.js

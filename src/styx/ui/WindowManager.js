@@ -21,9 +21,9 @@ Styx.ui.WindowManager = class
 
 	execute(command) {}
 
-	message(m, cssClass)
+	message(m, cssClass = "msg")
 	{
-		this.messages += `<span class="${cssClass}">${m}</span>`;
+		this.messages += "<span class=\"{1}\">{0}</span>".format(m.capitalize(), cssClass);
 	}
 
 	_renderStatusBar(options) {}

@@ -30,9 +30,9 @@ Styx.Game = class
 		}
 	}
 
-	message(m, type = null)
+	message(m, cssClass = "msg")
 	{
-		this.get('window-manager').message(m, type);
+		this.get('window-manager').message(m, cssClass);
 		console.log(m);
 	}
 
