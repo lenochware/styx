@@ -28,10 +28,11 @@ async function init()
 	input.on('keypress', gameLoop);
 
 	renderer = game.get('renderer');
-	renderer.render(level, 'game-container', {view: new Styx.Rectangle(0,0,50,20)});
+	renderer.render(level, 'level-map', {view: new Styx.Rectangle(0,0,50,20)});
 
 	wm = game.get('window-manager');
 	wm.render('messages', {container: "messages"});
+	wm.render('side-bar', {container: "side-bar"});
 	
 };
 
@@ -51,7 +52,8 @@ function gameLoop(event)
 	player.execute(command);
 
 	level.update();
-	renderer.render(level, 'game-container', {view: new Styx.Rectangle(0,0,50,20)});
+	renderer.render(level, 'level-map', {view: new Styx.Rectangle(0,0,50,20)});
 	wm.render('messages', {container: "messages"});
+	wm.render('side-bar', {container: "side-bar"});
 	
 }

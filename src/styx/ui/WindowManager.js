@@ -27,7 +27,19 @@ Styx.ui.WindowManager = class
 	}
 
 	_renderStatusBar(options) {}
-	_renderSideBar(options) {}
+
+	_renderSideBar(options)
+	{
+		var p = this.game.get('player');
+		$('#'+options.container).html(this.template('side-bar', {
+			player: {name: p.params.name, health: p.health} 
+		}));
+	}
+
+	template(id, data)
+	{
+		return _.template("hello <%= player.name %>")(data);
+	}
 
 	_renderMessages(options)
 	{
