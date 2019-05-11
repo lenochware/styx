@@ -7,6 +7,7 @@ Styx.ui.WindowManager = class
 	{
 		this.game = game;
 		this.messages = "";
+		this.templates = this.game.data["templates"];
 	}
 
 	render(id, options)

@@ -2,19 +2,14 @@
 /**
 - prepsat level.get set na praci s pos - ne x,y (nebo kombinovane? [x,y] or pos?)
 - level.get vracet perma_wall kdyz je mimo level, game.load.done(...)
-x render renderovat spravne @ atd.
 - pouzivat string.format a ne `${sss}`
-x zalozit directory styx/actors, styx/items (a kam triggery, trapy atd.?)
 - zalozit spolecneho predka pro vsechny objekty dungeonu? entity -> actor -> creature -> (monster, item, player)
 */
 
 var game = new Styx.Game();
 
-async function init()
+game.load('basic-types').done(function() 
 {
-	await game.load('basic-types');
-
-
 	game.get('dungeon-base');
 	builder = game.get('level-builder');
 
@@ -33,10 +28,8 @@ async function init()
 	wm = game.get('window-manager');
 	wm.render('messages', {container: "messages"});
 	wm.render('side-bar', {container: "side-bar"});
-	
-};
 
-init();
+})
 
 function gameLoop(event)
 {

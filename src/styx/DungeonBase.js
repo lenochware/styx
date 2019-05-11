@@ -4,7 +4,8 @@ Styx.DungeonBase = class
 {
 	constructor()
 	{
-		this.data = {};
+		this.game = game;
+		this.data = this.game.data["dungeon-base"];
 	}
 
 	getAttrib(category, id, attrib)
@@ -16,19 +17,5 @@ Styx.DungeonBase = class
 			console.warn(category+'.'+id+'.'+attrib+' not found.');
 			return null;
 		}
-	}
-
-	load(path)
-	{
-		var that = this;
-		return $.getJSON('loader.php?path=' + path, function(data) {
-			that.data = data;
-		})
-		.done(function() {
-	    console.log( "load success" );
-	  })
-	  .fail(function() {
-	    console.error( "load error" );
-	  });
 	}
 }

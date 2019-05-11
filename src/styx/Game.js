@@ -5,6 +5,7 @@ Styx.Game = class
 	constructor()
 	{
 		this.services = {};
+		this.data = {};
 	}
 
 	get(className, options)
@@ -36,8 +37,16 @@ Styx.Game = class
 		console.log(m);
 	}
 
+	loadJson(id)
+	{
+		return $.getJSON('loader.php?id=' + id)
+		.done(data => {this.data[id] = data; console.log(`'${id}' loaded.`); })
+		.fail((data) => { console.warn(`Loading of '${id}' failed.`); });
+	}
+
 	load(path)
 	{
-		return this.get('dungeon-base').load(path);
+		return this.loadJson('dungeon-base')
+		.done(() => this.loadJson('templates'));
 	}
 }
