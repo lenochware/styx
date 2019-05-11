@@ -7,6 +7,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		params.id = 'player';
 		super(params);
+		this.inventory = new Styx.actors.Inventory(this);
 	}
 
 	execute(command)

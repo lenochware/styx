@@ -28,7 +28,7 @@
 		},
 		"short_sword": {
 			"render": {"char": "|", "color": "white" },
-			"tags": ["item", "equipment", "weapon"],
+			"tags": ["item", "wearable", "weapon"],
 			"name": "short sword",
 			"desc": "It is indeed quite short, just a few inches longer than a dagger."
 		},

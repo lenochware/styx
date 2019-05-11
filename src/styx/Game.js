@@ -34,7 +34,11 @@ Styx.Game = class
 	message(m, cssClass = "msg")
 	{
 		this.get('window-manager').message(m, cssClass);
-		console.log(m);
+	}
+
+	debugLog(msg)
+	{
+		console.log(msg);
 	}
 
 	loadJson(id)
