@@ -25,7 +25,7 @@ Styx.actors.Inventory = class
 	set(key, item)
 	{
 		if (this.belongings[key]) {
-			game.debugLog("Cannot wear this item.");
+			game.debugLog("Inventory position is occupied.");
 			return false;			
 		}
 
@@ -39,24 +39,35 @@ Styx.actors.Inventory = class
 			game.debugLog("Cannot wear this item.");
 			return false;
 		}
-		
-		if (/\d/.test(key)) {
-			var newKey = this.freeKey();
+
+		var wearKey = this.getWearKey(item);
+		var wearItem = this.remove(wearKey);
+
+		this.set(wearKey, item);
+		this.remove(key);
+
+		if (wearItem) {
+			this.set(this.getFreeKey(), wearItem);		
 		}
-		else {
-			var newKey = this.getWearKey(item);
+	}
+
+	unwear(key)
+	{
+		if (!/\d/.test(key)) return false;
+		var item = this.get(key);
+		if (!item) return false;
+
+		var freeKey = this.getFreeKey();
+		if (!freeKey) {
+			game.debugLog("Inventory is full.");
+			return false;			
 		}
 
-		if (!newKey) {
-			console.log("Inventory is full.");
-			return false;
-		}
-
-		this.set(newKey, item);
+		this.set(freeKey, item);
 		this.remove(key);
 	}
 
-	freeKey()
+	getFreeKey()
 	{
 		var keys = "abcdefghijklmnop".split("");
 		return _.find(keys, key => this.belongings[key] == null);

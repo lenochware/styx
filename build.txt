@@ -1,5 +1,6 @@
 src/styx/utils/String.js
 src/styx/Entity.js
+src/styx/items/Item.js
 src/styx/actors/Inventory.js
 src/styx/actors/Actor.js
 src/styx/actors/Player.js
