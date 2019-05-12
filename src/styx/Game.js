@@ -50,7 +50,9 @@ Styx.Game = class
 
 	load(path)
 	{
-		return this.loadJson('dungeon-base')
-		.done(() => this.loadJson('templates'));
+		return Promise.all([
+			this.loadJson('dungeon-base'),
+			this.loadJson('templates')
+		]);
 	}
 }

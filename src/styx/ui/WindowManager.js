@@ -13,8 +13,8 @@ Styx.ui.WindowManager = class
 	render(id, options)
 	{
 		switch (id) {
-			case 'status-bar': this._renderStatusBar(options); break;
-			case 'side-bar': this._renderSideBar(options); break;
+			case 'statusbar': this._renderStatusBar(options); break;
+			case 'sidebar': this._renderSideBar(options); break;
 			case 'messages': this._renderMessages(options); break;
 			default: throw `Unknown window type: ${id}`;
 		}
@@ -32,14 +32,19 @@ Styx.ui.WindowManager = class
 	_renderSideBar(options)
 	{
 		var p = this.game.get('player');
-		$('#'+options.container).html(this.template('side-bar', {
+		$('#'+options.container).html(this.template('sidebar', {
 			player: {name: p.params.name, health: p.health} 
 		}));
 	}
 
 	template(id, data)
 	{
-		return _.template("hello <%= player.name %>")(data);
+		if (!this.templates[id]) {
+			throw new Error(`Template '${id}' not found.`);
+		}
+
+		return _.template(this.templates[id])(data);
+	}
 	}
 
 	_renderMessages(options)

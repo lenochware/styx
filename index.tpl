@@ -31,7 +31,7 @@
 	</head>
 	<body>
 		<div class="game-container">
-			<div id="side-bar"></div>
+			<div id="sidebar"></div>
 			<div id="level-map"></div>
 			<div id="messages"></div>			
 		</div>

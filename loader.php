@@ -8,7 +8,12 @@ switch ($id) {
 		break;
 
 	case 'templates':
-		die(json_encode(['inventory' => file_get_contents('game/templates/inventory.html')]));
+		$templates = [];
+		foreach(glob('game/templates/*.html') as $path) {
+			$templates[basename($path, ".html")] = file_get_contents($path);
+		}
+ 
+		die(json_encode($templates));
 		break;
 	
 	default:

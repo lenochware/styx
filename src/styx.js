@@ -8,7 +8,7 @@
 
 var game = new Styx.Game();
 
-game.load('basic-types').done(function() 
+game.load('basic-types').then(function() 
 {
 	game.get('dungeon-base');
 	builder = game.get('level-builder');
@@ -27,7 +27,7 @@ game.load('basic-types').done(function()
 
 	wm = game.get('window-manager');
 	wm.render('messages', {container: "messages"});
-	wm.render('side-bar', {container: "side-bar"});
+	wm.render('sidebar', {container: "sidebar"});
 
 })
 
@@ -47,6 +47,6 @@ function gameLoop(event)
 	level.update();
 	renderer.render(level, 'level-map', {view: new Styx.Rectangle(0,0,50,20)});
 	wm.render('messages', {container: "messages"});
-	wm.render('side-bar', {container: "side-bar"});
+	wm.render('sidebar', {container: "sidebar"});
 	
 }
