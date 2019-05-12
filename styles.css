@@ -25,6 +25,34 @@ body {
 		1px 1px 0 #000;  
 }
 
+.ui-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.1;
+}
+
+.ui-window {
+	position: fixed;
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	padding: 8px;
+	display: none;
+	box-shadow:4px 4px 4px 0px rgba(0, 0, 0, 0.5);	
+	border: 15px solid transparent;
+	border-image: url(assets/ui/border.png) 40% stretch;
+	background-color: #3b3e36;
+	color: white;
+}
+
 .msg {
 	padding-left: 10px 
 }

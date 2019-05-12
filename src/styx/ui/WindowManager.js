@@ -20,7 +20,15 @@ Styx.ui.WindowManager = class
 		}
 	}
 
-	execute(command) {}
+	execute(command)
+	{
+		switch(command.command) {
+			case 'inventory':
+				this.window('inventory', 600, 400, "Hello inventory");
+			break;				
+			default: throw `Invalid command '${command.command}'.`;
+		}
+	}		
 
 	message(m, cssClass = "msg")
 	{
@@ -45,7 +53,37 @@ Styx.ui.WindowManager = class
 
 		return _.template(this.templates[id])(data);
 	}
+
+	window(id, width, height, content)
+	{
+		var over = document.createElement('div');
+		$(over).addClass("ui-overlay")
+		.click(() => this.closeWindow(id))
+		.attr("id", id + "-overlay")
+		.appendTo('#game-container');
+
+		var d = document.createElement('div');
+		$(d).addClass("ui-window")
+		.attr("id", id)
+		.width(width)
+		.height(height)
+		.html(content)
+		.appendTo('#game-container').show();//fadeIn(200);
 	}
+
+	closeWindow(id)
+	{
+		$('#' + id).remove();
+		$('#' + id + '-overlay').remove();
+	}
+
+	// popup(icon, title, desc, buttons)
+	// {
+	// 	this.window('popup', 500, 200, 
+	// 		this.template('popup', {icon:icon,title:title,desc:desc,buttons:buttons})
+	// 	);
+	// }
+
 
 	_renderMessages(options)
 	{

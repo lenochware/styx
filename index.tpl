@@ -10,7 +10,7 @@
 		{scripts}
 
 	<style>
-		.game-container {
+		#game-container {
 		  display: grid;
 		  grid-template-columns: 1fr 4fr;
 		}
@@ -30,7 +30,7 @@
 	</style>		
 	</head>
 	<body>
-		<div class="game-container">
+		<div id="game-container">
 			<div id="sidebar"></div>
 			<div id="level-map"></div>
 			<div id="messages"></div>			
