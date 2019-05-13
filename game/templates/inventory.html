@@ -1,2 +1,22 @@
-<h1>Inventory</h1>
-hello <%= player.name %>
+<%= player.name %> inventory
+<table width="100%">
+	<tr>
+		<td valign="top">
+			Equipment:<br>
+			<% for (var i in body) { %>
+
+			<%= body[i].key %>) <%= body[i].keyName %>: <%= body[i].name %><br>
+
+			<% } %>
+		</td>
+		<td valign="top">
+			In backpack:<br>
+			<% for (var i in backpack) { %>
+
+			<%= backpack[i].key %>) <%= backpack[i].name %><br>
+
+			<% } %>			
+		</td>
+	</tr>
+</table>
+

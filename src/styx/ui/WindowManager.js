@@ -42,8 +42,12 @@ Styx.ui.WindowManager = class
 	_renderInventory()
 	{
 		var p = this.game.get('player');
+		var inventory = p.inventory.getAll();
+
 		this.window('inventory', 600, 400, this.template('inventory', {
-			player: {name: p.params.name, health: p.health} 			
+			player: {name: p.params.name, health: p.health},
+			backpack: inventory.backpack,
+			body: inventory.body,
 			})
 		);
 	}

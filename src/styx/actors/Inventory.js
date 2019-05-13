@@ -8,6 +8,8 @@ Styx.actors.Inventory = class
 	{
 		this.owner = owner;
 		this.belongings = {};
+		this.slots = "abcdefghijklmn".split("");
+		this.bodySlots = {1: "on head", 2: "on body", 3: "in left hand", 4: "in right hand", 5: "on feet"};
 	}
 
 	remove(key)
@@ -69,12 +71,44 @@ Styx.actors.Inventory = class
 
 	getFreeKey()
 	{
-		var keys = "abcdefghijklmnop".split("");
-		return _.find(keys, key => this.belongings[key] == null);
+		return _.find(this.slots, key => this.belongings[key] == null);
 	}
 
 	getWearKey(item) {
 		return "1";
+	}
+
+	getAll()
+	{
+		var output = { backpack: [], body: [] };
+		
+		for(var i = 0; i < this.slots.length; i++) {
+			var key = this.slots[i];
+
+			if (this.belongings[key] == null) {
+				output.backpack[i] = {key: key, name: '(nothing)', item: null}
+			}
+			else {
+				output.backpack[i] = {key: key, name: this.belongings[key].name(), item: this.belongings[key]}
+			}
+		}
+
+		for (var key in this.bodySlots) {
+			if (this.belongings[key] == null) {
+				var slot = {key: key, keyName: this.bodySlots[key], name: '(nothing)', item: null};
+			}
+			else {
+				var slot = {
+					key: key, 
+					keyName: this.bodySlots[key], 
+					name: this.belongings[key].name(), 
+					item: this.belongings[key]}
+			}
+
+			output.body.push(slot);
+		}
+
+		return output;
 	}
 
 }
