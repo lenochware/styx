@@ -8,7 +8,8 @@ Styx.ui.WindowManager = class
 		this.game = game;
 		this.messages = "";
 		this.templates = this.game.data["templates"];
-		this.opened = [];
+		this.windows = [];
+		this.activeWindow = null;
 	}
 
 	render(id, options)
@@ -25,7 +26,7 @@ Styx.ui.WindowManager = class
 	{
 		switch(command.command) {
 			case 'close-window':
-				this.closeActiveWindow();
+				this.closeWindow();
 			break;			
 			case 'inventory':
 				this._renderInventory();
@@ -42,7 +43,7 @@ Styx.ui.WindowManager = class
 	_renderInventory()
 	{
 		var p = this.game.get('player');
-		var inventory = p.inventory.getAll();
+		var inventory = p.inventory.getContent();
 
 		this.window('inventory', 600, 400, this.template('inventory', {
 			player: {name: p.params.name, health: p.health},
@@ -90,29 +91,19 @@ Styx.ui.WindowManager = class
 		.html(content)
 		.appendTo('#game-container').show();//fadeIn(200);
 
-		this.opened.push(id);
+		this.windows.push(id);
+		this.activeWindow = id;
 	}
 
-	closeWindow(id)
+	closeWindow()
 	{
+		var id = this.windows.pop();
+		if (!id) return false;
+
 		$('#' + id).remove();
 		$('#' + id + '-overlay').remove();
+		this.activeWindow = this.windows.length? this.windows[this.windows.length-1] : null;
 	}
-
-	closeActiveWindow()
-	{
-		var id = this.opened.pop();
-		if (!id) return false;
-		this.closeWindow(id);
-	}
-
-	// popup(icon, title, desc, buttons)
-	// {
-	// 	this.window('popup', 500, 200, 
-	// 		this.template('popup', {icon:icon,title:title,desc:desc,buttons:buttons})
-	// 	);
-	// }
-
 
 	_renderMessages(options)
 	{

@@ -78,7 +78,7 @@ Styx.actors.Inventory = class
 		return "1";
 	}
 
-	getAll()
+	getContent()
 	{
 		var output = { backpack: [], body: [] };
 		
