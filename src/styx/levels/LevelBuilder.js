@@ -4,24 +4,42 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.LevelBuilder = class
 {
-	build(param)
+	constructor()
 	{
-		var level = new Styx.levels.Level;
-		level.size = param.size;
-		level.map = this.getRandomMap(param.size);
-
-		var m = this.spawn('monster', {id: "kobold"});
-		level.set(6, 6, 'actor', m);
-
-		return level;
+		this.game = game;
+		this.level = null;
 	}
 
-	spawn(id, options)
+	build(param)
 	{
-		switch (id) {
+		this.level = new Styx.levels.Level;
+		this.level.size = param.size;
+		this.level.map = this.getRandomMap(param.size);
+
+		this.spawn(6,6, 'monster', {id: "kobold"});
+		this.spawn(7,7, 'item', {id: "short_sword"});
+
+		return this.level;
+	}
+
+	make(className, options)
+	{
+		switch (className) {
 			case 'monster': return new Styx.actors.Monster(options);
+			case 'item': return new Styx.items.Item(options);
 			default: throw `Unknown entity ${className}`;
 		}		
+	}
+
+	spawn(x, y, className, options)
+	{
+		var obj = this.make(className, options);
+		if (obj.is('alive')) var type = 'actor';
+		else if (obj.is('item')) var type = 'item';
+		else throw `Cannot spawn ${className} (unknown type)`;
+
+		this.level.set(x, y, type, obj);
+		return obj;
 	}
 
 	getRandomMap(size)

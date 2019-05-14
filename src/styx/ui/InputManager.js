@@ -29,6 +29,7 @@ Styx.ui.InputManager = class
 			case 'i': return {command: 'inventory', category: 'wm-command' };
 			case 'Escape': return {command: 'close-window', category: 'wm-command' };
 
+			case 'g': return {command: 'get', category: 'player-command' };
 			case 's':
 				return {command: 'search', category: 'player-command' };
 				break;

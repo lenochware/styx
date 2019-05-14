@@ -38,6 +38,12 @@ Styx.Entity = class
 		return Math.max(Math.abs(this.pos.x - entity.pos.x), Math.abs(this.pos.y - entity.pos.y));
 	}
 
+	getTile()
+	{
+		if (!this.level || !this.pos) return null;
+		return this.level.get(this.pos.x, this.pos.y, 'tile');
+	}
+
 
 	update() {}
 }
