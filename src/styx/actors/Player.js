@@ -10,26 +10,6 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.inventory = new Styx.actors.Inventory(this);
 	}
 
-	execute(command)
-	{
-		if (this.isDestroyed()) return;
-
-		switch(command.command) {
-			case 'walk':
-				this.walk(command.dir[0], command.dir[1]);
-			break;
-			case 'get':
-				this.get();
-			break;
-
-			case 'search':
-			break;
-			// case 'attack':
-			// break;
-			default: throw `Invalid command '${command.command}'.`;
-		}
-	}
-
 	get()
 	{
 		var tile = this.getTile();

@@ -18,22 +18,10 @@ Styx.ui.WindowManager = class
 			case 'statusbar': this._renderStatusBar(options); break;
 			case 'sidebar': this._renderSideBar(options); break;
 			case 'messages': this._renderMessages(options); break;
+			case 'inventory': this._renderInventory(options); break;
 			default: throw `Unknown window type: ${id}`;
 		}
 	}
-
-	execute(command)
-	{
-		switch(command.command) {
-			case 'close-window':
-				this.closeWindow();
-			break;			
-			case 'inventory':
-				this._renderInventory();
-			break;				
-			default: throw `Invalid command '${command.command}'.`;
-		}
-	}		
 
 	message(m, cssClass = "msg")
 	{

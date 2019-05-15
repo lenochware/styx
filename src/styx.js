@@ -36,14 +36,7 @@ function gameLoop(event)
 {
 	var command = input.getCommand(event); //keybindings file
 
-	if (command.category == 'wm-command') {
-		wm.execute(command);
-		return;
-	}
-
-	if (command.category != 'player-command') return;
-
-	player.execute(command);
+	input.handle(command);
 
 	level.update();
 	renderer.render(level, 'level-map', {view: new Styx.Rectangle(0,0,50,20)});
