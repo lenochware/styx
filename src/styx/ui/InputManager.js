@@ -6,7 +6,30 @@ Styx.ui.InputManager = class
 	constructor()
 	{
 		this.game = game;
-		this.activeWindow = this.game.get('window-manager').activeWindow;
+		this.wm = this.game.get('window-manager');
+
+		this.keyBinddings = {
+			player: {
+				'ArrowLeft': {command: 'walk', dir: [-1,0]},
+				'ArrowRight': {command: 'walk', dir: [1,0]},
+				'ArrowUp': {command: 'walk', dir: [0,-1]},
+				'ArrowDown': {command: 'walk', dir: [0,1]},
+				'4': {command: 'walk', dir: [-1,0]},
+				'6': {command: 'walk', dir: [1,0]},
+				'8': {command: 'walk', dir: [0,-1]},
+				'2': {command: 'walk', dir: [0,1]},
+				'7': {command: 'walk', dir: [-1,-1]},
+				'9': {command: 'walk', dir: [1,-1]},
+				'1': {command: 'walk', dir: [-1,1]},
+				'3': {command: 'walk', dir: [1,1]},
+				'g': {command: 'get'},
+				's': {command: 'search'},
+				'i': {command: 'inventory'}
+			},
+			inventory: {
+				'Escape': {command: 'close-window'}
+			}
+		};
 	}
 
 	on(eventName, callback)
@@ -16,30 +39,11 @@ Styx.ui.InputManager = class
 
 	getCommand(event)
 	{
-		switch (event.key)
-		{
-			case 'ArrowLeft': return {command: 'walk', dir: [-1,0], category: 'player' };
-			case 'ArrowRight': return {command: 'walk', dir: [1,0], category: 'player' };
-			case 'ArrowUp': return {command: 'walk', dir: [0,-1], category: 'player' };
-			case 'ArrowDown': return {command: 'walk', dir: [0,1], category: 'player' };
-			
-			case '4': return {command: 'walk', dir: [-1,0], category: 'player' };
-			case '6': return {command: 'walk', dir: [1,0], category: 'player' };
-			case '8': return {command: 'walk', dir: [0,-1], category: 'player' };
-			case '2': return {command: 'walk', dir: [0,1], category: 'player' };
-			case '7': return {command: 'walk', dir: [-1,-1], category: 'player' };
-			case '9': return {command: 'walk', dir: [1,-1], category: 'player' };
-			case '1': return {command: 'walk', dir: [-1,1], category: 'player' };
-			case '3': return {command: 'walk', dir: [1,1], category: 'player' };
-
-			case 'i': return {command: 'open', category: 'inventory' };
-			case 'Escape': return {command: 'close-window', category: 'inventory' };
-
-			case 'g': return {command: 'get', category: 'player' };
-			case 's': return {command: 'search', category: 'player' };
-		}
-
-		return {command: null, category: 'noop' };
+		var category = this.wm.activeWindow || 'player';
+		var cmd = this.keyBinddings[category][event.key];
+		if (!cmd) return {command: null, category: 'noop' };
+		cmd.category = category;
+		return cmd;
 	}
 
 	handle(command)
@@ -48,10 +52,9 @@ Styx.ui.InputManager = class
 		{
 			case 'player': this.handlePlayerCmd(command); break;
 			case 'inventory': this.handleInventoryCmd(command); break;
-			default: throw `Unknown command category.`;
+			default: throw `Unknown command.`;
 		}
 	}
-
 
 	handlePlayerCmd(command)
 	{
@@ -62,6 +65,7 @@ Styx.ui.InputManager = class
 		switch(command.command) {
 			case 'walk': p.walk(command.dir[0], command.dir[1]); break;
 			case 'get': p.get(); break;
+			case 'inventory': this.wm.render('inventory'); break;
 			case 'search':break;
 			// case 'attack': break;
 			default: throw `Invalid command '${command.command}'.`;
@@ -70,15 +74,10 @@ Styx.ui.InputManager = class
 
 	handleInventoryCmd(command)
 	{
-		var wm = this.game.get('window-manager');
-
 		switch(command.command) {
 			case 'close-window':
-				wm.closeWindow();
+				this.wm.closeWindow();
 			break;			
-			case 'open':
-				wm.render('inventory');
-			break;				
 			default: throw `Invalid command '${command.command}'.`;
 		}
 	}
