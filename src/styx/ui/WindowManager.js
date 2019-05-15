@@ -19,6 +19,7 @@ Styx.ui.WindowManager = class
 			case 'sidebar': this._renderSideBar(options); break;
 			case 'messages': this._renderMessages(options); break;
 			case 'inventory': this._renderInventory(options); break;
+			case 'item-window': this._renderItemWindow(options); break;
 			default: throw `Unknown window type: ${id}`;
 		}
 	}
@@ -37,6 +38,14 @@ Styx.ui.WindowManager = class
 			player: {name: p.params.name, health: p.health},
 			backpack: inventory.backpack,
 			body: inventory.body,
+			})
+		);
+	}
+
+	_renderItemWindow(options)
+	{
+		this.window('item-window', 400, 200, this.template('item-window', {
+			item: options.item,
 			})
 		);
 	}

@@ -1,6 +1,8 @@
 
 /**
-- wm: nahr. primy odkaz na #game-container, zasilat commandy objektu, ktery ma focus, player commands pres wm?
+- game.spendTime()
+- string.format colors, a/an?
+- wm: nahr. primy odkaz na #game-container
 - wm.render('ui') vykresli vsechny panely (pridat renderPanel)
 - prepsat level.get set na praci s pos - ne x,y (nebo kombinovane? [x,y] or pos?)
 - level.get vracet perma_wall kdyz je mimo level, game.load.done(...)
