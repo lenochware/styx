@@ -47,6 +47,13 @@
 	},
 
 	"tiles": {
+		"null": {
+			"render": {"char": " ", "color": "black" },
+			"tags": ["wall"],
+			"name": "unknown grid",
+			"desc": "You see nothing."
+		},
+
 		"wall": {
 			"render": {"char": "#", "color": "gray" },
 			"tags": ["wall"],
@@ -56,7 +63,7 @@
 
 		"fake_wall": {
 			"render": {"char": "#", "color": "gray" },
-			"tags": ["wall"],
+			"tags": [],
 			"name": "stone wall",
 			"desc": "You see nothing interesting."
 		},
