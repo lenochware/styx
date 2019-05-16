@@ -6,6 +6,7 @@ Styx.Game = class
 	{
 		this.services = {};
 		this.data = {};
+		this.time = 0;
 	}
 
 	get(className, options)

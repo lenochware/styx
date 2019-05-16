@@ -75,7 +75,7 @@ Styx.ui.InputManager = class
 			case 'walk': p.walk(command.dir[0], command.dir[1]); break;
 			case 'get': p.get(); break;
 			case 'inventory': this.wm.render('inventory'); break;
-			case 'search':break;
+			case 'search': p.search(); break;
 			// case 'attack': break;
 			default: throw `Invalid command '${command.command}'.`;
 		}

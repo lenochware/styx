@@ -7,7 +7,9 @@ Styx.actors.Actor = class extends Styx.Entity
 	{
 		super('actors', params.id, params);
 		this.health = this.getAttrib('health', 10);
+		this.tick = 1;
 		this.target = null;
+		this.time = 0;
 	}
 
 	walk(dx, dy)
@@ -22,6 +24,7 @@ Styx.actors.Actor = class extends Styx.Entity
 			return;
 		}
 
+		this.spendTime();
 		this.level.set(this.pos.x + dx, this.pos.y + dy, 'actor', this);
 	}
 
@@ -45,6 +48,7 @@ Styx.actors.Actor = class extends Styx.Entity
 		}
 
 		this.target.damage({actor: this, strength: this.getAttrib('attack')});
+		this.spendTime();
 		//this.game.flashMsg(this.target.pos.px, this.target.pos.py, '-1', "msg-danger");
 
 		if (this.target.isDestroyed()) this.target = null;
@@ -79,5 +83,10 @@ Styx.actors.Actor = class extends Styx.Entity
 	isDestroyed()
 	{
 		return (this.health <= 0);
-	}	
+	}
+
+	spendTime()
+	{
+		this.time += this.tick;
+	}
 }
