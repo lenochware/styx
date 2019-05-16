@@ -13,23 +13,21 @@ Styx.levels.Level = class
 	get(x, y, attrib)
 	{
 		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
-			var tileParams = { id: 'null', actor: null, item: null };
+			return new Styx.levels.Tile('null');
 		}
 		else {
-			var tileParams = this.map[y * this.size.width + x];
+			var tile = this.map[y * this.size.width + x];
 		}
-
 
 		switch (attrib) {
 			case 'id':
 			case 'actor':
 			case 'item': 
-				return tileParams[attrib];
-			case 'tile-params': return tileParams;
+				return tile[attrib];
 			case 'tile': 
-				return new Styx.levels.Tile(x, y, tileParams);
-
-			default: throw `Invalid attribute'${attrib}'.`;
+				return tile;
+			default: 
+				throw `Invalid attribute'${attrib}'.`;
 		}
 	}
 

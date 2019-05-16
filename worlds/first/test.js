@@ -56,14 +56,14 @@
 
 		"wall": {
 			"render": {"char": "#", "color": "gray" },
-			"tags": ["wall"],
+			"tags": ["wall", "hiding"],
 			"name": "stone wallx",
 			"desc": "You see nothing interesting."
 		},
 
 		"fake_wall": {
 			"render": {"char": "#", "color": "gray" },
-			"tags": [],
+			"tags": ["hiding"],
 			"name": "stone wall",
 			"desc": "You see nothing interesting."
 		},

@@ -31,10 +31,12 @@ Styx.ui.Renderer = class
 	_renderTile(level, x, y)
 	{
 		var r = {char: "?", color: "white" };
-		var tile = level.get(x, y, 'tile-params');
-		if (tile.actor) r = tile.actor.getAttrib('render');
+		var tile = level.get(x, y, 'tile');
+		
+		if (tile.is("hiding")) r = tile.getAttrib('render');
+		else if (tile.actor) r = tile.actor.getAttrib('render');
 		else if (tile.item)  r = tile.item.getAttrib('render');
-		else r = this.db.getAttrib('tiles', tile.id, 'render');
+		else r = tile.getAttrib('render');
 
 		return `<span class=\"ui-${r.color}\">${r.char}</span>`;
 	}

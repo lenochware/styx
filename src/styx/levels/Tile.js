@@ -1,14 +1,33 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
-Styx.levels.Tile = class extends Styx.Entity
+Styx.levels.Tile = class
 {
-	constructor(x, y, params)
+	constructor(id, actor = null, item = null)
 	{
-		super('tiles', params.id, {pos: {x: x, y: y}});
-		//this.level = 
-		this.actor = params.actor;
-		this.item = params.item;
+		this.id = id;
+		this.actor = actor;
+		this.item = item;
+	}
+
+	getAttrib(attrib, defaultValue = null)
+	{
+		return game.get("dungeon-base").getAttrib('tiles', this.id, attrib) || defaultValue;
+	}
+
+	is(tag)
+	{
+		return (this.getAttrib("tags").indexOf(tag) != -1);
+	}
+
+	name()
+	{
+		return this.getAttrib("name");
+	}
+
+	shortDesc()
+	{
+		return this.getAttrib("desc");
 	}
 
 }

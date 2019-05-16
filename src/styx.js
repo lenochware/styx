@@ -1,10 +1,9 @@
 
 /**
-- string.format colors, a/an?
-- wm: nahr. primy odkaz na #game-container
 - wm.render('ui') vykresli vsechny panely (pridat renderPanel)
 - prepsat level.get set na praci s pos - ne x,y (nebo kombinovane? [x,y] or pos?)
-- pouzivat string.format a ne `${sss}`
+- string.format colors, a/an? - pouzivat misto `${sss}`
+- wm: nahr. primy odkaz na #game-container
 */
 
 var game = new Styx.Game();
