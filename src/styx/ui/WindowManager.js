@@ -9,7 +9,6 @@ Styx.ui.WindowManager = class
 		this.messages = "";
 		this.templates = this.game.data["templates"];
 		this.windows = [];
-		this.activeWindow = null;
 	}
 
 	render(id, options)
@@ -34,20 +33,19 @@ Styx.ui.WindowManager = class
 		var p = this.game.get('player');
 		var inventory = p.inventory.getContent();
 
-		this.window('inventory', 600, 400, this.template('inventory', {
+		this.window('inventory', 600, 400, {
 			player: {name: p.params.name, health: p.health},
 			backpack: inventory.backpack,
-			body: inventory.body,
-			})
-		);
+			body: inventory.body
+		});
 	}
 
 	_renderItemWindow(options)
 	{
-		this.window('item-window', 400, 200, this.template('item-window', {
+		this.window('item-window', 400, 200, {
 			item: options.item,
-			})
-		);
+			actions: ['drop']
+		});
 	}
 
 	_renderSideBar(options)
@@ -67,7 +65,20 @@ Styx.ui.WindowManager = class
 		return _.template(this.templates[id])(data);
 	}
 
-	window(id, width, height, content)
+	getActiveWindow()
+	{
+		if (!this.windows) return null;
+		return this.windows[this.windows.length-1];
+	}
+
+	window(id, width, height, data)
+	{
+		this.createModal(id, width, height, this.template(id, data));
+		data.id = id;
+		this.windows.push(data);
+	}
+
+	createModal(id, width, height, html)
 	{
 		if ($('#'+id).length) {
 			this.game.debugLog(`Window '${id}' already exists.`);
@@ -85,21 +96,18 @@ Styx.ui.WindowManager = class
 		.attr("id", id)
 		.width(width)
 		.height(height)
-		.html(content)
-		.appendTo('#game-container').show();//fadeIn(200);
-
-		this.windows.push(id);
-		this.activeWindow = id;
+		.html(html)
+		.appendTo('#game-container').show();
 	}
 
 	closeWindow()
 	{
-		var id = this.windows.pop();
-		if (!id) return false;
+		var win = this.getActiveWindow();
+		if (!win) return false;
 
-		$('#' + id).remove();
-		$('#' + id + '-overlay').remove();
-		this.activeWindow = this.windows.length? this.windows[this.windows.length-1] : null;
+		$('#' + win.id).remove();
+		$('#' + win.id + '-overlay').remove();
+		this.windows.pop();
 	}
 
 	_renderMessages(options)

@@ -42,7 +42,8 @@ Styx.ui.InputManager = class
 
 	getCommand(event)
 	{
-		var category = this.wm.activeWindow || 'player';
+		var window = this.wm.getActiveWindow();
+		var category = window? window.id : 'player';
 
 		if (category == 'inventory' && /^[a-z0-9]+$/.test(event.key)) {
 			return {command: 'examine', category: 'inventory', key: event.key };
