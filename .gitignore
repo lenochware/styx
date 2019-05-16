@@ -1,5 +1,4 @@
 # ignored directories
 
 /_etc/*
-/lib/*
 *.bak
