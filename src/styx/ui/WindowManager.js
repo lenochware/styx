@@ -23,21 +23,22 @@ Styx.ui.WindowManager = class
 		}
 	}
 
-	message(m, cssClass = "msg")
+	message(m, cssClass = "msg", args)
 	{
+		if (args) {
+			m = m.format(args);
+		}
+
 		this.messages += "<span class=\"{1}\">{0}</span>".format(m.capitalize(), cssClass);
 	}
 
 	_renderInventory()
 	{
 		var p = this.game.get('player');
-		var inventory = p.inventory.getContent();
 
 		this.openWindow('inventory', 600, 400, {
 			template: 'inventory',
-			player: {name: p.params.name, health: p.health},
-			backpack: inventory.backpack,
-			body: inventory.body
+			player: p,
 		});
 	}
 
@@ -85,6 +86,8 @@ Styx.ui.WindowManager = class
 		var win = this.getActiveWindow();
 		if (!win) return false;
 		win.close();
+		win = this.getActiveWindow();
+		if (win) win.redraw();
 	}
 
 	closeAll()

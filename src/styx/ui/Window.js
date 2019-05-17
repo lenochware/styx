@@ -22,8 +22,8 @@ Styx.ui.Window = class
 
 	redraw()
 	{
-		this.close();
-		this.draw();
+		var html = this.content['html'] || this.wm.template(this.content['template'], this.content);
+		$('#'+this.id).html(html);
 	}
 
 	createModal(html)

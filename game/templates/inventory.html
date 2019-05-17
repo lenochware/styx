@@ -1,19 +1,20 @@
-<%= player.name %> inventory
+<% var c = player.inventory.getContent(); %>
+<%= player.params.name %> inventory
 <table width="100%">
 	<tr>
 		<td valign="top">
 			Equipment:<br>
-			<% for (var i in body) { %>
+			<% for (var i in c.body) { %>
 
-			<%= body[i].key %>) <%= body[i].keyName %>: <%= body[i].name %><br>
+			<%= c.body[i].key %>) <%= c.body[i].keyName %>: <%= c.body[i].name %><br>
 
 			<% } %>
 		</td>
 		<td valign="top">
 			In backpack:<br>
-			<% for (var i in backpack) { %>
+			<% for (var i in c.backpack) { %>
 
-			<%= backpack[i].key %>) <%= backpack[i].name %><br>
+			<%= c.backpack[i].key %>) <%= c.backpack[i].name %><br>
 
 			<% } %>			
 		</td>
