@@ -10,7 +10,17 @@ Styx.levels.Level = class
 		this.actors = [];
 	}
 
-	get(x, y, attrib)
+	get(pos, attrib)
+	{
+		return this.getXY(pos.x, pos.y, attrib);
+	}
+
+	set(pos, attrib, value)
+	{
+		return this.setXY(pos.x, pos.y, attrib, value);
+	}
+
+	getXY(x, y, attrib)
 	{
 		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
 			return new Styx.levels.Tile('null');
@@ -27,11 +37,11 @@ Styx.levels.Level = class
 			case 'tile': 
 				return tile;
 			default: 
-				throw `Invalid attribute'${attrib}'.`;
+				throw `Invalid attribute '${attrib}'.`;
 		}
 	}
 
-	set(x, y, attrib, value)
+	setXY(x, y, attrib, value)
 	{
 		var pos = y * this.size.width + x;
 		if (pos < 0 || pos >= this.map.length) {

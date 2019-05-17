@@ -26,7 +26,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		}
 
 		this.inventory.set(freeKey, tile.item);
-		this.game.message("You got {0}.", 'info', tile.item.name());
+		this.game.message("You got {0}.", 'msg-info', tile.item.name());
 		this.level.remove(tile.item);
 		this.spendTime();
 	}
@@ -40,7 +40,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		var item = this.inventory.get(key);
 		this.inventory.wear(key);
-		this.game.message("You are wearing {0}.", 'info', item.name());
+		this.game.message("You are wearing {0}.", 'msg-info', item.name());
 		this.spendTime();
 	}
 
@@ -53,8 +53,8 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		var item = this.inventory.remove(key);
 		if (!item) return;
 
-		this.level.set(this.pos.x, this.pos.y, 'item', item);
-		this.game.message("You drop {0}.", 'info', item.name());
+		this.level.set(this.pos, 'item', item);
+		this.game.message("You drop {0}.", 'msg-info', item.name());
 		this.spendTime();
 	}
 

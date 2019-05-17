@@ -38,7 +38,7 @@ Styx.levels.LevelBuilder = class
 		else if (obj.is('item')) var type = 'item';
 		else throw `Cannot spawn ${className} (unknown type)`;
 
-		this.level.set(x, y, type, obj);
+		this.level.setXY(x, y, type, obj);
 		return obj;
 	}
 

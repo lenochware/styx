@@ -16,7 +16,7 @@ Styx.actors.Actor = class extends Styx.Entity
 	{
 		if (dx == 0 && dy == 0) return;
 
-		var tile = this.level.get(this.pos.x + dx, this.pos.y + dy, 'tile');
+		var tile = this.level.getXY(this.pos.x + dx, this.pos.y + dy, 'tile');
 		if (tile.is('wall')) return;
 
 		if (tile.actor) {
@@ -25,7 +25,7 @@ Styx.actors.Actor = class extends Styx.Entity
 		}
 
 		this.spendTime();
-		this.level.set(this.pos.x + dx, this.pos.y + dy, 'actor', this);
+		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);
 	}
 
 

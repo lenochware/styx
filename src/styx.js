@@ -1,7 +1,6 @@
 
 /**
 - wm.render('ui') vykresli vsechny panely (pridat renderPanel)
-- prepsat level.get set na praci s pos - ne x,y (nebo kombinovane? [x,y] or pos?)
 - string.format colors, a/an? - pouzivat misto `${sss}`
 - vycistit game messages, flashMessage()
 - wm: nahr. primy odkaz na #game-container
@@ -18,7 +17,7 @@ game.load('basic-types').then(function()
 
 	player = game.get('player', {name: 'Conan'});
 	
-	level.set(5, 5, 'actor', player);
+	level.setXY(5, 5, 'actor', player);
 
 	input = game.get('input-manager');
 	input.on('keypress', gameLoop);

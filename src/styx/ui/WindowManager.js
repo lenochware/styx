@@ -23,7 +23,7 @@ Styx.ui.WindowManager = class
 		}
 	}
 
-	message(m, cssClass = "msg", args)
+	message(m, cssClass = "msg-info", args)
 	{
 		if (args) {
 			m = m.format(args);

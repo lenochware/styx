@@ -31,7 +31,7 @@ Styx.ui.Renderer = class
 	_renderTile(level, x, y)
 	{
 		var r = {char: "?", color: "white" };
-		var tile = level.get(x, y, 'tile');
+		var tile = level.getXY(x, y, 'tile');
 		
 		if (tile.is("hiding")) r = tile.getAttrib('render');
 		else if (tile.actor) r = tile.actor.getAttrib('render');
