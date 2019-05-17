@@ -2,7 +2,7 @@
 /**
 - wm.render('ui') vykresli vsechny panely (pridat renderPanel)
 - string.format colors, a/an? - pouzivat misto `${sss}`
-- vycistit game messages, flashMessage()
+- flashMessage()
 - wm: nahr. primy odkaz na #game-container
 */
 

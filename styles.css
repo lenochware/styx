@@ -54,18 +54,21 @@ body {
 }
 
 .msg-info {
-	padding-left: 10px 
+	padding-left: 10px; 
 }
 
 .msg-danger {
+	padding-left: 10px; 	
 	color: red;
 }
 
 .msg-warning {
+	padding-left: 10px; 	
 	color: yellow;
 }
 
 .msg-hilite {
+	padding-left: 10px;
 	color: #00ff00;
 }
 

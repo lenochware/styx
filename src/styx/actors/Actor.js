@@ -41,10 +41,10 @@ Styx.actors.Actor = class extends Styx.Entity
 		}
 
 		if (this.is('player')) {
-			this.game.message(`You hit ${this.target.name()}.`);
+			this.game.message("You hit {0}.", "msg-info", this.target.name());
 		}
 		else {
-			this.game.message(this.name() + " hits " + this.target.name() + ".");
+			this.game.message("{0} hits {1}.", "msg-info", this.name(), this.target.name());
 		}
 
 		this.target.damage({actor: this, strength: this.getAttrib('attack')});
@@ -64,21 +64,15 @@ Styx.actors.Actor = class extends Styx.Entity
 	die()
 	{
 		if (this.is('player')) {
-			this.game.message("You die.", "msg msg-danger");
+			this.game.message("You die.", "msg-danger");
 		}
 		else {
-			this.game.message(`You defeated ${this.name()}.`, "msg msg-hilite");
+			this.game.message("You defeated {0}.", "msg-hilite", this.name());
 		}
 
 		this.health = 0;
 		this.level.remove(this);
 	}
-
-	search()
-	{
-		this.game.message('Searching...');
-	}
-
 
 	isDestroyed()
 	{
