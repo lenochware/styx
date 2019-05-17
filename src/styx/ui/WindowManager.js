@@ -44,7 +44,8 @@ Styx.ui.WindowManager = class
 	{
 		this.window('item-window', 400, 200, {
 			item: options.item,
-			actions: ['drop']
+			key: options.key,
+			actions: ['close-window', 'drop']
 		});
 	}
 
@@ -67,7 +68,7 @@ Styx.ui.WindowManager = class
 
 	getActiveWindow()
 	{
-		if (!this.windows) return null;
+		if (this.windows.length == 0) return null;
 		return this.windows[this.windows.length-1];
 	}
 
@@ -108,6 +109,13 @@ Styx.ui.WindowManager = class
 		$('#' + win.id).remove();
 		$('#' + win.id + '-overlay').remove();
 		this.windows.pop();
+	}
+
+	closeAll()
+	{
+		while(this.windows.length) {
+			this.closeWindow();			
+		}
 	}
 
 	_renderMessages(options)

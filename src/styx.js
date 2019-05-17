@@ -3,6 +3,7 @@
 - wm.render('ui') vykresli vsechny panely (pridat renderPanel)
 - prepsat level.get set na praci s pos - ne x,y (nebo kombinovane? [x,y] or pos?)
 - string.format colors, a/an? - pouzivat misto `${sss}`
+- vycistit game messages, flashMessage()
 - wm: nahr. primy odkaz na #game-container
 */
 

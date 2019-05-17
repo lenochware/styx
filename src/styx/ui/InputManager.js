@@ -30,7 +30,9 @@ Styx.ui.InputManager = class
 				'Escape': {command: 'close-window'}
 			},
 			'item-window': {
-				'Escape': {command: 'close-window'}
+				'Escape': {command: 'close-window'},
+				'd': {command: 'drop', key: null},
+				'w': {command: 'wear', key: null}
 			}
 		};
 	}
@@ -50,7 +52,17 @@ Styx.ui.InputManager = class
 		}
 
 		var cmd = this.keyBinddings[category][event.key];
-		if (!cmd) return {command: null, category: 'noop' };
+
+		if (category == 'item-window') {
+			if (window.actions.indexOf(cmd.command)) {
+				cmd.key = window.key;
+			}
+			else {
+				var cmd = null;
+			}
+		}
+
+		if (!cmd) return {command: event.key, category: 'undefined' };
 		cmd.category = category;
 		return cmd;
 	}
@@ -62,7 +74,7 @@ Styx.ui.InputManager = class
 			case 'player': this.handlePlayerCmd(command); break;
 			case 'inventory': this.handleInventoryCmd(command); break;
 			case 'item-window': this.handleItemCmd(command); break;
-			default: throw `Unknown command.`;
+			case 'undefined': console.warn(`Undefined command '${command.command}'`); break;
 		}
 	}
 
@@ -89,7 +101,7 @@ Styx.ui.InputManager = class
 				var p = this.game.get('player');
 				var item = p.inventory.get(command.key);
 				if (item) {
-					this.wm.render('item-window', {item: item});
+					this.wm.render('item-window', {item: item, key: command.key});
 				}
 			break;
 			case 'close-window':
@@ -101,11 +113,22 @@ Styx.ui.InputManager = class
 
 	handleItemCmd(command)
 	{
+		var p = this.game.get('player');
+
 		switch(command.command) {
 			case 'close-window':
 				this.wm.closeWindow();
-			break;			
+			break;	
+			case 'drop':
+				p.drop(command.key);
+				this.wm.closeAll();
+			break;
+			case 'wear':
+				p.wear(command.key);
+				this.wm.closeWindow();
+			break;
+
 			default: throw `Invalid command '${command.command}'.`;
-		}		
+		}
 	}
 }

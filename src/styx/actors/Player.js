@@ -36,6 +36,27 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
+	wear(key)
+	{
+		this.inventory.wear(key);
+		this.game.message("You are wearing xxx.");
+		this.spendTime();
+	}
+
+	drop(key)
+	{
+		if (this.getTile().item) {
+			this.game.message("There is no place to drop item.");
+		}
+
+		var item = this.inventory.remove(key);
+		if (!item) return;
+
+		this.level.set(this.pos.x, this.pos.y, 'item', item);
+		this.game.message("You drop xxx.");
+		this.spendTime();
+	}
+
 	spendTime()
 	{
 		this.game.time += this.tick;
