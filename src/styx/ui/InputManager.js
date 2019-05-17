@@ -54,8 +54,8 @@ Styx.ui.InputManager = class
 		var cmd = this.keyBinddings[category][event.key];
 
 		if (category == 'item-window') {
-			if (window.actions.indexOf(cmd.command)) {
-				cmd.key = window.key;
+			if (window.content.actions.indexOf(cmd.command)) {
+				cmd.key = window.content.key;
 			}
 			else {
 				var cmd = null;

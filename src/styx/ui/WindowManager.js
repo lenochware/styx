@@ -33,7 +33,8 @@ Styx.ui.WindowManager = class
 		var p = this.game.get('player');
 		var inventory = p.inventory.getContent();
 
-		this.window('inventory', 600, 400, {
+		this.openWindow('inventory', 600, 400, {
+			template: 'inventory',
 			player: {name: p.params.name, health: p.health},
 			backpack: inventory.backpack,
 			body: inventory.body
@@ -42,7 +43,8 @@ Styx.ui.WindowManager = class
 
 	_renderItemWindow(options)
 	{
-		this.window('item-window', 400, 200, {
+		this.openWindow('item-window', 400, 200, {
+			template: 'item-window',			
 			item: options.item,
 			key: options.key,
 			actions: ['close-window', 'drop']
@@ -72,43 +74,17 @@ Styx.ui.WindowManager = class
 		return this.windows[this.windows.length-1];
 	}
 
-	window(id, width, height, data)
+	openWindow(id, width, height, content)
 	{
-		this.createModal(id, width, height, this.template(id, data));
-		data.id = id;
-		this.windows.push(data);
-	}
-
-	createModal(id, width, height, html)
-	{
-		if ($('#'+id).length) {
-			this.game.debugLog(`Window '${id}' already exists.`);
-			return;
-		}
-
-		var over = document.createElement('div');
-		$(over).addClass("ui-overlay")
-		.click(() => this.closeWindow(id))
-		.attr("id", id + "-overlay")
-		.appendTo('#game-container');
-
-		var d = document.createElement('div');
-		$(d).addClass("ui-window")
-		.attr("id", id)
-		.width(width)
-		.height(height)
-		.html(html)
-		.appendTo('#game-container').show();
+		var win = new Styx.ui.Window(id, width, height, content);
+		win.draw();
 	}
 
 	closeWindow()
 	{
 		var win = this.getActiveWindow();
 		if (!win) return false;
-
-		$('#' + win.id).remove();
-		$('#' + win.id + '-overlay').remove();
-		this.windows.pop();
+		win.close();
 	}
 
 	closeAll()
