@@ -9,7 +9,7 @@ Styx.actors.Inventory = class
 		this.owner = owner;
 		this.belongings = {};
 		this.slots = "abcdefghijklmn".split("");
-		this.bodySlots = {1: "on head", 2: "on body", 3: "in left hand", 4: "in right hand", 5: "on feet"};
+		this.bodySlots = {1: "on head", 2: "on body", 3: "in right hand", 4: "in left hand", 5: "on feet"};
 	}
 
 	remove(key)
@@ -74,8 +74,13 @@ Styx.actors.Inventory = class
 		return _.find(this.slots, key => this.belongings[key] == null);
 	}
 
-	getWearKey(item) {
-		return "1";
+	getWearKey(item)
+	{
+		if (item.is('weapon')) return "3";
+		else if (item.is('shield')) return "4";
+		else if (item.is('cap')) return "1";
+		else if (item.is('armor')) return "2";
+		else if (item.is('boots')) return "5";
 	}
 
 	getContent()
