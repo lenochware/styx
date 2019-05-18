@@ -44,6 +44,14 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
+	unwear(key)
+	{
+		var item = this.inventory.get(key);
+		this.inventory.unwear(key);
+		this.game.message("You take off {0}.", 'msg-info', item.name());
+		this.spendTime();
+	}
+
 	drop(key)
 	{
 		if (this.getTile().item) {

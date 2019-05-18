@@ -44,11 +44,20 @@ Styx.ui.WindowManager = class
 
 	_renderItemWindow(options)
 	{
+		var commands = {};
+
+		commands['d'] = {command: 'drop', key: options.key, label: "[d]rop", category: "item-window"};
+		if (/^[0-9]+$/.test(options.key)) {
+			commands['t'] = {command: 'unwear', key: options.key, label: "[t]ake off", category: "item-window"};
+		}
+		else if (options.item.is('wearable')) {
+			commands['w'] = {command: 'wear', key: options.key, label: "[w]ear", category: "item-window"};
+		}
+
 		this.openWindow('item-window', 400, 200, {
 			template: 'item-window',			
 			item: options.item,
-			key: options.key,
-			actions: ['close-window', 'drop']
+			commands: commands
 		});
 	}
 

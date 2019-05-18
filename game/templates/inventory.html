@@ -4,17 +4,17 @@
 	<tr>
 		<td valign="top">
 			Equipment:<br>
-			<% for (var i in c.body) { %>
+			<% for (let it of c.body) { %>
 
-			<%= c.body[i].key %>) <%= c.body[i].keyName %>: <%= c.body[i].name %><br>
+			<%= it.key %>) <%= it.keyName %>: <span class="<%= it.cssClass %>"><%= it.name %></span><br>
 
 			<% } %>
 		</td>
 		<td valign="top">
 			In backpack:<br>
-			<% for (var i in c.backpack) { %>
+			<% for (let it of c.backpack) { %>
 
-			<%= c.backpack[i].key %>) <%= c.backpack[i].name %><br>
+			<%= it.key %>) <span class="<%= it.cssClass %>"><%= it.name %></span><br>
 
 			<% } %>			
 		</td>

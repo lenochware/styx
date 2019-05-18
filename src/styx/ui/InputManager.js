@@ -27,12 +27,8 @@ Styx.ui.InputManager = class
 				'i': {command: 'inventory'}
 			},
 			inventory: {
-				'Escape': {command: 'close-window'}
 			},
 			'item-window': {
-				'Escape': {command: 'close-window'},
-				'd': {command: 'drop', key: null},
-				'w': {command: 'wear', key: null}
 			}
 		};
 	}
@@ -47,20 +43,19 @@ Styx.ui.InputManager = class
 		var window = this.wm.getActiveWindow();
 		var category = window? window.id : 'player';
 
+		if (window && event.key == 'Escape') {
+			return {command: 'close-window', category: 'window'};
+		}
+
 		if (category == 'inventory' && /^[a-z0-9]+$/.test(event.key)) {
 			return {command: 'examine', category: 'inventory', key: event.key };
 		}
 
-		var cmd = this.keyBinddings[category][event.key];
-
 		if (category == 'item-window') {
-			if (window.content.actions.indexOf(cmd.command)) {
-				cmd.key = window.content.key;
-			}
-			else {
-				var cmd = null;
-			}
+			return window.content.commands[event.key] || {command: event.key, category: 'undefined' };
 		}
+
+		var cmd = this.keyBinddings[category][event.key];
 
 		if (!cmd) return {command: event.key, category: 'undefined' };
 		cmd.category = category;
@@ -74,6 +69,11 @@ Styx.ui.InputManager = class
 			case 'player': this.handlePlayerCmd(command); break;
 			case 'inventory': this.handleInventoryCmd(command); break;
 			case 'item-window': this.handleItemCmd(command); break;
+			case 'window': 
+				if (command.command == 'close-window') {
+					this.wm.closeWindow();
+				}
+			break;
 			case 'undefined': console.warn(`Undefined command '${command.command}'`); break;
 		}
 	}
@@ -104,9 +104,6 @@ Styx.ui.InputManager = class
 					this.wm.render('item-window', {item: item, key: command.key});
 				}
 			break;
-			case 'close-window':
-				this.wm.closeWindow();
-			break;			
 			default: throw `Invalid command '${command.command}'.`;
 		}
 	}
@@ -116,15 +113,16 @@ Styx.ui.InputManager = class
 		var p = this.game.get('player');
 
 		switch(command.command) {
-			case 'close-window':
-				this.wm.closeWindow();
-			break;	
 			case 'drop':
 				p.drop(command.key);
 				this.wm.closeAll();
 			break;
 			case 'wear':
 				p.wear(command.key);
+				this.wm.closeWindow();
+			break;
+			case 'unwear':
+				p.unwear(command.key);
 				this.wm.closeWindow();
 			break;
 

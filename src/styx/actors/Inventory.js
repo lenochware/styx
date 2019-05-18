@@ -91,23 +91,30 @@ Styx.actors.Inventory = class
 			var key = this.slots[i];
 
 			if (this.belongings[key] == null) {
-				output.backpack[i] = {key: key, name: '(nothing)', item: null}
+				output.backpack[i] = {key: key, name: '(nothing)', item: null, cssClass: 'ui-gray'}
 			}
 			else {
-				output.backpack[i] = {key: key, name: this.belongings[key].name(), item: this.belongings[key]}
+				output.backpack[i] = {
+					key: key, 
+					name: this.belongings[key].name(), 
+					item: this.belongings[key],
+					cssClass: 'ui-white'
+				}
 			}
 		}
 
 		for (var key in this.bodySlots) {
 			if (this.belongings[key] == null) {
-				var slot = {key: key, keyName: this.bodySlots[key], name: '(nothing)', item: null};
+				var slot = {key: key, keyName: this.bodySlots[key], name: '(nothing)', item: null, cssClass: 'ui-gray'};
 			}
 			else {
 				var slot = {
 					key: key, 
 					keyName: this.bodySlots[key], 
 					name: this.belongings[key].name(), 
-					item: this.belongings[key]}
+					item: this.belongings[key],
+					cssClass: 'ui-white'
+				}
 			}
 
 			output.body.push(slot);

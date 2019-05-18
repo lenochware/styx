@@ -1,2 +1,6 @@
 <%= item.name().indef().capitalize() %><br>
-<%= item.shortDesc() %>
+<%= item.shortDesc() %><br><br>
+
+<% for (let cmd of _.values(commands)) { %>
+<%= cmd.label %> 
+<% } %>	
