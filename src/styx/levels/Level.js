@@ -49,7 +49,7 @@ Styx.levels.Level = class
 		}
 
 		switch (attrib) {
-			case 'id': this.map[pos].tile = value; break;
+			case 'id': this.map[pos].id = value; break;
 			case 'item': 
 			case 'actor':
 				if (this.map[pos][attrib]) {

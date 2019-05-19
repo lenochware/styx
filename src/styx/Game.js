@@ -46,7 +46,10 @@ Styx.Game = class
 	{
 		return $.getJSON('loader.php?id=' + id)
 		.done(data => {this.data[id] = data; console.log(`'${id}' loaded.`); })
-		.fail((data) => { console.warn(`Loading of '${id}' failed.`); });
+		.fail((jqxhr, textStatus, error) => { 
+			console.warn(`Loading of '${id}' failed.`); 
+			console.warn(error); 
+		});
 	}
 
 	load(path)

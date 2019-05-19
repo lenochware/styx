@@ -1,5 +1,14 @@
 {
 	"actors": {
+		"player": {
+			"tags": ["player", "alive"],
+			"render": {"char": "@", "color": "white" },
+			"health": 10,
+			"attack": 5,
+			"name": "you",
+			"desc": "Warriors start with 11 points of Strength."
+		},
+
 		"kobold": {
 			"tags": ["alive", "kobold", "slow"],
 			"render": {"char": "k", "color": "green" },
@@ -9,14 +18,15 @@
 			"desc": "Kobolds are the largest, strongest and toughest of all gnolls. When severely wounded, they go berserk, inflicting even more damage to their enemies."
 		},
 
-		"player": {
-			"tags": ["player", "alive"],
-			"render": {"char": "@", "color": "white" },
+		"ghost": {
+			"tags": ["alive", "ghost"],
+			"render": {"char": "G", "color": "green" },
 			"health": 10,
-			"attack": 5,
-			"name": "you",
-			"desc": "Warriors start with 11 points of Strength."
+			"attack": 1,
+			"name": "green ghost",
+			"desc": "Strange transparent humanoid form."
 		}
+
 	},
 
 	"items": {
@@ -32,17 +42,23 @@
 			"name": "short sword",
 			"desc": "It is indeed quite short, just a few inches longer than a dagger."
 		},
-		"gold": {
-			"render": {"char": "$", "color": "yellow" },
-			"tags": ["item", "money"],
-			"name": "gold",
-			"desc": "A pile of %d gold coins."
+		"small_shield": {
+			"render": {"char": ")", "color": "white" },
+			"tags": ["item", "wearable", "shield"],
+			"name": "small wooden shield",
+			"desc": "Scratched round small woden shield with brass spice in center."
+		},		
+		"copper_coins": {
+			"render": {"char": "$", "color": "brown" },
+			"tags": ["item", "gold"],
+			"name": "copper coins",
+			"desc": "A pile of %d copper coins."
 		},
-		"food": {
+		"bread": {
 			"render": {"char": ",", "color": "brown" },
 			"tags": ["item", "food"],
-			"name": "ration of food",
-			"desc": "Nothing fancy here: dried meat, some biscuits - things like that."
+			"name": "piece of bread",
+			"desc": "A piece of bread."
 		}
 	},
 
@@ -68,11 +84,26 @@
 			"desc": "You see nothing interesting."
 		},
 
+		"water": {
+			"render": {"char": "~", "color": "light-blue" },
+			"tags": ["water", "hiding"],
+			"name": "deep water",
+			"on": {"enter": "drowning" },
+			"desc": "You see nothing interesting."
+		},
+
 		"floor": {
 			"render": {"char": ".", "color": "gray" },
 			"tags": ["floor"],
 			"name": "stone floor",
 			"desc": "You see nothing interesting."
-		}
+		},
+
+		"door": {
+			"render": {"char": "+", "color": "brown" },
+			"tags": ["wall", "hiding", "door"],
+			"name": "wooden door",
+			"desc": "You see nothing interesting."
+		}		
 	}	
 }

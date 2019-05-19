@@ -18,6 +18,17 @@ Styx.levels.LevelBuilder = class
 
 		this.spawn(6,6, 'monster', {id: "kobold"});
 		this.spawn(7,7, 'item', {id: "short_sword"});
+		this.spawn(10,7, 'item', {id: "small_shield"});
+		this.spawn(12,7, 'item', {id: "copper_coins"});
+		this.spawn(14,7, 'item', {id: "bread"});
+		this.spawn(16,7, 'item', {id: "bones"});
+
+		this.spawn(16,16, 'monster', {id: "ghost"});
+
+		this.level.setXY(5,4, 'id', 'door');
+
+		var pool = new Styx.Rectangle(8,10,5,4);
+		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'water'));
 
 		return this.level;
 	}
@@ -46,7 +57,7 @@ Styx.levels.LevelBuilder = class
 	{
 		var map = [];
 		for (var i = 0; i < size.width * size.height; i++) {
-			map[i] = new Styx.levels.Tile((Math.random() > 0.2)? 'floor' : 'wall');
+			map[i] = new Styx.levels.Tile((Math.random() > 0.05)? 'floor' : 'wall');
 		}
 		return map;
 	}
