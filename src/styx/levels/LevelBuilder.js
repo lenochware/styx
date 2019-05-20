@@ -45,7 +45,7 @@ Styx.levels.LevelBuilder = class
 	spawn(x, y, className, options)
 	{
 		var obj = this.make(className, options);
-		if (obj.is('alive')) var type = 'actor';
+		if (obj.is('actor')) var type = 'actor';
 		else if (obj.is('item')) var type = 'item';
 		else throw `Cannot spawn ${className} (unknown type)`;
 

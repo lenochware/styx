@@ -30,8 +30,18 @@ Styx.levels.Tile = class
 		return this.getAttrib("desc");
 	}
 
-	enter(actor) {};
+	enter(actor)
+	{
+		if (this.is('water')) {
+			actor.damage(this, 'drowning');
+		}
+	};
 	
 	leave(actor) {};
+
+	getDamage(actor, type)
+	{
+		return {points:1, message: "You are drowning!" };
+	}
 
 }

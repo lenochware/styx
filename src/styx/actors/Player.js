@@ -50,13 +50,6 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		}
 	}
 
-	attack(target)
-	{
-		var wm = this.game.get('window-manager');
-		super.attack(target);
-
-	}
-
 	wear(key)
 	{
 		var item = this.inventory.get(key);
@@ -85,6 +78,13 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.level.set(this.pos, 'item', item);
 		this.game.message("You drop {0}.", 'msg-info', item.name());
 		this.spendTime();
+	}
+
+	getDamage(actor, type)
+	{
+		var weapon = this.inventory.get('3');
+		var dmg = weapon? weapon.getDamage(actor, type) : {points: this.getAttrib('attack')};
+		return dmg;
 	}
 
 	spendTime()

@@ -64,7 +64,7 @@ Styx.levels.Level = class
 					this.map[oldPos][attrib] = null;
 				}
 
-				if (value.is('alive') && !value.level) {
+				if (value.is('actor') && !value.level) {
 					this.actors.push(value);
 				}
 
@@ -81,7 +81,7 @@ Styx.levels.Level = class
 	{
 		var pos = entity.pos.y * this.size.width + entity.pos.x;
 
-		if (entity.is('alive')) {
+		if (entity.is('actor')) {
 			this.map[pos].actor = null;
 
 			for (var i = 0; i < this.actors.length; i++) {

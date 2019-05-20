@@ -59,18 +59,29 @@ Styx.actors.Actor = class extends Styx.Entity
 			this.game.message("{0} hits {1}.", "msg-info", this.name(), this.target.name());
 		}
 
-		this.target.damage({actor: this, strength: this.getAttrib('attack')});
+		this.target.damage(this, 'hit');
+	
 		this.spendTime();
 		//this.game.flashMsg(this.target.pos.px, this.target.pos.py, '-1', "msg-danger");
 
 		if (this.target.isDestroyed()) this.target = null;
 	}
 
-	damage(attack)
+	damage(enemy, type)
 	{
-		this.health -= attack.strength;
-		this.target = attack.actor;
+		var dmg = enemy.getDamage(this, type);
+
+		if (enemy.is('actor')) {
+			this.target = enemy;
+		}
+
+		this.health -= dmg.points;
 		if (this.health <= 0) this.die();
+	}
+
+	getDamage(actor, type)
+	{
+		return {points: this.getAttrib('attack'), message: "{0} hits {1}." };
 	}
 
 	die()

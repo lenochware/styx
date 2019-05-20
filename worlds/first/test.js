@@ -1,7 +1,7 @@
 {
 	"actors": {
 		"player": {
-			"tags": ["player", "alive"],
+			"tags": ["player", "actor"],
 			"render": {"char": "@", "color": "white" },
 			"health": 10,
 			"attack": 5,
@@ -10,7 +10,7 @@
 		},
 
 		"kobold": {
-			"tags": ["alive", "kobold", "slow"],
+			"tags": ["actor", "kobold", "slow"],
 			"render": {"char": "k", "color": "green" },
 			"health": 10,
 			"attack": 1,
@@ -19,7 +19,7 @@
 		},
 
 		"ghost": {
-			"tags": ["alive", "ghost"],
+			"tags": ["actor", "ghost"],
 			"render": {"char": "G", "color": "green" },
 			"health": 10,
 			"attack": 1,
