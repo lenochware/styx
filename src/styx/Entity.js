@@ -44,6 +44,11 @@ Styx.Entity = class
 		return this.level.get(this.pos, 'tile');
 	}
 
+	damage(attack) {}
+
+	die()	{}
+
+	isDestroyed()	{}	
 
 	update() {}
 }

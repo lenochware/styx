@@ -30,4 +30,8 @@ Styx.levels.Tile = class
 		return this.getAttrib("desc");
 	}
 
+	enter(actor) {};
+	
+	leave(actor) {};
+
 }

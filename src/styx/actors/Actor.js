@@ -25,9 +25,21 @@ Styx.actors.Actor = class extends Styx.Entity
 		}
 
 		this.spendTime();
-		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);
+
+		this.leave(this.pos);
+		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);		
+		this.enter(this.pos);
 	}
 
+	enter(pos)
+	{
+		this.level.get(pos, 'tile').enter(this);
+	};
+
+	leave(pos)
+	{
+		this.level.get(pos, 'tile').leave(this);		
+	};
 
 	attack(target = null)
 	{

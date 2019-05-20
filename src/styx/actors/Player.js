@@ -8,6 +8,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		params.id = 'player';
 		super(params);
 		this.inventory = new Styx.actors.Inventory(this);
+		this.gold = 0;
 		this.tick = 1;
 	}
 
@@ -34,6 +35,19 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	search()
 	{
 		this.spendTime();
+	}
+
+	enter(pos)
+	{
+		super.enter(pos);
+		var tile = this.level.get(pos, 'tile');
+
+		if (tile.item && tile.item.is('gold')) {
+			var amount = tile.item.getAttrib('amount', 10);
+			this.gold += amount;
+			this.game.message("You got {0} ({1}).", 'msg-info', tile.item.name(), amount);
+			this.level.remove(tile.item);
+		}
 	}
 
 	wear(key)
