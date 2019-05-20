@@ -50,6 +50,13 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		}
 	}
 
+	attack(target)
+	{
+		var wm = this.game.get('window-manager');
+		super.attack(target);
+
+	}
+
 	wear(key)
 	{
 		var item = this.inventory.get(key);

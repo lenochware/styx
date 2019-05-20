@@ -65,7 +65,7 @@ Styx.ui.WindowManager = class
 	{
 		var p = this.game.get('player');
 		$('#'+options.container).html(this.template('sidebar', {
-			player: {name: p.params.name, health: p.health} 
+			player: p
 		}));
 	}
 

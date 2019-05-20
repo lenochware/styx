@@ -1,1 +1,6 @@
-hello <%= player.name %>
+<%= player.params.name %><br>
+Gold: <%= player.gold %><br>
+Health: <%= player.health %>/<%= player.getAttrib('health') %><br><br>
+<% if (player.target) { %>
+<%= player.target.name() %>: <%= player.target.health %>/<%= player.target.getAttrib('health') %>
+<% } %>
