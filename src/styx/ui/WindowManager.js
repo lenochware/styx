@@ -10,6 +10,7 @@ Styx.ui.WindowManager = class
 		this.lastMessage = "";
 		this.templates = this.game.data["templates"];
 		this.windows = [];
+		this.initTileInfo();
 	}
 
 	render(id, options)
@@ -22,6 +23,31 @@ Styx.ui.WindowManager = class
 			case 'item-window': this._renderItemWindow(options); break;
 			default: throw `Unknown window type: ${id}`;
 		}
+	}
+
+	showTileInfo(level, x, y)
+	{
+		var obj = level.getXY(x, y, 'tile').getVisible();
+		this.quickMessage("You see {0}.", obj.name());
+	}
+
+	initTileInfo()
+	{
+		var level = this.game.get("player").level;
+		
+		$("#level-map").on("click", "span", (e) => {
+			var pos = $(e.target).data("pos").split(",");
+			this.showTileInfo(level, Number(pos[0]), Number(pos[1]));
+		});
+	}
+
+	quickMessage(m, ...args)
+	{
+		if (args) {
+			m = m.format(args);
+		}
+
+		$("#quick-message").html(m);
 	}
 
 	message(m, cssClass = "msg-info", args)

@@ -38,7 +38,7 @@ Styx.ui.Renderer = class
 		else if (tile.item)  r = tile.item.getAttrib('render');
 		else r = tile.getAttrib('render');
 
-		return `<span class=\"ui-${r.color}\">${r.char}</span>`;
+		return `<span class="ui-${r.color}" data-pos="${x},${y}">${r.char}</span>`;
 	}
 
 }

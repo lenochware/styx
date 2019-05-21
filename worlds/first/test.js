@@ -73,7 +73,7 @@
 		"wall": {
 			"render": {"char": "#", "color": "gray" },
 			"tags": ["wall", "hiding"],
-			"name": "stone wallx",
+			"name": "stone wall",
 			"desc": "You see nothing interesting."
 		},
 
@@ -105,7 +105,7 @@
 			"name": "wooden door",
 			"desc": "You see nothing interesting."
 		},
-		
+
 		"open_door": {
 			"render": {"char": "`", "color": "brown" },
 			"tags": ["door", "open"],

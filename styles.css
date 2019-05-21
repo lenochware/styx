@@ -53,6 +53,10 @@ body {
 	color: white;
 }
 
+#level-map {
+	cursor: pointer;
+}
+
 .msg-info {
 	padding-left: 10px; 
 }
