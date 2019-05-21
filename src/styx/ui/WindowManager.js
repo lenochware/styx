@@ -66,6 +66,9 @@ Styx.ui.WindowManager = class
 		else if (options.item.is('wearable')) {
 			commands['w'] = {command: 'wear', key: options.key, label: "[w]ear", category: "item-window"};
 		}
+		else if (options.item.is('food')) {
+			commands['e'] = {command: 'eat', key: options.key, label: "[e]at", category: "item-window"};
+		}
 
 		this.openWindow('item-window', 400, 200, {
 			template: 'item-window',			

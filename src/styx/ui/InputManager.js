@@ -125,6 +125,10 @@ Styx.ui.InputManager = class
 				p.unwear(command.key);
 				this.wm.closeWindow();
 			break;
+			case 'eat':
+				p.eat(command.key);
+				this.wm.closeWindow();
+			break;
 
 			default: throw `Invalid command '${command.command}'.`;
 		}

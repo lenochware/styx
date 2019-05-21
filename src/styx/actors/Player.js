@@ -80,6 +80,13 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
+	eat(key)
+	{
+		var item = this.inventory.remove(key);
+		this.game.message("You eat {0}.", 'msg-info', item.name());
+		this.spendTime();
+	}
+
 	getDamage(target, type)
 	{
 		var weapon = this.inventory.get('3');
