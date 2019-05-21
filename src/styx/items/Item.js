@@ -16,7 +16,7 @@ Styx.items.Item = class extends Styx.Entity
 			actor: this,
 			type: type,
 			points: 1, 
-			message: "Attacked."
+			message: "{0} hit[s] {1}"
 		};
 
 		return dmg;

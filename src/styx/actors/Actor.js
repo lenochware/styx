@@ -52,13 +52,6 @@ Styx.actors.Actor = class extends Styx.Entity
 			return;
 		}
 
-		if (this.is('player')) {
-			this.game.message("You hit {0}.", "msg-info", this.target.name());
-		}
-		else {
-			this.game.message("{0} hits {1}.", "msg-info", this.name(), this.target.name());
-		}
-
 		var dmg = this.getDamage(this.target, 'hit');
 		this.target.damage(this, dmg);
 	
@@ -77,7 +70,10 @@ Styx.actors.Actor = class extends Styx.Entity
 		}
 
 		this.health -= dmg.points;
-		if (this.health <= 0) this.die();
+
+		this.game.message(dmg.message, "msg-info", attacker.name(), this.name());
+
+		if (this.health <= 0) this.die(attacker);
 	}
 
 	getDamage(target, type)
@@ -86,19 +82,22 @@ Styx.actors.Actor = class extends Styx.Entity
 			actor: this,
 			type: type,
 			points: this.getAttrib('attack'), 
-			message: "{0} hits {1}."
+			message: "{0} hit[s] {1}."
 		};
 
 		return dmg;
 	}
 
-	die()
+	die(attacker)
 	{
 		if (this.is('player')) {
 			this.game.message("You die.", "msg-danger");
 		}
-		else {
+		else if (attacker.is('player')) {
 			this.game.message("You defeated {0}.", "msg-hilite", this.name());
+		}
+		else {
+			this.game.message("{0} dies.", "msg-info", this.name());			
 		}
 
 		this.health = 0;

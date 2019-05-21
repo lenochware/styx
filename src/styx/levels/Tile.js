@@ -48,7 +48,7 @@ Styx.levels.Tile = class
 			actor: this,
 			type: type,
 			points: 1, 
-			message: "You are drowning!"
+			message: "{1} [is] drowning!"
 		};
 
 		return dmg;

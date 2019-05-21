@@ -7,6 +7,7 @@ Styx.ui.WindowManager = class
 	{
 		this.game = game;
 		this.messages = "";
+		this.lastMessage = "";
 		this.templates = this.game.data["templates"];
 		this.windows = [];
 	}
@@ -28,6 +29,18 @@ Styx.ui.WindowManager = class
 		if (args) {
 			m = m.format(args);
 		}
+
+		if (m.substring(0,3) == "you") {
+			m= m.replace("[is]", "are")
+				.replace("[s]", "");
+		}
+		else {
+			m = m.replace("[is]", "is")
+				.replace("[s]", "s");
+		}
+
+		if (m == this.lastMessage) return;
+		this.lastMessage = m;
 
 		this.messages += "<span class=\"{1}\">{0}</span>".format(m.capitalize(), cssClass);
 	}
