@@ -39,7 +39,6 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 	enter(pos)
 	{
-		super.enter(pos);
 		var tile = this.level.get(pos, 'tile');
 
 		if (tile.item && tile.item.is('gold')) {
@@ -48,6 +47,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 			this.game.message("You got {0} ({1}).", 'msg-info', tile.item.name(), amount);
 			this.level.remove(tile.item);
 		}
+		super.enter(pos);
 	}
 
 	wear(key)
@@ -80,10 +80,10 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
-	getDamage(actor, type)
+	getDamage(target, type)
 	{
 		var weapon = this.inventory.get('3');
-		var dmg = weapon? weapon.getDamage(actor, type) : {points: this.getAttrib('attack')};
+		var dmg = weapon? weapon.getDamage(target, type) : super.getDamage(target, type);
 		return dmg;
 	}
 

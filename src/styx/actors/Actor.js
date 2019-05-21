@@ -27,7 +27,7 @@ Styx.actors.Actor = class extends Styx.Entity
 		this.spendTime();
 
 		this.leave(this.pos);
-		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);		
+		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);
 		this.enter(this.pos);
 	}
 
@@ -59,7 +59,8 @@ Styx.actors.Actor = class extends Styx.Entity
 			this.game.message("{0} hits {1}.", "msg-info", this.name(), this.target.name());
 		}
 
-		this.target.damage(this, 'hit');
+		var dmg = this.getDamage(this.target, 'hit');
+		this.target.damage(this, dmg);
 	
 		this.spendTime();
 		//this.game.flashMsg(this.target.pos.px, this.target.pos.py, '-1', "msg-danger");
@@ -67,21 +68,28 @@ Styx.actors.Actor = class extends Styx.Entity
 		if (this.target.isDestroyed()) this.target = null;
 	}
 
-	damage(enemy, type)
+	damage(attacker, dmg)
 	{
-		var dmg = enemy.getDamage(this, type);
+		if (!dmg) return;
 
-		if (enemy.is('actor')) {
-			this.target = enemy;
+		if (attacker.is('actor')) {
+			this.target = attacker;
 		}
 
 		this.health -= dmg.points;
 		if (this.health <= 0) this.die();
 	}
 
-	getDamage(actor, type)
+	getDamage(target, type)
 	{
-		return {points: this.getAttrib('attack'), message: "{0} hits {1}." };
+		var dmg = {
+			actor: this,
+			type: type,
+			points: this.getAttrib('attack'), 
+			message: "{0} hits {1}."
+		};
+
+		return dmg;
 	}
 
 	die()
