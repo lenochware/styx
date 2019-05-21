@@ -19,7 +19,7 @@
 		},
 
 		"ghost": {
-			"tags": ["actor", "ghost"],
+			"tags": ["actor", "ghost", "flying"],
 			"render": {"char": "G", "color": "green" },
 			"health": 10,
 			"attack": 1,
@@ -65,7 +65,7 @@
 	"tiles": {
 		"null": {
 			"render": {"char": " ", "color": "black" },
-			"tags": ["wall"],
+			"tags": ["wall", "inpenetrable"],
 			"name": "unknown grid",
 			"desc": "You see nothing."
 		},

@@ -32,7 +32,7 @@ Styx.levels.Tile = class
 
 	enter(actor)
 	{
-		if (this.is('water')) {
+		if (this.is('water') && !actor.is("flying")) {
 			var dmg = this.getDamage(actor, 'drowning');
 			actor.damage(this, dmg);
 		}

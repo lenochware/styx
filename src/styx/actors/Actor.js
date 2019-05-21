@@ -17,7 +17,8 @@ Styx.actors.Actor = class extends Styx.Entity
 		if (dx == 0 && dy == 0) return;
 
 		var tile = this.level.getXY(this.pos.x + dx, this.pos.y + dy, 'tile');
-		if (tile.is('wall')) return;
+
+		if (!this.canOccupy(tile)) return;
 
 		if (tile.actor) {
 			this.attack(tile.actor);
@@ -86,6 +87,13 @@ Styx.actors.Actor = class extends Styx.Entity
 		};
 
 		return dmg;
+	}
+
+	canOccupy(tile)
+	{
+		if (this.is('ghost') && !tile.is('inpenetrable')) return true;
+		if (tile.is('wall')) return false;
+		return true;
 	}
 
 	die(attacker)
