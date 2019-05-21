@@ -36,6 +36,9 @@ Styx.levels.Tile = class
 			var dmg = this.getDamage(actor, 'drowning');
 			actor.damage(this, dmg);
 		}
+		else if (this.id == 'door') {
+			this.id = 'open_door';
+		}
 	};
 	
 	leave(actor) {};

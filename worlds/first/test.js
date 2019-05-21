@@ -101,8 +101,15 @@
 
 		"door": {
 			"render": {"char": "+", "color": "brown" },
-			"tags": ["wall", "hiding", "door"],
+			"tags": ["hiding", "door"],
 			"name": "wooden door",
+			"desc": "You see nothing interesting."
+		},
+		
+		"open_door": {
+			"render": {"char": "`", "color": "brown" },
+			"tags": ["door", "open"],
+			"name": "open wooden door",
 			"desc": "You see nothing interesting."
 		}		
 	}	

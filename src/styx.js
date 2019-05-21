@@ -1,7 +1,8 @@
 
 /**
+- lepsi door management (potrebne tile.pos?) devices, use?
 - wm.render('ui') vykresli vsechny panely (pridat renderPanel)
-- string.format colors, a/an? - pouzivat misto `${sss}`
+- string.format colors, a/an?
 - flashMessage()
 - wm: nahr. primy odkaz na #game-container
 */
