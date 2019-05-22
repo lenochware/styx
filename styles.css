@@ -1,9 +1,7 @@
 body {
-  font-size: 18px;
+  font-size: 17px;
   font-family: monospace;
-  font-weight: bold;
   line-height: initial;
-
 	background-color: #000000;
 	color: #afafaf;
 }
@@ -48,13 +46,15 @@ body {
 	display: none;
 	box-shadow:4px 4px 4px 0px rgba(0, 0, 0, 0.5);	
 	border: 15px solid transparent;
-	border-image: url(assets/ui/border.png) 40% stretch;
+	border-image: url(game/images/border.png) 40% stretch;
 	background-color: #3b3e36;
 	color: white;
 }
 
 #level-map {
 	cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;  
 }
 
 .msg-info {
@@ -80,6 +80,11 @@ body {
 	color: #00ff00;
 }
 
+.ui-dark-green {
+	color: #00af5f;
+}
+
+
 .ui-yellow {
 	color: #ffff00;
 }
@@ -87,12 +92,32 @@ body {
 	color: #d7af5f;
 }
 
+.ui-dark-brown {
+	color: #af5f00;
+}
+
+.ui-red {
+	color: #d70000;
+}
+
 .ui-pink {
 	color: #d7005f;
 }
 
+.ui-purple {
+	color: #ff00ff;
+}
+
+.ui-cyan {
+	color: #00ffff;
+}
+
 .ui-light-blue {
 	color: #5fffd7;
+}
+
+.ui-blue {
+	color: #5c5cff;
 }
 
 .ui-white {
@@ -100,7 +125,16 @@ body {
 }
 
 .ui-gray {
-	color: #afafaf;
+	//color: #afafaf;
+	color: #878787;
+}
+
+.command {
+	cursor: pointer;
+}
+
+.command kbd {
+	color: #ffff00;
 }
 
 .link {

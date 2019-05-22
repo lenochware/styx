@@ -26,7 +26,12 @@
 		#messages {
 			grid-column: 1/3;
 			grid-row: 2/3;
+			height:100px;
 		}
+		#statusbar {
+			grid-column: 1/3;
+			grid-row: 3/4;
+		}		
 	</style>		
 	</head>
 	<body>
@@ -34,6 +39,13 @@
 			<div id="sidebar"></div>
 			<div id="level-map"></div>
 			<div id="messages"></div>			
+			<div id="statusbar">
+				<span class="command" data-key="Esc"><kbd>[Esc]</kbd> Menu</span> 
+				<span class="command" data-key="i"><kbd>I</kbd>nventory</span> 
+				<span class="command" data-key="s"><kbd>S</kbd>earch</span> 
+				<span class="command" data-key="g"><kbd>G</kbd>et item</span> 
+				<span class="command"><kbd>&larr;&uarr;&rarr;&darr;</kbd> Move</span>
+			</div>
 		</div>
 		<script type="text/javascript" src="src/styx.js"></script>
 	</body>
