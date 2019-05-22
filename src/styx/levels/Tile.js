@@ -27,6 +27,11 @@ Styx.levels.Tile = class
 
 	shortDesc()
 	{
+		return this.getAttrib("name");
+	}
+
+	longDesc()
+	{
 		return this.getAttrib("desc");
 	}
 

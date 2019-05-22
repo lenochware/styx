@@ -112,6 +112,17 @@ Styx.actors.Actor = class extends Styx.Entity
 		this.level.remove(this);
 	}
 
+	shortDesc()
+	{
+		var info = "";
+		var hltPerc = this.health / this.getAttrib('health');
+		if (hltPerc < 0.2) info = " (badly wounded)";
+		else if (hltPerc < 0.8) info = " (somewhat wounded)";
+		else info = "";
+
+		return super.name()+info;
+	}
+
 	isDestroyed()
 	{
 		return (this.health <= 0);

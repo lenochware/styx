@@ -28,13 +28,13 @@ Styx.ui.WindowManager = class
 	showTileInfo(level, x, y)
 	{
 		var obj = level.getXY(x, y, 'tile').getVisible();
-		this.quickMessage("You see {0}.", obj.name());
+		this.quickMessage("You see {0}.", obj.shortDesc());
 	}
 
 	initTileInfo()
 	{
 		var level = this.game.get("player").level;
-		
+
 		$("#level-map").on("click", "span", (e) => {
 			var pos = $(e.target).data("pos").split(",");
 			this.showTileInfo(level, Number(pos[0]), Number(pos[1]));

@@ -44,7 +44,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		if (tile.item && tile.item.is('gold')) {
 			var amount = tile.item.getAttrib('amount', 10);
 			this.gold += amount;
-			this.game.message("You got {0} ({1}).", 'msg-info', tile.item.name(), amount);
+			this.game.message("You collected {1} {0}.", 'msg-info', tile.item.name(), amount);
 			this.level.remove(tile.item);
 		}
 		super.enter(pos);
