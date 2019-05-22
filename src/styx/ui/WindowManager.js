@@ -21,6 +21,7 @@ Styx.ui.WindowManager = class
 			case 'messages': this._renderMessages(options); break;
 			case 'inventory': this._renderInventory(options); break;
 			case 'item-window': this._renderItemWindow(options); break;
+			case 'tile-window': this._renderTileWindow(options); break;
 			default: throw `Unknown window type: ${id}`;
 		}
 	}
@@ -28,7 +29,10 @@ Styx.ui.WindowManager = class
 	showTileInfo(level, x, y)
 	{
 		var obj = level.getXY(x, y, 'tile').getVisible();
-		this.quickMessage("You see {0}.", obj.shortDesc());
+		this.quickMessage(
+			'You see <span class="link tile-info" data-pos="{1}">{0}</span>.', 
+			obj.shortDesc(), x + ',' + y
+		);
 	}
 
 	initTileInfo()
@@ -38,6 +42,13 @@ Styx.ui.WindowManager = class
 		$("#level-map").on("click", "span", (e) => {
 			var pos = $(e.target).data("pos").split(",");
 			this.showTileInfo(level, Number(pos[0]), Number(pos[1]));
+		});
+
+		$("body").on("click", ".tile-info", (e) => {
+			var pos = $(e.target).data("pos").split(",");
+			this.render("tile-window", {
+				"pos": {x:Number(pos[0]),y:Number(pos[1])}
+			});
 		});
 	}
 
@@ -99,6 +110,19 @@ Styx.ui.WindowManager = class
 		this.openWindow('item-window', 400, 200, {
 			template: 'item-window',			
 			item: options.item,
+			commands: commands
+		});
+	}
+
+	_renderTileWindow(options)
+	{
+		var commands = {};
+
+		var obj = level.get(options.pos, 'tile').getVisible();
+
+		this.openWindow('item-window', 400, 200, {
+			template: 'item-window',			
+			item: obj,
 			commands: commands
 		});
 	}

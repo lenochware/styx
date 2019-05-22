@@ -103,4 +103,8 @@ body {
 	color: #afafaf;
 }
 
-
+.link {
+	text-decoration: underline;
+	color: white;
+	cursor: pointer;
+}
