@@ -7,9 +7,24 @@ Styx.actors.Actor = class extends Styx.Entity
 	{
 		super('actors', params.id, params);
 		this.health = this.getAttrib('health', 10);
+		this.maxHealth = this.health;
 		this.tick = 1;
 		this.target = null;
+		this.conditions = {};
 		this.time = 0;
+	}
+
+	condition(id, duration = null)
+	{
+		if (!this.conditions[id]) {
+			this.conditions[id] = 0;
+		}
+
+		if (duration !== null) {
+			this.conditions[id] = this.game.time + duration;
+		}
+
+		return (this.conditions[id] > this.game.time);
 	}
 
 	walk(dx, dy)
@@ -115,10 +130,13 @@ Styx.actors.Actor = class extends Styx.Entity
 	shortDesc()
 	{
 		var info = "";
-		var hltPerc = this.health / this.getAttrib('health');
-		if (hltPerc < 0.2) info = " (badly wounded)";
-		else if (hltPerc < 0.8) info = " (somewhat wounded)";
-		else info = "";
+
+		// var hltPerc = this.health / this.maxHealth;
+		// if (hltPerc < 0.2) info = " (badly wounded)";
+		// else if (hltPerc < 0.8) info = " (somewhat wounded)";
+		// else info = "";
+
+		if (this.condition('afraid')) info = "(afraid)";
 
 		return super.name()+info;
 	}

@@ -10,4 +10,12 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		}
 	}
 
+	damage(attacker, dmg)
+	{
+		super.damage(attacker, dmg);
+		
+		if (this.health < this.maxHealth / 3) {
+			this.condition('afraid', 10);
+		}
+	}
 }
