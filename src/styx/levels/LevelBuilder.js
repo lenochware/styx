@@ -57,7 +57,7 @@ Styx.levels.LevelBuilder = class
 	{
 		var map = [];
 		for (var i = 0; i < size.width * size.height; i++) {
-			map[i] = new Styx.levels.Tile((Math.random() > 0.05)? 'floor' : 'wall');
+			map[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), (Math.random() > 0.05)? 'floor' : 'wall');
 		}
 		return map;
 	}

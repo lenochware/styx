@@ -39,8 +39,26 @@ Styx.Entity = class
 
 	distance(entity)
 	{
-		if (!this.pos || !entity.pos) return 999999;
+		if (!this.pos || !entity.pos) {
+			console.warn("Missing pos - cannot calculate distance.");
+			return 999999;
+		}
+
 		return Math.max(Math.abs(this.pos.x - entity.pos.x), Math.abs(this.pos.y - entity.pos.y));
+	}
+
+	surroundings()
+	{
+		return [
+			{x: this.pos.x - 1, y: this.pos.y - 1},
+			{x: this.pos.x    , y: this.pos.y - 1},
+			{x: this.pos.x + 1, y: this.pos.y - 1},
+			{x: this.pos.x - 1, y: this.pos.y},
+			{x: this.pos.x + 1, y: this.pos.y},
+			{x: this.pos.x - 1, y: this.pos.y + 1},
+			{x: this.pos.x    , y: this.pos.y + 1},
+			{x: this.pos.x + 1, y: this.pos.y + 1}
+		];
 	}
 
 	getTile()

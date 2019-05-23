@@ -3,11 +3,12 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.Tile = class
 {
-	constructor(id, actor = null, item = null)
+	constructor(x, y, id)
 	{
 		this.id = id;
-		this.actor = actor;
-		this.item = item;
+		this.pos = {x:x, y:y};
+		this.actor = null;
+		this.item = null;
 	}
 
 	getAttrib(attrib, defaultValue = null)
@@ -73,5 +74,15 @@ Styx.levels.Tile = class
 
 		return obj;
 	}
+
+	distance(entity)
+	{
+		if (!this.pos || !entity.pos) {
+			console.warn("Missing pos - cannot calculate distance.");
+			return 999999;
+		}
+
+		return Math.max(Math.abs(this.pos.x - entity.pos.x), Math.abs(this.pos.y - entity.pos.y));
+	}	
 
 }

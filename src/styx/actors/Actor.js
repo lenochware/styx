@@ -27,17 +27,16 @@ Styx.actors.Actor = class extends Styx.Entity
 		return (this.conditions[id] > this.game.time);
 	}
 
-	walk(dx, dy)
+	move(dx, dy)
 	{
-		if (dx == 0 && dy == 0) return;
+		if (dx == 0 && dy == 0) return false;
 
 		var tile = this.level.getXY(this.pos.x + dx, this.pos.y + dy, 'tile');
 
-		if (!this.canOccupy(tile)) return;
+		if (!this.canOccupy(tile)) return false;
 
 		if (tile.actor) {
-			this.attack(tile.actor);
-			return;
+			return this.attack(tile.actor);
 		}
 
 		this.spendTime();
@@ -45,6 +44,7 @@ Styx.actors.Actor = class extends Styx.Entity
 		this.leave(this.pos);
 		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);
 		this.enter(this.pos);
+		return true;
 	}
 
 	enter(pos)
@@ -65,16 +65,16 @@ Styx.actors.Actor = class extends Styx.Entity
 
 		if (!this.target || !this.distance(this.target) > 1) {
 			console.log('Cannot reach target.');
-			return;
+			return false;
 		}
 
 		var dmg = this.getDamage(this.target, 'hit');
 		this.target.damage(this, dmg);
 	
 		this.spendTime();
-		//this.game.flashMsg(this.target.pos.px, this.target.pos.py, '-1', "msg-danger");
 
 		if (this.target.isDestroyed()) this.target = null;
+		return true;
 	}
 
 	damage(attacker, dmg)

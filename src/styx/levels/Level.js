@@ -23,7 +23,7 @@ Styx.levels.Level = class
 	getXY(x, y, attrib)
 	{
 		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
-			return new Styx.levels.Tile('null');
+			return new Styx.levels.Tile(x, y, 'null');
 		}
 		else {
 			var tile = this.map[y * this.size.width + x];
@@ -49,7 +49,9 @@ Styx.levels.Level = class
 		}
 
 		switch (attrib) {
-			case 'id': this.map[pos].id = value; break;
+			case 'id':
+				this.map[pos].id = value;
+			break;
 			case 'item': 
 			case 'actor':
 				if (this.map[pos][attrib]) {

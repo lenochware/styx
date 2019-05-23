@@ -10,18 +10,18 @@ Styx.ui.InputManager = class
 
 		this.keyBinddings = {
 			player: {
-				'ArrowLeft': {command: 'walk', dir: [-1,0]},
-				'ArrowRight': {command: 'walk', dir: [1,0]},
-				'ArrowUp': {command: 'walk', dir: [0,-1]},
-				'ArrowDown': {command: 'walk', dir: [0,1]},
-				'4': {command: 'walk', dir: [-1,0]},
-				'6': {command: 'walk', dir: [1,0]},
-				'8': {command: 'walk', dir: [0,-1]},
-				'2': {command: 'walk', dir: [0,1]},
-				'7': {command: 'walk', dir: [-1,-1]},
-				'9': {command: 'walk', dir: [1,-1]},
-				'1': {command: 'walk', dir: [-1,1]},
-				'3': {command: 'walk', dir: [1,1]},
+				'ArrowLeft': {command: 'move', dir: [-1,0]},
+				'ArrowRight': {command: 'move', dir: [1,0]},
+				'ArrowUp': {command: 'move', dir: [0,-1]},
+				'ArrowDown': {command: 'move', dir: [0,1]},
+				'4': {command: 'move', dir: [-1,0]},
+				'6': {command: 'move', dir: [1,0]},
+				'8': {command: 'move', dir: [0,-1]},
+				'2': {command: 'move', dir: [0,1]},
+				'7': {command: 'move', dir: [-1,-1]},
+				'9': {command: 'move', dir: [1,-1]},
+				'1': {command: 'move', dir: [-1,1]},
+				'3': {command: 'move', dir: [1,1]},
 				'g': {command: 'get'},
 				's': {command: 'search'},
 				'i': {command: 'inventory'}
@@ -85,7 +85,7 @@ Styx.ui.InputManager = class
 		if (p.isDestroyed()) return;
 
 		switch(command.command) {
-			case 'walk': p.walk(command.dir[0], command.dir[1]); break;
+			case 'move': p.move(command.dir[0], command.dir[1]); break;
 			case 'get': p.get(); break;
 			case 'inventory': this.wm.render('inventory'); break;
 			case 'search': p.search(); break;
