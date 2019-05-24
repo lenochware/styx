@@ -141,6 +141,8 @@ Styx.ui.WindowManager = class
 			throw new Error(`Template '${id}' not found.`);
 		}
 
+		data["_templ"] = this.game.get('helpers');
+
 		return _.template(this.templates[id])(data);
 	}
 

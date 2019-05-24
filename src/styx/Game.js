@@ -30,6 +30,7 @@ Styx.Game = class
 			case 'dungeon-base': return new Styx.DungeonBase;
 			case 'window-manager': return new Styx.ui.WindowManager;
 			case 'random': return new Styx.utils.Random;
+			case 'helpers': return new Styx.utils.TemplateHelpers;
 			default: throw `Unknown service ${className}`;
 		}
 	}
