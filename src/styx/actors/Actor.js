@@ -89,6 +89,8 @@ Styx.actors.Actor = class extends Styx.Entity
 
 		this.game.message(dmg.message, "msg-info", attacker.name(), this.name());
 
+		this.game.get('window-manager').warMessage(dmg);
+
 		if (this.health <= 0) this.die(attacker);
 	}
 

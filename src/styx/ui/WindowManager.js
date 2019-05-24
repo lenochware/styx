@@ -61,6 +61,20 @@ Styx.ui.WindowManager = class
 		$("#quick-message").html(m);
 	}
 
+	warMessage(dmg)
+	{
+  	var r = dmg.actor.getAttrib('render');
+
+		var d = document.createElement('div');
+		$(d).addClass("animated fadeOut delay-1s ui-red")
+		.html(`<span class="ui-${r.color}">${r.char}</span> ${dmg.type}`)
+		.delay(2000)
+		.queue(function() {
+		  $(this).remove();
+		})
+		.appendTo('#war-messages');
+  }
+
 	message(m, cssClass = "msg-info", args)
 	{
 		if (args) {

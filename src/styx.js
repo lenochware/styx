@@ -5,6 +5,7 @@
 - string.format colors, a/an?
 - wm: nahr. prime odkazy: #game-container atd.
 - Tile: zvazit podedeni z Entity
+- null.pos err in attack - multiple targets?
 */
 
 var game = new Styx.Game();
