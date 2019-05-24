@@ -1,4 +1,5 @@
 src/styx/utils/String.js
+src/styx/utils/Random.js
 src/styx/Entity.js
 src/styx/items/Item.js
 src/styx/actors/Inventory.js
