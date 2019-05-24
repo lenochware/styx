@@ -58,6 +58,17 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		this.level.set(this.pos, 'item', item);
 	}
 
+	die(attacker)
+	{
+		var name = this.getAttrib('bones');
+		if (name && this.game.random.percent(50)) {
+			var bones = new Styx.items.Item({id: "bones", actor: this, name: name});
+			this.drop(bones);
+		}
+
+		super.die(attacker);
+	}
+
 	wait()
 	{
 		this.spendTime();

@@ -125,8 +125,14 @@ Styx.actors.Actor = class extends Styx.Entity
 			this.game.message("{0} dies.", "msg-info", this.name());			
 		}
 
+		var tile = this.getTile();
+		if (tile.is('floor')) {
+			this.level.set(tile.pos, 'id', 'blood_floor');
+		}
+
 		this.health = 0;
 		this.level.remove(this);
+
 	}
 
 	shortDesc()

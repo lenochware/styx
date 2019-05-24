@@ -14,6 +14,7 @@
 			"render": {"char": "k", "color": "green" },
 			"health": 20,
 			"attack": 1,
+			"bones": "skull",
 			"name": "gnoll kobold",
 			"desc": "Kobolds are the largest, strongest and toughest of all gnolls. When severely wounded, they go berserk, inflicting even more damage to their enemies."
 		},
@@ -52,7 +53,7 @@
 			"render": {"char": "$", "color": "brown" },
 			"tags": ["item", "gold"],
 			"name": "copper coins",
-			"desc": "A pile of %d copper coins."
+			"desc": "A pile of {0} copper coins."
 		},
 		"bread": {
 			"render": {"char": ",", "color": "brown" },
@@ -97,6 +98,13 @@
 			"tags": ["floor"],
 			"name": "stone floor",
 			"desc": "You see nothing interesting."
+		},
+
+		"blood_floor": {
+			"render": {"char": ".", "color": "red" },
+			"tags": ["floor"],
+			"name": "blood stains",
+			"desc": "Blood stains on the floor looks suspicious."
 		},
 
 		"door": {
