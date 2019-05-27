@@ -10,19 +10,22 @@ Styx.ui.WindowManager = class
 		this.lastMessage = "";
 		this.templates = this.game.data["templates"];
 		this.windows = [];
-		this.initTileInfo();
+		this.panels = [];
 	}
 
-	render(id, options)
+	add(panel) {
+		this.panels.push(panel);
+	}
+
+	render()
 	{
-		switch (id) {
-			case 'statusbar': this._renderStatusBar(options); break;
-			case 'sidebar': this._renderSideBar(options); break;
-			case 'messages': this._renderMessages(options); break;
-			case 'inventory': this._renderInventory(options); break;
-			case 'item-window': this._renderItemWindow(options); break;
-			case 'tile-window': this._renderTileWindow(options); break;
-			default: throw `Unknown window type: ${id}`;
+		for (let panel of this.panels) {
+			switch (panel.id) {
+				case 'statusbar': this._renderStatusBar(panel); break;
+				case 'sidebar': this._renderSideBar(panel); break;
+				case 'messages': this._renderMessages(panel); break;
+				default: throw `Unknown window type: ${id}`;
+			}
 		}
 	}
 
@@ -33,23 +36,6 @@ Styx.ui.WindowManager = class
 			'You see <span class="link tile-info" data-pos="{1}">{0}</span>.', 
 			obj.shortDesc(), x + ',' + y
 		);
-	}
-
-	initTileInfo()
-	{
-		var level = this.game.get("player").level;
-
-		$("#level-map").on("click", "span", (e) => {
-			var pos = $(e.target).data("pos").split(",");
-			this.showTileInfo(level, Number(pos[0]), Number(pos[1]));
-		});
-
-		$("body").on("click", ".tile-info", (e) => {
-			var pos = $(e.target).data("pos").split(",");
-			this.render("tile-window", {
-				"pos": {x:Number(pos[0]),y:Number(pos[1])}
-			});
-		});
 	}
 
 	quickMessage(m, ...args)
@@ -96,7 +82,7 @@ Styx.ui.WindowManager = class
 		this.messages += "<span class=\"{1}\">{0}</span>".format(m.capitalize(), cssClass);
 	}
 
-	_renderInventory()
+	openInventory()
 	{
 		var p = this.game.get('player');
 
@@ -106,7 +92,7 @@ Styx.ui.WindowManager = class
 		});
 	}
 
-	_renderItemWindow(options)
+	openItemWindow(options)
 	{
 		var commands = {};
 
@@ -128,7 +114,7 @@ Styx.ui.WindowManager = class
 		});
 	}
 
-	_renderTileWindow(options)
+	openTileWindow(options)
 	{
 		var commands = {};
 

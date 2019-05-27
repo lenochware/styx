@@ -1,11 +1,11 @@
 
 /**
 - lepsi door management (potrebne tile.pos?) devices, use?
-- wm.render('ui') vykresli vsechny panely (pridat renderPanel)
 - string.format colors, a/an?
 - wm: nahr. prime odkazy: #game-container atd.
 - Tile: zvazit podedeni z Entity
 - null.pos err in attack - multiple targets?
+- initTileInfo, initCommands nejak do inputu?
 */
 
 var game = new Styx.Game();
@@ -28,8 +28,8 @@ game.load('basic-types').then(function()
 	renderer.render(level, 'level-map', {view: new Styx.Rectangle(0,0,50,20)});
 
 	wm = game.get('window-manager');
-	wm.render('messages', {container: "messages"});
-	wm.render('sidebar', {container: "sidebar"});
+	wm.add({id: "messages", container: "messages"});
+	wm.add({id: "sidebar", container: "sidebar"});
 
 })
 
@@ -41,7 +41,5 @@ function gameLoop(event)
 
 	level.update();
 	renderer.render(level, 'level-map', {view: new Styx.Rectangle(0,0,50,20)});
-	wm.render('messages', {container: "messages"});
-	wm.render('sidebar', {container: "sidebar"});
-	
+	wm.render();	
 }
