@@ -31,11 +31,42 @@ Styx.ui.InputManager = class
 			'item-window': {
 			}
 		};
+
+		this.initTileInfo();
+		this.initCommands();		
 	}
 
 	on(eventName, callback)
 	{
 		document.addEventListener('keydown', callback);		
+	}
+
+
+	initTileInfo()
+	{
+		var level = this.game.get("player").level;
+
+		$("#level-map").on("click", "span", (e) => {
+			var pos = $(e.target).data("pos").split(",");
+			this.wm.showTileInfo(level, Number(pos[0]), Number(pos[1]));
+		});
+
+		$("body").on("click", ".tile-info", (e) => {
+			var pos = $(e.target).data("pos").split(",");
+			this.wm.openTileWindow({
+				"pos": {x:Number(pos[0]),y:Number(pos[1])}
+			});
+		});
+	}	
+
+
+	initCommands()
+	{
+		$("body").on("click", ".command", (e) => {
+			var key = $(e.target).data("key");
+			var cmd = this.getCommand({key: key});
+			this.handle(cmd);
+		});	
 	}
 
 	getCommand(event)
@@ -87,7 +118,7 @@ Styx.ui.InputManager = class
 		switch(command.command) {
 			case 'move': p.move(command.dir[0], command.dir[1]); break;
 			case 'get': p.get(); break;
-			case 'inventory': this.wm.render('inventory'); break;
+			case 'inventory': this.wm.openInventory(); break;
 			case 'search': p.search(); break;
 			// case 'attack': break;
 			default: throw `Invalid command '${command.command}'.`;
@@ -101,7 +132,7 @@ Styx.ui.InputManager = class
 				var p = this.game.get('player');
 				var item = p.inventory.get(command.key);
 				if (item) {
-					this.wm.render('item-window', {item: item, key: command.key});
+					this.wm.openItemWindow({item: item, key: command.key});
 				}
 			break;
 			default: throw `Invalid command '${command.command}'.`;
