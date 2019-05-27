@@ -14,7 +14,8 @@ Styx.levels.LevelBuilder = class
 	{
 		this.level = new Styx.levels.Level;
 		this.level.size = param.size;
-		this.level.map = this.getRandomMap(param.size);
+		this.level.map = this.createMap(param.size, 'wall');
+		this.buildTestMap();
 
 		this.spawn(6,6, 'monster', {id: "kobold"});
 		this.spawn(7,7, 'item', {id: "short_sword"});
@@ -31,6 +32,14 @@ Styx.levels.LevelBuilder = class
 		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'water'));
 
 		return this.level;
+	}
+
+	buildTestMap()
+	{
+		 var r = new Styx.Rectangle(5,5,6,5);
+		 for (let pos of r.coords()) {
+		 		this.level.set(pos, 'id', 'floor');
+		 }
 	}
 
 	make(className, options)
@@ -53,12 +62,21 @@ Styx.levels.LevelBuilder = class
 		return obj;
 	}
 
-	getRandomMap(size)
+	createMap(size, fillId)
 	{
 		var map = [];
+
 		for (var i = 0; i < size.width * size.height; i++) {
-			map[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), (Math.random() > 0.05)? 'floor' : 'wall');
+			map[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), fillId);
 		}
+
 		return map;
+	}
+
+	buildRandomMap()
+	{
+		for (var i = 0; i < this.level.size.width * this.level.size.height; i++) {
+			this.level.map[i].id = (Math.random() > 0.05)? 'floor' : 'wall';
+		}
 	}
 }
