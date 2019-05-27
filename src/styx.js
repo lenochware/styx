@@ -16,7 +16,7 @@ game.load('basic-types').then(function()
 	builder = game.get('level-builder');
 
 	level = builder.build({ size: new Styx.Rectangle(0,0,50,20) });
-
+	
 	player = game.get('player', {name: 'Conan'});
 	
 	level.setXY(5, 5, 'actor', player);

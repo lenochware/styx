@@ -44,6 +44,7 @@ Styx.levels.Tile = class
 		}
 		else if (this.id == 'door') {
 			this.id = 'open_door';
+			actor.spendTime(); //TODO: It does two turns at once (walk+open door).
 		}
 	};
 	

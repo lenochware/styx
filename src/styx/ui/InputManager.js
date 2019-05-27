@@ -44,8 +44,9 @@ Styx.ui.InputManager = class
 		this.initCommands();
 		input.on('keypress', (e) => {
 			var command = this.getCommand(event);
+			var level = this.game.get('player').level;
 			this.handle(command);
-			this.game.get('player').level.update();
+			if (level) level.update();
 			this.wm.render();				
 		});
 	}
@@ -53,9 +54,8 @@ Styx.ui.InputManager = class
 
 	initTileInfo()
 	{
-		var level = this.game.get("player").level;
-
 		$("#level-map").on("click", "span", (e) => {
+			var level = this.wm.getPanel('level-map').level;
 			var pos = $(e.target).data("pos").split(",");
 			this.wm.showTileInfo(level, Number(pos[0]), Number(pos[1]));
 		});

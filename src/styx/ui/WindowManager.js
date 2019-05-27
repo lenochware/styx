@@ -14,7 +14,12 @@ Styx.ui.WindowManager = class
 	}
 
 	setPanel(panel) {
-		this.panels[panel.id] =panel;
+		this.panels[panel.id] = panel;
+	}
+
+	getPanel(id)
+	{
+		return this.panels[id];
 	}
 
 	render()
