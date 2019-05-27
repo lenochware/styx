@@ -22,24 +22,11 @@ game.load('basic-types').then(function()
 	level.setXY(5, 5, 'actor', player);
 
 	input = game.get('input-manager');
-	input.on('keypress', gameLoop);
-
-	renderer = game.get('renderer');
-	renderer.render(level, 'level-map', {view: new Styx.Rectangle(0,0,50,20)});
+	input.init();
 
 	wm = game.get('window-manager');
-	wm.add({id: "messages", container: "messages"});
-	wm.add({id: "sidebar", container: "sidebar"});
-
-})
-
-function gameLoop(event)
-{
-	var command = input.getCommand(event); //keybindings file
-
-	input.handle(command);
-
-	level.update();
-	renderer.render(level, 'level-map', {view: new Styx.Rectangle(0,0,50,20)});
-	wm.render();	
-}
+	wm.setPanel({id: "messages", container: "messages"});
+	wm.setPanel({id: "sidebar", container: "sidebar"});
+	wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,50,20)});
+	wm.render();
+});

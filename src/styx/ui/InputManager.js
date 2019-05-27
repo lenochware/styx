@@ -31,14 +31,23 @@ Styx.ui.InputManager = class
 			'item-window': {
 			}
 		};
-
-		this.initTileInfo();
-		this.initCommands();		
 	}
 
 	on(eventName, callback)
 	{
 		document.addEventListener('keydown', callback);		
+	}
+
+	init()
+	{
+		this.initTileInfo();
+		this.initCommands();
+		input.on('keypress', (e) => {
+			var command = this.getCommand(event);
+			this.handle(command);
+			this.game.get('player').level.update();
+			this.wm.render();				
+		});
 	}
 
 
@@ -66,7 +75,9 @@ Styx.ui.InputManager = class
 			var key = $(e.target).data("key");
 			var cmd = this.getCommand({key: key});
 			this.handle(cmd);
-		});	
+			this.game.get('player').level.update();
+			this.wm.render();
+		});
 	}
 
 	getCommand(event)

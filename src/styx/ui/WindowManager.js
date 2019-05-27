@@ -10,21 +10,25 @@ Styx.ui.WindowManager = class
 		this.lastMessage = "";
 		this.templates = this.game.data["templates"];
 		this.windows = [];
-		this.panels = [];
+		this.panels = {};
 	}
 
-	add(panel) {
-		this.panels.push(panel);
+	setPanel(panel) {
+		this.panels[panel.id] =panel;
 	}
 
 	render()
 	{
-		for (let panel of this.panels) {
-			switch (panel.id) {
+		for (let id in this.panels) {
+			var panel = this.panels[id];
+			switch (id) {
 				case 'statusbar': this._renderStatusBar(panel); break;
 				case 'sidebar': this._renderSideBar(panel); break;
 				case 'messages': this._renderMessages(panel); break;
-				default: throw `Unknown window type: ${id}`;
+				case 'level-map': 
+					this.game.get('renderer').render(panel.level, panel.container, {view: panel.view});
+				break;	
+				default: throw `Unknown panel: ${id}`;
 			}
 		}
 	}
