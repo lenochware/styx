@@ -2,22 +2,118 @@ var Styx = Styx || {};
 
 Styx.Rectangle = class
 {
-	constructor(x, y, width, height)
+	constructor(x, y, w, h, opts = {})
 	{
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		this.assign(x, y, w, h);
 	}
 
 	coords()
 	{
 		var pos = [];
-		for(var y = 0; y < this.height; y++) {
-			for(var x = 0; x < this.width; x++) {
-				pos.push({x:x + this.x, y:y + this.y});
+		var start = this._pos(this.x, this.y);
+		var size = this._pos(this.width, this.height);
+
+		for(var y = 0; y < size.y; y++) {
+			for(var x = 0; x < size.x; x++) {
+				pos.push({x:x + start.x, y:y + start.y});
 			}
 		}
 		return pos;
 	}
+
+	assign(x, y, w = null, h = null)
+	{
+		if (x !== null) this.x = x;
+		if (y !== null) this.y = y;
+		if (w !== null) this.width = (w > 0)? w : 0;
+		if (h !== null) this.height = (h > 0)? h : 0;
+		
+		return this;
+	}
+
+	move(x, y, jed = 'abs')
+	{
+		if (jed == 'rel')
+		{
+			this.assign(this.x + this.width * x, this.y + this.height * y);
+		}
+		else if(jed == 'abs') {
+			this.assign(this.x + x, this.y + y);
+		}
+
+		return this;
+	}
+
+	resize(x, y, jed)
+	{
+		if (jed == 'rel')
+		{
+			this.assign(null, null, this.width * x, this.height * y);
+		}
+		else if(jed == 'abs') {
+			this.assign(null, null, this.width + x, this.height + y);
+		}
+
+		return this;
+	}
+
+	expand(x, y)
+	{
+		this.assign(this.x - x, this.y - y, this.width + 2*x, this.height + 2*y);
+		return this;		
+	}
+
+	clone()
+	{
+		return new this.constructor(this.x, this.y, this.width, this.height, {});
+	}
+
+  _pos(x, y)
+  {
+    return {x: Math.floor(x), y: Math.floor(y)};
+  }
+
+	getPoint(name)
+	{
+		switch(name) {
+			case 'corner-1': return this._pos(this.x, this.y);
+			case 'corner-2': return this._pos(this.x + this.width - 1, this.y);
+			case 'corner-3': return this._pos(this.x + this.width - 1, this.y + this.height - 1);
+			case 'corner-4': return this._pos(this.x, this.y + this.height - 1);
+
+			case 'center-1': return this._pos(this.x + this.width / 2, this.y);
+			case 'center-2': return this._pos(this.x + this.width - 1, this.y + this.height / 2);
+			case 'center-3': return this._pos(this.x + this.width / 2, this.y + this.height - 1);
+			case 'center-4': return this._pos(this.x, this.y + this.height / 2);
+
+			case 'center': return this._pos(this.x + this.width / 2, this.y + this.height / 2);
+
+			case 'border-1': return this._pos(_.random(this.x + 1, this.x + this.width - 2), this.y);
+			case 'border-2': return this._pos(this.x + this.width - 1, _.random(this.y + 1, this.y + this.height - 2));
+			case 'border-3': return this._pos(_.random(this.x + 1, this.x + this.width - 2), this.y + this.height - 1);
+			case 'border-4': return this._pos(this.x, _.random(this.y + 1, this.y + this.height - 2));
+
+			default: console.warn('Unknown point name.');
+		}
+	}
+
+	isEmpty()
+	{
+		return (this.width == 0 || this.height == 0);
+	}
+
+	intersect(rect)
+	{
+		return !this.getIntersection(rect).isEmpty();
+	}
+
+	getIntersection(rect)
+	{
+		var x1 = Math.max(this.x, rect.x);
+		var y1 = Math.max(this.y, rect.y);
+		var x2 = Math.min(this.x + this.width, rect.x + rect.width);
+		var y2 = Math.min(this.y + this.height, rect.y + rect.height);
+
+		return new Styx.Rectangle(x1, y1, x2 - x1, y2 - y1);
+	}	
 }
