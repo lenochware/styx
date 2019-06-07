@@ -15,7 +15,7 @@ game.load('basic-types').then(function()
 	game.get('dungeon-base');
 	builder = game.get('level-builder');
 
-	level = builder.build({ size: new Styx.Rectangle(0,0,50,20) });
+	level = builder.build({ type: 'random-level', size: new Styx.Rectangle(0,0,50,20) });
 	
 	player = game.get('player', {name: 'Conan'});
 	
