@@ -120,5 +120,49 @@
 			"name": "open wooden door",
 			"desc": "You see nothing interesting."
 		}		
-	}	
+	},
+
+	"rooms": {
+		"small-pillar-room": {
+			"cells":
+			[ 
+			  "##+##",
+			  "#...#",
+			  "+.O.+",
+			  "#...#",
+			  "##+##"
+			],
+
+			"tags": ["small", "room"],
+			"width": 5, "height": 5,
+
+			"features": {
+			"#": ["wall"],
+			".": ["floor"],
+			"+": ["entrance"],
+			"O": ["pillar"]
+			}
+		},
+
+		"room13x5": {
+			"cells": 
+			[
+			  "######+######",
+			  "#...........#",
+			  "+...........+",
+			  "#...........#",
+			  "######+######"
+			],
+
+			"tags": ["small", "room"],
+			"width": 13, "height": 5,
+
+			"features": {
+			"#": ["wall"],
+			".": ["floor"],
+			"+": ["entrance"]
+			}
+		}
+
+	}
 }

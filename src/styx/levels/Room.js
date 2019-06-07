@@ -64,6 +64,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 	{
 		super(0,0,0,0,{});
 
+		this.game = game;
 		this.name = name;
 		this.assign(0, 0, this.getAttrib('width'), this.getAttrib('height'));
 		this.cells = this.getCells();
@@ -72,13 +73,13 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 	getAttrib(attrib)
 	{
-		return rooms[this.name][attrib];
+		return this.game.get("dungeon-base").getAttrib('rooms', this.name, attrib);
 	}
 
 	getCells()
 	{
 		var cells = [];
-		var rows = this._chunkSplit(this.getAttrib('cells'), this.width);
+		var rows = this.getAttrib('cells');
 		for(let row of rows) {
 			cells.push(row.split(""));
 		}
@@ -103,10 +104,6 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 		this.entrances = this._getEntrances();
 		return this;
-	}
-
-	_chunkSplit(str, length) {
-	  return str.match(new RegExp('.{1,' + length + '}', 'g'));
 	}
 
 	getCell(x,y)
@@ -147,7 +144,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 				throw new Error("Wrong entrance.");
 			}
 
-			listEnt[side] = new Entrance(this, side, pos);
+			listEnt[side] = new Styx.levels.Entrance(this, side, pos);
 		}
 
 		return listEnt;
@@ -164,7 +161,17 @@ Styx.levels.Room = class extends Styx.Rectangle
 				if (cor && cell == '+') cell = '.';
 				//nevykreslovat neconnected doors v mistnostech
 
-				level.setCell({x:this.x + x, y:this.y + y}, 'char', cell);
+				var id = '';
+
+				switch(cell) {
+					case '#': case 'O': id = 'wall'; break;
+					case '+': id = 'door'; break;
+					case '.': id = 'floor'; break;
+				}
+
+				console.log(level.size, this.x + x, this.y + y);
+
+				level.setXY(this.x + x, this.y + y, 'id', id);
 			}
 		}
 	}
