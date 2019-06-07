@@ -2,8 +2,9 @@ var Styx = Styx || {};
 
 Styx.Rectangle = class
 {
-	constructor(x, y, w, h, opts = {})
+	constructor(x, y, w, h, params = {})
 	{
+		this.params = params;
 		this.assign(x, y, w, h);
 	}
 
@@ -19,6 +20,11 @@ Styx.Rectangle = class
 			}
 		}
 		return pos;
+	}
+
+	static from(rect)
+	{
+		return new this(rect.x, rect.y, rect.width, rect.height);
 	}
 
 	assign(x, y, w = null, h = null)
@@ -65,7 +71,7 @@ Styx.Rectangle = class
 
 	clone()
 	{
-		return new this.constructor(this.x, this.y, this.width, this.height, {});
+		return new this.constructor(this.x, this.y, this.width, this.height, this.params);
 	}
 
   _pos(x, y)
@@ -81,20 +87,36 @@ Styx.Rectangle = class
 			case 'corner-3': return this._pos(this.x + this.width - 1, this.y + this.height - 1);
 			case 'corner-4': return this._pos(this.x, this.y + this.height - 1);
 
-			case 'center-1': return this._pos(this.x + this.width / 2, this.y);
-			case 'center-2': return this._pos(this.x + this.width - 1, this.y + this.height / 2);
-			case 'center-3': return this._pos(this.x + this.width / 2, this.y + this.height - 1);
-			case 'center-4': return this._pos(this.x, this.y + this.height / 2);
+			case 'border-1': return this._pos(this.x - 1, this.y - 1);
+			case 'border-2': return this._pos(this.x + this.width, this.y - 1);
+			case 'border-3': return this._pos(this.x + this.width, this.y + this.height);
+			case 'border-4': return this._pos(this.x - 1, this.y + this.height);
+
 
 			case 'center': return this._pos(this.x + this.width / 2, this.y + this.height / 2);
 
-			case 'border-1': return this._pos(_.random(this.x + 1, this.x + this.width - 2), this.y);
-			case 'border-2': return this._pos(this.x + this.width - 1, _.random(this.y + 1, this.y + this.height - 2));
-			case 'border-3': return this._pos(_.random(this.x + 1, this.x + this.width - 2), this.y + this.height - 1);
-			case 'border-4': return this._pos(this.x, _.random(this.y + 1, this.y + this.height - 2));
+			case 'center-1': return this._pos(this.x + this.width / 2, this.y - 1);
+			case 'center-2': return this._pos(this.x + this.width, this.y + this.height / 2);
+			case 'center-3': return this._pos(this.x + this.width / 2, this.y + this.height);
+			case 'center-4': return this._pos(this.x - 1, this.y + this.height / 2);
+
+			// case 'border-1': return this._pos(_.random(this.x + 1, this.x + this.width - 2), this.y - 1);
+			// case 'border-2': return this._pos(this.x + this.width, _.random(this.y + 1, this.y + this.height - 2));
+			// case 'border-3': return this._pos(_.random(this.x + 1, this.x + this.width - 2), this.y + this.height);
+			// case 'border-4': return this._pos(this.x - 1, _.random(this.y + 1, this.y + this.height - 2));
 
 			default: console.warn('Unknown point name.');
 		}
+	}
+
+	equals(rect)
+	{
+		return (rect.x == this.x && rect.y == this.y && rect.width == this.width && rect.height == this.height);
+	}
+
+	inside(rect)
+	{
+		return this.equals(this.getIntersection(rect));
 	}
 
 	isEmpty()
