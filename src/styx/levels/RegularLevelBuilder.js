@@ -32,20 +32,27 @@ Styx.levels.RegularLevelBuilder = class
 				break;
 			}
 
-			console.log('pick', room);
+			//console.log('pick', room);
 
 			var nextRoom = this.chooseNextRoom(room);
 
 			var added = this.addNextRoom(room, nextRoom);
 
 			if (added) {
-				console.log('add', nextRoom);
+				//console.log('add', nextRoom);
 				attempts = 5;
 			}
 			else attempts--;
 		}
 
+		this.populate();
+
 		return this.level;
+	}
+
+	populate()
+	{
+
 	}
 
 	addNextRoom(room, nextRoom)
@@ -104,7 +111,6 @@ Styx.levels.RegularLevelBuilder = class
 	pickRoom()
 	{
 		var room = _.chain(this.rooms).filter(r => r.freeEntrances().length > 0).sample().value();
-		//if (!room) console.log('aaa',this.rooms, _.filter(this.rooms, r => r.freeEntrances().length > 0));
 		return room;
 	}
 
@@ -112,7 +118,6 @@ Styx.levels.RegularLevelBuilder = class
 	{
 		var room = this.pickRoom();
 		var en = _.sample(room.freeEntrances());
-		//console.log(id, room.freeEntrances());
 		return en;
 	}
 
@@ -138,23 +143,9 @@ Styx.levels.RegularLevelBuilder = class
 		return map;
 	}
 
-	// clear()
-	// {
-	// 	for (var i = 0; i < this.width * this.height; i++) {
-	// 		this.cells[i] = {id: "null", char: '#' };
-	// 	}
-	// }
-
-	// setCell(pos, atrrib, value)
-	// {
-	// 	var ipos = pos.y * this.width + pos.x;
-	// 	this.cells[ipos][atrrib] = value;
-	// }
-
 	drawRoom(room)
 	{
 		room.draw(this.level);
-		//_.each(room.coords(), (pos) => this.setCell(pos, 'id', room.params.id));
 	}
 
 	drawAll()

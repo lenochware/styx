@@ -8,6 +8,7 @@
 - rozdelit test.js na rooms.js, tiles.js atd.
 - prejmenovat .map na .tiles (.cells?)
 - odstranit width,height z rooms defs
+- RoomBuilder, map meta (roominfo, first etc.)
 */
 
 var game = new Styx.Game();
@@ -20,8 +21,10 @@ game.load('basic-types').then(function()
 	level = builder.build({ type: 'regular-level', size: new Styx.Rectangle(0,0,50,20) });
 	
 	player = game.get('player', {name: 'Conan'});
+
+	level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 	
-	level.setXY(5, 5, 'actor', player);
+	level.set(level.find('floor').sample().value(), 'actor', player);
 
 	input = game.get('input-manager');
 	input.init();

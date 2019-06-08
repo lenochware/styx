@@ -12,13 +12,29 @@ Styx.levels.Level = class
 
 	get(pos, attrib)
 	{
-		return this.getXY(pos.x, pos.y, attrib);
+		if (_.isObject(pos)) {
+			return this.getXY(pos.x, pos.y, attrib);
+		}
+		else {
+			return this.getXY(pos % this.size.width, Math.floor(pos / this.size.width), attrib);
+		}
 	}
 
 	set(pos, attrib, value)
 	{
-		return this.setXY(pos.x, pos.y, attrib, value);
+		if (_.isObject(pos)) {
+			return this.setXY(pos.x, pos.y, attrib, value);
+		}
+		else {
+			return this.setXY(pos % this.size.width, Math.floor(pos / this.size.width), attrib, value);
+		}
 	}
+
+	find(tag)
+	{
+		return _.chain(_.keys(this.map)).filter(i => this.map[i].is(tag));
+	}
+
 
 	getXY(x, y, attrib)
 	{
