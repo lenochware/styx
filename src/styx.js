@@ -18,11 +18,11 @@ game.load('basic-types').then(function()
 	game.get('dungeon-base');
 	builder = game.get('level-builder');
 
-	level = builder.build({ type: 'regular-level', size: new Styx.Rectangle(0,0,50,20) });
+	level = builder.build({ type: 'random-level', size: new Styx.Rectangle(0,0,80,30) });
 	
 	player = game.get('player', {name: 'Conan'});
 
-	level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
+	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 	
 	level.set(level.find('floor').sample().value(), 'actor', player);
 
@@ -33,5 +33,15 @@ game.load('basic-types').then(function()
 	wm.setPanel({id: "messages", container: "messages"});
 	wm.setPanel({id: "sidebar", container: "sidebar"});
 	wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,50,20)});
+
+	wm.on('render', updateView);
+
 	wm.render();
 });
+
+
+function updateView()
+{
+	var view = wm.getPanel('level-map').view;
+	view.center(player.pos.x, player.pos.y).align(level.size);
+}

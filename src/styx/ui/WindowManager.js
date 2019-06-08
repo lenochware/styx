@@ -22,8 +22,21 @@ Styx.ui.WindowManager = class
 		return this.panels[id];
 	}
 
+	on(eventName, callback)
+	{
+		document.addEventListener(eventName, callback);
+	}
+
+	trigger(eventName)
+	{
+		var event = new Event(eventName);
+		document.dispatchEvent(event);
+	}
+
 	render()
 	{
+		this.trigger('render');
+
 		for (let id in this.panels) {
 			var panel = this.panels[id];
 			switch (id) {

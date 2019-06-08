@@ -69,6 +69,27 @@ Styx.Rectangle = class
 		return this;		
 	}
 
+	center(x, y)
+	{
+		var pos = this.getPoint('center');
+		return this.move(x - pos.x, y - pos.y);
+	}
+
+	align(rect)
+	{
+		var dx, dy;
+
+		dx = this.x + this.width - (rect.x + rect.width);
+		dy = this.y + this.height - (rect.y + rect.height);
+		this.move((dx>0)? -dx : 0, (dy>0)? -dy : 0);
+
+		dx = rect.x - this.x;
+		dy = rect.y - this.y;
+		this.move((dx>0)? dx : 0, (dy>0)? dy : 0);
+
+		return this;
+	}
+
 	clone()
 	{
 		return new this.constructor(this.x, this.y, this.width, this.height, this.params);

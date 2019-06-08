@@ -9,17 +9,17 @@ Styx.ui.Renderer = class
 		this.db = this.game.get('dungeon-base');
 	}
 
-	render(level, container, param)
+	render(level, container, params)
 	{
-		$('#'+container).html(this._renderHtml(level));
+		$('#'+container).html(this._renderHtml(level, params.view));
 	}
 
-	_renderHtml(level)
+	_renderHtml(level, view)
 	{
 		var html = '';
-		for (var y = 0; y < level.size.height; y++) {
-			for (var x = 0; x < level.size.width; x++) {
-				html += this._renderTile(level, x, y);
+		for (var y = 0; y < view.height; y++) {
+			for (var x = 0; x < view.width; x++) {
+				html += this._renderTile(level, x + view.x, y + view.y);
 			}
 
 			html += '<br>';
