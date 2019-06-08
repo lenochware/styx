@@ -63,8 +63,8 @@ Styx.actors.Actor = class extends Styx.Entity
 			this.target = target;
 		}
 
-		if (!this.target || !this.distance(this.target) > 1) {
-			console.log('Cannot reach target.');
+		if (!this.canAttack(this.target)) {
+			//console.log('Cannot reach target.');
 			return false;
 		}
 
@@ -75,6 +75,12 @@ Styx.actors.Actor = class extends Styx.Entity
 
 		if (this.target.isDestroyed()) this.target = null;
 		return true;
+	}
+
+
+	canAttack(target)
+	{
+		return (target && this.distance(target) <= 1);
 	}
 
 	damage(attacker, dmg)

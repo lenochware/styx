@@ -23,12 +23,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	update()
 	{
 		while (this.time + this.tick < this.game.time) {
-			if (this.game.random.percent(20)) {
-				this.randomWalk();
-			}
-			else {
-				this.simpleWalk() || this.wait();
-			}
+			this.walk() || this.attack() || this.wait();
 		}
 	}
 
@@ -41,14 +36,24 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		}
 	}
 
+	walk()
+	{
+		if (this.is('unmovable')) return false;
+
+		if (this.is('moving-random') && this.game.random.percent(20)) {
+			return this.randomWalk();
+		}
+		else {
+			return this.simpleWalk() || this.randomWalk();
+		}		
+	}
+
 	simpleWalk()
 	{
 		if (!this.target) return;
 
 		var pos = this.pos;
 		var afraid = this.condition('afraid');
-
-		//debugger;
 
 		for (pos of this.surroundings()) {
 			let tile = this.level.get(pos, 'tile');
