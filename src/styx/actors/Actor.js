@@ -8,7 +8,7 @@ Styx.actors.Actor = class extends Styx.Entity
 		super('actors', params.id, params);
 		this.health = this.getAttrib('health', 10);
 		this.maxHealth = this.health;
-		this.tick = 1;
+		this.tick = 10;
 		this.target = null;
 		this.conditions = {};
 		this.time = 0;

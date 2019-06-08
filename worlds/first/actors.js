@@ -9,7 +9,7 @@
 	},
 
 	"kobold": {
-		"tags": ["actor", "kobold", "slow"],
+		"tags": ["actor", "kobold", "fast"],
 		"render": {"char": "k", "color": "green" },
 		"health": 20,
 		"attack": 1,
@@ -19,7 +19,7 @@
 	},
 
 	"ghost": {
-		"tags": ["actor", "ghost", "flying"],
+		"tags": ["actor", "ghost", "flying", "neutral"],
 		"render": {"char": "G", "color": "green" },
 		"health": 10,
 		"attack": 1,

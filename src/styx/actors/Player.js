@@ -9,7 +9,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		super(params);
 		this.inventory = new Styx.actors.Inventory(this);
 		this.gold = 0;
-		this.tick = 1;
+		this.tick = 10;
 	}
 
 	get()

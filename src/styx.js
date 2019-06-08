@@ -3,11 +3,11 @@
 - lepsi door management (potrebne tile.pos?) devices, use?
 - string.format colors, a/an?
 - wm: nahr. prime odkazy: #game-container atd.
-- GameObject, DungeonObject
+- GameObject(events?), DungeonObject
 - null.pos err in attack - multiple targets?
-- rozdelit test.js na rooms.js, tiles.js atd.
 - prejmenovat .map na .tiles (.cells?)
 - odstranit width,height z rooms defs
+- rest, sleep/awake monster, slow monster (snake)
 - RoomBuilder, map meta (roominfo, first etc.)
 */
 
@@ -23,8 +23,8 @@ game.load('world:first').then(function()
 	player = game.get('player', {name: 'Conan'});
 
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
-	
-	level.set(level.find('floor').sample().value(), 'actor', player);
+	//level.set(level.find('floor').sample().value(), 'actor', player);
+	level.setXY(5, 5, 'actor', player);
 
 	input = game.get('input-manager');
 	input.init();

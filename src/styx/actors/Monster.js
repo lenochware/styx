@@ -3,6 +3,23 @@ Styx.actors = Styx.actors || {};
 
 Styx.actors.Monster = class extends Styx.actors.Actor
 {
+
+	constructor(params)
+	{
+		super(params);
+
+		if (!this.is('neutral')) {
+			this.target = this.game.get('player');
+		}
+
+		if (this.is('slow')) {
+			this.tick = 14;
+		}
+		else if(this.is('fast')) {
+			this.tick = 7;			
+		}
+	}
+
 	update()
 	{
 		while (this.time + this.tick < this.game.time) {
