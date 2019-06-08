@@ -13,7 +13,7 @@
 
 var game = new Styx.Game();
 
-game.load('basic-types').then(function() 
+game.load('world:first').then(function() 
 {
 	game.get('dungeon-base');
 	builder = game.get('level-builder');

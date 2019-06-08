@@ -45,9 +45,9 @@ Styx.Game = class
 		console.log(msg);
 	}
 
-	loadJson(id)
+	loadJson(id, serverId = null)
 	{
-		return $.getJSON('loader.php?id=' + id)
+		return $.getJSON('loader.php?id=' + (serverId || id))
 		.done(data => {this.data[id] = data; console.log(`'${id}' loaded.`); })
 		.fail((jqxhr, textStatus, error) => { 
 			console.warn(`Loading of '${id}' failed.`); 
@@ -55,11 +55,11 @@ Styx.Game = class
 		});
 	}
 
-	load(path)
+	load(id)
 	{
 		return Promise.all([
-			this.loadJson('dungeon-base'),
-			this.loadJson('templates')
+			this.loadJson('templates'),
+			this.loadJson('dungeon-base', id)
 		]);
 	}
 }
