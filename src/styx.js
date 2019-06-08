@@ -3,9 +3,11 @@
 - lepsi door management (potrebne tile.pos?) devices, use?
 - string.format colors, a/an?
 - wm: nahr. prime odkazy: #game-container atd.
-- Tile: zvazit podedeni z Entity
+- GameObject, DungeonObject
 - null.pos err in attack - multiple targets?
-- initTileInfo, initCommands nejak do inputu?
+- rozdelit test.js na rooms.js, tiles.js atd.
+- prejmenovat .map na .tiles (.cells?)
+- odstranit width,height z rooms defs
 */
 
 var game = new Styx.Game();

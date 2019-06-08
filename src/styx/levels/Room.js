@@ -169,8 +169,6 @@ Styx.levels.Room = class extends Styx.Rectangle
 					case '.': id = 'floor'; break;
 				}
 
-				console.log(level.size, this.x + x, this.y + y);
-
 				level.setXY(this.x + x, this.y + y, 'id', id);
 			}
 		}

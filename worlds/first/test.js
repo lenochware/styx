@@ -162,6 +162,46 @@
 			".": ["floor"],
 			"+": ["entrance"]
 			}
+		},
+
+		"cor1": {
+
+			"cells": 
+			[
+			  "######",
+			  "+....+",
+			  "######"
+			],
+
+			"tags": ["small", "corridor"],
+			"width": 6, "height": 3,
+
+			"features": {
+			"#": ["wall"],
+			".": ["floor"],
+			"+": ["entrance"]
+			}
+		},
+
+		"cor2": {
+
+			"cells": 
+			[
+			  " #+#",
+			  "##.#",
+			  "+..#",
+			  "####"
+			],
+
+			"tags": ["small", "corridor"],
+			"width": 4, "height": 4,
+
+			"features": {
+			"#": ["wall"],
+			".": ["floor"],
+			"+": ["entrance"]
+
+			}
 		}
 
 	}

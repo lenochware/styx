@@ -11,8 +11,7 @@ Styx.levels.RegularLevelBuilder = class
 		this.level.size = this.params.size;
 		this.rooms = [];
 
-		this.roomsIndex = ['small-pillar-room'];
-		//['small-pillar-room', 'room5x5', 'room7x5', 'room13x5', 'cor1', 'cor2', 'cor3', 'smc1', 'smc2', 'smc3'];
+		this.roomsIndex = _.keys(this.game.get('dungeon-base').getCategory('rooms'));
 	}
 
 	build()
@@ -25,26 +24,26 @@ Styx.levels.RegularLevelBuilder = class
 
 		var attempts = 5;
 
-		// while (attempts)
-		// {
-		// 	var room = this.pickRoom();
-		// 	if (!room) {
-		// 		console.log('not free room.');
-		// 		break;
-		// 	}
+		while (attempts)
+		{
+			var room = this.pickRoom();
+			if (!room) {
+				console.log('not free room.');
+				break;
+			}
 
-		// 	console.log('pick', room);
+			console.log('pick', room);
 
-		// 	var nextRoom = this.chooseNextRoom(room);
+			var nextRoom = this.chooseNextRoom(room);
 
-		// 	var added = this.addNextRoom(room, nextRoom);
+			var added = this.addNextRoom(room, nextRoom);
 
-		// 	if (added) {
-		// 		console.log('add', nextRoom);
-		// 		attempts = 5;
-		// 	}
-		// 	else attempts--;
-		// }
+			if (added) {
+				console.log('add', nextRoom);
+				attempts = 5;
+			}
+			else attempts--;
+		}
 
 		return this.level;
 	}

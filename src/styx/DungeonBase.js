@@ -18,4 +18,27 @@ Styx.DungeonBase = class
 			return null;
 		}
 	}
+
+	getObject(category, id)
+	{
+		try {
+			return this.data[category][id];
+		}
+		catch(err) {
+			console.warn(category+'.'+id+' not found.');
+			return null;
+		}
+	}
+
+	getCategory(category)
+	{
+		try {
+			return this.data[category];
+		}
+		catch(err) {
+			console.warn(category+' not found.');
+			return null;
+		}
+	}
+
 }
