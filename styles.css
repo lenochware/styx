@@ -84,6 +84,10 @@ body {
 	color: #00af5f;
 }
 
+:root { 
+	--col-yellow: #ffff00; 
+	--col-blue: blue;
+} 
 
 .ui-yellow {
 	color: #ffff00;
@@ -127,6 +131,14 @@ body {
 .ui-gray {
 	//color: #afafaf;
 	color: #878787;
+}
+
+.condition-hungry {
+	color: var(--col-yellow);
+}
+
+.condition-asleep {
+	color: var(--col-blue);
 }
 
 .command {

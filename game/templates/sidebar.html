@@ -4,4 +4,9 @@ Health: <%= _templ.meter("meter-health", player.health, player.maxHealth) %><br>
 <% if (player.target) { %>
 	<%= player.target.name() %>: <%= _templ.meter("meter-health", player.target.health, player.target.maxHealth) %>
 <% } %>
+<div class="conditions">
+<% for (let cond of player.getConditions()) { %>
+	<span class="condition-<%= cond %>"><%= cond %></span><br>
+<% } %>	
+</div>
 <div id="quick-message"></div>
