@@ -8,6 +8,7 @@ Styx.ui.WindowManager = class
 		this.game = game;
 		this.messages = "";
 		this.lastMessage = "";
+		this.txtQuickMessage = "";
 		this.templates = this.game.data["templates"];
 		this.windows = [];
 		this.panels = {};
@@ -49,6 +50,12 @@ Styx.ui.WindowManager = class
 				default: throw `Unknown panel: ${id}`;
 			}
 		}
+
+
+		if (this.txtQuickMessage) {
+			$("#quick-message").html(this.txtQuickMessage);
+			this.txtQuickMessage = "";
+		}		
 	}
 
 	showTileInfo(level, x, y)

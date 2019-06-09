@@ -40,6 +40,15 @@ Styx.Game = class
 		this.get('window-manager').message(m, cssClass, args);
 	}
 
+	hint(m, ...args)
+	{
+		if (args) {
+			m = m.format(args);
+		}
+
+		this.get('window-manager').txtQuickMessage = m;
+	}
+
 	debugLog(msg)
 	{
 		console.log(msg);

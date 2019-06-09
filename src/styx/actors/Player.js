@@ -47,6 +47,12 @@ Styx.actors.Player = class extends Styx.actors.Actor
 			this.game.message("You collected {1} {0}.", 'msg-info', tile.item.name(), amount);
 			this.level.remove(tile.item);
 		}
+
+		if (tile.item) {
+			this.game.hint('You are on <span class="link tile-info" data-pos="{1}">{0}</span>.', 
+				tile.item.shortDesc(), pos.x + ',' + pos.y);
+		}
+
 		super.enter(pos);
 	}
 

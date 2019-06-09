@@ -3,7 +3,7 @@
 - lepsi door management (potrebne tile.pos?) devices, use?
 - string.format colors, a/an?
 - wm: nahr. prime odkazy: #game-container atd.
-- GameObject(events?), DungeonObject
+- GameObject(events? on, trigger, off, pres EventManager), DungeonObject
 - null.pos err in attack - multiple targets?
 - prejmenovat .map na .tiles (.cells?)
 - odstranit width,height z rooms defs
