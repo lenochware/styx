@@ -26,7 +26,7 @@ Styx.Game = class
 			case 'level-builder': return new Styx.levels.LevelBuilder;
 			case 'input-manager': return new Styx.ui.InputManager;
 			case 'renderer': return new Styx.ui.Renderer;
-			case 'player': return new Styx.actors.Player(options);
+			case 'player': return new Styx.actors.Player;
 			case 'dungeon-base': return new Styx.DungeonBase;
 			case 'window-manager': return new Styx.ui.WindowManager;
 			case 'random': return new Styx.utils.Random;

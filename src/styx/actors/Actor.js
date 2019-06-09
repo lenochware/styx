@@ -21,10 +21,17 @@ Styx.actors.Actor = class extends Styx.Entity
 		}
 
 		if (duration !== null) {
-			this.conditions[id] = this.game.time + duration;
+			this.conditions[id] = this.game.time + duration * this.tick;
 		}
 
 		return (this.conditions[id] > this.game.time);
+	}
+
+	getConditions()
+	{
+		return _.filter(_.keys(this.conditions), 
+			key => this.conditions[key] > this.game.time
+		);
 	}
 
 	move(dx, dy)

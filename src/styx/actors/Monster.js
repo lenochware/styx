@@ -18,11 +18,27 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		else if(this.is('fast')) {
 			this.tick = 7;			
 		}
+
+		if (!this.is('awake')) {
+			this.condition('asleep', Infinity);
+		}
 	}
 
 	update()
 	{
-		while (this.time + this.tick < this.game.time) {
+		while (this.time + this.tick < this.game.time)
+		{
+			if (this.condition('asleep')) {
+				this.wait();
+
+				if (this.distance(this.game.get('player')) < 5 && this.game.random.percent(20)) {
+					this.game.message("{0} wake up!", "msg-info", this.name());
+					this.condition('asleep', 0);	
+				}
+
+				continue;
+			}
+
 			this.walk() || this.attack() || this.wait();
 		}
 	}

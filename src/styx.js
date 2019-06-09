@@ -20,7 +20,8 @@ game.load('world:first').then(function()
 
 	level = builder.build({ type: 'random-level', size: new Styx.Rectangle(0,0,80,30) });
 	
-	player = game.get('player', {name: 'Conan'});
+	player = game.get('player');
+	player.params.name = 'Conan';
 
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 	//level.set(level.find('floor').sample().value(), 'actor', player);

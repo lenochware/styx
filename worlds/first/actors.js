@@ -19,7 +19,7 @@
 	},
 
 	"ghost": {
-		"tags": ["actor", "ghost", "flying", "neutral", "moving-random"],
+		"tags": ["actor", "ghost", "flying", "neutral", "moving-random", "awake"],
 		"render": {"char": "G", "color": "green" },
 		"health": 10,
 		"attack": 1,

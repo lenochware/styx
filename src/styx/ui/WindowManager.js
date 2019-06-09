@@ -152,6 +152,7 @@ Styx.ui.WindowManager = class
 		this.openWindow('item-window', 400, 200, {
 			template: 'item-window',			
 			item: obj,
+			conditions: obj.is('actor')? obj.getConditions() : {},
 			commands: commands
 		});
 	}
