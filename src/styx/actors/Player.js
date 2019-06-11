@@ -102,6 +102,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 	spendTime()
 	{
+		this.conditions.update();
 		this.game.time += this.tick;
 	}
 

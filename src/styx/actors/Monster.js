@@ -20,7 +20,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		}
 
 		if (!this.is('awake')) {
-			this.condition('asleep', Infinity);
+			this.conditions.add('Asleep', Infinity);
 		}
 	}
 
@@ -28,12 +28,11 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	{
 		while (this.time + this.tick < this.game.time)
 		{
-			if (this.condition('asleep')) {
+			if (this.conditions.is('Asleep')) {
 				this.wait();
 
-				if (this.distance(this.game.get('player')) < 5 && this.game.random.percent(20)) {
-					this.game.message("{0} wake up!", "msg-info", this.name());
-					this.condition('asleep', 0);	
+				if (this.distance(this.game.get('player')) < 5 && this.game.random.percent(20))	{
+					this.conditions.remove('Asleep');
 				}
 
 				continue;
@@ -48,7 +47,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		super.damage(attacker, dmg);
 
 		if (this.health < this.maxHealth / 3) {
-			this.condition('afraid', 50);
+			this.conditions.add('Afraid', 15);
 		}
 	}
 
@@ -69,7 +68,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		if (!this.target) return;
 
 		var pos = this.pos;
-		var afraid = this.condition('afraid');
+		var afraid = this.conditions.is('Afraid');
 
 		for (pos of this.surroundings()) {
 			let tile = this.level.get(pos, 'tile');

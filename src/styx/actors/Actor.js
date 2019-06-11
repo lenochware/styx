@@ -10,28 +10,13 @@ Styx.actors.Actor = class extends Styx.Entity
 		this.maxHealth = this.health;
 		this.tick = 10;
 		this.target = null;
-		this.conditions = {};
+		this.conditions = new Styx.actors.ConditionGroup(this);
 		this.time = 0;
-	}
-
-	condition(id, duration = null)
-	{
-		if (!this.conditions[id]) {
-			this.conditions[id] = 0;
-		}
-
-		if (duration !== null) {
-			this.conditions[id] = this.game.time + duration * this.tick;
-		}
-
-		return (this.conditions[id] > this.game.time);
 	}
 
 	getConditions()
 	{
-		return _.filter(_.keys(this.conditions), 
-			key => this.conditions[key] > this.game.time
-		);
+		return this.conditions.list();
 	}
 
 	move(dx, dy)
@@ -157,7 +142,7 @@ Styx.actors.Actor = class extends Styx.Entity
 		// else if (hltPerc < 0.8) info = " (somewhat wounded)";
 		// else info = "";
 
-		if (this.condition('afraid')) info = "(afraid)";
+		if (this.conditions.is('Afraid')) info = "(afraid)";
 
 		return super.name()+info;
 	}
@@ -169,6 +154,7 @@ Styx.actors.Actor = class extends Styx.Entity
 
 	spendTime()
 	{
+		this.conditions.update();
 		this.time += this.tick;
 	}
 }

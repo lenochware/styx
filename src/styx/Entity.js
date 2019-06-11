@@ -23,6 +23,11 @@ Styx.Entity = class
 		return (this.getAttrib("tags").indexOf(tag) != -1);
 	}
 
+	toString()
+	{
+		return this.name();
+	}
+
 	name()
 	{
 		return this.getAttrib("name");
