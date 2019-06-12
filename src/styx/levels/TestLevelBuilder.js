@@ -19,7 +19,7 @@ Styx.levels.TestLevelBuilder = class
 		if (this.params.type == 'test-level')	this.buildTestMap();
 		else this.buildRandomMap();
 
-		this.spawn(16,6, 'monster', {id: "kobold"});
+		this.spawn(16,6, 'monster', {id: "snake"});
 		this.spawn(7,7, 'item', {id: "short_sword"});
 		this.spawn(10,7, 'item', {id: "small_shield"});
 		this.spawn(12,7, 'item', {id: "copper_coins"});

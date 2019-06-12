@@ -76,7 +76,8 @@ Styx.actors.Actor = class extends Styx.Entity
 
 	getAttack()
 	{
-		return this.getAttrib('attack');
+		var attacks = this.getAttrib('attacks');
+		return {type: _.sample(attacks), points:1};
 	}
 
 	damage(src, type, points)

@@ -24,7 +24,7 @@
 		"render": {"char": "~", "color": "light-blue" },
 		"tags": ["water", "hiding"],
 		"name": "deep water",
-		"attack": {"type": "drowning", "points": 1},
+		"attacks": ["drowning"],
 		"desc": "You see nothing interesting."
 	},
 

@@ -3,7 +3,7 @@
 		"tags": ["player", "actor"],
 		"render": {"char": "@", "color": "white" },
 		"health": 10,
-		"attack": {"type": "hit", "points": 5},
+		"attacks": ["punch"],
 		"name": "you",
 		"desc": "Warriors start with 11 points of Strength."
 	},
@@ -12,7 +12,7 @@
 		"tags": ["actor", "kobold", "fast"],
 		"render": {"char": "k", "color": "green" },
 		"health": 20,
-		"attack": {"type": "hit", "points": 1},
+		"attacks": ["hit"],
 		"bones": "skull",
 		"name": "gnoll kobold",
 		"desc": "Kobolds are the largest, strongest and toughest of all gnolls. When severely wounded, they go berserk, inflicting even more damage to their enemies."
@@ -22,8 +22,17 @@
 		"tags": ["actor", "ghost", "flying", "neutral", "moving-random", "awake"],
 		"render": {"char": "G", "color": "green" },
 		"health": 10,
-		"attack": {"type": "touch", "points": 5},
+		"attacks": ["touch"],
 		"name": "green ghost",
 		"desc": "Strange transparent humanoid form."
+	},
+
+	"snake": {
+		"tags": ["actor", "neutral", "moving-random", "awake", "slow"],
+		"render": {"char": "J", "color": "yellow" },
+		"health": 10,
+		"attacks": ["bite", "poison_bite"],
+		"name": "great yellow snake",
+		"desc": "Great yellow snake moving slowly on the floor."
 	}
 }

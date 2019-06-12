@@ -53,7 +53,8 @@ Styx.levels.Tile = class
 
 	getAttack()
 	{
-		return this.getAttrib('attack');
+		var attacks = this.getAttrib('attacks');
+		return attacks? attacks[0] : null;
 	}
 
 	getVisible()
