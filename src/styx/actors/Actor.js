@@ -60,8 +60,8 @@ Styx.actors.Actor = class extends Styx.Entity
 			return false;
 		}
 
-		var dmg = this.getDamage(this.target, 'hit');
-		this.target.damage(this, dmg);
+		var a = this.getAttack();
+		this.target.damage(this, a.type, a.points);
 	
 		this.spendTime();
 
@@ -69,39 +69,30 @@ Styx.actors.Actor = class extends Styx.Entity
 		return true;
 	}
 
-
 	canAttack(target)
 	{
 		return (target && this.distance(target) <= 1);
 	}
 
-	damage(attacker, dmg)
+	getAttack()
 	{
-		if (!dmg) return;
-
-		if (attacker.is('actor')) {
-			this.target = attacker;
-		}
-
-		this.health -= dmg.points;
-
-		this.game.message(dmg.message, "msg-info", attacker.name(), this.name());
-
-		this.game.get('window-manager').warMessage(dmg);
-
-		if (this.health <= 0) this.die(attacker);
+		return this.getAttrib('attack');
 	}
 
-	getDamage(target, type)
+	damage(src, type, points)
 	{
-		var dmg = {
-			actor: this,
-			type: type,
-			points: this.getAttrib('attack'), 
-			message: "{0} hit[s] {1}."
-		};
+		if (!type) return;
 
-		return dmg;
+		this.health -= points;
+
+		if (src) {
+			if (src.is('actor')) this.target = src;
+			this.game.message('attack-' + type, "msg-info", src, this);
+		}
+
+		this.game.get('window-manager').warMessage(src, type, points);
+
+		if (this.health <= 0) this.die(src);
 	}
 
 	canOccupy(tile)
@@ -111,12 +102,12 @@ Styx.actors.Actor = class extends Styx.Entity
 		return true;
 	}
 
-	die(attacker)
+	die(src)
 	{
 		if (this.is('player')) {
 			this.game.message("You die.", "msg-danger");
 		}
-		else if (attacker.is('player')) {
+		else if (src && src.is('player')) {
 			this.game.message("You defeated {0}.", "msg-hilite", this.name());
 		}
 		else {
@@ -129,7 +120,10 @@ Styx.actors.Actor = class extends Styx.Entity
 		}
 
 		this.health = 0;
-		this.level.remove(this);
+
+		if (!this.is('player')) {
+			this.level.remove(this);
+		}
 
 	}
 
@@ -142,7 +136,7 @@ Styx.actors.Actor = class extends Styx.Entity
 		// else if (hltPerc < 0.8) info = " (somewhat wounded)";
 		// else info = "";
 
-		if (this.conditions.is('Afraid')) info = "(afraid)";
+		if (this.conditions.is('Afraid')) info = " (afraid)";
 
 		return super.name()+info;
 	}

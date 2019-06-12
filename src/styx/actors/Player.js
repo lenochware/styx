@@ -93,11 +93,18 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
-	getDamage(target, type)
+	getAttack()
 	{
-		var weapon = this.inventory.get('3');
-		var dmg = weapon? weapon.getDamage(target, type) : super.getDamage(target, type);
-		return dmg;
+		return super.getAttack();
+		// var weapon = this.inventory.get('3');
+		// var dmg = weapon? weapon.getDamage(target, type) : super.getDamage(target, type);
+		// return dmg;
+	}
+
+	die(src)
+	{
+		super.die(src);
+		this.params.render = {char: '~', color: 'red'};
 	}
 
 	spendTime()

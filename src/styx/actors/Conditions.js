@@ -85,6 +85,15 @@ Styx.actors.conditions = {
 
 	Afraid : class extends Styx.actors.Condition 
 	{
+		onAdd()
+		{
+			game.message("{0} [is] afraid!", 'msg-info', this.target);
+		}
+
+		onRemove()
+		{
+			game.message("{0} recover his courage!", 'msg-info', this.target);
+		}
 
 	},
 
@@ -93,6 +102,20 @@ Styx.actors.conditions = {
 		onRemove()
 		{
 			game.message("{0} wake up!", 'msg-info', this.target);
+		}
+	},
+
+	Posioned : class extends Styx.actors.Condition
+	{
+		onAdd()
+		{
+			game.message("{0} [is] posioned!", 'msg-info', this.target);
+		}
+
+		update()
+		{
+			super.update();
+			target.damage(null, 'poison', 1);
 		}
 	}
 

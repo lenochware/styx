@@ -8,18 +8,10 @@ Styx.items.Item = class extends Styx.Entity
 		super('items', params.id, params);
 	}
 
-	getDamage(target, type)
+	getAttack(target, type)
 	{
 		if (!this.is('weapon')) return null;
-
-		var dmg = {
-			actor: this,
-			type: type,
-			points: 1, 
-			message: "{0} hit[s] {1}"
-		};
-
-		return dmg;
+		return {type: 'hit', points: 1};
 	}
 
 	longDesc()

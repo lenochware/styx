@@ -39,8 +39,8 @@ Styx.levels.Tile = class
 	enter(actor)
 	{
 		if (this.is('water') && !actor.is("flying")) {
-			var dmg = this.getDamage(actor, 'drowning');
-			actor.damage(this, dmg);
+			var a = this.getAttack();
+			actor.damage(this, a.type, a.points);
 		}
 		else if (this.id == 'door') {
 			this.id = 'open_door';
@@ -50,18 +50,9 @@ Styx.levels.Tile = class
 	
 	leave(actor) {};
 
-	getDamage(target, type)
+	getAttack()
 	{
-		if (!this.is('water')) return null;
-
-		var dmg = {
-			actor: this,
-			type: type,
-			points: 1, 
-			message: "{1} [is] drowning!"
-		};
-
-		return dmg;
+		return this.getAttrib('attack');
 	}
 
 	getVisible()
