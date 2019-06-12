@@ -60,8 +60,8 @@ Styx.actors.Actor = class extends Styx.Entity
 			return false;
 		}
 
-		var a = this.getAttack();
-		this.target.damage(this, a.type, a.points);
+		var id = this.getAttack();
+		this.target.damage(this, id, 1);
 	
 		this.spendTime();
 
@@ -76,8 +76,12 @@ Styx.actors.Actor = class extends Styx.Entity
 
 	getAttack()
 	{
-		var attacks = this.getAttrib('attacks');
-		return {type: _.sample(attacks), points:1};
+		return _.sample(this.getAttrib('attacks'));
+	}
+
+	getAction(id)
+	{
+		return this.game.db.getObject('actions', id);
 	}
 
 	damage(src, type, points)
@@ -85,6 +89,10 @@ Styx.actors.Actor = class extends Styx.Entity
 		if (!type) return;
 
 		this.health -= points;
+
+		if (this.getAction(type).tags.includes('poison')) {
+			this.conditions.add('Poisoned', 10);
+		}
 
 		if (src) {
 			if (src.is('actor')) this.target = src;

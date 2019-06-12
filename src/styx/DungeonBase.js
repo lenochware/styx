@@ -21,10 +21,10 @@ Styx.DungeonBase = class
 
 	getObject(category, id)
 	{
-		try {
+		if (this.data[category] && this.data[category][id]) {
 			return this.data[category][id];
 		}
-		catch(err) {
+		else {
 			console.warn(category+'.'+id+' not found.');
 			return null;
 		}

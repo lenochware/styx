@@ -8,10 +8,10 @@ Styx.items.Item = class extends Styx.Entity
 		super('items', params.id, params);
 	}
 
-	getAttack(target, type)
+	getAttack()
 	{
 		if (!this.is('weapon')) return null;
-		return {type: 'hit', points: 1};
+		return 'hit';
 	}
 
 	longDesc()
