@@ -32,6 +32,11 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
+	name()
+	{
+		return "you";
+	}
+
 	search()
 	{
 		this.spendTime();
