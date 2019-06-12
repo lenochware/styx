@@ -11,7 +11,7 @@ Styx.levels.RegularLevelBuilder = class
 		this.level.size = this.params.size;
 		this.rooms = [];
 
-		this.roomsIndex = _.keys(this.game.get('dungeon-base').getCategory('rooms'));
+		this.roomsIndex = _.keys(this.game.db.getCategory('rooms'));
 	}
 
 	build()

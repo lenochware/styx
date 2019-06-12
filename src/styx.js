@@ -15,7 +15,6 @@ var game = new Styx.Game();
 
 game.load('world:first').then(function() 
 {
-	game.get('dungeon-base');
 	builder = game.get('level-builder');
 
 	level = builder.build({ type: 'random-level', size: new Styx.Rectangle(0,0,80,30) });

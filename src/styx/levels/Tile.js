@@ -13,7 +13,7 @@ Styx.levels.Tile = class
 
 	getAttrib(attrib, defaultValue = null)
 	{
-		return game.get("dungeon-base").getAttrib('tiles', this.id, attrib) || defaultValue;
+		return game.db.getAttrib('tiles', this.id, attrib) || defaultValue;
 	}
 
 	is(tag)

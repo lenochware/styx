@@ -6,7 +6,6 @@ Styx.ui.Renderer = class
 	constructor()
 	{
 		this.game = game;
-		this.db = this.game.get('dungeon-base');
 	}
 
 	render(level, container, params)

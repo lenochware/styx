@@ -73,7 +73,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 	getAttrib(attrib)
 	{
-		return this.game.get("dungeon-base").getAttrib('rooms', this.name, attrib);
+		return this.game.db.getAttrib('rooms', this.name, attrib);
 	}
 
 	getCells()

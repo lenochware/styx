@@ -8,6 +8,7 @@ Styx.Game = class
 		this.data = {};
 		this.time = 0;
 		this.random = this.get('random');
+		this.db = null;
 	}
 
 	get(className, options)
@@ -69,6 +70,6 @@ Styx.Game = class
 		return Promise.all([
 			this.loadJson('templates'),
 			this.loadJson('dungeon-base', id)
-		]);
+		]).then(() => this.db = this.get('dungeon-base'));
 	}
 }

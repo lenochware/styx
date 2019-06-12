@@ -15,7 +15,7 @@ Styx.Entity = class
 	getAttrib(attrib, defaultValue = null)
 	{
 		if (this.params[attrib]) return this.params[attrib];
-		return this.game.get("dungeon-base").getAttrib(this.category, this.id, attrib) || defaultValue;
+		return this.game.db.getAttrib(this.category, this.id, attrib) || defaultValue;
 	}
 
 	is(tag)

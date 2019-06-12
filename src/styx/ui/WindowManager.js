@@ -12,7 +12,7 @@ Styx.ui.WindowManager = class
 		this.templates = this.game.data["templates"];
 		this.windows = [];
 		this.panels = {};
-		this.texts = this.game.get('dungeon-base').getCategory('texts');
+		this.texts = this.game.db.getCategory('texts');
 	}
 
 	setPanel(panel) {
