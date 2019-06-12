@@ -133,11 +133,15 @@ body {
 	color: #878787;
 }
 
-.condition-hungry {
+.condition-Hungry {
 	color: var(--col-yellow);
 }
 
-.condition-asleep {
+.condition-Poisoned {
+	color: lime;
+}
+
+.condition-Asleep {
 	color: var(--col-blue);
 }
 

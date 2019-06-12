@@ -1,0 +1,22 @@
+- rest, sleep/awake monster, slow monster (snake)
+- odstranit width,height z rooms defs
+- lepsi door management (potrebne tile.pos?) devices, use?
+- GameObject(events? on, trigger, off, pres EventManager), DungeonObject
+- prejmenovat .map na .tiles (.cells?)
+- RoomBuilder, map meta (roominfo, first etc.)
+- null.pos err in attack - multiple targets?
+- string.format colors, a/an?
+- wm: nahr. prime odkazy: #game-container atd.
+- messages pri boji - zobrazovat jen dulezite
+- ghost is afraid msg i po smrti
+- getAttack() vyber podle rarity
+- kdyz se utopi zustane viset jeho info v sidebaru
+
+- shallow water
+- klikatelne jmeno potvory i v bojovem okne
+- barevne conditions, lepsi popisy monster (health v detail okne)
+- hungry, eat, leveling, xp, weapon, shield
+- poskozovani zbrani
+- touch-afraid, invisibility
+- save, menu
+- fov

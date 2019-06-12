@@ -24,14 +24,15 @@
 		"health": 10,
 		"attacks": ["touch"],
 		"name": "green ghost",
-		"desc": "Strange transparent humanoid form."
+		"desc": "Strange transparent humanoid form.",
+		"death-message": "{0} disappears."
 	},
 
 	"snake": {
 		"tags": ["actor", "neutral", "moving-random", "awake", "slow"],
 		"render": {"char": "J", "color": "yellow" },
 		"health": 10,
-		"attacks": ["bite", "poison_bite"],
+		"attacks": ["bite", "poison-bite"],
 		"name": "great yellow snake",
 		"desc": "Great yellow snake moving slowly on the floor."
 	}
