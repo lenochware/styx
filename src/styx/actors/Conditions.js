@@ -105,7 +105,7 @@ Styx.actors.conditions = {
 		}
 	},
 
-	Posioned : class extends Styx.actors.Condition
+	Poisoned : class extends Styx.actors.Condition
 	{
 		onAdd()
 		{
@@ -115,7 +115,7 @@ Styx.actors.conditions = {
 		update()
 		{
 			super.update();
-			target.damage(null, 'poison', 1);
+			this.target.damage(null, 'poison', 1);
 		}
 	}
 

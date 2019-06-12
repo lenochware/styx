@@ -23,6 +23,8 @@ game.load('world:first').then(function()
 	player = game.get('player');
 	player.params.name = 'Conan';
 
+	//player.conditions.add('Poisoned', 5);
+
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 	//level.set(level.find('floor').sample().value(), 'actor', player);
 	level.setXY(5, 5, 'actor', player);

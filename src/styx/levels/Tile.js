@@ -38,11 +38,12 @@ Styx.levels.Tile = class
 
 	enter(actor)
 	{
-		if (this.is('water') && !actor.is("flying")) {
+		if (!actor.is("flying")) {
 			var a = this.getAttack();
-			actor.damage(this, a.type, a.points);
+			if (a) actor.damage(this, a.type, a.points);
 		}
-		else if (this.id == 'door') {
+		
+		if (this.id == 'door') {
 			this.id = 'open_door';
 			actor.spendTime(); //TODO: It does two turns at once (walk+open door).
 		}

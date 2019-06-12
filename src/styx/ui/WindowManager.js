@@ -78,7 +78,7 @@ Styx.ui.WindowManager = class
 
 	warMessage(src, type, points)
 	{
-  	var r = src.getAttrib('render');
+  	var r = src? src.getAttrib('render') : {char: '!', color: 'red'};
 
 		var d = document.createElement('div');
 		$(d).addClass("animated fadeOut delay-1s ui-red")
