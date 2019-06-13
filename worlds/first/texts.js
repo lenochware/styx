@@ -4,5 +4,5 @@
 	"attack-punch": "{0} punches {1}",
 	"attack-bite": "{0} bites {1}",
 	"attack-poison-bite": "{0} bites {1}",
-	"attack-drowning": "{1} is drowning"
+	"attack-drowning": "{1} [is] drowning"
 }

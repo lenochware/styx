@@ -29,7 +29,7 @@
 	},
 
 	"snake": {
-		"tags": ["actor", "neutral", "moving-random", "awake", "slow"],
+		"tags": ["actor", "neutral", "moving-random", "awake", "slow", "swimmer"],
 		"render": {"char": "J", "color": "yellow" },
 		"health": 10,
 		"attacks": ["bite", "poison-bite"],

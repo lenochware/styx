@@ -154,8 +154,8 @@ Styx.ui.WindowManager = class
 
 		var obj = level.get(options.pos, 'tile').getVisible();
 
-		this.openWindow('item-window', 400, 200, {
-			template: 'item-window',			
+		this.openWindow('tile-window', 400, 200, {
+			template: 'tile-window',			
 			item: obj,
 			conditions: obj.is('actor')? obj.getConditions() : [],
 			commands: commands

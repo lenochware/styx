@@ -1,6 +1,12 @@
 <b><%= item.name().indef().capitalize() %></b><br>
 <%= item.longDesc() %><br><br>
 
+<div class="conditions">
+<% for (let cond of conditions) { %>
+	<span class="condition-<%= cond %>"><%= cond %></span>
+<% } %>
+</div>
+
 <% for (let cmd of _.values(commands)) { %>
 <%= cmd.label %> 
 <% } %>	

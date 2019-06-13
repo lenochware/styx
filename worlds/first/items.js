@@ -5,6 +5,18 @@
 		"name": "bones",
 		"desc": "Who left his bones in this sad place?"
 	},
+	"rusty_dagger": {
+		"render": {"char": "|", "color": "gray" },
+		"tags": ["item", "wearable", "weapon"],
+		"name": "rusty dagger",
+		"desc": "Small dagger looks somewhat damaged by water."
+	},
+	"broken_sword": {
+		"render": {"char": "|", "color": "gray" },
+		"tags": ["item", "wearable", "weapon"],
+		"name": "broken sword",
+		"desc": "Long sword, unfortunatelly its blade is broken few inches above handle."
+	},
 	"short_sword": {
 		"render": {"char": "|", "color": "white" },
 		"tags": ["item", "wearable", "weapon"],
@@ -28,5 +40,13 @@
 		"tags": ["item", "food"],
 		"name": "piece of bread",
 		"desc": "A piece of bread."
+	},
+	"fish_food": {
+		"render": {"char": ",", "color": "blue" },
+		"tags": ["item", "food"],
+		"name": "small blue fish",
+		"desc": "Small fish with blue scales. Looks quite tasty."
 	}
+
+
 }

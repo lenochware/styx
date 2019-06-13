@@ -21,3 +21,4 @@
 - save, menu
 - fov
 - drop: ['none', 'corpse', 'copper_coins'], drop-chances: [10,2,1]
+- doplnit commands pro tile/monster/item: run to, attack/target

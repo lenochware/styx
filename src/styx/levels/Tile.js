@@ -18,7 +18,7 @@ Styx.levels.Tile = class
 
 	is(tag)
 	{
-		return (this.getAttrib("tags").indexOf(tag) != -1);
+		return (this.id == tag || this.getAttrib("tags").includes(tag));
 	}
 
 	name()
@@ -38,7 +38,7 @@ Styx.levels.Tile = class
 
 	enter(actor)
 	{
-		if (!actor.is("flying")) {
+		if (!actor.is("flying") && !actor.is("swimmer")) {
 			var id = this.getAttack();
 			if (id) actor.damage(this, id, 1);
 		}

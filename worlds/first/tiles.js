@@ -27,6 +27,13 @@
 		"attacks": ["drowning"],
 		"desc": "You see nothing interesting."
 	},
+	
+	"shallow_water": {
+		"render": {"char": "~", "color": "light-blue" },
+		"tags": ["water", "hiding"],
+		"name": "shallow water",
+		"desc": "You see nothing interesting."
+	},
 
 	"floor": {
 		"render": {"char": ".", "color": "gray" },

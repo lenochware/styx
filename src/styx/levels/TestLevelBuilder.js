@@ -31,7 +31,13 @@ Styx.levels.TestLevelBuilder = class
 		this.level.setXY(5,4, 'id', 'door');
 
 		var pool = new Styx.Rectangle(8,10,5,4);
-		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'water'));
+		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'shallow_water'));
+		_.each(pool.move(1,0).coords(), (pos) => this.level.set(pos, 'id', 'water'));
+
+		var water = this.level.find('shallow_water');
+		//this.level.set(water.sample().value(), 'item', this.make('item', {id: 'copper_coins'}));
+		this.level.set(water.sample().value(), 'item', this.make('item', {id: 'fish_food'}));
+		this.level.set(water.sample().value(), 'item', this.make('item', {id: 'rusty_dagger'}));
 
 		return this.level;
 	}
