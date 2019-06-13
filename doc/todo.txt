@@ -20,3 +20,4 @@
 - touch-afraid, invisibility
 - save, menu
 - fov
+- drop: ['none', 'corpse', 'copper_coins'], drop-chances: [10,2,1]
