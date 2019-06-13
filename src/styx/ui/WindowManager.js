@@ -126,25 +126,33 @@ Styx.ui.WindowManager = class
 		});
 	}
 
+
+	_addCmd(cmds, id, key, label, cmd)
+	{
+		cmds[key] = _.extend({command: id, label: `<span class="command" data-key="${key}">${label}</span>`}, cmd);
+	}
+
 	openItemWindow(options)
 	{
-		var commands = {};
+		var cmds = {};
+		var cmd = {category: "item-window", key: options.key};
 
-		commands['d'] = {command: 'drop', key: options.key, label: "[d]rop", category: "item-window"};
+		this._addCmd(cmds, 'drop', 'd', '<kbd>D</kbd>rop', cmd);
+
 		if (/^[0-9]+$/.test(options.key)) {
-			commands['t'] = {command: 'unwear', key: options.key, label: "[t]ake off", category: "item-window"};
+			this._addCmd(cmds, 'unwear', 't', '<kbd>T</kbd>ake off', cmd);
 		}
 		else if (options.item.is('wearable')) {
-			commands['w'] = {command: 'wear', key: options.key, label: "[w]ear", category: "item-window"};
+			this._addCmd(cmds, 'wear', 'w', '<kbd>W</kbd>ear', cmd);
 		}
 		else if (options.item.is('food')) {
-			commands['e'] = {command: 'eat', key: options.key, label: "[e]at", category: "item-window"};
+			this._addCmd(cmds, 'eat', 'e', '<kbd>E</kbd>at', cmd);
 		}
 
 		this.openWindow('item-window', 400, 200, {
 			template: 'item-window',			
 			item: options.item,
-			commands: commands
+			commands: cmds
 		});
 	}
 
