@@ -113,7 +113,7 @@ Styx.actors.Actor = class extends Styx.Entity
 
 	isVisible()
 	{
-		if (this.is('player') || this.distance(this.game.player) == 1) return true;
+		if (this.isPlayer() || this.distance(this.game.player) == 1) return true;
 		if (this.conditions.is('invisible')) return false;
 		var tile = this.level.get(this.pos, 'tile');
 		if (tile.is('hiding_mon') && this.game.random.bet(0.7)) return false;
@@ -122,7 +122,7 @@ Styx.actors.Actor = class extends Styx.Entity
 
 	die(src)
 	{
-		if (this.is('player')) {
+		if (this.isPlayer()) {
 			this.game.message("You die.", "msg-danger");
 		}
 		else if (src && src.is('player')) {
@@ -139,7 +139,7 @@ Styx.actors.Actor = class extends Styx.Entity
 
 		this.health = 0;
 
-		if (!this.is('player')) {
+		if (!this.isPlayer()) {
 			this.level.remove(this);
 		}
 
@@ -162,6 +162,11 @@ Styx.actors.Actor = class extends Styx.Entity
 	isDestroyed()
 	{
 		return (this.health <= 0);
+	}
+
+	isPlayer()
+	{
+		return false;
 	}
 
 	spendTime()

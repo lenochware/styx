@@ -9,6 +9,7 @@ Styx.Game = class
 		this.time = 0;
 		this.random = this.get('random');
 		this.db = null;
+		this.player = null;
 	}
 
 	get(className, options)

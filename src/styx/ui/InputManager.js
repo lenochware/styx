@@ -44,7 +44,7 @@ Styx.ui.InputManager = class
 		this.initCommands();
 		input.on('keypress', (e) => {
 			var command = this.getCommand(event);
-			var level = this.game.get('player').level;
+			var level = this.game.player.level;
 			this.handle(command);
 			if (level) level.update();
 			this.wm.render();				
@@ -75,7 +75,7 @@ Styx.ui.InputManager = class
 			var key = $(e.target).data("key");
 			var cmd = this.getCommand({key: key});
 			this.handle(cmd);
-			this.game.get('player').level.update();
+			this.game.player.level.update();
 			this.wm.render();
 		});
 	}
@@ -122,7 +122,7 @@ Styx.ui.InputManager = class
 
 	handlePlayerCmd(command)
 	{
-		var p = this.game.get('player');
+		var p = this.game.player;
 
 		if (p.isDestroyed()) return;
 
@@ -140,7 +140,7 @@ Styx.ui.InputManager = class
 	{
 		switch(command.command) {
 			case 'examine':
-				var p = this.game.get('player');
+				var p = this.game.player;
 				var item = p.inventory.get(command.key);
 				if (item) {
 					this.wm.openItemWindow({item: item, key: command.key});
@@ -152,7 +152,7 @@ Styx.ui.InputManager = class
 
 	handleItemCmd(command)
 	{
-		var p = this.game.get('player');
+		var p = this.game.player;
 
 		switch(command.command) {
 			case 'drop':

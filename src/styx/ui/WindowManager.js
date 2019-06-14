@@ -118,11 +118,9 @@ Styx.ui.WindowManager = class
 
 	openInventory()
 	{
-		var p = this.game.get('player');
-
 		this.openWindow('inventory', 600, 400, {
 			template: 'inventory',
-			player: p,
+			player: this.game.player
 		});
 	}
 
@@ -172,9 +170,8 @@ Styx.ui.WindowManager = class
 
 	_renderSideBar(options)
 	{
-		var p = this.game.get('player');
 		$('#'+options.container).html(this.template('sidebar', {
-			player: p
+			player: this.game.player
 		}));
 	}
 

@@ -109,7 +109,7 @@ Styx.actors.conditions = {
 	{
 		onAdd()
 		{
-			var cssClass = this.target.is('player')? 'msg-warning' : 'msg-info';
+			var cssClass = this.target.isPlayer()? 'msg-warning' : 'msg-info';
 			game.message("{0} [is] poisoned!", cssClass, this.target);
 		}
 

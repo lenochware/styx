@@ -10,6 +10,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.inventory = new Styx.actors.Inventory(this);
 		this.gold = 0;
 		this.tick = 10;
+		this.game.player = this;
 	}
 
 	get()
@@ -35,6 +36,11 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	name()
 	{
 		return "you";
+	}
+
+	isPlayer()
+	{
+		return true;
 	}
 
 	search()

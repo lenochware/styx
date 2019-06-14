@@ -9,7 +9,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		super(params);
 
 		if (!this.is('neutral')) {
-			this.target = this.game.get('player');
+			this.target = this.game.player;
 		}
 
 		if (this.is('slow')) {
@@ -31,7 +31,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 			if (this.conditions.is('Asleep')) {
 				this.wait();
 
-				if (this.distance(this.game.get('player')) < 5 && this.game.random.percent(20))	{
+				if (this.distance(this.game.player) < 5 && this.game.random.percent(20))	{
 					this.conditions.remove('Asleep');
 				}
 
