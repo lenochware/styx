@@ -104,9 +104,9 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
-	getAttack()
+	pickAttack()
 	{
-		return super.getAttack();
+		return super.pickAttack();
 		// var weapon = this.inventory.get('3');
 		// var dmg = weapon? weapon.getDamage(target, type) : super.getDamage(target, type);
 		// return dmg;

@@ -60,8 +60,9 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 			return false;
 		}
 
-		var id = this.getAttack();
-		this.target.damage(this, id, 1);
+		var a = this.pickAttack();
+		a = this.target.defense(a);
+		if (a) this.target.damage(this, a.type, a.points);
 	
 		this.spendTime();
 
@@ -72,11 +73,6 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	canAttack(target)
 	{
 		return (target && this.distance(target) <= 1);
-	}
-
-	getAction(id)
-	{
-		return this.game.db.getObject('actions', id);
 	}
 
 	damage(src, type, points)

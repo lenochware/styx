@@ -39,8 +39,8 @@ Styx.levels.Tile = class
 	enter(actor)
 	{
 		if (!actor.is("flying") && !actor.is("swimmer")) {
-			var id = this.getAttack();
-			if (id) actor.damage(this, id, 1);
+			var attack = this.pickAttack();
+			if (attack) actor.damage(this, attack.type, attack.points);
 		}
 		
 		if (this.id == 'door') {
@@ -51,10 +51,21 @@ Styx.levels.Tile = class
 	
 	leave(actor) {};
 
-	getAttack()
+	pickAttackId()
 	{
 		var attacks = this.getAttrib('attacks');
 		return attacks? attacks[0] : null;
+	}
+
+	getAction(id)
+	{
+		return game.db.getObject('actions', id);
+	}
+
+	pickAttack()
+	{
+		var id = this.pickAttackId();
+		return id? this.getAction(id) : null;
 	}
 
 	getVisible()

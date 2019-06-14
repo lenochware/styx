@@ -9,7 +9,8 @@
 - string.format colors, a/an?
 - wm: nahr. prime odkazy: #game-container atd.
 - messages pri boji - zobrazovat jen dulezite
-- getAttack() vyber podle attack-chances
+
+- Tile nejak z DungeonObject... minimalizovat atrib. pro tile?
 
 - klikatelne jmeno potvory i v bojovem okne
 - barevne conditions, lepsi popisy monster (health v detail okne)
@@ -20,10 +21,6 @@
 - drop: ['none', 'corpse', 'copper_coins'], drop-chances: [10,2,1]
 - doplnit commands pro tile/monster/item: run to, attack/target
 
-- hiding_item, hiding_monster? - po objeveni zviditelnit, monster se muze zase skryt (monster actions[hide,...] + tile.hiding -> condition:hidden)
-
-x shallow water
-x sleep/awake monster, slow monster (snake)
 
 = BUGS =
 
@@ -32,5 +29,11 @@ x sleep/awake monster, slow monster (snake)
 - kdyz se utopi zustane viset jeho info v sidebaru
 - null.pos err in attack - multiple targets?
 
+= DONE =
+
+x shallow water
+x sleep/awake monster, slow monster (snake)
+x getAttack() vyber podle attack-chances
+x hiding_item, hiding_monster? - po objeveni zviditelnit, monster se muze zase skryt (monster actions[hide,...] + tile.hiding -> condition:hidden)
 
 angband level size: 198x66
