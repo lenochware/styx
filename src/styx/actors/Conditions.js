@@ -83,6 +83,8 @@ Styx.actors.Condition = class
 
 Styx.actors.conditions = {
 
+	Invisible : class extends Styx.actors.Condition  {},
+
 	Afraid : class extends Styx.actors.Condition 
 	{
 		onAdd()

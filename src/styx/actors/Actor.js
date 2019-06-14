@@ -109,7 +109,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	isVisible()
 	{
 		if (this.isPlayer() || this.distance(this.game.player) == 1) return true;
-		if (this.conditions.is('invisible')) return false;
+		if (this.conditions.is('Invisible')) return false;
 		var tile = this.level.get(this.pos, 'tile');
 		if (tile.is('hiding_mon') && this.game.random.bet(0.7)) return false;
 		return true;
