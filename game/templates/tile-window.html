@@ -7,6 +7,10 @@
 <% } %>
 </div>
 
+<% if (item.is('actor')) { %>
+	<%= _templ.meter("meter-health", item.health, item.maxHealth) %>
+<% } %>
+
 <% for (let cmd of _.values(commands)) { %>
 <%= cmd.label %> 
 <% } %>	

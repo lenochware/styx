@@ -1,7 +1,7 @@
 var Styx = Styx || {};
 Styx.items = Styx.items || {};
 
-Styx.items.Item = class extends Styx.Entity
+Styx.items.Item = class extends Styx.DungeonObject
 {
 	constructor(params)
 	{

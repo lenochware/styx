@@ -1,46 +1,13 @@
 var Styx = Styx || {};
 
-Styx.Entity = class
+Styx.DungeonObject = class extends Styx.GameObject
 {
 	constructor(category, id, params)
 	{
-		this.game = game;
+		super(category, id, params);
+
 		this.level = null;
-		this.category = category;
-		this.id = id;
-		this.params = params;
 		this.pos = params.pos || null;
-	}
-
-	getAttrib(attrib, defaultValue = null)
-	{
-		if (this.params[attrib]) return this.params[attrib];
-		return this.game.db.getAttrib(this.category, this.id, attrib) || defaultValue;
-	}
-
-	is(tag)
-	{
-		return (this.getAttrib("tags").indexOf(tag) != -1);
-	}
-
-	toString()
-	{
-		return this.name();
-	}
-
-	name()
-	{
-		return this.getAttrib("name");
-	}
-
-	shortDesc()
-	{
-		return this.getAttrib("name");
-	}
-
-	longDesc()
-	{
-		return this.getAttrib("desc");
 	}
 
 	distance(entity)
@@ -78,6 +45,4 @@ Styx.Entity = class
 	die()	{}
 
 	isDestroyed()	{}	
-
-	update() {}
 }

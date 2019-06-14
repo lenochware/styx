@@ -1,7 +1,8 @@
 src/styx/utils/String.js
 src/styx/utils/Random.js
 src/styx/utils/TemplateHelpers.js
-src/styx/Entity.js
+src/styx/GameObject.js
+src/styx/DungeonObject.js
 src/styx/items/Item.js
 src/styx/actors/Inventory.js
 src/styx/actors/Conditions.js

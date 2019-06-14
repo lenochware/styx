@@ -9,7 +9,7 @@
 - string.format colors, a/an?
 - wm: nahr. prime odkazy: #game-container atd.
 - messages pri boji - zobrazovat jen dulezite
-- getAttack() vyber podle rarity
+- getAttack() vyber podle attack-chances
 
 - klikatelne jmeno potvory i v bojovem okne
 - barevne conditions, lepsi popisy monster (health v detail okne)
@@ -31,3 +31,6 @@ x sleep/awake monster, slow monster (snake)
 - ghost is afraid msg i po smrti
 - kdyz se utopi zustane viset jeho info v sidebaru
 - null.pos err in attack - multiple targets?
+
+
+angband level size: 198x66
