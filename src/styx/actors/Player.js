@@ -48,6 +48,37 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
+	rest()
+	{
+		if (!this.canRest()) return;
+
+		if (this.game.random.bet(.3)) {
+			this.health++;
+			this.game.message("You are sleeping...", "msg-info");
+		}
+
+		if (this.health > this.maxHealth) {
+			this.health = this.maxHealth;
+		}
+
+		this.spendTime();
+	}
+
+	canRest()
+	{
+		if (this.health == this.maxHealth) {
+			this.game.message("You are in full condition now.", "msg-hilite");
+			return false;
+		}
+
+		if (this.conditions.is('Poisoned')) {
+			this.game.message("You cannot rest while poisoned!", "msg-info");
+			return false;
+		}
+
+		return true;
+	}
+
 	enter(pos)
 	{
 		var tile = this.level.get(pos, 'tile');

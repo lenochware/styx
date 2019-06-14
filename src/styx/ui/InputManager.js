@@ -24,7 +24,8 @@ Styx.ui.InputManager = class
 				'3': {command: 'move', dir: [1,1]},
 				'g': {command: 'get'},
 				's': {command: 'search'},
-				'i': {command: 'inventory'}
+				'i': {command: 'inventory'},
+				'r': {command: 'rest'}
 			},
 			inventory: {
 			},
@@ -131,6 +132,7 @@ Styx.ui.InputManager = class
 			case 'get': p.get(); break;
 			case 'inventory': this.wm.openInventory(); break;
 			case 'search': p.search(); break;
+			case 'rest': p.rest(); break;
 			// case 'attack': break;
 			default: throw `Invalid command '${command.command}'.`;
 		}

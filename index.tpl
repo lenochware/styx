@@ -53,7 +53,8 @@
 				<span class="command" data-key="Esc"><kbd>[Esc]</kbd> Menu</span> 
 				<span class="command" data-key="i"><kbd>I</kbd>nventory</span> 
 				<span class="command" data-key="s"><kbd>S</kbd>earch</span> 
-				<span class="command" data-key="g"><kbd>G</kbd>et item</span> 
+				<span class="command" data-key="g"><kbd>G</kbd>et</span> 
+				<span class="command" data-key="r"><kbd>R</kbd>est</span> 
 				<span class="command"><kbd>&larr;&uarr;&rarr;&darr;</kbd> Move</span>
 			</div>
 		</div>
