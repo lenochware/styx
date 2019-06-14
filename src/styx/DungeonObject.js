@@ -40,6 +40,15 @@ Styx.DungeonObject = class extends Styx.GameObject
 		return this.level.get(this.pos, 'tile');
 	}
 
+	getAttack()
+	{
+		var attacks = this.getAttrib('attacks');
+		var chances = this.getAttrib('attack-chances');
+		if (!attacks)	return 'hit';
+		if (!chances) return _.sample(attacks);
+		return attacks[this.game.random.chances(chances)];
+	}	
+
 	damage(src, type, points) {}
 
 	die()	{}

@@ -113,6 +113,11 @@ Styx.actors.conditions = {
 			game.message("{0} [is] poisoned!", cssClass, this.target);
 		}
 
+		onRemove()
+		{
+			game.message("{0} [is] no longer poisoned!", 'msg-hilite', this.target);
+		}		
+
 		update()
 		{
 			super.update();
@@ -134,7 +139,7 @@ Styx.actors.conditions = {
 		update()
 		{
 			super.update();
-			
+
 			if (this.game.random.bet(.3)) {
 				this.target.damage(null, 'bleeding', 1);
 

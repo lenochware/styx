@@ -33,7 +33,8 @@
 		"render": {"char": "J", "color": "yellow" },
 		"health": 10,
 		"attacks": ["bite", "poison-bite"],
+		"attack-chances": [3,1],
 		"name": "great yellow snake",
-		"desc": "Great yellow snake moving slowly on the floor."
+		"desc": "Great yellow snake is moving slowly on the floor."
 	}
 }

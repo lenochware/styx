@@ -74,11 +74,6 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		return (target && this.distance(target) <= 1);
 	}
 
-	getAttack()
-	{
-		return _.sample(this.getAttrib('attacks'));
-	}
-
 	getAction(id)
 	{
 		return this.game.db.getObject('actions', id);

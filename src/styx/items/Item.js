@@ -8,12 +8,6 @@ Styx.items.Item = class extends Styx.DungeonObject
 		super('items', params.id, params);
 	}
 
-	getAttack()
-	{
-		if (!this.is('weapon')) return null;
-		return 'hit';
-	}
-
 	longDesc()
 	{
 		var desc = super.longDesc();
