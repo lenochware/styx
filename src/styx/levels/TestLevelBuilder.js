@@ -34,6 +34,9 @@ Styx.levels.TestLevelBuilder = class
 		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'shallow_water'));
 		_.each(pool.move(1,0).coords(), (pos) => this.level.set(pos, 'id', 'water'));
 
+		pool.assign(14,5);
+		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'high_grass'));
+
 		var water = this.level.find('shallow_water');
 		//this.level.set(water.sample().value(), 'item', this.make('item', {id: 'copper_coins'}));
 		this.level.set(water.sample().value(), 'item', this.make('item', {id: 'fish_food'}));

@@ -27,11 +27,18 @@
 		"attacks": ["drowning"],
 		"desc": "You see nothing interesting."
 	},
-	
+
 	"shallow_water": {
 		"render": {"char": "~", "color": "light-blue" },
 		"tags": ["water", "hiding"],
 		"name": "shallow water",
+		"desc": "You see nothing interesting."
+	},
+
+	"high_grass": {
+		"render": {"char": ";", "color": "dark-green" },
+		"tags": ["hiding", "hiding_mon"],
+		"name": "high grass",
 		"desc": "You see nothing interesting."
 	},
 

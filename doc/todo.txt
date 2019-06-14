@@ -1,4 +1,6 @@
-- rest, sleep/awake monster, slow monster (snake)
+- hungry, eat, leveling, xp, weapon, shield
+- rest
+
 - odstranit width,height z rooms defs
 - lepsi door management (potrebne tile.pos?) devices, use?
 - GameObject(events? on, trigger, off, pres EventManager), DungeonObject
@@ -12,13 +14,16 @@
 - getAttack() vyber podle rarity
 - kdyz se utopi zustane viset jeho info v sidebaru
 
-- shallow water
 - klikatelne jmeno potvory i v bojovem okne
 - barevne conditions, lepsi popisy monster (health v detail okne)
-- hungry, eat, leveling, xp, weapon, shield
 - poskozovani zbrani
 - touch-afraid, invisibility
 - save, menu
 - fov
 - drop: ['none', 'corpse', 'copper_coins'], drop-chances: [10,2,1]
 - doplnit commands pro tile/monster/item: run to, attack/target
+
+- hiding_item, hiding_monster? - po objeveni zviditelnit, monster se muze zase skryt (monster actions[hide,...] + tile.hiding -> condition:hidden)
+
+x shallow water
+x sleep/awake monster, slow monster (snake)

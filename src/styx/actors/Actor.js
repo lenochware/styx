@@ -111,6 +111,15 @@ Styx.actors.Actor = class extends Styx.Entity
 		return true;
 	}
 
+	isVisible()
+	{
+		if (this.is('player') || this.distance(this.game.player) == 1) return true;
+		if (this.conditions.is('invisible')) return false;
+		var tile = this.level.get(this.pos, 'tile');
+		if (tile.is('hiding_mon') && this.game.random.bet(0.7)) return false;
+		return true;
+	}
+
 	die(src)
 	{
 		if (this.is('player')) {
