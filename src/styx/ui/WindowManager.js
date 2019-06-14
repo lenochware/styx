@@ -83,7 +83,7 @@ Styx.ui.WindowManager = class
 
 		var d = document.createElement('div');
 		$(d).addClass("animated fadeOut delay-1s ui-red")
-		.html(`<span class="ui-${r.color}">${r.char}</span> ${type}`)
+		.html(`<span class="ui-${r.color}">${r.char}</span> ${type} ${points}`)
 		.delay(2000)
 		.queue(function() {
 		  $(this).remove();

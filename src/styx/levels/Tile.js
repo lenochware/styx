@@ -65,7 +65,10 @@ Styx.levels.Tile = class
 	pickAttack()
 	{
 		var id = this.pickAttackId();
-		return id? this.getAction(id) : null;
+		if (!id) return null;
+		var a = this.getAction(id);
+		a.type = id;
+		return a;
 	}
 
 	getVisible()
