@@ -26,7 +26,8 @@ Styx.levels.TestLevelBuilder = class
 		this.spawn(14,7, 'item', {id: "bread"});
 		this.spawn(16,7, 'item', {id: "bones"});
 
-		this.spawn(16,16, 'monster', {id: "ghost"});
+		var m = this.spawn(16,16, 'monster', {id: "ghost"});
+		m.conditions.add('Bleeding', 10);
 
 		this.level.setXY(5,4, 'id', 'door');
 

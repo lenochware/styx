@@ -116,8 +116,35 @@ Styx.actors.conditions = {
 		update()
 		{
 			super.update();
-			this.target.damage(null, 'poison', 1);
+
+			if (this.game.random.bet(.3)) {
+				this.target.damage(null, 'poison', 1);
+			}
+		}
+	},
+
+	Bleeding : class extends Styx.actors.Condition
+	{
+		onAdd()
+		{
+			var cssClass = this.target.isPlayer()? 'msg-warning' : 'msg-info';
+			game.message("{0} [is] bleeding!", cssClass, this.target);
+		}
+
+		update()
+		{
+			super.update();
+			
+			if (this.game.random.bet(.3)) {
+				this.target.damage(null, 'bleeding', 1);
+
+				var pos = this.target.pos;
+				var level = this.target.level;
+
+				if (level.get(pos, 'id') == 'floor') level.set(pos, 'id', 'blood_floor');
+			}
 		}
 	}
+
 
 }
