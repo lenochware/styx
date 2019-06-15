@@ -6,19 +6,48 @@ Styx.ui.Renderer = class
 	constructor()
 	{
 		this.game = game;
+		this.fov = {};
+		this.level = null;
+		this.view = null;
+	}
+
+	calcVisible()
+	{
+		//ROT.RNG.setSeed(12345);
+		var pos = this.game.player.pos;
+		this.fov = {};
+
+		var fov = new ROT.FOV.PreciseShadowcasting((x, y) => this.lightPasses(x,y) );
+		fov.compute(pos.x, pos.y, 10, (x, y, r, vis) => this.writeFov(x, y, r, vis) );
+	}
+
+	lightPasses(x, y)
+	{
+		if (!this.view.pointInside(x, y)) return false;
+		return !this.level.getXY(x, y, 'tile').is('wall');
+	}
+
+	writeFov(x, y, r, vis)
+	{
+		if (!this.view.pointInside(x, y)) return;
+		this.fov[x + ',' + y] = true;
 	}
 
 	render(level, container, params)
 	{
-		$('#'+container).html(this._renderHtml(level, params.view));
+		this.level = level;
+		this.view = params.view;
+		this.calcVisible();
+
+		$('#'+container).html(this._renderHtml());
 	}
 
 	_renderHtml(level, view)
 	{
 		var html = '';
-		for (var y = 0; y < view.height; y++) {
-			for (var x = 0; x < view.width; x++) {
-				html += this._renderTile(level, x + view.x, y + view.y);
+		for (var y = 0; y < this.view.height; y++) {
+			for (var x = 0; x < this.view.width; x++) {
+				html += this._renderTile(this.level, x + this.view.x, y + this.view.y);
 			}
 
 			html += '<br>';
@@ -29,6 +58,10 @@ Styx.ui.Renderer = class
 
 	_renderTile(level, x, y)
 	{
+		if (!this.fov[x + ',' + y]) {
+			return `<span class="ui-gray" data-pos="${x},${y}">*</span>`;
+		}
+
 		var r = {char: "?", color: "white" };
 		var tile = level.getXY(x, y, 'tile');
 

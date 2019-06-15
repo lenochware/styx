@@ -140,6 +140,11 @@ Styx.Rectangle = class
 		return this.equals(this.getIntersection(rect));
 	}
 
+	pointInside(x, y)
+	{
+		return (x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height);
+	}
+
 	isEmpty()
 	{
 		return (this.width == 0 || this.height == 0);
