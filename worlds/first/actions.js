@@ -6,7 +6,22 @@
 
 	"punch": {
 		"tags": ["attack"],
-		"points": 2
+		"points": 1
+	},
+
+	"slash": {
+		"tags": ["attack"],
+		"points": 3
+	},
+
+	"hack": {
+		"tags": ["attack"],
+		"points": 3
+	},
+
+	"cut": {
+		"tags": ["attack"],
+		"points": 3
 	},
 
 	"poison-bite": {

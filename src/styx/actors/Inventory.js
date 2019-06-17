@@ -69,6 +69,16 @@ Styx.actors.Inventory = class
 		this.remove(key);
 	}
 
+	getWeapon()
+	{
+		return this.get('3');
+	}
+
+	getShield()
+	{
+		return this.get('4');
+	}
+
 	getFreeKey()
 	{
 		return _.find(this.slots, key => this.belongings[key] == null);

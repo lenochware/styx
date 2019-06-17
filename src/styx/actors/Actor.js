@@ -7,6 +7,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	{
 		super('actors', params.id, params);
 		this.health = this.getAttrib('health', 10);
+		this.armor = this.getAttrib('armor', 0);
 		this.maxHealth = this.health;
 		this.tick = 10;
 		this.target = null;
@@ -62,7 +63,13 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 		var a = this.pickAttack();
 		a = this.target.defense(a);
-		if (a) this.target.damage(this, a.type, a.points);
+
+		if (a) {
+			this.target.damage(this, a.type, a.points);
+		}
+		else {
+			this.game.message("{0} shrug[s] off attack.", "msg-info", this.target);
+		}
 	
 		this.spendTime();
 
@@ -73,6 +80,12 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	canAttack(target)
 	{
 		return (target && this.distance(target) <= 1);
+	}
+
+	defense(attack)
+	{
+		attack.points = Math.ceil(1/(1 + this.armor/50) * attack.points);
+		return (attack.points > 0)? attack : null;
 	}
 
 	damage(src, type, points)

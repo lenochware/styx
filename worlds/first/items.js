@@ -7,27 +7,38 @@
 	},
 	"rusty_dagger": {
 		"render": {"char": "|", "color": "gray" },
-		"tags": ["item", "wearable", "weapon"],
+		"tags": ["item", "wearable", "weapon", "sword"],
 		"name": "rusty dagger",
 		"desc": "Small dagger looks somewhat damaged by water."
 	},
 	"broken_sword": {
 		"render": {"char": "|", "color": "gray" },
-		"tags": ["item", "wearable", "weapon"],
+		"tags": ["item", "wearable", "weapon", "sword"],
 		"name": "broken sword",
 		"desc": "Long sword, unfortunatelly its blade is broken few inches above handle."
 	},
 	"short_sword": {
 		"render": {"char": "|", "color": "white" },
-		"tags": ["item", "wearable", "weapon"],
+		"tags": ["item", "wearable", "weapon", "sword"],
+		"attacks": ["slash", "hack", "cut"],
+		"attack-chances": [5,3,1],
 		"name": "short sword",
 		"desc": "It is indeed quite short, just a few inches longer than a dagger."
 	},
 	"small_shield": {
 		"render": {"char": ")", "color": "white" },
 		"tags": ["item", "wearable", "shield"],
+		"attacks": ["none", "block"],
+		"attack-chances": [10,1],
 		"name": "small wooden shield",
 		"desc": "Scratched round small woden shield with brass spice in center."
+	},		
+	"soft_lether_armour": {
+		"render": {"char": "(", "color": "brown" },
+		"tags": ["item", "wearable", "armor"],
+		"points": 10,
+		"name": "soft leather armour",
+		"desc": "Kind of basic armour."
 	},		
 	"copper_coins": {
 		"render": {"char": "$", "color": "brown" },
