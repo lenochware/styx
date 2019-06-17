@@ -29,7 +29,7 @@
 		"render": {"char": ")", "color": "white" },
 		"tags": ["item", "wearable", "shield"],
 		"attacks": ["none", "block"],
-		"attack-chances": [10,1],
+		"attack-chances": [2,1],
 		"name": "small wooden shield",
 		"desc": "Scratched round small woden shield with brass spice in center."
 	},		

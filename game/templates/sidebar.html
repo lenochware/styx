@@ -1,7 +1,8 @@
 <span class="command" data-key="i">
 	<%= player.params.name %><br>
 	Gold: <%= player.gold %><br>
-	Health: <%= _templ.meter("meter-health", player.health, player.maxHealth) %><br>
+	Health: <%= player.health %> <%= _templ.meter("meter-health", player.health, player.maxHealth) %><br>
+	Armor: <%= player.armor %><br>
 </span>	
 <% if (player.target) { %>
 	<%= player.target.name() %>: <%= _templ.meter("meter-health", player.target.health, player.target.maxHealth) %>

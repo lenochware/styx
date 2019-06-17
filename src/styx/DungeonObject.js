@@ -42,7 +42,7 @@ Styx.DungeonObject = class extends Styx.GameObject
 
 	getAction(id)
 	{
-		return this.game.db.getObject('actions', id);
+		return _.clone(this.game.db.getObject('actions', id));
 	}
 
 	pickAttackId()

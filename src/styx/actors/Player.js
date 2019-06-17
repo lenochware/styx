@@ -141,8 +141,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		
 		var shield = this.inventory.getShield();
 		if (shield && shield.pickAttack().type == 'block') {
-			this.game.get('window-manager').warMessage(this, 'block', 0);
-			return null;
+			attack.points = 0;
 		}
 
 		return attack;

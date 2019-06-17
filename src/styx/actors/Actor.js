@@ -57,21 +57,19 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		}
 
 		if (!this.canAttack(this.target)) {
-			//console.log('Cannot reach target.');
 			return false;
 		}
 
 		var a = this.pickAttack();
 		a = this.target.defense(a);
+	
+		this.target.damage(this, a.type, a.points);
+		this.spendTime();
 
-		if (a) {
-			this.target.damage(this, a.type, a.points);
-		}
-		else {
+		if (!a.points) {
+			this.game.get('window-manager').warMessage(this.target, 'block', 0);
 			this.game.message("{0} shrug[s] off attack.", "msg-info", this.target);
 		}
-	
-		this.spendTime();
 
 		if (this.target.isDestroyed()) this.target = null;
 		return true;
@@ -85,7 +83,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	defense(attack)
 	{
 		attack.points = Math.ceil(1/(1 + this.armor/50) * attack.points);
-		return (attack.points > 0)? attack : null;
+		return attack;
 	}
 
 	damage(src, type, points)
@@ -101,7 +99,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 		this.game.get('window-manager').warMessage(src, type, points);
 
-		if (this.getAction(type).tags.includes('poison')) {
+		if (points && this.getAction(type).tags.includes('poison')) {
 			this.conditions.add('Poisoned', 10);
 		}
 

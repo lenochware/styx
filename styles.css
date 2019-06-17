@@ -166,4 +166,5 @@ body {
 
 .meter {
   height: 10px;
+  vertical-align: baseline;
 }

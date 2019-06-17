@@ -36,17 +36,17 @@
 	},
 
 	"poison": {
-		"tags": ["attack"],
+		"tags": ["damage"],
 		"points": 1
 	},
 
 	"drowning": {
-		"tags": ["attack"],
+		"tags": ["damage"],
 		"points": 2
 	},
 
 	"bleeding": {
-		"tags": ["attack"],
+		"tags": ["damage"],
 		"points": 1
 	},
 
