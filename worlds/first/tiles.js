@@ -1,14 +1,14 @@
 {
 	"null": {
 		"render": {"char": " ", "color": "black" },
-		"tags": ["wall", "inpenetrable"],
+		"tags": ["wall", "inpenetrable", "opaque", "blocking"],
 		"name": "unknown grid",
 		"desc": "You see nothing."
 	},
 
 	"wall": {
 		"render": {"char": "#", "color": "gray" },
-		"tags": ["wall", "hiding"],
+		"tags": ["wall", "hiding", "opaque", "blocking"],
 		"name": "stone wall",
 		"desc": "You see nothing interesting."
 	},
@@ -58,7 +58,7 @@
 
 	"door": {
 		"render": {"char": "+", "color": "brown" },
-		"tags": ["hiding", "door"],
+		"tags": ["hiding", "door", "opaque"],
 		"name": "wooden door",
 		"desc": "You see nothing interesting."
 	},

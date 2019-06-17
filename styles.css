@@ -133,6 +133,11 @@ body {
 	color: #878787;
 }
 
+.ui-dark-gray {
+	color: #575757;
+}
+
+
 .condition-Hungry {
 	color: var(--col-yellow);
 }

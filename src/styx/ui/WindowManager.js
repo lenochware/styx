@@ -61,7 +61,7 @@ Styx.ui.WindowManager = class
 
 	showTileInfo(level, x, y)
 	{
-		var obj = level.getXY(x, y, 'tile').getVisible();
+		var obj = level.isVisible(x, y)? level.getXY(x, y, 'tile').getVisible() : level.getXY(x, y, 'tile');
 		this.quickMessage(
 			'You see <span class="link tile-info" data-pos="{1}">{0}</span>.', 
 			obj.shortDesc(), x + ',' + y

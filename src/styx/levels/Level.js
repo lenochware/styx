@@ -6,6 +6,7 @@ Styx.levels.Level = class
 	constructor()
 	{
 		this.map = [];
+		this.fov = {};
 		this.size = new Styx.Rectangle(0,0,0,0);
 		this.actors = [];
 	}
@@ -33,6 +34,11 @@ Styx.levels.Level = class
 	find(tag)
 	{
 		return _.chain(_.keys(this.map)).filter(i => this.map[i].is(tag));
+	}
+
+	isVisible(x, y)
+	{
+		return this.fov[x + ',' + y]? true : false;
 	}
 
 

@@ -6,38 +6,35 @@ Styx.ui.Renderer = class
 	constructor()
 	{
 		this.game = game;
-		this.fov = {};
 		this.level = null;
 		this.view = null;
 	}
 
-	calcVisible()
+	computeFov()
 	{
-		//ROT.RNG.setSeed(12345);
+		this.level.fov = {};
 		var pos = this.game.player.pos;
-		this.fov = {};
-
 		var fov = new ROT.FOV.PreciseShadowcasting((x, y) => this.lightPasses(x,y) );
-		fov.compute(pos.x, pos.y, 10, (x, y, r, vis) => this.writeFov(x, y, r, vis) );
+		fov.compute(pos.x, pos.y, 50, (x, y, r, vis) => this.writeFov(x, y, r, vis) );
 	}
 
 	lightPasses(x, y)
 	{
 		if (!this.view.pointInside(x, y)) return false;
-		return !this.level.getXY(x, y, 'tile').is('wall');
+		return !this.level.getXY(x, y, 'tile').is('opaque');
 	}
 
 	writeFov(x, y, r, vis)
 	{
 		if (!this.view.pointInside(x, y)) return;
-		this.fov[x + ',' + y] = true;
+		this.level.fov[x + ',' + y] = true;
 	}
 
 	render(level, container, params)
 	{
 		this.level = level;
 		this.view = params.view;
-		this.calcVisible();
+		this.computeFov();
 
 		$('#'+container).html(this._renderHtml());
 	}
@@ -58,12 +55,13 @@ Styx.ui.Renderer = class
 
 	_renderTile(level, x, y)
 	{
-		if (!this.fov[x + ',' + y]) {
-			return `<span class="ui-gray" data-pos="${x},${y}">*</span>`;
-		}
-
 		var r = {char: "?", color: "white" };
 		var tile = level.getXY(x, y, 'tile');
+
+		if (!level.isVisible(x,y)) {
+			r = tile.getAttrib('render');
+			return `<span class="ui-dark-gray" data-pos="${x},${y}">${r.char}</span>`;
+		}
 
 		if (tile.actor && tile.actor.isVisible()) r = tile.actor.getAttrib('render');
 		else if (tile.is("hiding")) r = tile.getAttrib('render');

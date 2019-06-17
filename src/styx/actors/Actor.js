@@ -98,7 +98,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	canOccupy(tile)
 	{
 		if (this.is('ghost') && !tile.is('inpenetrable')) return true;
-		if (tile.is('wall')) return false;
+		if (tile.is('blocking')) return false;
 		return true;
 	}
 
