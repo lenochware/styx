@@ -1,4 +1,10 @@
 {
+	"none": {
+	},
+
+	"block": {
+	},
+
 	"bite": {
 		"tags": ["attack"],
 		"points": 2

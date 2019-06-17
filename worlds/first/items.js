@@ -33,12 +33,12 @@
 		"name": "small wooden shield",
 		"desc": "Scratched round small woden shield with brass spice in center."
 	},		
-	"soft_lether_armour": {
+	"soft_leather_armor": {
 		"render": {"char": "(", "color": "brown" },
 		"tags": ["item", "wearable", "armor"],
 		"points": 10,
-		"name": "soft leather armour",
-		"desc": "Kind of basic armour."
+		"name": "soft leather armor",
+		"desc": "Kind of basic armor."
 	},		
 	"copper_coins": {
 		"render": {"char": "$", "color": "brown" },

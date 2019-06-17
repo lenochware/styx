@@ -51,6 +51,8 @@ Styx.actors.Inventory = class
 		if (wearItem) {
 			this.set(this.getFreeKey(), wearItem);		
 		}
+
+		this.updateOwner();
 	}
 
 	unwear(key)
@@ -67,6 +69,7 @@ Styx.actors.Inventory = class
 
 		this.set(freeKey, item);
 		this.remove(key);
+		this.updateOwner();
 	}
 
 	getWeapon()
@@ -92,6 +95,24 @@ Styx.actors.Inventory = class
 		else if (item.is('armor')) return "2";
 		else if (item.is('boots')) return "5";
 	}
+
+	updateOwner()
+	{
+		this.owner.armor = this.getArmorPoints();
+	}
+
+	getArmorPoints()
+	{
+		var points = 0;
+
+		for (let i of [1,2,5]) {
+			if (!this.get(i)) continue;
+			points += this.get(i);
+		}
+
+		return points;
+	}
+
 
 	getContent()
 	{
