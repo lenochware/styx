@@ -106,8 +106,9 @@ Styx.actors.Inventory = class
 		var points = 0;
 
 		for (let i of [1,2,5]) {
-			if (!this.get(i)) continue;
-			points += this.get(i);
+			var item = this.get(i);
+			if (!item) continue;
+			points += item.getAttrib('points', 0);
 		}
 
 		return points;

@@ -92,12 +92,17 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 		this.health -= points;
 
+		var isNear = (this.distance(this.game.player) < 6);
+
 		if (src) {
 			if (src.is('actor')) this.target = src;
-			this.game.message('attack-' + type, "msg-info", src, this);
+			if (isNear) this.game.message('attack-' + type, "msg-info", src, this);
 		}
 
-		this.game.get('window-manager').warMessage(src, type, points);
+		if (isNear) {
+			this.game.get('window-manager').warMessage(src, type, points);
+		}
+
 
 		if (points && this.getAction(type).tags.includes('poison')) {
 			this.conditions.add('Poisoned', 10);
@@ -128,10 +133,10 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 			this.game.message("You die.", "msg-danger");
 		}
 		else if (src && src.is('player')) {
-			this.game.message(this.getAttrib("death-message", "You defeated {0}."), "msg-hilite", this.name());
+			this.game.message(this.getAttrib("death-message", "You defeated {0}."), "msg-hilite", this);
 		}
 		else {
-			this.game.message("{0} dies.", "msg-info", this.name());			
+			this.game.message("{0} dies.", "msg-info", this);
 		}
 
 		var tile = this.getTile();
