@@ -1,7 +1,6 @@
-- hungry, eat, leveling, xp, weapon, shield
+- hungry, eat
 - rest vylepsit
 
-- odstranit width,height z rooms defs
 - lepsi door management (potrebne tile.pos?) devices, use?
 - GameObject(events? on, trigger, off, pres EventManager), DungeonObject
 - prejmenovat .map na .tiles (.cells?)
@@ -32,6 +31,8 @@
 
 = DONE =
 
+x odstranit width,height z rooms defs
+x leveling, xp, weapon, shield
 x shallow water
 x sleep/awake monster, slow monster (snake)
 x getAttack() vyber podle attack-chances

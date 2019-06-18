@@ -15,8 +15,8 @@ game.load('world:first').then(function()
 	//player.conditions.add('Poisoned', 5);
 
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
-	//level.set(level.find('floor').sample().value(), 'actor', player);
-	level.setXY(5, 5, 'actor', player);
+	level.set(level.find('floor').sample().value(), 'actor', player);
+	//level.setXY(5, 5, 'actor', player);
 
 	input = game.get('input-manager');
 	input.init();
@@ -24,7 +24,7 @@ game.load('world:first').then(function()
 	wm = game.get('window-manager');
 	wm.setPanel({id: "messages", container: "messages"});
 	wm.setPanel({id: "sidebar", container: "sidebar"});
-	wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,50,20)});
+	wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,80,30)});
 
 	wm.on('render', updateView);
 

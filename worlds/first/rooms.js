@@ -29,7 +29,7 @@
 		  "######+######"
 		],
 
-		"tags": ["small", "room"],
+		"tags": ["small", "room", "no-rotate"],
 
 		"features": {
 		"#": ["wall"],

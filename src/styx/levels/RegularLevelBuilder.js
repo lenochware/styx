@@ -89,7 +89,7 @@ Styx.levels.RegularLevelBuilder = class
 			r = new Styx.levels.Room(_.sample(this.roomsIndex));
 		}
 
-		if(Math.random() < 0.5) r.rotate();
+		if(!r.is('no-rotate') && Math.random() < 0.5) r.rotate();
 
 		return r;
 	}
