@@ -7,7 +7,7 @@ game.load('world:first').then(function()
 {
 	builder = game.get('level-builder');
 
-	level = builder.build({ type: 'random-level', size: new Styx.Rectangle(0,0,80,30) });
+	level = builder.build({ type: 'regular-level', size: new Styx.Rectangle(0,0,80,30) });
 	
 	player = game.get('player');
 	player.params.name = 'Conan';

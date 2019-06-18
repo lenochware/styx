@@ -10,7 +10,6 @@
 		],
 
 		"tags": ["small", "room"],
-		"width": 5, "height": 5,
 
 		"features": {
 		"#": ["wall"],
@@ -31,7 +30,6 @@
 		],
 
 		"tags": ["small", "room"],
-		"width": 13, "height": 5,
 
 		"features": {
 		"#": ["wall"],
@@ -50,7 +48,6 @@
 		],
 
 		"tags": ["small", "corridor"],
-		"width": 6, "height": 3,
 
 		"features": {
 		"#": ["wall"],
@@ -70,7 +67,6 @@
 		],
 
 		"tags": ["small", "corridor"],
-		"width": 4, "height": 4,
 
 		"features": {
 		"#": ["wall"],

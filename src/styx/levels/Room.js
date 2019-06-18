@@ -66,8 +66,8 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 		this.game = game;
 		this.name = name;
-		this.assign(0, 0, this.getAttrib('width'), this.getAttrib('height'));
 		this.cells = this.getCells();
+		this.assign(0, 0, this.cells[0].length, this.cells.length);
 		this.entrances = this._getEntrances();
 	}
 
