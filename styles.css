@@ -76,6 +76,11 @@ body {
 	color: white;
 }
 
+.msg-good {
+	padding-left: 10px;
+	color: lime;
+}
+
 .ui-green {
 	color: #00ff00;
 }

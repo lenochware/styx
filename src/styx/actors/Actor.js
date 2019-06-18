@@ -134,6 +134,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		}
 		else if (src && src.is('player')) {
 			this.game.message(this.getAttrib("death-message", "You defeated {0}."), "msg-hilite", this);
+			src.addExperience(this);
 		}
 		else {
 			this.game.message("{0} dies.", "msg-info", this);

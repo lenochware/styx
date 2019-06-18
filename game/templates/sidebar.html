@@ -1,8 +1,9 @@
 <span class="command" data-key="i">
 	<%= player.params.name %><br>
-	Gold: <%= player.gold %><br>
+	Level: <%= player.lvl %> <%= _templ.meterSimple(player.xp, player.nextXp) %><br>
 	Health: <%= player.health %> <%= _templ.meter("meter-health", player.health, player.maxHealth) %><br>
 	Armor: <%= player.armor %><br>
+	Gold: <%= player.gold %><br>
 </span>	
 <div class="conditions">
 <% for (let cond of player.getConditions()) { %>

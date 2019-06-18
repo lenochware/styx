@@ -1,5 +1,9 @@
 {
 	"player": {
+		"lvl": 1,
+		"xp": 0,
+		"gold": 0,
+		"armor": 0,
 		"tags": ["player", "actor"],
 		"render": {"char": "@", "color": "white" },
 		"health": 100,
@@ -9,6 +13,8 @@
 	},
 
 	"kobold": {
+		"lvl": 1,
+		"xp": 3,
 		"tags": ["actor", "kobold", "fast"],
 		"render": {"char": "k", "color": "green" },
 		"health": 20,
@@ -19,6 +25,8 @@
 	},
 
 	"ghost": {
+		"lvl": 1,
+		"xp": 3,
 		"tags": ["actor", "ghost", "flying", "neutral", "moving-random", "awake"],
 		"render": {"char": "G", "color": "green" },
 		"health": 10,
@@ -29,6 +37,8 @@
 	},
 
 	"snake": {
+		"lvl": 1,
+		"xp": 6,
 		"tags": ["actor", "neutral", "moving-random", "awake", "slow", "swimmer"],
 		"render": {"char": "J", "color": "yellow" },
 		"health": 10,

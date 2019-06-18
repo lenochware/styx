@@ -8,7 +8,10 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		params.id = 'player';
 		super(params);
 		this.inventory = new Styx.actors.Inventory(this);
-		this.gold = 0;
+		this.gold = this.getAttrib('gold');
+		this.lvl = this.getAttrib('lvl');
+		this.xp = this.getAttrib('xp');
+		this.nextXp = 20 * Math.pow(2, this.lvl - 1);
 		this.tick = 10;
 		this.game.player = this;
 	}
@@ -158,6 +161,21 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		super.die(src);
 		this.params.render = {char: '~', color: 'red'};
+	}
+
+	addExperience(src)
+	{
+		this.xp += src.getAttrib('xp');
+		if (this.xp >= this.nextXp) {
+			this.levelUp();
+			this.nextXp *= 2;
+		}
+	}
+
+	levelUp()
+	{
+		this.lvl++;
+		this.game.message("Welcome to level {0}!", "msg-good", this.lvl);
 	}
 
 	spendTime()
