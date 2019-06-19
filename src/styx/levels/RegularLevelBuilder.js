@@ -10,6 +10,8 @@ Styx.levels.RegularLevelBuilder = class
 		this.level = new Styx.levels.Level;
 		this.level.size = this.params.size;
 		this.rooms = [];
+		this.entrances = [];
+		this.deadEnds = [];
 
 		this.roomsIndex = _.keys(this.game.db.getCategory('rooms'));
 	}
@@ -47,6 +49,8 @@ Styx.levels.RegularLevelBuilder = class
 
 		this.populate();
 
+		this.drawAll();
+
 		return this.level;
 	}
 
@@ -57,9 +61,9 @@ Styx.levels.RegularLevelBuilder = class
 
 	addNextRoom(room, nextRoom)
 	{
-		for(let en of room.freeEntrances()) {
+		for(let en of room.getFreeEntrances()) {
 
-			if (!nextRoom.entrances[en.oppositeSide()]) continue;
+			if (!nextRoom.getEntranceBySide(en.oppositeSide())) continue;
 
 			en.alignRoom(nextRoom);
 
@@ -68,7 +72,7 @@ Styx.levels.RegularLevelBuilder = class
 				return true;
 			}
 			else {
-				delete room.entrances[en.id];
+				//delete room.entrances[en.id];
 			}
 		}
 
@@ -110,14 +114,14 @@ Styx.levels.RegularLevelBuilder = class
 
 	pickRoom()
 	{
-		var room = _.chain(this.rooms).filter(r => r.freeEntrances().length > 0).sample().value();
+		var room = _.chain(this.rooms).filter(r => r.getFreeEntrances().length > 0).sample().value();
 		return room;
 	}
 
 	pickEntrance()
 	{
 		var room = this.pickRoom();
-		var en = _.sample(room.freeEntrances());
+		var en = _.sample(room.getFreeEntrances());
 		return en;
 	}
 
@@ -128,7 +132,8 @@ Styx.levels.RegularLevelBuilder = class
 		}
 
 		this.rooms.push(room);
-		this.drawRoom(room);
+		//this.entrances = this.entrances.concat(room.entrances);
+		//this.drawRoom(room);
 		return room;
 	}
 
@@ -150,7 +155,6 @@ Styx.levels.RegularLevelBuilder = class
 
 	drawAll()
 	{
-		this.clear();
 		for(let room of this.rooms) {
 			this.drawRoom(room);
 		}

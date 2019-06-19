@@ -37,7 +37,7 @@ Styx.levels.Entrance = class
 
 	alignRoom(room)
 	{
-		var en = room.entrances[this.oppositeSide()];
+		var en = room.getEntranceBySide(this.oppositeSide());
 		if (!en) {
 			throw new Error("Entrance does not exists.");
 		}
@@ -68,7 +68,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 		this.name = name;
 		this.cells = this.getCells();
 		this.assign(0, 0, this.cells[0].length, this.cells.length);
-		this.entrances = this._getEntrances();
+		this.entrances = this.createEntrances();
 	}
 
 	getAttrib(attrib)
@@ -102,7 +102,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 		[this.width, this.height] = [this.height, this.width];
 
-		this.entrances = this._getEntrances();
+		this.entrances = this.createEntrances();
 		return this;
 	}
 
@@ -133,9 +133,9 @@ Styx.levels.Room = class extends Styx.Rectangle
 		return false;
 	}
 
-	_getEntrances()
+	createEntrances()
 	{
-		var listEnt = {};
+		var list = [];
 		var listPos = this.findChar('+');
 		for (let pos of listPos) {
 			var side = this._getSide(pos);
@@ -144,10 +144,10 @@ Styx.levels.Room = class extends Styx.Rectangle
 				throw new Error("Wrong entrance.");
 			}
 
-			listEnt[side] = new Styx.levels.Entrance(this, side, pos);
+			list.push(new Styx.levels.Entrance(this, side, pos));
 		}
 
-		return listEnt;
+		return list;
 	}
 
 	draw(level)
@@ -159,8 +159,12 @@ Styx.levels.Room = class extends Styx.Rectangle
 				var cell = this.cells[y][x];
 				if (cell == ' ') continue;
 				if (cor && cell == '+') cell = '.';
-				//nevykreslovat neconnected doors v mistnostech
 
+				if (!cor && cell == '+') {
+					var en = this.getEntrance(x, y);
+					if (en && !en.connected) continue;
+				}
+				
 				var id = '';
 
 				switch(cell) {
@@ -174,10 +178,20 @@ Styx.levels.Room = class extends Styx.Rectangle
 		}
 	}
 
-	freeEntrances()
+	getEntrance(x, y)
+	{
+		return _.find(this.entrances, en => en.pos.x == x && en.pos.y == y);
+	}
+
+	getEntranceBySide(side)
+	{
+		return _.find(this.entrances, en => en.side == side);
+	}
+
+	getFreeEntrances()
 	{
 		var list = [];
-		_.each(this.entrances, (en, key) => {if(!en.connected) list.push(en)});
+		_.each(this.entrances, en => {if(!en.connected) list.push(en)});
 		return list;
 	}
 

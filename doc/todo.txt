@@ -22,6 +22,12 @@
 - doplnit commands pro tile/monster/item: run to, attack/target
 
 
+- ui: po vyberu objektu zobrazit prikazy pro objekt v sidebaru (s hotkeys shift+D, shift+...)
+- ui: "use" otevre inv. a umozni pouzit objekt - wear/eat/quaff
+- ui: shift+arrows posune level o obrazovku...
+- ui: "look" - zobrazi veci kolem (v seznamu)?
+
+
 = BUGS =
 
 - muze nakliknout i neviditelny monster (in high_grass)
