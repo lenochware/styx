@@ -18,18 +18,25 @@ Styx.levels.RegularLevelBuilder = class
 
 	build()
 	{
+		//game.dbgBuild = this;
+
 		this.level.map = this.fillMap(this.level.size, 'wall');
 
 		var first = new Styx.levels.Room('room13x5');
 
-		this.add(first.move(16,8));
+		this.add(first.move(16,8), null);
 
 		while(this.entrances.length)
 		{
 			var en = this.entrances.pop();
-			var nextRoom = this.chooseNextRoom(en.room);
-			var added = this.addNextRoom(en.room, nextRoom);
-			if (!added) this.deadEnds.push(en);
+
+			for (let i = 0; i < 3; i++) {
+				var nextRoom = this.chooseNextRoom(en.room);
+				var added = this.addNextRoom(en.room, nextRoom);
+				if (added) break;
+			}
+
+			if (!en.connected && en.room.is('corridor')) this.deadEnds.push(en);
 		};
 
 		this.populate();
@@ -109,7 +116,7 @@ Styx.levels.RegularLevelBuilder = class
 		return en;
 	}
 
-	add(room, exit = null)
+	add(room, exit)
 	{
 		if (exit) {
 			exit.connect(room);
