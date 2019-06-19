@@ -24,32 +24,19 @@ Styx.levels.RegularLevelBuilder = class
 
 		this.add(first.move(16,8));
 
-		var attempts = 5;
-
-		while (attempts)
+		while(this.entrances.length)
 		{
-			var room = this.pickRoom();
-			if (!room) {
-				console.log('not free room.');
-				break;
-			}
-
-			//console.log('pick', room);
-
-			var nextRoom = this.chooseNextRoom(room);
-
-			var added = this.addNextRoom(room, nextRoom);
-
-			if (added) {
-				//console.log('add', nextRoom);
-				attempts = 5;
-			}
-			else attempts--;
-		}
+			var en = this.entrances.pop();
+			var nextRoom = this.chooseNextRoom(en.room);
+			var added = this.addNextRoom(en.room, nextRoom);
+			if (!added) this.deadEnds.push(en);
+		};
 
 		this.populate();
 
 		this.drawAll();
+
+		console.log('dead ends:' + this.deadEnds.length);
 
 		return this.level;
 	}
@@ -70,9 +57,6 @@ Styx.levels.RegularLevelBuilder = class
 			if (this.hasFreeSpace(nextRoom)) {
 				this.add(nextRoom, en);
 				return true;
-			}
-			else {
-				//delete room.entrances[en.id];
 			}
 		}
 
@@ -132,8 +116,7 @@ Styx.levels.RegularLevelBuilder = class
 		}
 
 		this.rooms.push(room);
-		//this.entrances = this.entrances.concat(room.entrances);
-		//this.drawRoom(room);
+		this.entrances = this.entrances.concat(room.entrances);
 		return room;
 	}
 
