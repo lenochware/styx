@@ -22,18 +22,23 @@ Styx.levels.RegularLevelBuilder = class
 
 		this.level.map = this.fillMap(this.level.size, 'wall');
 
-		var first = new Styx.levels.Room('room13x5');
+		var first = new Styx.levels.Room('cor4');
 
 		this.add(first.move(16,8), null);
 
-		while(this.entrances.length)
+		var maxRooms = 40;
+
+		while(this.entrances.length && maxRooms)
 		{
 			var en = this.entrances.pop();
 
 			for (let i = 0; i < 3; i++) {
 				var nextRoom = this.chooseNextRoom(en.room);
 				var added = this.addNextRoom(en.room, nextRoom);
-				if (added) break;
+				if (added) {
+					maxRooms--;
+					break;
+				}
 			}
 
 			if (!en.connected && en.room.is('corridor')) this.deadEnds.push(en);

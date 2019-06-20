@@ -139,10 +139,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 		var listPos = this.findChar('+');
 		for (let pos of listPos) {
 			var side = this._getSide(pos);
-			if (!side) {
-				console.log(this, listPos);
-				throw new Error("Wrong entrance.");
-			}
+			if (!side) continue;
 
 			list.push(new Styx.levels.Entrance(this, side, pos));
 		}
