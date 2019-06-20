@@ -288,7 +288,7 @@
 		  "#+#"
 		],
 
-		"tags": ["small", "corridor"],
+		"tags": ["small", "corridor", "crossroad"],
 
 		"features": {
 		"#": ["wall"],

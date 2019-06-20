@@ -17,6 +17,7 @@ src/styx/levels/RoomBuilder.js
 src/styx/levels/LevelBuilder.js
 src/styx/levels/TestLevelBuilder.js
 src/styx/levels/RegularLevelBuilder.js
+src/styx/levels/ArenaLevelBuilder.js
 src/styx/levels/Level.js
 src/styx/levels/Tile.js
 src/styx/ui/InputManager.js

@@ -7,10 +7,24 @@ Styx.levels.RoomBuilder = class
 	{
 		this.game = game;
 		this.params = params;
-		this.roomsIndex = _.keys(this.game.db.getCategory('rooms'));
+
+    this.roomsIndex = _.keys(this.game.db.getCategory('rooms'));
+
+		this.rooms = this.game.db.getCategory('rooms');
 	}
 
-	get(room)
+	find(tag)
+	{
+		return _.chain(_.keys(this.rooms)).filter(i => this.rooms[i].tags.includes(tag));
+	}
+
+	get(id)
+	{
+		return new Styx.levels.Room(id);
+	}
+
+
+	build(room)
 	{
 		var r = null;
 

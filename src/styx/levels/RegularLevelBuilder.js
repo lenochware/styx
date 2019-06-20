@@ -78,7 +78,7 @@ Styx.levels.RegularLevelBuilder = class
 
 	chooseNextRoom(room)
 	{
-		return this.roomBuilder.get(room);
+		return this.roomBuilder.build(room);
 	}
 
 	hasFreeSpace(newRoom)
