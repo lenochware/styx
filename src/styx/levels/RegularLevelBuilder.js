@@ -13,7 +13,7 @@ Styx.levels.RegularLevelBuilder = class
 		this.entrances = [];
 		this.deadEnds = [];
 
-		this.roomsIndex = _.keys(this.game.db.getCategory('rooms'));
+		this.roomBuilder = new Styx.levels.RoomBuilder();
 	}
 
 	build()
@@ -22,9 +22,10 @@ Styx.levels.RegularLevelBuilder = class
 
 		this.level.map = this.fillMap(this.level.size, 'wall');
 
-		var first = new Styx.levels.Room('cor4');
+		var first = new Styx.levels.Room('room13x5');
 
-		this.add(first.move(16,8), null);
+		var c = this.level.size.getPoint('center');
+		this.add(first.center(c.x, c.y), null);
 
 		var maxRooms = 40;
 
@@ -77,21 +78,7 @@ Styx.levels.RegularLevelBuilder = class
 
 	chooseNextRoom(room)
 	{
-		var r = null;
-
-		if (room.is('room')) {
-			while(true) {
-				r = new Styx.levels.Room(_.sample(this.roomsIndex));
-				if (r.is('corridor')) break;
-			}
-		}
-		else {
-			r = new Styx.levels.Room(_.sample(this.roomsIndex));
-		}
-
-		if(!r.is('no-rotate') && Math.random() < 0.5) r.rotate();
-
-		return r;
+		return this.roomBuilder.get(room);
 	}
 
 	hasFreeSpace(newRoom)
@@ -128,7 +115,7 @@ Styx.levels.RegularLevelBuilder = class
 		}
 
 		this.rooms.push(room);
-		this.entrances = this.entrances.concat(room.entrances);
+		this.entrances = room.entrances.concat(this.entrances);
 		return room;
 	}
 
