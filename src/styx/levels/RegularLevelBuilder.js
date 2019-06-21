@@ -21,10 +21,26 @@ Styx.levels.RegularLevelBuilder = class
 		this.level.map = this.fillMap(this.level.size, 'wall');
 
 		var first = new Styx.levels.Room('room13x5');
+		var added = this.addToRandomPlace(first);
+		if (added) this.addRoomsStream(first);
 
-		var c = this.level.size.getPoint('center');
-		var room = this.add(first.center(c.x, c.y), null);
+		var first = new Styx.levels.Room('room13x5');
+		var added = this.addToRandomPlace(first);
+		if (added) this.addRoomsStream(first);
 
+		var first = new Styx.levels.Room('room13x5');
+		var added = this.addToRandomPlace(first);
+		if (added) this.addRoomsStream(first);
+
+		this.populate();
+
+		this.drawAll();
+
+		return this.level;
+	}
+
+	addRoomsStream(room)
+	{
 		var maxRooms = 40;
 
 		while(maxRooms--)
@@ -33,12 +49,25 @@ Styx.levels.RegularLevelBuilder = class
 			var added = this.addNextRoom(room, nextRoom);
 			if (added) room = nextRoom;
 		};
+	}
 
-		this.populate();
+	addToRandomPlace(room)
+	{
+		var tests = 10;
+		while (tests--) {
 
-		this.drawAll();
+			room.assign(
+				this.game.random.int(this.level.size.width - room.width), 
+				this.game.random.int(this.level.size.height - room.height)
+			);
 
-		return this.level;
+			if (this.hasFreeSpace(room)) {
+				this.add(room, null);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	populate()
