@@ -150,7 +150,7 @@
 		  "#########"
 		],
 
-		"tags": ["small", "room"],
+		"tags": ["small", "room", "corridor"],
 
 		"features": {
 		"#": ["wall"],

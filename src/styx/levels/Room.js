@@ -164,7 +164,20 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 				if (cell == '+') {
 					var en = this.getEntrance(x, y);
-					if (en && !en.connected) continue;
+						if (en) {
+						if (!en.connected) continue;
+
+						if (this.is('corridor')) {
+							cell = '.';
+						}
+
+						//prevent double door
+						if (!en.connected.room.is('corridor') && (en.room.x > en.connected.room.x 
+							|| (en.room.x == en.connected.room.x && en.room.y > en.connected.room.y))
+						) {
+							cell = '.';
+						}
+					}
 				}
 				
 				var id = '';
@@ -248,6 +261,11 @@ Styx.levels.Corridor = class extends Styx.Rectangle
     }
     // Return the result
     return pos;
+	}
+
+	is(tag)
+	{
+		return (tag == 'corridor');
 	}
 
 	coords()
