@@ -41,4 +41,14 @@ Styx.DungeonBase = class
 		}
 	}
 
+	find(category, tag)
+	{
+		return _.chain(this.data[category]).filter(obj => obj.tags.includes(tag));
+	}
+
+	findKey(category, tag)
+	{
+		return _.chain(_.keys(this.data[category])).filter(i => this.data[category][i].tags.includes(tag));
+	}
+
 }

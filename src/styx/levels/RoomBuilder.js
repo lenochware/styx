@@ -8,38 +8,26 @@ Styx.levels.RoomBuilder = class
 		this.game = game;
 		this.params = params;
 
-    this.roomsIndex = _.keys(this.game.db.getCategory('rooms'));
-
-		this.rooms = this.game.db.getCategory('rooms');
+    //this.roomsIndex = _.keys(this.game.db.getCategory('rooms'));
+		//this.rooms = this.game.db.getCategory('rooms');
 	}
 
 	find(tag)
 	{
-		return _.chain(_.keys(this.rooms)).filter(i => this.rooms[i].tags.includes(tag));
+		return this.game.db.findKey('rooms', tag);
 	}
 
-	make(id)
+	make(id, params = {})
 	{
+		if (params.tag) {
+			id = this.find(params.tag).sample().value();
+		}
+
+		if (!id) {
+			console.warn('Room id not found.');
+			return null;
+		}
+
 		return (id == 'corridor')? new Styx.levels.Corridor(3,3) : new Styx.levels.Room(id);
-	}
-
-
-	build(room)
-	{
-		var r = null;
-
-		if (room.is('room')) {
-			while(true) {
-				r = new Styx.levels.Room(_.sample(this.roomsIndex));
-				if (r.is('corridor')) break;
-			}
-		}
-		else {
-			r = new Styx.levels.Room(_.sample(this.roomsIndex));
-		}
-
-		if(!r.is('no-rotate') && Math.random() < 0.5) r.rotate();
-
-		return r;		
 	}
 }

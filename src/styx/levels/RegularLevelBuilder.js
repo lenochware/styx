@@ -10,6 +10,7 @@ Styx.levels.RegularLevelBuilder = class
 		this.level = new Styx.levels.Level;
 		this.level.size = this.params.size;
 		this.rooms = [];
+		this.rnd = this.game.random;
 
 		this.roomBuilder = new Styx.levels.RoomBuilder();
 	}
@@ -24,13 +25,13 @@ Styx.levels.RegularLevelBuilder = class
 		var added = this.addToRandomPlace(first);
 		if (added) this.addRoomsStream(first);
 
-		var first = new Styx.levels.Room('room13x5');
-		var added = this.addToRandomPlace(first);
-		if (added) this.addRoomsStream(first);
+		// var first = new Styx.levels.Room('room13x5');
+		// var added = this.addToRandomPlace(first);
+		// if (added) this.addRoomsStream(first);
 
-		var first = new Styx.levels.Room('room13x5');
-		var added = this.addToRandomPlace(first);
-		if (added) this.addRoomsStream(first);
+		// var first = new Styx.levels.Room('room13x5');
+		// var added = this.addToRandomPlace(first);
+		// if (added) this.addRoomsStream(first);
 
 		this.populate();
 
@@ -47,7 +48,15 @@ Styx.levels.RegularLevelBuilder = class
 		{
 			var nextRoom = this.chooseNextRoom();
 			var added = this.addNextRoom(room, nextRoom);
-			if (added) room = nextRoom;
+			if (added) { 
+
+				if (this.rnd.bet(.2)) {
+					var sideRoom = this.roomBuilder.make(null, {tag: 'room'});
+					this.addNextRoom(room, sideRoom);
+				}
+
+				room = nextRoom;
+			}
 		};
 	}
 
@@ -57,8 +66,8 @@ Styx.levels.RegularLevelBuilder = class
 		while (tests--) {
 
 			room.assign(
-				this.game.random.int(this.level.size.width - room.width), 
-				this.game.random.int(this.level.size.height - room.height)
+				this.rnd.int(this.level.size.width - room.width), 
+				this.rnd.int(this.level.size.height - room.height)
 			);
 
 			if (this.hasFreeSpace(room)) {
@@ -94,9 +103,12 @@ Styx.levels.RegularLevelBuilder = class
 
 	chooseNextRoom()
 	{
-		var rnd = this.game.random;
-		var id = rnd.bet(.5)? 'corridor' : this.roomBuilder.find('room').sample().value();
-		return this.roomBuilder.make(id);
+		if (this.rnd.bet(.5)) {
+			return this.roomBuilder.make('corridor');
+		}
+		else {
+			return  this.roomBuilder.make(null, {tag: 'room'});
+		}
 	}
 
 	hasFreeSpace(newRoom)
