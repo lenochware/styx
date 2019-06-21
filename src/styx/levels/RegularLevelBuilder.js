@@ -10,8 +10,6 @@ Styx.levels.RegularLevelBuilder = class
 		this.level = new Styx.levels.Level;
 		this.level.size = this.params.size;
 		this.rooms = [];
-		this.entrances = [];
-		this.deadEnds = [];
 
 		this.roomBuilder = new Styx.levels.RoomBuilder();
 	}
@@ -25,31 +23,20 @@ Styx.levels.RegularLevelBuilder = class
 		var first = new Styx.levels.Room('room13x5');
 
 		var c = this.level.size.getPoint('center');
-		this.add(first.center(c.x, c.y), null);
+		var room = this.add(first.center(c.x, c.y), null);
 
 		var maxRooms = 40;
 
-		while(this.entrances.length && maxRooms)
+		while(maxRooms--)
 		{
-			var en = this.entrances.pop();
-
-			for (let i = 0; i < 3; i++) {
-				var nextRoom = this.chooseNextRoom(en.room);
-				var added = this.addNextRoom(en.room, nextRoom);
-				if (added) {
-					maxRooms--;
-					break;
-				}
-			}
-
-			if (!en.connected && en.room.is('corridor')) this.deadEnds.push(en);
+			var nextRoom = this.chooseNextRoom();
+			var added = this.addNextRoom(room, nextRoom);
+			if (added) room = nextRoom;
 		};
 
 		this.populate();
 
 		this.drawAll();
-
-		console.log('dead ends:' + this.deadEnds.length);
 
 		return this.level;
 	}
@@ -76,9 +63,11 @@ Styx.levels.RegularLevelBuilder = class
 		return false;
 	}
 
-	chooseNextRoom(room)
+	chooseNextRoom()
 	{
-		return this.roomBuilder.build(room);
+		var rnd = this.game.random;
+		var id = rnd.bet(.5)? 'corridor' : this.roomBuilder.find('room').sample().value();
+		return this.roomBuilder.make(id);
 	}
 
 	hasFreeSpace(newRoom)
@@ -95,19 +84,6 @@ Styx.levels.RegularLevelBuilder = class
 		return true;
 	}
 
-	pickRoom()
-	{
-		var room = _.chain(this.rooms).filter(r => r.getFreeEntrances().length > 0).sample().value();
-		return room;
-	}
-
-	pickEntrance()
-	{
-		var room = this.pickRoom();
-		var en = _.sample(room.getFreeEntrances());
-		return en;
-	}
-
 	add(room, exit)
 	{
 		if (exit) {
@@ -115,7 +91,6 @@ Styx.levels.RegularLevelBuilder = class
 		}
 
 		this.rooms.push(room);
-		this.entrances = room.entrances.concat(this.entrances);
 		return room;
 	}
 

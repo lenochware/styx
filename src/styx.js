@@ -7,7 +7,7 @@ game.load('world:first').then(function()
 {
 	builder = game.get('level-builder');
 
-	level = builder.build({ type: 'arena-level', size: new Styx.Rectangle(0,0,80,30) });
+	level = builder.build({ type: 'regular-level', size: new Styx.Rectangle(0,0,80,30) });
 	
 	player = game.get('player');
 	player.params.name = 'Conan';
@@ -15,11 +15,11 @@ game.load('world:first').then(function()
 	//player.conditions.add('Poisoned', 5);
 
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
-	//level.set(level.find('floor').sample().value(), 'actor', player);
+	level.set(level.find('floor').sample().value(), 'actor', player);
 	//level.setXY(5, 5, 'actor', player);
 
-	var c = level.size.getPoint('center');
-	level.set(c, 'actor', player);
+	// var c = level.size.getPoint('center');
+	// level.set(c, 'actor', player);
 
 	input = game.get('input-manager');
 	input.init();

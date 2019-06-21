@@ -18,9 +18,9 @@ Styx.levels.RoomBuilder = class
 		return _.chain(_.keys(this.rooms)).filter(i => this.rooms[i].tags.includes(tag));
 	}
 
-	get(id)
+	make(id)
 	{
-		return new Styx.levels.Room(id);
+		return (id == 'corridor')? new Styx.levels.Corridor(3,3) : new Styx.levels.Room(id);
 	}
 
 

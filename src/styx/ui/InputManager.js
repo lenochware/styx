@@ -48,7 +48,8 @@ Styx.ui.InputManager = class
 			var level = this.game.player.level;
 			this.handle(command);
 			if (level) level.update();
-			this.wm.render();				
+			this.wm.render();
+			e.preventDefault();
 		});
 	}
 

@@ -30,20 +30,28 @@ Styx.levels.Entrance = class
 
 	connect(room)
 	{
-		var en = this.alignRoom(room);
-		this.connected = room;
-		en.connected = this.room;		
+		//var en = this.alignRoom(room);
+		var en = this.getMatchingEntrance(room);
+		this.connected = en;
+		en.connected = this;
 	}
 
-	alignRoom(room)
+	getMatchingEntrance(room)
 	{
 		var en = room.getEntranceBySide(this.oppositeSide());
 		if (!en) {
 			throw new Error("Entrance does not exists.");
 		}
-		if ((en.connected && en.connected != this) || this.connected && this.connected != room) {
+		if ((en.connected && en.connected.room != this) || this.connected && this.connected.room != room) {
 			throw new Error("Entrance is already connected.");
 		}
+
+		return en;
+	}
+
+	alignRoom(room)
+	{
+		var en = this.getMatchingEntrance(room);
 
 		room.move(this.getPos().x - en.getPos().x, this.getPos().y - en.getPos().y); //nastavi prekryvajici mistnost
 
@@ -149,15 +157,12 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 	draw(level)
 	{
-		var cor = this.is('corridor');
-
 		for (var y = 0; y < this.height; y++) {
 			for (var x = 0; x < this.width; x++) {
 				var cell = this.cells[y][x];
 				if (cell == ' ') continue;
-				if (cor && cell == '+') cell = '.';
 
-				if (!cor && cell == '+') {
+				if (cell == '+') {
 					var en = this.getEntrance(x, y);
 					if (en && !en.connected) continue;
 				}
@@ -173,6 +178,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 				level.setXY(this.x + x, this.y + y, 'id', id);
 			}
 		}
+
 	}
 
 	getEntrance(x, y)
@@ -189,7 +195,105 @@ Styx.levels.Room = class extends Styx.Rectangle
 	{
 		var list = [];
 		_.each(this.entrances, en => {if(!en.connected) list.push(en)});
+		return _.shuffle(list);
+	}
+}
+
+
+//Corridor
+
+Styx.levels.Corridor = class extends Styx.Rectangle
+{
+	constructor(w, h)
+	{
+		super(0,0,w, h, {});
+
+		this.game = game;
+		this.name = 'corridor';
+		this.entrances = this.createEntrances();
+	}
+
+	/** Bresenham line */
+	line (p1, p2) {
+    var pos = [];
+    // Translate coordinates
+    var x1 = p1.x;
+    var y1 = p1.y;
+    var x2 = p2.x;
+    var y2 = p2.y;
+
+    // Define differences and error check
+    var dx = Math.abs(x2 - x1);
+    var dy = Math.abs(y2 - y1);
+    var sx = (x1 < x2) ? 1 : -1;
+    var sy = (y1 < y2) ? 1 : -1;
+    var err = dx - dy;
+
+    // Set first coordinates
+    pos.push({x:x1, y: y1});
+
+    // Main loop
+    while (!((x1 == x2) && (y1 == y2))) {
+        var e2 = err << 1;
+        if (e2 > -dy) {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y1 += sy;
+        }
+        // Set coordinates
+        pos.push({x:x1, y: y1});
+    }
+    // Return the result
+    return pos;
+	}
+
+	coords()
+	{
+		var pos = [];
+		var center = this.getPoint('center');
+
+		_.each(this.entrances, 
+			(en) => { if (en.connected) pos = pos.concat(this.line(en.getPos(), center)); }
+		);
+
+		return pos;
+	}
+
+	draw(level)
+	{
+		for (let pos of this.coords()) {
+			level.set(pos, 'id', 'floor');
+		}
+	}
+
+	createEntrances()
+	{
+		var list = [];
+		list.push(new Styx.levels.Entrance(this, 'north', this.getPoint('center-1')));
+		list.push(new Styx.levels.Entrance(this, 'east', this.getPoint('center-2')));
+		list.push(new Styx.levels.Entrance(this, 'south', this.getPoint('center-3')));
+		list.push(new Styx.levels.Entrance(this, 'west', this.getPoint('center-4')));
+
 		return list;
 	}
 
+	getEntrance(x, y)
+	{
+		return _.find(this.entrances, en => en.pos.x == x && en.pos.y == y);
+	}
+
+	getEntranceBySide(side)
+	{
+		return _.find(this.entrances, en => en.side == side);
+	}
+
+	getFreeEntrances()
+	{
+		var list = [];
+		_.each(this.entrances, en => {if(!en.connected) list.push(en)});
+		return _.shuffle(list);
+	}
 }
