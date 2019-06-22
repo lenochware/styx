@@ -74,8 +74,13 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 		this.game = game;
 		this.name = name;
-		this.cells = this.getCells();
-		this.assign(0, 0, this.cells[0].length, this.cells.length);
+		this._init();
+	}
+
+	_init()
+	{
+		this.cells = this.getCells();		
+		this.assign(0, 0, this.cells[0].length, this.cells.length);		
 		this.entrances = this.createEntrances();
 	}
 
@@ -215,14 +220,17 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 //Corridor
 
-Styx.levels.Corridor = class extends Styx.Rectangle
+Styx.levels.Corridor = class extends Styx.levels.Room
 {
 	constructor(w, h)
 	{
-		super(0,0,w, h, {});
+		super('corridor');
+		this._init(w,h);
+	}
 
-		this.game = game;
-		this.name = 'corridor';
+	_init(w, h) {
+		this.cells = null;
+		this.assign(0, 0, w, h);
 		this.entrances = this.createEntrances();
 	}
 
@@ -263,11 +271,6 @@ Styx.levels.Corridor = class extends Styx.Rectangle
     return pos;
 	}
 
-	is(tag)
-	{
-		return (tag == 'corridor');
-	}
-
 	coords()
 	{
 		var pos = [];
@@ -296,22 +299,5 @@ Styx.levels.Corridor = class extends Styx.Rectangle
 		list.push(new Styx.levels.Entrance(this, 'west', this.getPoint('center-4')));
 
 		return list;
-	}
-
-	getEntrance(x, y)
-	{
-		return _.find(this.entrances, en => en.pos.x == x && en.pos.y == y);
-	}
-
-	getEntranceBySide(side)
-	{
-		return _.find(this.entrances, en => en.side == side);
-	}
-
-	getFreeEntrances()
-	{
-		var list = [];
-		_.each(this.entrances, en => {if(!en.connected) list.push(en)});
-		return _.shuffle(list);
 	}
 }

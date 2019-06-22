@@ -1,4 +1,10 @@
 {
+	"corridor": {
+		"cells": [],
+		"tags": ["corridor"],
+		"features": {}
+	},
+
 	"small-pillar-room": {
 		"cells":
 		[ 
