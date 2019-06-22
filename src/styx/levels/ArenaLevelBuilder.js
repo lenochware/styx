@@ -61,8 +61,7 @@ Styx.levels.ArenaLevelBuilder = class
 
 	chooseNextRoom(room)
 	{
-		var id = this.roomBuilder.find('room').sample().value();
-		return this.roomBuilder.get(id);
+		return this.roomBuilder.make(null, {tag: 'room'});
 	}
 
 	hasFreeSpace(newRoom)
@@ -91,9 +90,15 @@ Styx.levels.ArenaLevelBuilder = class
 		return map;
 	}
 
+	drawXY(room, x, y, attrib, value)
+	{
+		this.level.setXY(x, y, attrib, value);
+		//this.roomCells[y * this.level.size.width + x] = room;
+	}
+
 	drawRoom(room)
 	{
-		room.draw(this.level);
+		room.draw(this.drawXY.bind(this));
 	}
 
 	drawAll()

@@ -109,7 +109,7 @@ Styx.levels.RegularLevelBuilder = class
 			return this.roomBuilder.make('corridor');
 		}
 		else {
-			return  this.roomBuilder.make(null, {tag: 'room'});
+			return this.roomBuilder.make(null, {tag: 'room'});
 		}
 	}
 
