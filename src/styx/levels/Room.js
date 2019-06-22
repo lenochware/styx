@@ -160,7 +160,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 		return list;
 	}
 
-	draw(level)
+	draw(drawCellCallback)
 	{
 		var features = this.getAttrib('features');
 
@@ -188,8 +188,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 				}
 				
 				var id = features[cell].id;
-
-				level.setXY(this.x + x, this.y + y, 'id', id);
+				drawCellCallback(this, this.x + x, this.y + y, 'id', id);
 			}
 		}
 
@@ -279,10 +278,10 @@ Styx.levels.Corridor = class extends Styx.levels.Room
 		return pos;
 	}
 
-	draw(level)
+	draw(drawCellCallback)
 	{
 		for (let pos of this.coords()) {
-			level.set(pos, 'id', 'floor');
+			drawCellCallback(this, pos.x, pos.y , 'id', 'floor');
 		}
 	}
 

@@ -10,9 +10,11 @@ Styx.levels.RegularLevelBuilder = class
 		this.level = new Styx.levels.Level;
 		this.level.size = this.params.size;
 		this.rooms = [];
-		this.rnd = this.game.random;
+		this.roomCells = [];
 
 		this.roomBuilder = new Styx.levels.RoomBuilder();
+		
+		this.rnd = this.game.random;
 	}
 
 	build()
@@ -146,9 +148,15 @@ Styx.levels.RegularLevelBuilder = class
 		return map;
 	}
 
+	drawXY(room, x, y, attrib, value)
+	{
+		this.level.setXY(x, y, attrib, value);
+		this.roomCells[y * this.level.size.width + x] = room;
+	}
+
 	drawRoom(room)
 	{
-		room.draw(this.level);
+		room.draw(this.drawXY.bind(this));
 	}
 
 	drawAll()
