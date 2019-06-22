@@ -44,12 +44,16 @@ Styx.ui.InputManager = class
 		this.initTileInfo();
 		this.initCommands();
 		input.on('keypress', (e) => {
-			var command = this.getCommand(event);
+			var command = this.getCommand(e);
 			var level = this.game.player.level;
 			this.handle(command);
 			if (level) level.update();
 			this.wm.render();
-			e.preventDefault();
+
+			//allow develop-tools
+			if (['F12', 'F5'].includes(e.key)) return;
+			else e.preventDefault();
+			
 		});
 	}
 

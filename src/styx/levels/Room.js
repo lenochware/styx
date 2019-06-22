@@ -162,6 +162,8 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 	draw(level)
 	{
+		var features = this.getAttrib('features');
+
 		for (var y = 0; y < this.height; y++) {
 			for (var x = 0; x < this.width; x++) {
 				var cell = this.cells[y][x];
@@ -185,13 +187,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 					}
 				}
 				
-				var id = '';
-
-				switch(cell) {
-					case '#': case 'O': id = 'wall'; break;
-					case '+': id = 'door'; break;
-					case '.': id = 'floor'; break;
-				}
+				var id = features[cell].id;
 
 				level.setXY(this.x + x, this.y + y, 'id', id);
 			}

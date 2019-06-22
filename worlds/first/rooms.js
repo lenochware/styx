@@ -18,10 +18,10 @@
 		"tags": ["small", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"],
-		"O": ["pillar"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"},
+		"O": {"id": "wall", "tags": ["pillar"] }
 		}
 	},
 
@@ -38,9 +38,9 @@
 		"tags": ["small", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -57,9 +57,9 @@
 		"tags": ["small", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -76,9 +76,9 @@
 		"tags": ["small", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -96,9 +96,9 @@
 		"tags": ["small", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -117,9 +117,9 @@
 		"tags": ["small", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -138,9 +138,9 @@
 		"tags": ["small", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -159,9 +159,9 @@
 		"tags": ["small", "room", "corridor"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -178,9 +178,9 @@
 		"tags": ["small", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -197,9 +197,9 @@
 		"tags": ["small", "room", "no-rotate"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	},
 
@@ -220,9 +220,9 @@
 		"tags": ["big", "room"],
 
 		"features": {
-		"#": ["wall"],
-		".": ["floor"],
-		"+": ["entrance"]
+		"#": {"id": "wall"},
+		".": {"id": "floor"},
+		"+": {"id": "door"}
 		}
 	}
 }
