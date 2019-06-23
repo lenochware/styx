@@ -66,20 +66,96 @@ Styx.levels.Entrance = class
 	}
 }
 
-Styx.levels.Room = class extends Styx.Rectangle
+Styx.levels.GenericRoom = class extends Styx.Rectangle
+{
+	constructor(width, height)
+	{
+		super(0, 0, width, height, {});
+		this.game = game;
+		this.entrances = [];
+	}
+
+	is(tag)
+	{
+		return false;
+	}
+
+	getEntrance(x, y)
+	{
+		return _.find(this.entrances, en => en.pos.x == x && en.pos.y == y);
+	}
+
+	getEntranceBySide(side)
+	{
+		return _.find(this.entrances, en => en.side == side);
+	}
+
+	getFreeEntrances()
+	{
+		var list = [];
+		_.each(this.entrances, en => {if(!en.connected) list.push(en)});
+		return _.shuffle(list);
+	}
+
+	_getSide(pos)
+	{
+		if (pos.x == 0) return 'west';
+		if (pos.y == 0) return 'north';
+		if (pos.y == this.height - 1) return 'south';
+		if (pos.x == this.width - 1) return 'east';
+		return false;
+	}
+
+	/** Bresenham line */
+	line (p1, p2) {
+    var pos = [];
+    // Translate coordinates
+    var x1 = p1.x;
+    var y1 = p1.y;
+    var x2 = p2.x;
+    var y2 = p2.y;
+
+    // Define differences and error check
+    var dx = Math.abs(x2 - x1);
+    var dy = Math.abs(y2 - y1);
+    var sx = (x1 < x2) ? 1 : -1;
+    var sy = (y1 < y2) ? 1 : -1;
+    var err = dx - dy;
+
+    // Set first coordinates
+    pos.push({x:x1, y: y1});
+
+    // Main loop
+    while (!((x1 == x2) && (y1 == y2))) {
+        var e2 = err << 1;
+        if (e2 > -dy) {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y1 += sy;
+        }
+        // Set coordinates
+        pos.push({x:x1, y: y1});
+    }
+    // Return the result
+    return pos;
+	}
+
+	draw(drawCellCallback)
+	{
+	}
+
+}
+
+Styx.levels.Room = class extends Styx.levels.GenericRoom
 {
 	constructor(name)
 	{
-		super(0,0,0,0,{});
-
-		this.game = game;
+		super(0,0);
 		this.name = name;
-		this._init();
-	}
-
-	_init()
-	{
-		this.cells = this.getCells();		
+		this.cells = this.getCells();
 		this.assign(0, 0, this.cells[0].length, this.cells.length);		
 		this.entrances = this.createEntrances();
 	}
@@ -137,15 +213,6 @@ Styx.levels.Room = class extends Styx.Rectangle
 		return pos;
 	}
 
-	_getSide(pos)
-	{
-		if (pos.x == 0) return 'west';
-		if (pos.y == 0) return 'north';
-		if (pos.y == this.height - 1) return 'south';
-		if (pos.x == this.width - 1) return 'east';
-		return false;
-	}
-
 	createEntrances()
 	{
 		var list = [];
@@ -193,78 +260,24 @@ Styx.levels.Room = class extends Styx.Rectangle
 		}
 
 	}
-
-	getEntrance(x, y)
-	{
-		return _.find(this.entrances, en => en.pos.x == x && en.pos.y == y);
-	}
-
-	getEntranceBySide(side)
-	{
-		return _.find(this.entrances, en => en.side == side);
-	}
-
-	getFreeEntrances()
-	{
-		var list = [];
-		_.each(this.entrances, en => {if(!en.connected) list.push(en)});
-		return _.shuffle(list);
-	}
 }
 
 
 //Corridor
 
-Styx.levels.Corridor = class extends Styx.levels.Room
+Styx.levels.Corridor = class extends Styx.levels.GenericRoom
 {
 	constructor(w, h)
 	{
-		super('corridor');
-		this._init(w,h);
-	}
-
-	_init(w, h) {
-		this.cells = null;
-		this.assign(0, 0, w, h);
+		super(w,h);
 		this.entrances = this.createEntrances();
 	}
 
-	/** Bresenham line */
-	line (p1, p2) {
-    var pos = [];
-    // Translate coordinates
-    var x1 = p1.x;
-    var y1 = p1.y;
-    var x2 = p2.x;
-    var y2 = p2.y;
-
-    // Define differences and error check
-    var dx = Math.abs(x2 - x1);
-    var dy = Math.abs(y2 - y1);
-    var sx = (x1 < x2) ? 1 : -1;
-    var sy = (y1 < y2) ? 1 : -1;
-    var err = dx - dy;
-
-    // Set first coordinates
-    pos.push({x:x1, y: y1});
-
-    // Main loop
-    while (!((x1 == x2) && (y1 == y2))) {
-        var e2 = err << 1;
-        if (e2 > -dy) {
-            err -= dy;
-            x1 += sx;
-        }
-        if (e2 < dx) {
-            err += dx;
-            y1 += sy;
-        }
-        // Set coordinates
-        pos.push({x:x1, y: y1});
-    }
-    // Return the result
-    return pos;
+	is(tag)
+	{
+		return (tag == 'corridor');
 	}
+
 
 	coords()
 	{
@@ -295,4 +308,34 @@ Styx.levels.Corridor = class extends Styx.levels.Room
 
 		return list;
 	}
+}
+
+Styx.levels.Connector = class extends Styx.levels.GenericRoom
+{
+	constructor(en1, en2)
+	{
+		super(0,0);
+		this.entrances.push(en1, en2);
+	}
+
+	is(tag)
+	{
+		return (tag == 'corridor');
+	}
+
+	coords()
+	{
+		var pos = [];
+		var pos = pos.concat(this.line(this.entrances[0].getPos(), this.entrances[1].getPos()));
+		return pos;
+	}
+
+	draw(drawCellCallback)
+	{
+		for (let pos of this.coords()) {
+			drawCellCallback(this, pos.x, pos.y , 'id', 'shallow_water');
+		}
+	}
+
+
 }

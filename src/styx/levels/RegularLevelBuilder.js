@@ -72,7 +72,7 @@ Styx.levels.RegularLevelBuilder = class
 				this.rnd.int(this.level.size.height - room.height)
 			);
 
-			if (this.hasFreeSpace(room)) {
+			if (!this.isOccupied(room)) {
 				this.add(room, null);
 				return true;
 			}
@@ -94,13 +94,27 @@ Styx.levels.RegularLevelBuilder = class
 
 			en.alignRoom(nextRoom);
 
-			if (this.hasFreeSpace(nextRoom)) {
+			if (!nextRoom.inside(this.level.size)) continue;
+			var occupied = this.isOccupied(nextRoom);
+
+			if (!occupied) {
 				this.add(nextRoom, en);
 				return true;
+			}
+			else {
+				this.makeConnection(en, occupied);
 			}
 		}
 
 		return false;
+	}
+
+	makeConnection(en, room)
+	{
+		var en2 = room.getEntranceBySide(en.oppositeSide());
+		if (!en2 || en2.connected) return;
+		var con = new Styx.levels.Connector(en, en2);
+		this.add(con, en);
 	}
 
 	chooseNextRoom()
@@ -113,18 +127,14 @@ Styx.levels.RegularLevelBuilder = class
 		}
 	}
 
-	hasFreeSpace(newRoom)
+	isOccupied(newRoom)
 	{
-		if (!newRoom.inside(this.level.size)) {
-			return false;
-		}
-
 		for(let room of this.rooms)
 		{
-			if (newRoom.intersect(room)) return false;
+			if (newRoom.intersect(room)) return room;
 		}
 
-		return true;
+		return false;
 	}
 
 	add(room, exit)
