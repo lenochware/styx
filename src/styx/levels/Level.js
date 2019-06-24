@@ -1,14 +1,20 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
-Styx.levels.Level = class
+Styx.levels.Level = class extends Styx.GameObject
 {
-	constructor()
+	constructor(id)
 	{
+		super('levels', id, {});
 		this.map = [];
 		this.fov = {};
-		this.size = new Styx.Rectangle(0,0,0,0);
+		this.size = this._createRect();
 		this.actors = [];
+	}
+
+	_createRect()
+	{
+		return new Styx.Rectangle(0,0,80,30);
 	}
 
 	get(pos, attrib)

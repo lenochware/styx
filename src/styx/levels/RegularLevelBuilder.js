@@ -3,12 +3,10 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.RegularLevelBuilder = class
 {
-	constructor(params)
+	constructor()
 	{
 		this.game = game;
-		this.params = params;
-		this.level = new Styx.levels.Level;
-		this.level.size = this.params.size;
+		this.level = null;
 		this.rooms = [];
 		this.roomCells = [];
 

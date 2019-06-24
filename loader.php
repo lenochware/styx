@@ -7,12 +7,15 @@ $id = $_GET['id'];
 
 if (strpos($id, 'world:') === 0) {
 	list($temp, $name) = explode(":", $id);
-	$worldParts = ['tiles', 'items', 'actors', 'rooms', 'texts', 'actions'];
+	$worldParts = ['tiles', 'items', 'actors', 'rooms', 'texts', 'actions', 'levels'];
 
 	$world = [];
 
 	foreach ($worldParts as $part) {
 		$world[$part] = json_decode(file_get_contents("worlds/$name/$part.js"));
+		if (json_last_error() != JSON_ERROR_NONE) {
+			die("worlds/$name/$part.js: " . json_last_error_msg());
+		}
 	}
 	outputJson($world);
 }
