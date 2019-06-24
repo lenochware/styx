@@ -124,6 +124,13 @@ Styx.ui.WindowManager = class
 		});
 	}
 
+	openGameMenu()
+	{
+		this.openWindow('game-menu', 600, 400, {
+			template: 'game-menu',
+			player: this.game.player
+		});
+	}
 
 	_addCmd(cmds, id, key, label, cmd)
 	{

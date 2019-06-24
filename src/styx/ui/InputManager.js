@@ -30,6 +30,13 @@ Styx.ui.InputManager = class
 			inventory: {
 			},
 			'item-window': {
+			},
+			'game-menu': {
+				'Esc': {command: 'open'},
+				'n': {command: 'new-game'},
+				's': {command: 'save-game'},
+				'h': {command: 'help'},
+				't': {command: 'settings'}
 			}
 		};
 	}
@@ -89,10 +96,21 @@ Styx.ui.InputManager = class
 	getCommand(event)
 	{
 		var window = this.wm.getActiveWindow();
-		var category = window? window.id : 'player';
+		var category = '';
 
-		if (window && event.key == 'Escape') {
-			return {command: 'close-window', category: 'window'};
+		if (window) {
+			if(event.key == 'Escape') {
+				return {command: 'close-window', category: 'window'};
+			}
+			else {
+				category = window.id;
+			}
+		}
+		else if(event.key == 'Escape') {
+			return {command: 'open', category: 'game-menu'};
+		}
+		else {
+			category = 'player';
 		}
 
 		if (category == 'inventory' && /^[a-z0-9]+$/.test(event.key)) {
@@ -114,6 +132,7 @@ Styx.ui.InputManager = class
 	{
 		switch (command.category)
 		{
+			case 'game-menu': this.handleGameMenuCmd(command); break;
 			case 'player': this.handlePlayerCmd(command); break;
 			case 'inventory': this.handleInventoryCmd(command); break;
 			case 'item-window': this.handleItemCmd(command); break;
@@ -123,6 +142,17 @@ Styx.ui.InputManager = class
 				}
 			break;
 			case 'undefined': console.warn(`Undefined command '${command.command}'`); break;
+		}
+	}
+
+	handleGameMenuCmd(command)
+	{
+		switch(command.command) {
+			case 'open': this.wm.openGameMenu(); break;
+			case 'new-game': console.log('New game.'); break;
+			case 'save-game': console.log('Save game.'); break;
+			case 'help': console.log('Help.'); break;
+			case 'settings': console.log('Settings.'); break;
 		}
 	}
 
@@ -139,7 +169,6 @@ Styx.ui.InputManager = class
 			case 'search': p.search(); break;
 			case 'rest': p.rest(); break;
 			// case 'attack': break;
-			default: throw `Invalid command '${command.command}'.`;
 		}
 	}
 
@@ -153,7 +182,6 @@ Styx.ui.InputManager = class
 					this.wm.openItemWindow({item: item, key: command.key});
 				}
 			break;
-			default: throw `Invalid command '${command.command}'.`;
 		}
 	}
 
@@ -178,8 +206,6 @@ Styx.ui.InputManager = class
 				p.eat(command.key);
 				this.wm.closeWindow();
 			break;
-
-			default: throw `Invalid command '${command.command}'.`;
 		}
 	}
 }
