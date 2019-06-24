@@ -1,18 +1,15 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
-Styx.levels.ArenaLevelBuilder = class
+Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 {
 	constructor()
 	{
-		this.game = game;
-		this.level = null;
-		this.rooms = [];
-
+		super();
 		this.roomBuilder = new Styx.levels.RoomBuilder();
 	}
 
-	build()
+	createLevel()
 	{
 		//game.dbgBuild = this;
 
@@ -31,22 +28,11 @@ Styx.levels.ArenaLevelBuilder = class
 			var added = this.addNextRoom(nextRoom);
 		};
 
-		this.populate();
+		//this.populate();
 
 		this.drawAll();
 
 		return this.level;
-	}
-
-	populate()
-	{
-
-	}
-
-	add(room)
-	{
-		this.rooms.push(room);
-		return room;
 	}
 
 	addNextRoom(nextRoom)
@@ -62,48 +48,10 @@ Styx.levels.ArenaLevelBuilder = class
 		return this.roomBuilder.make(null, {tag: 'room'});
 	}
 
-	hasFreeSpace(newRoom)
-	{
-		if (!newRoom.inside(this.level.size)) {
-			return false;
-		}
-
-		for(let room of this.rooms)
-		{
-			if (newRoom.intersect(room)) return false;
-		}
-
-		return true;
-	}
-
-
-	fillMap(size, fillId)
-	{
-		var map = [];
-
-		for (var i = 0; i < size.width * size.height; i++) {
-			map[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), fillId);
-		}
-
-		return map;
-	}
-
 	drawXY(room, x, y, attrib, value)
 	{
 		this.level.setXY(x, y, attrib, value);
 		//this.roomCells[y * this.level.size.width + x] = room;
 	}
-
-	drawRoom(room)
-	{
-		room.draw(this.drawXY.bind(this));
-	}
-
-	drawAll()
-	{
-		for(let room of this.rooms) {
-			this.drawRoom(room);
-		}
-	}	
 
 }

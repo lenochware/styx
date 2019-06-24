@@ -73,4 +73,23 @@ Styx.Game = class
 			this.loadJson('dungeon-base', id)
 		]).then(() => this.db = this.get('dungeon-base'));
 	}
+
+	getLevelBuilder(type)
+	{
+		switch (type) {
+			case 'regular': return new Styx.levels.RegularLevelBuilder();
+			case 'arena': return new Styx.levels.ArenaLevelBuilder();
+			case 'test': return new Styx.levels.TestLevelBuilder();
+			case 'random': return new Styx.levels.TestLevelBuilder();
+			default: throw new Error("Unknown level type.");
+		}
+	}
+
+	createLevel(id)
+	{
+		var level = new Styx.levels.Level(id);
+		var builder = this.getLevelBuilder(level.getAttrib('type'));
+		builder.level = level;
+		return builder.createLevel();
+	}
 }

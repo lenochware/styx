@@ -7,25 +7,118 @@ Styx.levels.LevelBuilder = class
 	constructor()
 	{
 		this.game = game;
+		this.level = null;
+		this.rooms = [];
+		this.rnd = this.game.random;
 	}
 
-	build(id)
+	createLevel()
 	{
-		var level = new Styx.levels.Level(id);
-		var builder = this.getBuilder(level.getAttrib('type'));
-		builder.level = level;
-
-		return builder.build();
+		throw new Error('Not implemented.');
 	}
 
-	getBuilder(type)
+	populate() 
 	{
-		switch (type) {
-			case 'regular': return new Styx.levels.RegularLevelBuilder();
-			case 'arena': return new Styx.levels.ArenaLevelBuilder();
-			case 'test': return new Styx.levels.TestLevelBuilder();
-			case 'random': return new Styx.levels.TestLevelBuilder();
-			default: throw new Error("Unknown level type.");
+		throw new Error('Not implemented.');		
+	}
+
+	chooseNextRoom()
+	{
+		throw new Error('Not implemented.');
+	}
+
+
+	add(room, exit)
+	{
+		if (exit) {
+			exit.connect(room);
+		}
+
+		this.rooms.push(room);
+		return room;
+	}
+
+	addToRandomPlace(room)
+	{
+		var tests = 10;
+		while (tests--) {
+
+			room.assign(
+				this.rnd.int(this.level.size.width - room.width), 
+				this.rnd.int(this.level.size.height - room.height)
+			);
+
+			if (!this.isOccupied(room)) {
+				this.add(room, null);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	addNextRoom(room, nextRoom)
+	{
+		for(let en of room.getFreeEntrances()) {
+
+			if (!nextRoom.getEntranceBySide(en.oppositeSide())) continue;
+
+			en.alignRoom(nextRoom);
+
+			if (!nextRoom.inside(this.level.size)) continue;
+			var occupied = this.isOccupied(nextRoom);
+
+			if (!occupied) {
+				this.add(nextRoom, en);
+				return true;
+			}
+			else {
+				this.makeConnection(en, occupied);
+			}
+		}
+
+		return false;
+	}
+
+	makeConnection(en, room)
+	{
+		var en2 = room.getEntranceBySide(en.oppositeSide());
+		if (!en2 || en2.connected) return;
+		var con = new Styx.levels.Connector(en, en2);
+		this.add(con, en);
+	}
+
+	isOccupied(newRoom)
+	{
+		for(let room of this.rooms)
+		{
+			if (newRoom.intersect(room)) return room;
+		}
+
+		return false;
+	}
+
+	fillMap(size, fillId)
+	{
+		var map = [];
+
+		for (var i = 0; i < size.width * size.height; i++) {
+			map[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), fillId);
+		}
+
+		return map;
+	}
+
+	drawXY(room, x, y, attrib, value)
+	{
+		throw new Error('Not implemented.');
+	}
+
+	drawAll()
+	{
+		for(let room of this.rooms) {
+			room.draw(this.drawXY.bind(this));
 		}
 	}
+
 }

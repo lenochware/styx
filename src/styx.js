@@ -5,9 +5,7 @@ var game = new Styx.Game();
 
 game.load('world:first').then(function() 
 {
-	builder = game.get('level-builder');
-
-	level = builder.build('small-cave');
+	level = game.createLevel('small-cave');
 	
 	player = game.get('player');
 	player.params.name = 'Conan';
