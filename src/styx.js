@@ -5,7 +5,7 @@ var game = new Styx.Game();
 
 game.load('world:first').then(function() 
 {
-	level = game.createLevel('small-cave');
+	var level = game.createLevel('first');
 	
 	player = game.get('player');
 	player.params.name = 'Conan';
@@ -27,7 +27,7 @@ game.load('world:first').then(function()
 	wm.setPanel({id: "sidebar", container: "sidebar"});
 	wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,80,30)});
 
-	wm.on('render', updateView);
+	game.on('render', updateView);
 
 	wm.render();
 });
@@ -36,5 +36,5 @@ game.load('world:first').then(function()
 function updateView()
 {
 	var view = wm.getPanel('level-map').view;
-	view.center(player.pos.x, player.pos.y).align(level.size);
+	view.center(player.pos.x, player.pos.y).align(player.level.size);
 }

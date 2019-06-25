@@ -100,7 +100,8 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 		if (tile.is('exit')) {
 			this.game.message("You climb the {0}.", 'msg-info', tile);
-			var exit = this.exits[tile.pos.x + ',' + tile.pos.y];
+			var exit = this.level.exits[tile.pos.x + ',' + tile.pos.y];
+			this.game.on('render', () => this.game.changeLevel(exit.id), {run: 'once'});
 		}
 
 		super.enter(pos);

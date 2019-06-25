@@ -92,4 +92,30 @@ Styx.Game = class
 		builder.level = level;
 		return builder.createLevel();
 	}
+
+	changeLevel(id)
+	{
+		console.log('changeLevel');
+	}
+
+	on(eventName, callback, params = {})
+	{
+		var f = callback;
+
+		if (params.run == 'once') {
+			f = function(e) {
+				document.removeEventListener(e.type, f);
+				return callback(e);
+			}
+		}
+		
+		document.addEventListener(eventName, f);
+	}
+
+	trigger(eventName)
+	{
+		var event = new Event(eventName);
+		document.dispatchEvent(event);
+	}
+
 }
