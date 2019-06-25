@@ -95,6 +95,26 @@ Styx.Game = class
 
 	changeLevel(id)
 	{
+		var wm = this.get('window-manager');
+		var currentLevel = this.player.level;
+		var level = this.createLevel(id);
+		var exitFound = null;
+		
+		for (let exit of _.values(level.exits)) {
+			if (exit.id == currentLevel.id) {
+				exitFound = exit;
+				break;
+			}
+		}
+
+		if (!exitFound) {
+			console.warn('Missing exit in the level.');
+			return;
+		}
+
+		level.set(exitFound.pos, 'actor', this.player);
+
+		wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,80,30)});
 		console.log('changeLevel');
 	}
 

@@ -88,7 +88,7 @@ Styx.levels.LevelBuilder = class
 	addExit(pos, exit)
 	{
 		this.level.set(pos, 'id', exit.tile);
-		this.level.exits[pos.x + ',' + pos.y] = exit;
+		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos};
 	}
 
 	makeConnection(en, room)
