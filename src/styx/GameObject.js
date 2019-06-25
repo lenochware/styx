@@ -16,6 +16,13 @@ Styx.GameObject = class
 		return this.game.db.getAttrib(this.category, this.id, attrib) || defaultValue;
 	}
 
+	setAttrib(attrib, value)
+	{
+		this.params[attrib] = value;
+	}
+
+	addTag(tag)	{}
+
 	is(tag)
 	{
     return (this.id == tag || this.getAttrib("tags").includes(tag));

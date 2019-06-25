@@ -56,6 +56,20 @@
 		"desc": "Blood stains on the floor looks suspicious."
 	},
 
+	"stairs-up": {
+		"render": {"char": "<", "color": "white" },
+		"tags": ["exit"],
+		"name": "stairs up",
+		"desc": "You see nothing interesting."
+	},
+
+	"stairs-down": {
+		"render": {"char": ">", "color": "white" },
+		"tags": ["exit"],
+		"name": "stairs down",
+		"desc": "You see nothing interesting."
+	},
+
 	"door": {
 		"render": {"char": "+", "color": "brown" },
 		"tags": ["hiding", "door", "opaque"],

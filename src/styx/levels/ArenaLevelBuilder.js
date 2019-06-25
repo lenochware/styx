@@ -31,8 +31,20 @@ Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 		//this.populate();
 
 		this.drawAll();
+		this.addStairs();
 
 		return this.level;
+	}
+
+	addStairs()
+	{
+		var rooms = this.findRoom('room');
+
+		var exits = this.level.getAttrib('exits');
+		for (let exit of exits) {
+			var pos = rooms.sample().value().getPoint('random');
+			this.addExit(pos, exit);
+		}
 	}
 
 	addNextRoom(nextRoom)

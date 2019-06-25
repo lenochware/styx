@@ -10,6 +10,7 @@ Styx.levels.Level = class extends Styx.GameObject
 		this.fov = {};
 		this.size = this._createRect();
 		this.actors = [];
+		this.exits = {};
 	}
 
 	_createRect()

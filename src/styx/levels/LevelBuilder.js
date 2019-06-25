@@ -27,6 +27,11 @@ Styx.levels.LevelBuilder = class
 		throw new Error('Not implemented.');
 	}
 
+	findRoom(tag)
+	{
+		return _.chain(this.rooms).filter(obj => obj.is(tag));
+	}
+
 
 	add(room, exit)
 	{
@@ -78,6 +83,12 @@ Styx.levels.LevelBuilder = class
 		}
 
 		return false;
+	}
+
+	addExit(pos, exit)
+	{
+		this.level.set(pos, 'id', exit.tile);
+		this.level.exits[pos.x + ',' + pos.y] = exit;
 	}
 
 	makeConnection(en, room)
