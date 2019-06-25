@@ -98,6 +98,11 @@ Styx.actors.Player = class extends Styx.actors.Actor
 				tile.item.shortDesc(), pos.x + ',' + pos.y);
 		}
 
+		if (tile.is('exit')) {
+			this.game.message("You climb the {0}.", 'msg-info', tile);
+			var exit = this.exits[tile.pos.x + ',' + tile.pos.y];
+		}
+
 		super.enter(pos);
 	}
 

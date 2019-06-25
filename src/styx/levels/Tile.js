@@ -36,6 +36,11 @@ Styx.levels.Tile = class
 		return this.getAttrib("desc");
 	}
 
+	toString()
+	{
+		return this.name();
+	}
+
 	enter(actor)
 	{
 		if (!actor.is("flying") && !actor.is("swimmer")) {
