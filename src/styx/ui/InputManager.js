@@ -76,6 +76,7 @@ Styx.ui.InputManager = class
 	initKeyboard()
 	{
 		$("body").on('keydown', (e) => {
+			this.game.trigger('game-loop');
 			var command = this.getCommand(e);
 			var level = this.game.player.level;
 			this.handle(command);
