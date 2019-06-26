@@ -18,6 +18,13 @@
 		]
 	},
 
+	"test": {
+		"name": "Test level",
+		"type": "test",
+		"tags": ["small"],
+		"exits": []
+	},
+
 	"wilderness": {
 		"name": "Wilderness",
 		"type": "arena",

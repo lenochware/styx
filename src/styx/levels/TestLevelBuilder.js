@@ -1,23 +1,14 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
-Styx.levels.TestLevelBuilder = class
+Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 {
-	constructor(params)
+	createLevel()
 	{
-		this.game = game;
-		this.level = null;
-		this.params = params;
-	}
+		// if (this.params.type == 'test-level')	this.buildTestMap();
+		// else this.buildRandomMap();
 
-	build()
-	{
-		this.level = new Styx.levels.Level;
-		this.level.size = this.params.size;
-		this.level.map = this.createMap(this.params.size, 'wall');
-
-		if (this.params.type == 'test-level')	this.buildTestMap();
-		else this.buildRandomMap();
+		super.createLevel();
 
 		this.spawn(16,6, 'monster', {id: "snake"});
 		this.spawn(7,7, 'item', {id: "short_sword"});
@@ -73,17 +64,6 @@ Styx.levels.TestLevelBuilder = class
 
 		this.level.setXY(x, y, type, obj);
 		return obj;
-	}
-
-	createMap(size, fillId)
-	{
-		var map = [];
-
-		for (var i = 0; i < size.width * size.height; i++) {
-			map[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), fillId);
-		}
-
-		return map;
 	}
 
 	buildRandomMap()
