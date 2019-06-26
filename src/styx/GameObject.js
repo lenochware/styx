@@ -12,8 +12,9 @@ Styx.GameObject = class
 
 	getAttrib(attrib, defaultValue = null)
 	{
-		if (this.params[attrib]) return this.params[attrib];
-		return this.game.db.getAttrib(this.category, this.id, attrib) || defaultValue;
+		if (this.params[attrib] !== undefined) return this.params[attrib];
+		var value = this.game.db.getAttrib(this.category, this.id, attrib);
+		return (value !== undefined)? value : defaultValue;
 	}
 
 	setAttrib(attrib, value)
