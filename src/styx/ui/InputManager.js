@@ -41,36 +41,20 @@ Styx.ui.InputManager = class
 		};
 	}
 
-	on(eventName, callback)
-	{
-		document.addEventListener('keydown', callback);		
-	}
-
 	init()
 	{
-		this.initTileInfo();
-		this.initCommands();
-		input.on('keypress', (e) => {
-			var command = this.getCommand(e);
-			var level = this.game.player.level;
-			this.handle(command);
-			if (level) level.update();
-			this.wm.render();
-
-			//allow develop-tools
-			if (['F12', 'F5'].includes(e.key)) return;
-			else e.preventDefault();
-			
-		});
+		this.initMouse();
+		this.initKeyboard();
 	}
 
-
-	initTileInfo()
+	initMouse()
 	{
-		$("#level-map").on("click", "span", (e) => {
-			var level = this.wm.getPanel('level-map').level;
-			var pos = $(e.target).data("pos").split(",");
-			this.wm.showTileInfo(level, Number(pos[0]), Number(pos[1]));
+		$("body").on("click", ".command", (e) => {
+			var key = $(e.target).data("key");
+			var cmd = this.getCommand({key: key});
+			this.handle(cmd);
+			this.game.player.level.update();
+			this.wm.render();
 		});
 
 		$("body").on("click", ".tile-info", (e) => {
@@ -81,17 +65,27 @@ Styx.ui.InputManager = class
 				pos: {x:Number(pos[0]),y:Number(pos[1])}
 			});
 		});
-	}	
 
+		$("#level-map").on("click", "span", (e) => {
+			var level = this.wm.getPanel('level-map').level;
+			var pos = $(e.target).data("pos").split(",");
+			this.wm.showTileInfo(level, Number(pos[0]), Number(pos[1]));
+		});				
+	}
 
-	initCommands()
+	initKeyboard()
 	{
-		$("body").on("click", ".command", (e) => {
-			var key = $(e.target).data("key");
-			var cmd = this.getCommand({key: key});
-			this.handle(cmd);
-			this.game.player.level.update();
+		$("body").on('keydown', (e) => {
+			var command = this.getCommand(e);
+			var level = this.game.player.level;
+			this.handle(command);
+			if (level) level.update();
 			this.wm.render();
+
+			//allow develop-tools
+			if (['F12', 'F5'].includes(e.key)) return;
+			else e.preventDefault();
+			
 		});
 	}
 

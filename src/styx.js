@@ -25,7 +25,7 @@ game.load('world:first').then(function()
 	wm = game.get('window-manager');
 	wm.setPanel({id: "messages", container: "messages"});
 	wm.setPanel({id: "sidebar", container: "sidebar"});
-	wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,80,30)});
+	wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,40,20)});
 
 	game.on('render', updateView);
 

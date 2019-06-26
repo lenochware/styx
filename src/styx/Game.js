@@ -113,8 +113,8 @@ Styx.Game = class
 		}
 
 		level.set(exitFound.pos, 'actor', this.player);
-
-		wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,80,30)});
+		wm.getPanel('level-map').level = level;
+		
 		console.log('changeLevel');
 	}
 
