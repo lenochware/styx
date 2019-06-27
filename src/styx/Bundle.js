@@ -20,11 +20,23 @@ Styx.Bundle = class
 		}
 	}
 
-	get(key) {
-		return this.data[key];
+	get(key)
+	{
+		var value = this.data[key];
+
+		if (this.isBundledObject(value)) {
+			return this.getObject(key);
+		}
+		else if (_.isArray(value)) {
+			return this.getArray(key);
+		}
+		else {
+			return value;
+		}
 	}
 
-	getBundle(key) {
+	getBundle(key)
+	{
 		return new this.constructor(this.data[key]);
 	}
 
@@ -48,6 +60,27 @@ Styx.Bundle = class
 	isBundlable(value)
 	{
 		return _.isObject(value) && (typeof value.storeInBundle == 'function');
+ 	}
+
+	isBundledObject(value)
+	{
+		return (_.isObject(value) && value['_className_']);
+ 	}
+
+ 	getArray(key)
+ 	{
+ 		if (!this.isBundledObject(this.data[key][0])) {
+ 			return this.data[key];
+ 		}
+
+ 		var list = [];
+ 		let bundle = this.getBundle(key);
+
+ 		for(let i in bundle.data) { 			
+ 			list.push(bundle.getObject(i));
+ 		}
+
+ 		return list;
  	}
 
  	putArray(key, srcList)

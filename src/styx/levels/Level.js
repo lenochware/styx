@@ -17,11 +17,21 @@ Styx.levels.Level = class extends Styx.GameObject
 		super.storeInBundle(bundle);
 		bundle.put('_className_', 'Styx.levels.Level');
 		bundle.put('_args_', [this.id]);
+		bundle.put('map', this.map);
+		bundle.put('fov', this.fov);
+		bundle.put('size', this.size);
+		bundle.put('actors', this.actors);
+		bundle.put('exits', this.exits);
 	}
 
 	restoreFromBundle(bundle) {
 		super.restoreFromBundle(bundle);
-	}	
+		this.map = bundle.get('map');
+		this.fov = bundle.get('fov');
+		this.size = bundle.get('size');
+		this.actors = bundle.get('actors');
+		this.exits = bundle.get('exits');
+	}
 
 	_createRect()
 	{

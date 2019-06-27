@@ -8,6 +8,14 @@ Styx.Rectangle = class
 		this.assign(x, y, w, h);
 	}
 
+	storeInBundle(bundle) {
+		bundle.put('_className_', 'Styx.Rectangle');
+		bundle.put('_args_', [this.x, this.y, this.width, this.height, this.params]);
+	}
+
+	restoreFromBundle(bundle) {
+	}	
+
 	coords()
 	{
 		var pos = [];
