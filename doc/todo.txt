@@ -1,8 +1,9 @@
+- level.set() prepocita pos na x,y a pak v setxy zpatky. nemel by byt primarni level.set misto setxy?
+
 - hungry, eat
 - rest vylepsit
 
 - lepsi door management (potrebne tile.pos?) devices, use?
-- GameObject(events? on, trigger, off, pres EventManager), DungeonObject
 - prejmenovat .map na .tiles (.cells?)
 - RoomBuilder, map meta (roominfo, first etc.)
 - wm: nahr. prime odkazy: #game-container atd.
@@ -17,7 +18,6 @@
 - poskozovani zbrani
 - touch-afraid, invisibility
 - save, menu
-- fov
 - drop: ['none', 'corpse', 'copper_coins'], drop-chances: [10,2,1]
 - doplnit commands pro tile/monster/item: run to, attack/target
 
@@ -30,7 +30,6 @@
 
 = BUGS =
 
-- muze nakliknout i neviditelny monster (in high_grass)
 - ghost is afraid msg i po smrti
 - kdyz se utopi zustane viset jeho info v sidebaru
 - null.pos err in attack - multiple targets?
@@ -43,5 +42,8 @@ x shallow water
 x sleep/awake monster, slow monster (snake)
 x getAttack() vyber podle attack-chances
 x hiding_item, hiding_monster? - po objeveni zviditelnit, monster se muze zase skryt (monster actions[hide,...] + tile.hiding -> condition:hidden)
+x GameObject(events? on, trigger, off, pres EventManager), DungeonObject  --- on a spol. prozatim v Game 
+x fov
+x muze nakliknout i neviditelny monster (in high_grass)
 
 angband level size: 198x66

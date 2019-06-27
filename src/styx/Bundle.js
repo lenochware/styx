@@ -4,7 +4,6 @@ Styx.Bundle = class
 {
 	constructor(data = {})
 	{
-		this.CLASS_NAME = '_className_';
 		this.data = data;
 	}
 
@@ -26,13 +25,22 @@ Styx.Bundle = class
 	}
 
 	getBundle(key) {
-		return new Bundle(this.data[key]);
+		return new this.constructor(this.data[key]);
 	}
 
-	getInstance()
+	getObject(key)
 	{
-		var className = this.get(this.CLASS_NAME);
-		var obj = new window[className]();
+		var bundle = this.getBundle(key);
+
+		var className = bundle.get('_className_');
+
+		if (!className.match(/^[a-zA-Z0-9_.]+$/)) {
+			throw new Error('Invalid _className_');
+		}
+
+		var obj = eval(`new ${className}()`);
+		obj.restoreFromBundle(bundle);
+
 		return obj;
 	}
 
@@ -51,8 +59,7 @@ Styx.Bundle = class
  		var list = [];
 
  		for(let obj of srcList) {
- 			bundle = new Bundle();
- 			bundle.put(this.CLASS_NAME, obj.constructor.name);
+ 			let bundle = new this.constructor();
  			obj.storeInBundle(bundle);
  			list.push(bundle.data);
  		}
@@ -66,8 +73,7 @@ Styx.Bundle = class
 			throw new Error('Object is not serializable.');
 		}
 
-		bundle = new Bundle();
-		bundle.put(this.CLASS_NAME, obj.constructor.name);
+		let bundle = new this.constructor();
 		obj.storeInBundle(bundle);
 		this.data[key] = bundle.data;
 	}
