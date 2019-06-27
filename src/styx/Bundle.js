@@ -33,12 +33,13 @@ Styx.Bundle = class
 		var bundle = this.getBundle(key);
 
 		var className = bundle.get('_className_');
+		var args = bundle.get('_args_');
 
 		if (!className.match(/^[a-zA-Z0-9_.]+$/)) {
 			throw new Error('Invalid _className_');
 		}
 
-		var obj = eval(`new ${className}()`);
+		var obj = args? eval(`new ${className}(...args)`) : eval(`new ${className}()`);
 		obj.restoreFromBundle(bundle);
 
 		return obj;
