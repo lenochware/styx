@@ -10,6 +10,16 @@ Styx.DungeonObject = class extends Styx.GameObject
 		this.pos = params.pos || null;
 	}
 
+	storeInBundle(bundle) {
+		super.storeInBundle(bundle);
+		bundle.put('_className_', 'Styx.DungeonObject');
+		bundle.put('_args_', [this.category, this.id, this.params]);
+	}
+
+	restoreFromBundle(bundle) {
+		super.restoreFromBundle(bundle);
+	}	
+
 	distance(entity)
 	{
 		if (!this.pos || !entity.pos) {

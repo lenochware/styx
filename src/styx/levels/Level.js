@@ -13,6 +13,16 @@ Styx.levels.Level = class extends Styx.GameObject
 		this.exits = {};
 	}
 
+	storeInBundle(bundle) {
+		super.storeInBundle(bundle);
+		bundle.put('_className_', 'Styx.levels.Level');
+		bundle.put('_args_', [this.id]);
+	}
+
+	restoreFromBundle(bundle) {
+		super.restoreFromBundle(bundle);
+	}	
+
 	_createRect()
 	{
 		return new Styx.Rectangle(0,0,80,30);

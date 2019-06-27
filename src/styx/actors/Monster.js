@@ -24,6 +24,16 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		}
 	}
 
+	storeInBundle(bundle) {
+		super.storeInBundle(bundle);
+		bundle.put('_className_', 'Styx.actors.Monster');
+		bundle.put('_args_', [this.params]);
+	}
+
+	restoreFromBundle(bundle) {
+		super.restoreFromBundle(bundle);
+	}	
+
 	update()
 	{
 		while (this.time + this.tick < this.game.time)

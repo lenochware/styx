@@ -15,6 +15,21 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		this.time = 0;
 	}
 
+	storeInBundle(bundle) {
+		super.storeInBundle(bundle);
+		bundle.put('_className_', 'Styx.actors.Actor');
+		bundle.put('_args_', [this.params]);
+		bundle.put('health', this.health);
+		//target?
+		//conditions?
+		//time?
+	}
+
+	restoreFromBundle(bundle) {
+		super.restoreFromBundle(bundle);
+		this.health = bundle.get('health');
+	}	
+
 	getConditions()
 	{
 		return this.conditions.list();

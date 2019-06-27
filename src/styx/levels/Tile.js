@@ -11,6 +11,16 @@ Styx.levels.Tile = class
 		this.item = null;
 	}
 
+	storeInBundle(bundle) {
+		bundle.put('_className_', 'Styx.levels.Tile');
+		bundle.put('_args_', [this.pos.x, this.pos.y, this.id]);
+		//actor and item?
+	}
+
+	restoreFromBundle(bundle) {
+	}	
+
+
 	getAttrib(attrib, defaultValue = null)
 	{
 		return game.db.getAttrib('tiles', this.id, attrib) || defaultValue;

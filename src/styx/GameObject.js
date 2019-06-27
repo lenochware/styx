@@ -10,6 +10,14 @@ Styx.GameObject = class
 		this.params = params;
 	}
 
+	storeInBundle(bundle) {
+		bundle.put('_className_', 'Styx.GameObject');
+		bundle.put('_args_', [this.category, this.id, this.params]);
+	}
+
+	restoreFromBundle(bundle) {
+	}	
+
 	getAttrib(attrib, defaultValue = null)
 	{
 		if (this.params[attrib] !== undefined) return this.params[attrib];
