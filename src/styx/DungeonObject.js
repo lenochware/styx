@@ -14,10 +14,12 @@ Styx.DungeonObject = class extends Styx.GameObject
 		super.storeInBundle(bundle);
 		bundle.put('_className_', 'Styx.DungeonObject');
 		bundle.put('_args_', [this.category, this.id, this.params]);
+		bundle.put('pos', this.pos);
 	}
 
 	restoreFromBundle(bundle) {
 		super.restoreFromBundle(bundle);
+		this.pos = bundle.get('pos');
 	}	
 
 	distance(entity)

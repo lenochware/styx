@@ -17,20 +17,50 @@ Styx.levels.Level = class extends Styx.GameObject
 		super.storeInBundle(bundle);
 		bundle.put('_className_', 'Styx.levels.Level');
 		bundle.put('_args_', [this.id]);
-		bundle.put('map', this.map);
-		bundle.put('fov', this.fov);
 		bundle.put('size', this.size);
-		bundle.put('actors', this.actors);
 		bundle.put('exits', this.exits);
+
+		var items = [];
+		var actors = [];
+		var map = [];
+
+		for (let tile of this.map) {
+			map.push(tile.id);
+			if (tile.actor) actors.push(tile.actor);
+			if (tile.item) items.push(tile.item);
+		}
+
+		bundle.put('items', items);
+		bundle.put('actors', actors);
+		bundle.put('map', map);
+
+		//bundle.put('fov', this.fov);
 	}
 
 	restoreFromBundle(bundle) {
 		super.restoreFromBundle(bundle);
-		this.map = bundle.get('map');
-		this.fov = bundle.get('fov');
+
 		this.size = bundle.get('size');
-		this.actors = bundle.get('actors');
 		this.exits = bundle.get('exits');
+
+		this.map = [];
+		
+		var tileIds = bundle.get('map');
+		for (let i in tileIds) {
+			this.map.push(
+				new Styx.levels.Tile(i % this.size.width, Math.floor(i / this.size.width), tileIds[i])
+			);
+		}
+
+		for (let obj of bundle.get('actors')) {
+			this.set(obj.pos, 'actor', obj);
+		}
+
+		for (let obj of bundle.get('items')) {
+			this.set(obj.pos, 'item', obj);
+		}
+
+		//this.fov = bundle.get('fov');
 	}
 
 	_createRect()
