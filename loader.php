@@ -1,6 +1,13 @@
 <?php
 
 $id = $_GET['id'];
+$action = $_GET['action'];
+
+
+if ($action == 'saveLevel') {
+	file_put_contents("worlds/first/save/$id.json", $_POST['data']);
+	return;
+}
 
 
 //worlds/first/test.js

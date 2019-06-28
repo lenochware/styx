@@ -8,6 +8,16 @@ Styx.items.Item = class extends Styx.DungeonObject
 		super('items', params.id, params);
 	}
 
+	storeInBundle(bundle) {
+		super.storeInBundle(bundle);
+		bundle.put('_className_', 'Styx.items.Item');
+		bundle.put('_args_', [this.params]);
+	}
+
+	restoreFromBundle(bundle) {
+		super.restoreFromBundle(bundle);
+	}
+
 	longDesc()
 	{
 		var desc = super.longDesc();

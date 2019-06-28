@@ -118,6 +118,26 @@ Styx.Game = class
 		console.log('changeLevel');
 	}
 
+	saveLevel(level)
+	{
+		var bundle = new Styx.Bundle();
+		bundle.put('level', level);
+
+		return $.post("loader.php?action=saveLevel&id=" + level.id, { 
+			data: bundle.getData()})
+		.done(() => { console.log('Level saved.'); })
+		.fail((jqxhr, textStatus, error) => { 
+			console.warn('Save level failed.');
+			console.warn(error); 
+		});
+
+	}
+
+	loadLevel(id)
+	{
+
+	}
+
 	on(eventName, callback, params = {})
 	{
 		var f = callback;

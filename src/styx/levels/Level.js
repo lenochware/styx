@@ -88,17 +88,6 @@ Styx.levels.Level = class extends Styx.GameObject
 		}
 	}
 
-	find(tag)
-	{
-		return _.chain(_.keys(this.tiles)).filter(i => this.tiles[i].is(tag));
-	}
-
-	isVisible(x, y)
-	{
-		return this.fov[x + ',' + y]? true : false;
-	}
-
-
 	getXY(x, y, attrib)
 	{
 		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
@@ -138,12 +127,12 @@ Styx.levels.Level = class extends Styx.GameObject
 					return false;
 				}
 
-				this.tiles[pos][attrib] = value;
-
 				if (value.pos) {
 					var oldPos = value.pos.y * this.size.width + value.pos.x;
 					this.tiles[oldPos][attrib] = null;
 				}
+
+				this.tiles[pos][attrib] = value;
 
 				if (value.is('actor') && !value.level) {
 					this.actors.push(value);
@@ -156,6 +145,16 @@ Styx.levels.Level = class extends Styx.GameObject
 		}
 
 		return true;
+	}
+
+	find(tag)
+	{
+		return _.chain(_.keys(this.tiles)).filter(i => this.tiles[i].is(tag));
+	}
+
+	isVisible(x, y)
+	{
+		return this.fov[x + ',' + y]? true : false;
 	}
 
 	remove(entity)

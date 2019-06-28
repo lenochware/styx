@@ -1,10 +1,10 @@
-- level.set() prepocita pos na x,y a pak v setxy zpatky. nemel by byt primarni level.set misto setxy?
+- ui: "use" otevre inv. a umozni pouzit objekt - wear/eat/quaff
 
+- prepsat loader.php
 - hungry, eat
 - rest vylepsit
 
 - lepsi door management (potrebne tile.pos?) devices, use?
-- prejmenovat .map na .tiles (.cells?)
 - RoomBuilder, map meta (roominfo, first etc.)
 - wm: nahr. prime odkazy: #game-container atd.
 - messages pri boji - zobrazovat jen dulezite
@@ -23,7 +23,6 @@
 
 
 - ui: po vyberu objektu zobrazit prikazy pro objekt v sidebaru (s hotkeys shift+D, shift+...)
-- ui: "use" otevre inv. a umozni pouzit objekt - wear/eat/quaff
 - ui: shift+arrows posune level o obrazovku...
 - ui: "look" - zobrazi veci kolem (v seznamu)?
 
@@ -36,6 +35,7 @@
 
 = DONE =
 
+x level.set() prepocita pos na x,y a pak v setxy zpatky. musi kontrolovat hranice - potrebuje vzdy xy
 x odstranit width,height z rooms defs
 x leveling, xp, weapon, shield
 x shallow water
@@ -45,5 +45,6 @@ x hiding_item, hiding_monster? - po objeveni zviditelnit, monster se muze zase s
 x GameObject(events? on, trigger, off, pres EventManager), DungeonObject  --- on a spol. prozatim v Game 
 x fov
 x muze nakliknout i neviditelny monster (in high_grass)
+x prejmenovat .map na .tiles (.cells?)
 
 angband level size: 198x66
