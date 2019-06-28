@@ -6,7 +6,7 @@ Styx.levels.Level = class extends Styx.GameObject
 	constructor(id)
 	{
 		super('levels', id, {});
-		this.map = [];
+		this.tiles = [];
 		this.fov = {};
 		this.size = this._createRect();
 		this.actors = [];
@@ -22,17 +22,17 @@ Styx.levels.Level = class extends Styx.GameObject
 
 		var items = [];
 		var actors = [];
-		var map = [];
+		var tiles = [];
 
-		for (let tile of this.map) {
-			map.push(tile.id);
+		for (let tile of this.tiles) {
+			tiles.push(tile.id);
 			if (tile.actor) actors.push(tile.actor);
 			if (tile.item) items.push(tile.item);
 		}
 
 		bundle.put('items', items);
 		bundle.put('actors', actors);
-		bundle.put('map', map);
+		bundle.put('tiles', tiles);
 
 		//bundle.put('fov', this.fov);
 	}
@@ -43,11 +43,11 @@ Styx.levels.Level = class extends Styx.GameObject
 		this.size = bundle.get('size');
 		this.exits = bundle.get('exits');
 
-		this.map = [];
+		this.tiles = [];
 		
-		var tileIds = bundle.get('map');
+		var tileIds = bundle.get('tiles');
 		for (let i in tileIds) {
-			this.map.push(
+			this.tiles.push(
 				new Styx.levels.Tile(i % this.size.width, Math.floor(i / this.size.width), tileIds[i])
 			);
 		}
@@ -90,7 +90,7 @@ Styx.levels.Level = class extends Styx.GameObject
 
 	find(tag)
 	{
-		return _.chain(_.keys(this.map)).filter(i => this.map[i].is(tag));
+		return _.chain(_.keys(this.tiles)).filter(i => this.tiles[i].is(tag));
 	}
 
 	isVisible(x, y)
@@ -105,7 +105,7 @@ Styx.levels.Level = class extends Styx.GameObject
 			return new Styx.levels.Tile(x, y, 'null');
 		}
 		else {
-			var tile = this.map[y * this.size.width + x];
+			var tile = this.tiles[y * this.size.width + x];
 		}
 
 		switch (attrib) {
@@ -123,26 +123,26 @@ Styx.levels.Level = class extends Styx.GameObject
 	setXY(x, y, attrib, value)
 	{
 		var pos = y * this.size.width + x;
-		if (pos < 0 || pos >= this.map.length) {
+		if (pos < 0 || pos >= this.tiles.length) {
 			throw "Tile position out of bounds.";
 		}
 
 		switch (attrib) {
 			case 'id':
-				this.map[pos].id = value;
+				this.tiles[pos].id = value;
 			break;
 			case 'item': 
 			case 'actor':
-				if (this.map[pos][attrib]) {
+				if (this.tiles[pos][attrib]) {
 					console.warn('Cannot set: level position already occupied.');
 					return false;
 				}
 
-				this.map[pos][attrib] = value;
+				this.tiles[pos][attrib] = value;
 
 				if (value.pos) {
 					var oldPos = value.pos.y * this.size.width + value.pos.x;
-					this.map[oldPos][attrib] = null;
+					this.tiles[oldPos][attrib] = null;
 				}
 
 				if (value.is('actor') && !value.level) {
@@ -163,7 +163,7 @@ Styx.levels.Level = class extends Styx.GameObject
 		var pos = entity.pos.y * this.size.width + entity.pos.x;
 
 		if (entity.is('actor')) {
-			this.map[pos].actor = null;
+			this.tiles[pos].actor = null;
 
 			for (var i = 0; i < this.actors.length; i++) {
 				if (this.actors[i] == entity) {
@@ -173,7 +173,7 @@ Styx.levels.Level = class extends Styx.GameObject
 			}
 		}
 		else if (entity.is('item')) {
-			this.map[pos].item = null;
+			this.tiles[pos].item = null;
 		}
 		else {
 			throw `Invalid entity type.`;

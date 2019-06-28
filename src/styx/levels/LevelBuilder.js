@@ -109,15 +109,15 @@ Styx.levels.LevelBuilder = class
 		return false;
 	}
 
-	fillMap(size, fillId)
+	fillLevel(size, fillId)
 	{
-		var map = [];
+		var tiles = [];
 
 		for (var i = 0; i < size.width * size.height; i++) {
-			map[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), fillId);
+			tiles[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), fillId);
 		}
 
-		return map;
+		return tiles;
 	}
 
 	drawXY(room, x, y, attrib, value)

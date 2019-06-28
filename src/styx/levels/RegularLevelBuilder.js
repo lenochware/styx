@@ -14,7 +14,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	{
 		//game.dbgBuild = this;
 
-		this.level.map = this.fillMap(this.level.size, 'wall');
+		this.level.tiles = this.fillLevel(this.level.size, 'wall');
 
 		var first = new Styx.levels.Room('room13x5');
 		var added = this.addToRandomPlace(first);

@@ -13,7 +13,7 @@ Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 	{
 		//game.dbgBuild = this;
 
-		this.level.map = this.fillMap(this.level.size, 'floor');
+		this.level.tiles = this.fillLevel(this.level.size, 'floor');
 
 		var first = new Styx.levels.Room('room13x5');
 
