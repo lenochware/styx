@@ -6,23 +6,6 @@ body {
 	color: #afafaf;
 }
 
-.ui-messages {
-	position: absolute;
-	bottom: 55px;
-	height: 58px;
-	pointer-events: none;
-	background-color: rgba(0,0,0,0.2);
-	overflow: hidden;
-
-	font-weight: bold;
-	font-size: 18px;
-	text-shadow:
-		-1px -1px 0 #000,
-		1px -1px 0 #000,
-		-1px 1px 0 #000,
-		1px 1px 0 #000;  
-}
-
 .ui-overlay {
 	position: fixed;
 	top: 0;
@@ -55,6 +38,17 @@ body {
 	cursor: pointer;
   font-weight: bold;
   font-size: 18px;  
+}
+
+#sidebar hr {
+	border:0;
+	margin:10px 0;
+	width: 90%;
+	border-top: 1px solid #333;
+}
+
+#sidebar {
+	position: relative;
 }
 
 .msg-info {

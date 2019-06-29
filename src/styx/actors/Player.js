@@ -20,18 +20,18 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		var tile = this.getTile();
 		if (!tile.item) {
-			this.game.message("There is nothing to get.");
+			this.game.hint("There is nothing to get.");
 			return;
 		}
 
 		var freeKey = this.inventory.getFreeKey();
 		if (!freeKey) {
-			this.game.message("Inventory is full.");
+			this.game.hint("Inventory is full.");
 			return;
 		}
 
 		this.inventory.set(freeKey, tile.item);
-		this.game.message("You got {0}.", 'msg-info', tile.item);
+		this.game.hint("You got {0}.", tile.item);
 		this.level.remove(tile.item);
 		this.spendTime();
 	}
@@ -70,12 +70,12 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	canRest()
 	{
 		if (this.health == this.maxHealth) {
-			this.game.message("You are in full condition now.", "msg-hilite");
+			this.game.hint("You are in full condition now.");
 			return false;
 		}
 
 		if (this.conditions.is('Poisoned')) {
-			this.game.message("You cannot rest while poisoned!", "msg-info");
+			this.game.hint("You cannot rest while poisoned!");
 			return false;
 		}
 
@@ -89,7 +89,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		if (tile.item && tile.item.is('gold')) {
 			var amount = tile.item.getAttrib('amount', 10);
 			this.gold += amount;
-			this.game.message("You collected {1} {0}.", 'msg-info', tile.item, amount);
+			this.game.hint("You collected {1} {0}.", tile.item, amount);
 			this.level.remove(tile.item);
 		}
 
@@ -111,7 +111,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		var item = this.inventory.get(key);
 		this.inventory.wear(key);
-		this.game.message("You are wearing {0}.", 'msg-info', item);
+		this.game.hint("You are wearing {0}.", item);
 		this.spendTime();
 	}
 
@@ -119,28 +119,28 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		var item = this.inventory.get(key);
 		this.inventory.unwear(key);
-		this.game.message("You take off {0}.", 'msg-info', item);
+		this.game.hint("You take off {0}.", item);
 		this.spendTime();
 	}
 
 	drop(key)
 	{
 		if (this.getTile().item) {
-			this.game.message("There is no place to drop item.");
+			this.game.hint("There is no place to drop item.");
 		}
 
 		var item = this.inventory.remove(key);
 		if (!item) return;
 
 		this.level.set(this.pos, 'item', item);
-		this.game.message("You drop {0}.", 'msg-info', item);
+		this.game.hint("You drop {0}.", item);
 		this.spendTime();
 	}
 
 	eat(key)
 	{
 		var item = this.inventory.remove(key);
-		this.game.message("You eat {0}.", 'msg-info', item);
+		this.game.hint("You eat {0}.", item);
 		this.spendTime();
 	}
 

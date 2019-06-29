@@ -45,7 +45,10 @@ Styx.ui.WindowManager = class
 		if (this.txtQuickMessage) {
 			$("#quick-message").html(this.txtQuickMessage);
 			this.txtQuickMessage = "";
-		}		
+		}
+		else {
+			$("#quick-message").html('');			
+		}
 	}
 
 	showTileInfo(level, x, y)
@@ -102,7 +105,7 @@ Styx.ui.WindowManager = class
 		if (m == this.lastMessage) return;
 		this.lastMessage = m;
 
-		this.messages += "<span class=\"{1}\">{0}</span>".format(m.capitalize(), cssClass);
+		this.messages += "<span class=\"{1}\">{0}</span><br>".format(m.capitalize(), cssClass);
 	}
 
 	openInventory()

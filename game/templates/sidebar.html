@@ -1,20 +1,21 @@
-<span class="command" data-key="i">
-	<%= player.params.name %><br>
-	Level: <%= player.lvl %> <%= _templ.meterSimple(player.xp, player.nextXp) %><br>
-	Health: <%= player.health %> <%= _templ.meter("meter-health", player.health, player.maxHealth) %><br>
-	Armor: <%= player.armor %><br>
-	Gold: <%= player.gold %><br>
-</span>	
-<div class="conditions">
-<% for (let cond of player.getConditions()) { %>
-	<span class="condition-<%= cond %>"><%= cond %></span><br>
-<% } %>	
+<div class="player-info">
+	<span class="command" data-key="i">
+		<%= player.params.name %><br>
+		Level: <%= player.lvl %> <%= _templ.meterSimple(player.xp, player.nextXp) %><br>
+		Health: <%= player.health %> <%= _templ.meter("meter-health", player.health, player.maxHealth) %><br>
+		<%= player.inventory.getWeapon() %><br>
+		Armor: <%= player.armor %><br>
+		Gold: <%= player.gold %><br>
+	</span>	
+	<div class="conditions">
+	<% for (let cond of player.getConditions()) { %>
+		<span class="condition-<%= cond %>"><%= cond %></span><br>
+	<% } %>	
+	</div>
 </div>
-
+<hr>
 <% if (player.target) { %>
 	<%= player.target.name() %>: <%= _templ.meter("meter-health", player.target.health, player.target.maxHealth) %>
 <% } %>
 
-<div id="quick-message"></div>
-
-<br><div><b><%= player.level %></b></div>
+<div style="position:absolute; bottom: 0; width:100%"><b><%= player.level %></b><hr></div>

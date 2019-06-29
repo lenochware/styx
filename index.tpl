@@ -15,7 +15,7 @@
 	<style>
 		#game-container {
 		  display: grid;
-		  grid-template-columns: 1fr 4fr;
+		  grid-template-columns: 1fr 3fr;
 		}
 
 		#side-bar {
@@ -23,33 +23,32 @@
 			grid-row: 1/2;
 		}
 
-		#war-messages {
-			grid-column: 1/2;
-			grid-row: 2/3;
-		}
-
-
 		#level-map {
 			grid-column: 2/3;
 		}
 
 		#messages {
-			grid-column: 2/3;
+			grid-column: 1/3;
 			grid-row: 2/3;
-			height:100px;
+			height:5em;
 		}
-		#statusbar {
+		#quick-message {
 			grid-column: 1/3;
 			grid-row: 3/4;
+			height: 2em;
+		}		
+		#statusbar {
+			grid-column: 1/3;
+			grid-row: 4/5;
 		}		
 	</style>		
 	</head>
 	<body>
 		<div id="game-container">
 			<div id="sidebar"></div>
-			<div id="war-messages"></div>
 			<div id="level-map"></div>
-			<div id="messages"></div>			
+			<div id="messages"></div>
+			<div id="quick-message"></div>		
 			<div id="statusbar">
 				<span class="command" data-key="Esc"><kbd>[Esc]</kbd> Menu</span> 
 				<span class="command" data-key="i"><kbd>I</kbd>nventory</span> 
