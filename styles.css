@@ -51,27 +51,29 @@ body {
 	position: relative;
 }
 
+#messages {
+	border-top: 1px solid #333;
+	margin-top: 1em;
+	padding-top: 0.5em;
+	overflow: hidden;
+}
+
 .msg-info {
-	padding-left: 10px; 
 }
 
 .msg-danger {
-	padding-left: 10px; 	
 	color: red;
 }
 
 .msg-warning {
-	padding-left: 10px; 	
 	color: yellow;
 }
 
 .msg-hilite {
-	padding-left: 10px;
 	color: white;
 }
 
 .msg-good {
-	padding-left: 10px;
 	color: lime;
 }
 
@@ -166,4 +168,9 @@ body {
 .meter {
   height: 10px;
   vertical-align: baseline;
+}
+
+.close-btn {
+	position: absolute;
+	right: 0; top: 0;
 }

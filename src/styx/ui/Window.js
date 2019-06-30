@@ -44,7 +44,7 @@ Styx.ui.Window = class
 		.attr("id", this.id)
 		.width(this.width)
 		.height(this.height)
-		.html(html)
+		.html(html + '<div class="close-btn command" data-key="Escape" title="Close">[x]</div>')
 		.appendTo('#game-container').show();
 	}
 
