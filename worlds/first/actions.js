@@ -17,7 +17,7 @@
 
 	"slash": {
 		"tags": ["attack"],
-		"points": 3
+		"points": 2
 	},
 
 	"hack": {
@@ -27,7 +27,7 @@
 
 	"cut": {
 		"tags": ["attack"],
-		"points": 3
+		"points": 6
 	},
 
 	"poison-bite": {
@@ -52,7 +52,7 @@
 
 	"hit": {
 		"tags": ["attack"],
-		"points": 2
+		"points": 1
 	},
 
 	"touch": {

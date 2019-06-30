@@ -89,7 +89,7 @@ Styx.actors.conditions = {
 	{
 		onAdd()
 		{
-			game.message("{0} [is] afraid!", 'msg-info', this.target);
+			game.message("{0} [is] afraid!", 'msg-hilite', this.target);
 		}
 
 		onRemove()

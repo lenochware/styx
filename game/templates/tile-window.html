@@ -1,15 +1,15 @@
 <b><%= item.name().indef().capitalize() %></b><br>
 <%= item.longDesc() %><br><br>
 
+<% if (item.is('actor')) { %>
+	<%= _templ.meter("meter-health", item.health, item.maxHealth) %>
+<% } %>
+
 <div class="conditions">
 <% for (let cond of conditions) { %>
 	<span class="condition-<%= cond %>"><%= cond %></span>
 <% } %>
 </div>
-
-<% if (item.is('actor')) { %>
-	<%= _templ.meter("meter-health", item.health, item.maxHealth) %>
-<% } %>
 
 <% for (let cmd of _.values(commands)) { %>
 <%= cmd.label %> 
