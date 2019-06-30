@@ -82,7 +82,6 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		this.spendTime();
 
 		if (!a.points) {
-			this.game.get('window-manager').warMessage(this.target, 'block', 0);
 			this.game.message("{0} shrug[s] off attack.", "msg-info", this.target);
 		}
 
@@ -113,11 +112,6 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 			if (src.is('actor')) this.target = src;
 			if (isNear) this.game.message('attack-' + type, "msg-info", src, this);
 		}
-
-		if (isNear) {
-			this.game.get('window-manager').warMessage(src, type, points);
-		}
-
 
 		if (points && this.getAction(type).tags.includes('poison')) {
 			this.conditions.add('Poisoned', 10);

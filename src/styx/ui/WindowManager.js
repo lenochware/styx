@@ -6,9 +6,9 @@ Styx.ui.WindowManager = class
 	constructor()
 	{
 		this.game = game;
-		this.messages = "";
+		this.messages = [];
 		this.lastMessage = "";
-		this.txtQuickMessage = "";
+		this.txtInfo = "";
 		this.templates = this.game.data["templates"];
 		this.windows = [];
 		this.panels = {};
@@ -42,9 +42,9 @@ Styx.ui.WindowManager = class
 		}
 
 
-		if (this.txtQuickMessage) {
-			$("#quick-message").html(this.txtQuickMessage);
-			this.txtQuickMessage = "";
+		if (this.txtInfo) {
+			$("#quick-message").html(this.txtInfo);
+			this.txtInfo = "";
 		}
 		else {
 			$("#quick-message").html('');			
@@ -69,19 +69,14 @@ Styx.ui.WindowManager = class
 		$("#quick-message").html(m);
 	}
 
-	warMessage(src, type, points)
+	info(m, args)
 	{
-  	var r = src? src.getAttrib('render') : {char: '!', color: 'red'};
+		if (args) {
+			m = m.format(args);
+		}
 
-		var d = document.createElement('div');
-		$(d).addClass("animated fadeOut delay-1s ui-red")
-		.html(`<span class="ui-${r.color}">${r.char}</span> ${type} ${points}`)
-		.delay(2000)
-		.queue(function() {
-		  $(this).remove();
-		})
-		.appendTo('#war-messages');
-  }
+		this.txtInfo = m;
+	}	
 
 	message(m, cssClass = "msg-info", args)
 	{
@@ -105,7 +100,12 @@ Styx.ui.WindowManager = class
 		if (m == this.lastMessage) return;
 		this.lastMessage = m;
 
-		this.messages += "<span class=\"{1}\">{0}</span><br>".format(m.capitalize(), cssClass);
+		var fmtMsg = "<span class=\"{1}\">{0}</span>".format(m.capitalize(), cssClass);
+
+		this.messages.push(fmtMsg);
+		if (this.messages.length > 50) {
+			this.messages.shift();
+		}
 	}
 
 	openInventory()
@@ -216,6 +216,7 @@ Styx.ui.WindowManager = class
 	_renderMessages(options)
 	{
 		//this.messages.scrollTop = this.messages.scrollHeight;
-		$('#'+options.container).html(this.messages);
+
+		$('#'+options.container).html(this.messages.slice(-5).join('<br>'));
 	}
 }

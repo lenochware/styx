@@ -30,7 +30,6 @@
 		#messages {
 			grid-column: 1/3;
 			grid-row: 2/3;
-			height:5em;
 		}
 		#quick-message {
 			grid-column: 1/3;

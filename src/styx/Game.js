@@ -42,13 +42,9 @@ Styx.Game = class
 		this.get('window-manager').message(m, cssClass, args);
 	}
 
-	hint(m, ...args)
+	info(m, ...args)
 	{
-		if (args) {
-			m = m.format(args);
-		}
-
-		this.get('window-manager').txtQuickMessage = m;
+		this.get('window-manager').info(m, args);
 	}
 
 	debugLog(msg)
