@@ -27,12 +27,18 @@ Styx.ui.InputManager = class
 				'i': {command: 'inventory'},
 				'r': {command: 'rest'}
 			},
+			main: {
+				'Escape': {command: 'game-menu'},
+				'Shift+ArrowLeft': {command: 'move-view', dir: [-1,0]},
+				'Shift+ArrowRight': {command: 'move-view', dir: [1,0]},
+				'Shift+ArrowUp': {command: 'move-view', dir: [0,-1]},
+				'Shift+ArrowDown': {command: 'move-view', dir: [0,1]},
+			},
 			inventory: {
 			},
 			'item-window': {
 			},
 			'game-menu': {
-				'Esc': {command: 'open'},
 				'n': {command: 'new-game'},
 				's': {command: 'save-game'},
 				'h': {command: 'help'},
@@ -85,6 +91,9 @@ Styx.ui.InputManager = class
 	initKeyboard()
 	{
 		$("body").on('keydown', (e) => {
+			
+			if (['Shift', 'Alt', 'Control'].includes(e.key)) return;
+
 			this.game.trigger('game-loop');
 			var command = this.getCommand(e);
 			var level = this.game.player.level;
@@ -99,37 +108,46 @@ Styx.ui.InputManager = class
 		});
 	}
 
+	isCharKey(event)
+	{
+		return event.key.length == 1;
+	}
+
 	getCommand(event)
 	{
-		var window = this.wm.getActiveWindow();
+		var activeWindow = this.wm.getActiveWindow();
 		var category = '';
 
-		if (window) {
-			if(event.key == 'Escape') {
+		var key = event.key;
+		var isCharKey = this.isCharKey(event);
+
+		if(!isCharKey) {
+			if (event.shiftKey) key = 'Shift+' + key;
+		}
+
+		if (activeWindow) {
+			if(key == 'Escape') {
 				return {command: 'close-window', category: 'window'};
 			}
 			else {
-				category = window.id;
+				category = activeWindow.id;
 			}
 		}
-		else if(event.key == 'Escape') {
-			return {command: 'open', category: 'game-menu'};
-		}
 		else {
-			category = 'player';
+			category = this.keyBinddings['main'][key]? 'main' : 'player';
 		}
 
-		if (category == 'inventory' && /^[a-z0-9]+$/.test(event.key)) {
-			return {command: 'examine', category: 'inventory', key: event.key };
+		if (category == 'inventory' && isCharKey) {
+			return {command: 'examine', category: 'inventory', key: key };
 		}
 
 		if (category == 'item-window') {
-			return window.content.commands[event.key] || {command: event.key, category: 'undefined' };
+			return activeWindow.content.commands[key] || {command: key, category: 'undefined' };
 		}
 
-		var cmd = this.keyBinddings[category][event.key];
+		var cmd = this.keyBinddings[category][key];
 
-		if (!cmd) return {command: event.key, category: 'undefined' };
+		if (!cmd) return {command: key, category: 'undefined' };
 		cmd.category = category;
 		return cmd;
 	}
@@ -138,6 +156,7 @@ Styx.ui.InputManager = class
 	{
 		switch (command.category)
 		{
+			case 'main': this.handleMainCmd(command); break;
 			case 'game-menu': this.handleGameMenuCmd(command); break;
 			case 'player': this.handlePlayerCmd(command); break;
 			case 'inventory': this.handleInventoryCmd(command); break;
@@ -151,10 +170,17 @@ Styx.ui.InputManager = class
 		}
 	}
 
+	handleMainCmd(command)
+	{
+		switch(command.command) {
+			case 'game-menu': this.wm.openGameMenu(); break;
+			case 'move-view': console.log(command.dir); break;
+		}
+	}
+
 	handleGameMenuCmd(command)
 	{
 		switch(command.command) {
-			case 'open': this.wm.openGameMenu(); break;
 			case 'new-game': console.log('New game.'); break;
 			case 'save-game': 
 				this.game.saveLevel(this.game.player.level);

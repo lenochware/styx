@@ -215,8 +215,6 @@ Styx.ui.WindowManager = class
 
 	_renderMessages(options)
 	{
-		//this.messages.scrollTop = this.messages.scrollHeight;
-
 		$('#'+options.container).html(this.messages.slice(-5).join('<br>'));
 	}
 }
