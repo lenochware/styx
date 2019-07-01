@@ -85,7 +85,6 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 			this.game.message("{0} shrug[s] off attack.", "msg-info", this.target);
 		}
 
-		if (this.target.isDestroyed()) this.target = null;
 		return true;
 	}
 
@@ -156,10 +155,13 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 		this.health = 0;
 
+		for (let a of this.level.actors) {
+			if (a && a.target === this) a.target = null;
+		}
+
 		if (!this.isPlayer()) {
 			this.level.remove(this);
 		}
-
 	}
 
 	shortDesc()

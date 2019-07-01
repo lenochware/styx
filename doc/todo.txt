@@ -31,10 +31,10 @@
 
 - ghost is afraid msg i po smrti
 - kdyz se utopi zustane viset jeho info v sidebaru
-- null.pos err in attack - multiple targets?
 
 = DONE =
 
+x null.pos err in attack - multiple targets?
 x level.set() prepocita pos na x,y a pak v setxy zpatky. musi kontrolovat hranice - potrebuje vzdy xy
 x odstranit width,height z rooms defs
 x leveling, xp, weapon, shield
