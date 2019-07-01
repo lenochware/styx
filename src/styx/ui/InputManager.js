@@ -66,6 +66,15 @@ Styx.ui.InputManager = class
 			});
 		});
 
+		$("#level-map").on("dblclick", (e) => {
+			var level = this.wm.getPanel('level-map').level;
+			var pos = $(e.target).data("pos").split(",");
+			this.wm.openTileWindow({
+				level: level,
+				pos: {x:Number(pos[0]),y:Number(pos[1])}
+			});
+		});
+
 		$("#level-map").on("click", "span", (e) => {
 			var level = this.wm.getPanel('level-map').level;
 			var pos = $(e.target).data("pos").split(",");

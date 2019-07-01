@@ -36,9 +36,14 @@ body {
 
 #level-map {
 	cursor: pointer;
+	-moz-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select:none; 
+	user-select:none;
   font-weight: bold;
-  font-size: 18px;  
+  font-size: 18px;
 }
+
 
 #sidebar hr {
 	border:0;

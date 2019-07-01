@@ -6,7 +6,8 @@
 			Equipment:<br>
 			<% for (let it of c.body) { %>
 
-			<%= it.key %>) <%= it.keyName %>: <span class="<%= it.cssClass %>"><%= it.name %></span><br>
+			<%= it.key %>) <%= it.keyName %>: 
+				<span class="<%= it.cssClass %> command" data-key="<%= it.key %>"><%= it.name %></span><br>
 
 			<% } %>
 		</td>
@@ -14,7 +15,7 @@
 			In backpack:<br>
 			<% for (let it of c.backpack) { %>
 
-			<%= it.key %>) <span class="<%= it.cssClass %>"><%= it.name %></span><br>
+			<%= it.key %>) <span class="<%= it.cssClass %> command" data-key="<%= it.key %>"><%= it.name %></span><br>
 
 			<% } %>			
 		</td>
