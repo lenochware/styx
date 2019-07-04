@@ -51,22 +51,21 @@ Styx.ui.WindowManager = class
 		}
 	}
 
-	showTileInfo(level, x, y)
+	showTileInfo(x, y)
 	{
+		var level = this.getPanel('level-map').level;
 		var obj = level.isVisible(x, y)? level.getXY(x, y, 'tile').getVisible() : level.getXY(x, y, 'tile');
-		this.quickMessage(
-			'You see <span class="link tile-info" data-pos="{1}">{0}</span>.', 
-			obj.shortDesc(), x + ',' + y
-		);
+		this.showObjectInfo(obj);
+		$("#quick-message").html("You see {0}.".format(obj));
 	}
 
-	quickMessage(m, ...args)
+	showObjectInfo(obj)
 	{
-		if (args) {
-			m = m.format(args);
-		}
+		$("#object-info").html('<span class="link tile-info" data-pos="{1}">{0}</span>'.format(
+			[obj.shortDesc(), obj.pos.x + ',' + obj.pos.y])
+		);
 
-		$("#quick-message").html(m);
+		//TODO: 	<%= player.target.name() %>: <%= _templ.meter("meter-health", player.target.health, player.target.maxHealth) %>
 	}
 
 	info(m, args)
@@ -169,9 +168,13 @@ Styx.ui.WindowManager = class
 
 	_renderSideBar(options)
 	{
+		var p = this.game.player;
+
 		$('#'+options.container).html(this.template('sidebar', {
-			player: this.game.player
+			player: p
 		}));
+
+		if (p.target) this.showObjectInfo(p.target);
 	}
 
 	template(id, data)

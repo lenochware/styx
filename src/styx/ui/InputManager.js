@@ -82,9 +82,8 @@ Styx.ui.InputManager = class
 		});
 
 		$("#level-map").on("click", "span", (e) => {
-			var level = this.wm.getPanel('level-map').level;
 			var pos = $(e.target).data("pos").split(",");
-			this.wm.showTileInfo(level, Number(pos[0]), Number(pos[1]));
+			this.wm.showTileInfo(Number(pos[0]), Number(pos[1]));
 		});				
 	}
 
