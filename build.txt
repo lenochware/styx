@@ -23,5 +23,6 @@ src/styx/levels/Level.js
 src/styx/levels/Tile.js
 src/styx/ui/InputManager.js
 src/styx/ui/Window.js
+src/styx/ui/BaseWindowManager.js
 src/styx/ui/WindowManager.js
 src/styx/ui/Renderer.js
