@@ -34,13 +34,10 @@ Styx.ui.WindowManager = class
 				case 'statusbar': this._renderStatusBar(panel); break;
 				case 'sidebar': this._renderSideBar(panel); break;
 				case 'messages': this._renderMessages(panel); break;
-				case 'level-map': 
-					this.game.get('renderer').render(panel.level, panel.container, {view: panel.view});
-				break;	
+				case 'level-map': this._renderLevel(panel); break;
 				default: throw `Unknown panel: ${id}`;
 			}
 		}
-
 
 		if (this.txtInfo) {
 			$("#quick-message").html(this.txtInfo);
@@ -177,6 +174,11 @@ Styx.ui.WindowManager = class
 		if (p.target) this.showObjectInfo(p.target);
 	}
 
+	_renderLevel(panel)
+	{
+		this.game.get('renderer').render(panel.level, panel.container, {view: panel.view});
+	}
+
 	template(id, data)
 	{
 		if (!this.templates[id]) {
@@ -186,6 +188,14 @@ Styx.ui.WindowManager = class
 		data["_templ"] = this.game.get('helpers');
 
 		return _.template(this.templates[id])(data);
+	}
+
+	moveView(dir)
+	{
+		var levelMap = this.getPanel('level-map');
+		levelMap.view.move(dir[0] *.8, dir[1] *.8, 'rel');
+		levelMap.view.align(levelMap.level.size);
+		this._renderLevel(levelMap);
 	}
 
 	getActiveWindow()

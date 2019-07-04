@@ -98,6 +98,9 @@ Styx.ui.InputManager = class
 			var level = this.game.player.level;
 			this.handle(command);
 			if (level) level.update();
+			
+			if (command.command == 'move-view') return;
+
 			this.wm.render();
 
 			//allow develop-tools
@@ -173,7 +176,7 @@ Styx.ui.InputManager = class
 	{
 		switch(command.command) {
 			case 'game-menu': this.wm.openGameMenu(); break;
-			case 'move-view': console.log(command.dir); break;
+			case 'move-view': this.wm.moveView(command.dir); break;
 		}
 	}
 
