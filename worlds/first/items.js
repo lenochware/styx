@@ -11,6 +11,14 @@
 		"name": "rusty dagger",
 		"desc": "Small dagger looks somewhat damaged by water."
 	},
+	"wooden_club": {
+		"render": {"char": "/", "color": "brown" },
+		"tags": ["item", "wearable", "weapon", "heavy"],
+		"name": "wooden club",
+		"attacks": ["bash", "bash-stun"],
+		"attack-chances": [5,1],
+		"desc": "Big heavy club probably from oak wood."
+	},
 	"broken_sword": {
 		"render": {"char": "|", "color": "gray" },
 		"tags": ["item", "wearable", "weapon", "sword"],

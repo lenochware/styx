@@ -159,7 +159,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	pickAttack()
 	{
 		var weapon = this.inventory.getWeapon();
-		var attack =  weapon? weapon.pickAttack() : super.pickAttack();		
+		var attack =  weapon? weapon.pickAttack() : super.pickAttack();
 		return attack;
 	}
 

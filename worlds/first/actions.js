@@ -20,6 +20,16 @@
 		"points": 2
 	},
 
+	"bash": {
+		"tags": ["attack"],
+		"points": 4
+	},
+
+	"bash-stun": {
+		"tags": ["attack", "stun"],
+		"points": 4
+	},
+
 	"hack": {
 		"tags": ["attack"],
 		"points": 3

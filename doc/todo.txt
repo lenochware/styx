@@ -1,7 +1,10 @@
+- stun, speed of attacks podle heavy/light wpn + strenght
+- hungry, eat
+- poskozovani zbrani
 - ui: "use" otevre inv. a umozni pouzit objekt - wear/eat/quaff
+- barevne conditions, lepsi popisy monster (health v object-info okne)
 
 - prepsat loader.php
-- hungry, eat
 - rest vylepsit
 
 - lepsi door management (potrebne tile.pos?) devices, use?
@@ -13,9 +16,6 @@
 
 - Tile nejak z DungeonObject... minimalizovat atrib. pro tile?
 
-- klikatelne jmeno potvory i v bojovem okne
-- barevne conditions, lepsi popisy monster (health v detail okne)
-- poskozovani zbrani
 - touch-afraid, invisibility
 - save, menu
 - drop: ['none', 'corpse', 'copper_coins'], drop-chances: [10,2,1]
@@ -23,7 +23,6 @@
 
 
 - ui: po vyberu objektu zobrazit prikazy pro objekt v sidebaru (s hotkeys shift+D, shift+...)
-- ui: shift+arrows posune level o obrazovku...
 - ui: "look" - zobrazi veci kolem (v seznamu)?
 
 
@@ -34,6 +33,8 @@
 
 = DONE =
 
+x ui: shift+arrows posune level o obrazovku...
+x klikatelne jmeno potvory i v bojovem okne
 x null.pos err in attack - multiple targets?
 x level.set() prepocita pos na x,y a pak v setxy zpatky. musi kontrolovat hranice - potrebuje vzdy xy
 x odstranit width,height z rooms defs
@@ -47,4 +48,4 @@ x fov
 x muze nakliknout i neviditelny monster (in high_grass)
 x prejmenovat .map na .tiles (.cells?)
 
-angband level size: 198x66
+angband level size: 198x66 otestovat
