@@ -47,6 +47,10 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 
 				continue;
 			}
+			else if (this.conditions.is('Stunned')) {
+				this.wait();
+				continue;
+			}
 
 			this.walk() || this.attack() || this.wait();
 		}

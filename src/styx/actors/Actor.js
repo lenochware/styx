@@ -101,7 +101,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	damage(src, type, points)
 	{
-		if (!type) return;
+		if (!points) return;
 
 		this.health -= points;
 
@@ -112,8 +112,13 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 			if (isNear) this.game.message('attack-' + type, "msg-info", src, this);
 		}
 
-		if (points && this.getAction(type).tags.includes('poison')) {
+		var action = this.getAction(type);
+
+		if (action.tags.includes('poison')) {
 			this.conditions.add('Poisoned', 10);
+		}
+		else if (action.tags.includes('stun')) {
+			this.conditions.add('Stunned', 4);			
 		}
 
 		if (this.health <= 0) this.die(src);

@@ -99,6 +99,14 @@ Styx.actors.conditions = {
 
 	},
 
+	Stunned : class extends Styx.actors.Condition 
+	{
+		onAdd()
+		{
+			game.message("{0} [is] stunned!", 'msg-hilite', this.target);
+		}
+	},
+
 	Asleep : class extends Styx.actors.Condition
 	{
 		onRemove()
