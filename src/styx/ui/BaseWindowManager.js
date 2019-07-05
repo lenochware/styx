@@ -7,7 +7,6 @@ Styx.ui.BaseWindowManager = class
 	{
 		this.game = game;
 		this.messages = [];
-		this.lastMessage = "";
 		this.txtInfo = "";
 		this.templates = this.game.data["templates"];
 		this.windows = [];
@@ -57,12 +56,16 @@ Styx.ui.BaseWindowManager = class
 				.replace("[s]", "s");
 		}
 
-		if (m == this.lastMessage) return;
-		this.lastMessage = m;
-
 		var fmtMsg = "<span class=\"{1}\">{0}</span>".format(m.capitalize(), cssClass);
 
-		this.messages.push(fmtMsg);
+		var lastMessage = _.last(this.messages);
+
+		if (lastMessage && fmtMsg == lastMessage.text) {
+			lastMessage.num++;
+			return;
+		}
+
+		this.messages.push({text: fmtMsg, num: 1});
 		if (this.messages.length > 50) {
 			this.messages.shift();
 		}

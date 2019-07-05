@@ -9,6 +9,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		super(params);
 		this.inventory = new Styx.actors.Inventory(this);
 		this.gold = this.getAttrib('gold');
+		this.strength = this.getAttrib('strength');
 		this.lvl = this.getAttrib('lvl');
 		this.xp = this.getAttrib('xp');
 		this.nextXp = 20 * Math.pow(2, this.lvl - 1);
@@ -160,7 +161,17 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	pickAttack()
 	{
 		var weapon = this.inventory.getWeapon();
-		var attack =  weapon? weapon.pickAttack() : super.pickAttack();
+		if (!weapon) return super.pickAttack();
+
+		var attack =  weapon.pickAttack();
+		
+		if (weapon.is('light') && this.strength > 2) {
+			attack.time = this.tick / 2;
+		}
+		else if (weapon.is('heavy') && this.strength < 5) {
+			attack.time = this.tick * 2;
+		}
+
 		return attack;
 	}
 
@@ -185,10 +196,10 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.game.message("Welcome to level {0}!", "msg-good", this.lvl);
 	}
 
-	spendTime()
+	spendTime(time = null)
 	{
 		this.conditions.update();
-		this.game.time += this.tick;
+		this.game.time += (time || this.tick);
 	}
 
 }

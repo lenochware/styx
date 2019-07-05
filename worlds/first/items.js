@@ -7,7 +7,7 @@
 	},
 	"rusty_dagger": {
 		"render": {"char": "|", "color": "gray" },
-		"tags": ["item", "wearable", "weapon", "sword"],
+		"tags": ["item", "wearable", "weapon", "light"],
 		"name": "rusty dagger",
 		"desc": "Small dagger looks somewhat damaged by water."
 	},

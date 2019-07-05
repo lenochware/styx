@@ -7,6 +7,7 @@
 		"tags": ["player", "actor"],
 		"render": {"char": "@", "color": "white" },
 		"health": 100,
+		"strength": 3,
 		"attacks": ["punch"],
 		"name": "you",
 		"desc": "Warriors start with 11 points of Strength."

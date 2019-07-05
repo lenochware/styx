@@ -129,7 +129,18 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 
 	_renderMessages(options)
 	{
-		$('#'+options.container).html(this.messages.slice(-5).join('<br>'));
+		var html = '';
+		var msgs = this.messages.slice(-5);
+
+		for(let m of msgs) {
+			html += m.text;
+			if (m.num > 1) {
+				html += ' (x' + m.num + ')';
+			}
+			html += '<br>';
+		}
+
+		$('#'+options.container).html(html);
 	}
 
 	moveView(dir)

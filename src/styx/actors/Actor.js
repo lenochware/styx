@@ -79,7 +79,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		a = this.target.defense(a);
 	
 		this.target.damage(this, a.type, a.points);
-		this.spendTime();
+		this.spendTime(a.time);
 
 		if (!a.points) {
 			this.game.message("{0} shrug[s] off attack.", "msg-info", this.target);
@@ -193,9 +193,9 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		return false;
 	}
 
-	spendTime()
+	spendTime(time = null)
 	{
 		this.conditions.update();
-		this.time += this.tick;
+		this.time += time || this.tick;
 	}
 }
