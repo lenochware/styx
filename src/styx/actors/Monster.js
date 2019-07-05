@@ -54,6 +54,8 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 
 			this.walk() || this.attack() || this.wait();
 		}
+
+		super.update();
 	}
 
 	damage(src, type, points)

@@ -1,4 +1,4 @@
-- stun, speed of attacks podle heavy/light wpn + strenght
+- stun, speed of attacks podle heavy/light wpn + strenght radsi xtra attact - aby to bylo videt
 - hungry, eat
 - poskozovani zbrani
 - ui: "use" otevre inv. a umozni pouzit objekt - wear/eat/quaff
@@ -30,6 +30,8 @@
 
 - ghost is afraid msg i po smrti
 - kdyz se utopi zustane viset jeho info v sidebaru
+- klik na wielded v inv nefunguje
+- klik close - zmizi i close v okne pod nim
 
 = DONE =
 

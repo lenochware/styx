@@ -47,11 +47,11 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 			return this.attack(tile.actor);
 		}
 
-		this.spendTime();
-
 		this.leave(this.pos);
 		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);
 		this.enter(this.pos);
+
+		this.spendTime();
 		return true;
 	}
 
@@ -81,6 +81,10 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		this.target.damage(this, a.type, a.points);
 		this.spendTime(a.time);
 
+		if (this.distance(this.game.player) < 6) {
+			this.game.message('attack-' + a.type, "msg-info", this, target);
+		};
+
 		if (!a.points) {
 			this.game.message("{0} shrug[s] off attack.", "msg-info", this.target);
 		}
@@ -105,11 +109,8 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 		this.health -= points;
 
-		var isNear = (this.distance(this.game.player) < 6);
-
-		if (src) {
-			if (src.is('actor')) this.target = src;
-			if (isNear) this.game.message('attack-' + type, "msg-info", src, this);
+		if (src && src.is('actor')) {
+			this.target = src;
 		}
 
 		var action = this.getAction(type);
@@ -195,7 +196,11 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	spendTime(time = null)
 	{
-		this.conditions.update();
 		this.time += time || this.tick;
+	}
+
+	update()
+	{
+		this.conditions.update();
 	}
 }

@@ -198,8 +198,8 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 	spendTime(time = null)
 	{
-		this.conditions.update();
 		this.game.time += (time || this.tick);
+		this.level.updated = false;
 	}
 
 }

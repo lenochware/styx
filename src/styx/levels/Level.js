@@ -11,6 +11,7 @@ Styx.levels.Level = class extends Styx.GameObject
 		this.size = this._createRect();
 		this.actors = [];
 		this.exits = {};
+		this.updated = false;
 	}
 
 	storeInBundle(bundle) {
@@ -184,9 +185,13 @@ Styx.levels.Level = class extends Styx.GameObject
 
 	update()
 	{
+		if (this.updated) return;
+
 		for (var i = 0; i < this.actors.length; i++) {
 			if (this.actors[i] == null) continue;
 			this.actors[i].update();
-		}		
+		}
+
+		this.updated = true;		
 	}
 }
