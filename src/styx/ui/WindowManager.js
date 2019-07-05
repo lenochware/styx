@@ -37,8 +37,16 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 
 	showObjectInfo(obj)
 	{
-		$("#object-info").html('<span class="link tile-info" data-pos="{1}">{0}</span>'.format(
-			[obj.shortDesc(), obj.pos.x + ',' + obj.pos.y])
+		var commands = {};
+
+		$("#object-info").html(
+			this.template('object-info', 
+				{
+					item: obj,
+					conditions: obj.is('actor')? obj.getConditions() : [],
+					commands: commands
+				}
+			)
 		);
 
 		//TODO: 	<%= player.target.name() %>: <%= _templ.meter("meter-health", player.target.health, player.target.maxHealth) %>

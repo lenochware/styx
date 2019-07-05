@@ -94,7 +94,8 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		}
 
 		if (tile.item) {
-			this.game.info('You are on <span class="link tile-info" data-pos="{1}">{0}</span>.', 
+			this.game.info(
+				'You are on <span class="link tile-info" data-pos="{1}">{0}</span> (<span class="command" data-key="g"><kbd>G</kbd>et</span>).', 
 				tile.item.shortDesc(), pos.x + ',' + pos.y);
 		}
 
