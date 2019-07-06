@@ -80,12 +80,12 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	
 		if (this.isNear()) {
 			if (a.failed) {
-				this.game.message('failed-' + a.failed, "msg-info", this, target);
+				//this.game.message('failed-' + a.failed, "msg-info", this, target);
 			}
 			else {
 				this.game.message('attack-' + a.type, "msg-info", this, target);
-				if (a.special) {
-					this.game.message('attack-' + a.special, "msg-info", this, target);
+				if (a.special == 'multiple') {
+					this.game.message('attack-' + a.type, "msg-info", this, target); //hack
 				}
 			};
 		}

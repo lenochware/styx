@@ -4,6 +4,8 @@
 - ui: "use" otevre inv. a umozni pouzit objekt - wear/eat/quaff
 - barevne conditions, lepsi popisy monster (health v object-info okne)
 
+-starsi message mizet? matouci
+
 - prepsat loader.php
 - rest vylepsit
 
@@ -32,6 +34,7 @@
 - kdyz se utopi zustane viset jeho info v sidebaru
 - klik na wielded v inv nefunguje
 - klik close - zmizi i close v okne pod nim
+- Snake bites null msg
 
 = DONE =
 
