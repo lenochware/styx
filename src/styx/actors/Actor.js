@@ -78,16 +78,23 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		var a = this.pickAttack();
 		a = this.target.defense(a);
 	
-		this.target.damage(this, a.type, a.points);
-		this.spendTime(a.time);
-
 		if (this.distance(this.game.player) < 6) {
-			this.game.message('attack-' + a.type, "msg-info", this, target);
-		};
-
-		if (!a.points) {
-			this.game.message("{0} shrug[s] off attack.", "msg-info", this.target);
+			if (a.failed) {
+				this.game.message('failed-' + a.failed, "msg-info", this, target);
+			}
+			else {
+				this.game.message('attack-' + a.type, "msg-info", this, target);
+				if (a.special) {
+					this.game.message('attack-' + a.special, "msg-info", this, target);
+				}
+			};
 		}
+
+		if (a.points) {
+			this.target.damage(this, a.type, a.points);
+		}
+		
+		this.spendTime();
 
 		return true;
 	}
@@ -160,6 +167,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		}
 
 		this.health = 0;
+		this.conditions.removeAll();
 
 		for (let a of this.level.actors) {
 			if (a && a.target === this) a.target = null;

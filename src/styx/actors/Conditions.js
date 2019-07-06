@@ -36,6 +36,11 @@ Styx.actors.ConditionGroup = class
 		return true;
 	}
 
+	removeAll()
+	{
+		this.members = {};
+	}
+
 	is(className)
 	{
 		return _.has(this.members, className);

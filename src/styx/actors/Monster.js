@@ -60,11 +60,11 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 
 	damage(src, type, points)
 	{
-		super.damage(src, type, points);
-
-		if (src && src.is('actor') && this.health < this.maxHealth / 3) {
+		if (src && src.is('actor') && this.health < this.maxHealth / 3 && !this.conditions.is('Afraid')) {
 			this.conditions.add('Afraid', 15);
 		}
+
+		super.damage(src, type, points);
 	}
 
 	walk()

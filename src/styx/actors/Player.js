@@ -166,10 +166,14 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		var attack =  weapon.pickAttack();
 		
 		if (weapon.is('light') && this.strength > 2) {
-			attack.time = this.tick / 2;
+			attack.special = 'multiple';
+			attack.points *= 2;
 		}
 		else if (weapon.is('heavy') && this.strength < 5) {
-			attack.time = this.tick * 2;
+			if (this.game.random.bet(.3)) {
+				attack.failed = 'heavy';
+				attack.points = 0;
+			}
 		}
 
 		return attack;
