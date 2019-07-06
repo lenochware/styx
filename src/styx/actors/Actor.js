@@ -78,7 +78,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		var a = this.pickAttack();
 		a = this.target.defense(a);
 	
-		if (this.distance(this.game.player) < 6) {
+		if (this.isNear()) {
 			if (a.failed) {
 				this.game.message('failed-' + a.failed, "msg-info", this, target);
 			}
@@ -112,8 +112,6 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	damage(src, type, points)
 	{
-		if (!points) return;
-
 		this.health -= points;
 
 		if (src && src.is('actor')) {

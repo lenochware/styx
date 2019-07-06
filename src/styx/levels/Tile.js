@@ -44,8 +44,11 @@ Styx.levels.Tile = class
 	enter(actor)
 	{
 		if (!actor.is("flying") && !actor.is("swimmer")) {
-			var attack = this.pickAttack();
-			if (attack) actor.damage(this, attack.type, attack.points);
+			var a = this.pickAttack();
+			if (!a) return;
+
+			if (actor.isNear()) actor.game.message('attack-' + a.type, "msg-info", actor);
+			actor.damage(this, a.type, a.points);
 		}
 		
 		if (this.id == 'door') {

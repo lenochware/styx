@@ -75,6 +75,12 @@ Styx.actors.Condition = class
 		return this.id;
 	}
 
+	message(m, cssClass = "msg-info", ...args)
+	{
+		if (!this.target.isNear()) return;
+		this.game.message(m, cssClass, args);
+	}
+
 	onAdd() {}
 	onRemove() {}
 
@@ -94,12 +100,12 @@ Styx.actors.conditions = {
 	{
 		onAdd()
 		{
-			game.message("{0} [is] afraid!", 'msg-hilite', this.target);
+			this.message("{0} [is] afraid!", 'msg-hilite', this.target);
 		}
 
 		onRemove()
 		{
-			game.message("{0} recover his courage!", 'msg-info', this.target);
+			this.message("{0} recover his courage!", 'msg-info', this.target);
 		}
 
 	},
@@ -108,7 +114,7 @@ Styx.actors.conditions = {
 	{
 		onAdd()
 		{
-			game.message("{0} [is] stunned!", 'msg-hilite', this.target);
+			this.message("{0} [is] stunned!", 'msg-hilite', this.target);
 		}
 	},
 
@@ -116,7 +122,7 @@ Styx.actors.conditions = {
 	{
 		onRemove()
 		{
-			game.message("{0} wake up!", 'msg-info', this.target);
+			this.message("{0} wake up!", 'msg-info', this.target);
 		}
 	},
 
@@ -125,12 +131,12 @@ Styx.actors.conditions = {
 		onAdd()
 		{
 			var cssClass = this.target.isPlayer()? 'msg-warning' : 'msg-info';
-			game.message("{0} [is] poisoned!", cssClass, this.target);
+			this.message("{0} [is] poisoned!", cssClass, this.target);
 		}
 
 		onRemove()
 		{
-			game.message("{0} [is] no longer poisoned!", 'msg-hilite', this.target);
+			this.message("{0} [is] no longer poisoned!", 'msg-hilite', this.target);
 		}		
 
 		update()
@@ -148,7 +154,7 @@ Styx.actors.conditions = {
 		onAdd()
 		{
 			var cssClass = this.target.isPlayer()? 'msg-warning' : 'msg-info';
-			game.message("{0} [is] bleeding!", cssClass, this.target);
+			this.message("{0} [is] bleeding!", cssClass, this.target);
 		}
 
 		update()

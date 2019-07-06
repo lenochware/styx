@@ -32,6 +32,11 @@ Styx.DungeonObject = class extends Styx.GameObject
 		return Math.max(Math.abs(this.pos.x - entity.pos.x), Math.abs(this.pos.y - entity.pos.y));
 	}
 
+	isNear()
+	{
+		return this.game.player? (this.distance(this.game.player) < 6) : false;
+	}
+
 	surroundings()
 	{
 		return [
