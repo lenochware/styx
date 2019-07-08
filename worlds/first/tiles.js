@@ -72,7 +72,7 @@
 
 	"door": {
 		"render": {"char": "+", "color": "brown" },
-		"tags": ["hiding", "door", "opaque"],
+		"tags": ["hiding", "door", "opaque", "blocking"],
 		"name": "wooden door",
 		"desc": "You see nothing interesting."
 	},

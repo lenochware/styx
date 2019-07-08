@@ -43,21 +43,26 @@ Styx.levels.Tile = class
 
 	enter(actor)
 	{
-		if (!actor.is("flying") && !actor.is("swimmer")) {
-			var a = this.pickAttack();
-			if (!a) return;
+		var attack = this.pickAttack();
 
-			if (actor.isNear()) actor.game.message('attack-' + a.type, "msg-info", actor);
-			actor.damage(this, a.type, a.points);
-		}
-		
-		if (this.id == 'door') {
-			this.id = 'open_door';
-			actor.spendTime(); //TODO: It does two turns at once (walk+open door).
-		}
+		if (attack) {
+		  if (!actor.is("flying") && !actor.is("swimmer")) {
+				if (actor.isNear()) actor.game.message('attack-' + a.type, "msg-info", actor);
+				actor.damage(this, a.type, a.points);
+
+			}
+		}		
 	};
 	
 	leave(actor) {};
+
+	touch(actor)
+	{
+		if (this.id == 'door') {
+			this.id = 'open_door';
+			actor.spendTime();
+		}
+	}
 
 	pickAttackId()
 	{
