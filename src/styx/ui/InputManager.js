@@ -112,7 +112,7 @@ Styx.ui.InputManager = class
 
 	isCharKey(event)
 	{
-		return event.key.length == 1;
+		return event.key.toString().length == 1;
 	}
 
 	getCommand(event)

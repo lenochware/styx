@@ -11,6 +11,8 @@ Styx.ui.Window = class
 		this.width = width;
 		this.height = height;
 		this.content = content;
+
+		this.HTML_CLOSE_BUTTON = '<div class="close-btn command" data-key="Escape" title="Close">[x]</div>';
 	}
 
 	draw()
@@ -23,7 +25,7 @@ Styx.ui.Window = class
 	redraw()
 	{
 		var html = this.content['html'] || this.wm.template(this.content['template'], this.content);
-		$('#'+this.id).html(html);
+		$('#'+this.id).html(html + this.HTML_CLOSE_BUTTON);
 	}
 
 	createModal(html)
@@ -44,7 +46,7 @@ Styx.ui.Window = class
 		.attr("id", this.id)
 		.width(this.width)
 		.height(this.height)
-		.html(html + '<div class="close-btn command" data-key="Escape" title="Close">[x]</div>')
+		.html(html + this.HTML_CLOSE_BUTTON)
 		.appendTo('#game-container').show();
 	}
 

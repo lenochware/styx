@@ -30,14 +30,14 @@
 
 = BUGS =
 
-- ghost is afraid msg i po smrti
 - kdyz se utopi zustane viset jeho info v sidebaru
-- klik na wielded v inv nefunguje
-- klik close - zmizi i close v okne pod nim
 - Snake bites null msg
 
 = DONE =
 
+x ghost is afraid msg i po smrti
+x klik na wielded v inv nefunguje
+x klik close - zmizi i close v okne pod nim
 x ui: shift+arrows posune level o obrazovku...
 x klikatelne jmeno potvory i v bojovem okne
 x null.pos err in attack - multiple targets?
