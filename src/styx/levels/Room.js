@@ -326,7 +326,28 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 	coords()
 	{
 		var pos = [];
-		var pos = pos.concat(this.line(this.entrances[0].getPos(), this.entrances[1].getPos()));
+
+		var p1 = this.entrances[0].getPos();
+		var p2 = this.entrances[1].getPos();
+
+		var xm = p1.x + Math.floor((p2.x - p1.x) / 2);
+		var ym = p1.y + Math.floor((p2.y - p1.y) / 2);
+
+		if (['north', 'south'].includes(this.entrances[0].side)) {
+			pos = pos.concat(
+				this.line(p1, {x:p1.x, y:ym}),
+				this.line({x:p1.x, y:ym}, {x:p2.x, y:ym}),
+				this.line({x:p2.x, y:ym}, p2)
+			);
+		} else {
+			pos = pos.concat(
+				this.line(p1, {x:xm, y:p1.y}),
+				this.line({x:xm, y:p1.y}, {x:xm, y:p2.y}),
+				this.line({x:xm, y:p2.y}, p2)
+			);
+		}
+
+		//var pos = pos.concat(this.line(this.entrances[0].getPos(), this.entrances[1].getPos()));
 		return pos;
 	}
 

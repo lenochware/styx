@@ -5,7 +5,7 @@ var game = new Styx.Game();
 
 game.load('world:first').then(function() 
 {
-	var level = game.createLevel('test');
+	var level = game.createLevel('small-cave');
 	
 	player = game.get('player');
 	player.params.name = 'Conan';
@@ -13,8 +13,8 @@ game.load('world:first').then(function()
 	//player.conditions.add('Poisoned', 5);
 
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
-	//level.set(level.find('floor').sample().value(), 'actor', player);
-	level.setXY(10, 6, 'actor', player);
+	level.set(level.find('floor').sample().value(), 'actor', player);
+	//level.setXY(10, 6, 'actor', player);
 
 	// var c = level.size.getPoint('center');
 	// level.set(c, 'actor', player);
