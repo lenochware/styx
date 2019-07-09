@@ -71,7 +71,7 @@ Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 	buildRandomMap()
 	{
 		for (var i = 0; i < this.level.size.width * this.level.size.height; i++) {
-			this.level.tiles[i].id = (Math.random() > 0.05)? 'floor' : 'wall';
+			this.level.tiles[i].id = (Styx.Random.float() > 0.05)? 'floor' : 'wall';
 		}
 	}
 }

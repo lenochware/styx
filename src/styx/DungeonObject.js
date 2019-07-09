@@ -67,8 +67,8 @@ Styx.DungeonObject = class extends Styx.GameObject
 		var attacks = this.getAttrib('attacks');
 		var chances = this.getAttrib('attack-chances');
 		if (!attacks)	return 'hit';
-		if (!chances) return _.sample(attacks);
-		return attacks[this.game.random.chances(chances)];
+		if (!chances) return Styx.Random.pick(attacks);
+		return attacks[Styx.Random.chances(chances)];
 	}
 
 	pickAttack()

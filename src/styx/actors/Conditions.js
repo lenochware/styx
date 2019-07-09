@@ -143,7 +143,7 @@ Styx.actors.conditions = {
 		{
 			super.update();
 
-			if (this.game.random.bet(.3)) {
+			if (Styx.Random.bet(.3)) {
 				this.target.damage(null, 'poison', 1);
 			}
 		}
@@ -161,7 +161,7 @@ Styx.actors.conditions = {
 		{
 			super.update();
 
-			if (this.game.random.bet(.3)) {
+			if (Styx.Random.bet(.3)) {
 				this.target.damage(null, 'bleeding', 1);
 
 				var pos = this.target.pos;

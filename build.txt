@@ -1,5 +1,5 @@
+src/styx/Random.js
 src/styx/utils/String.js
-src/styx/utils/Random.js
 src/styx/utils/TemplateHelpers.js
 src/styx/Bundle.js
 src/styx/GameObject.js

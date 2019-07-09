@@ -49,8 +49,7 @@ Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 
 	addNextRoom(nextRoom)
 	{
-		var rndInt = this.game.random.int;
-		nextRoom.move(rndInt(this.level.size.width), rndInt(this.level.size.height));
+		nextRoom.move(Styx.Random.int(this.level.size.width), Styx.Random.int(this.level.size.height));
 		nextRoom.align(this.level.size);
 		this.rooms.push(nextRoom);
 	}

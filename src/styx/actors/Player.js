@@ -56,7 +56,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		if (!this.canRest()) return;
 
-		if (this.game.random.bet(.3)) {
+		if (Styx.Random.bet(.3)) {
 			this.health++;
 			this.game.message("You are sleeping...", "msg-info");
 		}
@@ -170,7 +170,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 			attack.points *= 2;
 		}
 		else if (weapon.is('heavy') && this.strength < 5) {
-			if (this.game.random.bet(.3)) {
+			if (Styx.Random.bet(.3)) {
 				attack.failed = 'heavy';
 				attack.points = 0;
 			}

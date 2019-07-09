@@ -7,7 +7,6 @@ Styx.Game = class
 		this.services = {};
 		this.data = {};
 		this.time = 0;
-		this.random = this.get('random');
 		this.db = null;
 		this.player = null;
 	}
@@ -31,7 +30,6 @@ Styx.Game = class
 			case 'player': return new Styx.actors.Player;
 			case 'dungeon-base': return new Styx.DungeonBase;
 			case 'window-manager': return new Styx.ui.WindowManager;
-			case 'random': return new Styx.utils.Random;
 			case 'helpers': return new Styx.utils.TemplateHelpers;
 			default: throw `Unknown service ${className}`;
 		}

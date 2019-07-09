@@ -41,7 +41,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 			if (this.conditions.is('Asleep')) {
 				this.wait();
 
-				if (this.distance(this.game.player) < 5 && this.game.random.percent(20))	{
+				if (this.distance(this.game.player) < 5 && Styx.Random.percent(20))	{
 					this.conditions.remove('Asleep');
 				}
 
@@ -71,7 +71,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	{
 		if (this.is('unmovable')) return false;
 
-		if (this.is('moving-random') && this.game.random.percent(20)) {
+		if (this.is('moving-random') && Styx.Random.percent(20)) {
 			return this.randomWalk();
 		}
 		else {
@@ -103,7 +103,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 
 	randomWalk()
 	{
-		return this.move(_.random(-1,1), _.random(-1,1));
+		return this.move(Styx.Random.int(-1,1), Styx.Random.int(-1,1));
 	}
 
 	drop(item)
@@ -114,7 +114,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	die(src)
 	{
 		var name = this.getAttrib('bones');
-		if (name && this.game.random.percent(50)) {
+		if (name && Styx.Random.percent(50)) {
 			var bones = new Styx.items.Item({id: "bones", actor: this, name: name});
 			this.drop(bones);
 		}

@@ -130,14 +130,9 @@ Styx.Rectangle = class
 			case 'center-4': return this._pos(this.x - 1, this.y + this.height / 2);
 
 			case 'random': return this._pos(
-				this.x + this.game.random.int(this.width - 2) + 1, 
-				this.y + this.game.random.int(this.height - 2) + 1
+				this.x + Styx.Random.int(this.width - 2) + 1, 
+				this.y + Styx.Random.int(this.height - 2) + 1
 			);
-
-			// case 'border-1': return this._pos(_.random(this.x + 1, this.x + this.width - 2), this.y - 1);
-			// case 'border-2': return this._pos(this.x + this.width, _.random(this.y + 1, this.y + this.height - 2));
-			// case 'border-3': return this._pos(_.random(this.x + 1, this.x + this.width - 2), this.y + this.height);
-			// case 'border-4': return this._pos(this.x - 1, _.random(this.y + 1, this.y + this.height - 2));
 
 			default: console.warn('Unknown point name.');
 		}

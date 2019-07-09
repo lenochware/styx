@@ -9,7 +9,6 @@ Styx.levels.LevelBuilder = class
 		this.game = game;
 		this.level = null;
 		this.rooms = [];
-		this.rnd = this.game.random;
 	}
 
 	createLevel()
@@ -49,8 +48,8 @@ Styx.levels.LevelBuilder = class
 		while (tests--) {
 
 			room.assign(
-				this.rnd.int(this.level.size.width - room.width), 
-				this.rnd.int(this.level.size.height - room.height)
+				Styx.Random.int(this.level.size.width - room.width), 
+				Styx.Random.int(this.level.size.height - room.height)
 			);
 
 			if (!this.isOccupied(room)) {
