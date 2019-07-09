@@ -1,10 +1,14 @@
 
 /* Styx */
 
+Styx.Random.setSeed(123);
+
 var game = new Styx.Game();
 
 game.load('world:first').then(function() 
 {
+	//var level = game.createLevel('test');
+
 	var level = game.createLevel('small-cave');
 	
 	player = game.get('player');
@@ -13,7 +17,8 @@ game.load('world:first').then(function()
 	//player.conditions.add('Poisoned', 5);
 
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
-	level.set(level.find('floor').sample().value(), 'actor', player);
+	level.set(level.find('floor').pickOne().value(), 'actor', player);
+
 	//level.setXY(10, 6, 'actor', player);
 
 	// var c = level.size.getPoint('center');

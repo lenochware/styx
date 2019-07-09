@@ -58,3 +58,12 @@ Styx.Random = class
 		return ROT.RNG.shuffle(list);
 	}	
 }
+
+_.mixin({
+    pickOne: function (list) {
+        return ROT.RNG.getItem(list);
+    }
+
+    // ,otherFunc: function () {
+    // }
+});

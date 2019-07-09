@@ -20,7 +20,7 @@ Styx.levels.RoomBuilder = class
 	make(id, params = {})
 	{
 		if (params.tag) {
-			id = this.find(params.tag).sample().value();
+			id = this.find(params.tag).pickOne().value();
 		}
 
 		if (!id) {

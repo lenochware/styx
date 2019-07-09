@@ -42,7 +42,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		var exits = this.level.getAttrib('exits');
 		for (let exit of exits) {
-			var pos = rooms.sample().value().getPoint('random');
+			var pos = rooms.pickOne().value().getPoint('random');
 			this.addExit(pos, exit);
 		}
 	}

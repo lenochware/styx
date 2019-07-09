@@ -94,7 +94,7 @@ Styx.levels.GenericRoom = class extends Styx.Rectangle
 	{
 		var list = [];
 		_.each(this.entrances, en => {if(!en.connected) list.push(en)});
-		return _.shuffle(list);
+		return Styx.Random.shuffle(list);
 	}
 
 	_getSide(pos)
