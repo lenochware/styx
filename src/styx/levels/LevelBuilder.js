@@ -95,7 +95,7 @@ Styx.levels.LevelBuilder = class
 		var en2 = room.getEntranceBySide(en.oppositeSide());
 		if (!en2 || en2.connected) return;
 		var con = new Styx.levels.Connector(en, en2);
-		this.add(con, en);
+		if (con.isValid()) this.add(con, en);
 	}
 
 	isOccupied(newRoom)

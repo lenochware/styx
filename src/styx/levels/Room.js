@@ -323,6 +323,19 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 		return (tag == 'corridor');
 	}
 
+	isValid()
+	{
+		var p1 = this.entrances[0].getPos();
+		var p2 = this.entrances[1].getPos();
+
+		if (['north', 'south'].includes(this.entrances[0].side)) {
+			return (Math.abs(p1.y - p2.y) > 1);
+		}
+		else {
+			return (Math.abs(p1.x - p2.x) > 1);
+		}
+	}
+
 	coords()
 	{
 		var pos = [];
