@@ -77,6 +77,7 @@ Styx.levels.LevelBuilder = class
 				return true;
 			}
 			else {
+				var test = this.digCorridor(en);
 				this.makeConnection(en, occupied);
 			}
 		}
@@ -98,6 +99,21 @@ Styx.levels.LevelBuilder = class
 		if (con.isValid()) this.add(con, en);
 	}
 
+	digCorridor(en, maxLen = 5)
+	{
+		var pos = en.getPos();
+		if (en.isVertical()) {
+			var cor = new Styx.levels.Corridor(3, maxLen);
+		}
+		else {
+			var cor = new Styx.levels.Corridor(maxLen, 3);
+		}
+
+		en.alignRoom(cor);
+		var rooms = this.findIntersecting(cor);
+		console.log(cor, rooms);
+	}
+
 	isOccupied(newRoom)
 	{
 		for(let room of this.rooms)
@@ -108,12 +124,24 @@ Styx.levels.LevelBuilder = class
 		return false;
 	}
 
-	fillLevel(size, fillId)
+	findIntersecting(testRoom)
+	{
+		var list = [];
+
+		for(let room of this.rooms)
+		{
+			if (testRoom.intersect(room)) list.push(room);
+		}
+
+		return list;
+	}
+
+	createTiles(size, tileId)
 	{
 		var tiles = [];
 
 		for (var i = 0; i < size.width * size.height; i++) {
-			tiles[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), fillId);
+			tiles[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), tileId);
 		}
 
 		return tiles;

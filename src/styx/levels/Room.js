@@ -23,6 +23,11 @@ Styx.levels.Entrance = class
 		}
 	}
 
+	isVertical()
+	{
+		return (this.side == 'north' || this.side == 'south');
+	}
+
 	getPos()
 	{
 		return {x: this.pos.x + this.room.x, y: this.pos.y + this.room.y};
@@ -328,7 +333,7 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 		var p1 = this.entrances[0].getPos();
 		var p2 = this.entrances[1].getPos();
 
-		if (['north', 'south'].includes(this.entrances[0].side)) {
+		if (this.entrances[0].isVertical()) {
 			return (Math.abs(p1.y - p2.y) > 1);
 		}
 		else {
@@ -346,7 +351,7 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 		var xm = p1.x + Math.floor((p2.x - p1.x) / 2);
 		var ym = p1.y + Math.floor((p2.y - p1.y) / 2);
 
-		if (['north', 'south'].includes(this.entrances[0].side)) {
+		if (this.entrances[0].isVertical()) {
 			pos = pos.concat(
 				this.line(p1, {x:p1.x, y:ym}),
 				this.line({x:p1.x, y:ym}, {x:p2.x, y:ym}),
