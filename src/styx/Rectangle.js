@@ -124,10 +124,16 @@ Styx.Rectangle = class
 
 			case 'center': return this._pos(this.x + this.width / 2, this.y + this.height / 2);
 
-			case 'center-1': return this._pos(this.x + this.width / 2, this.y - 1);
-			case 'center-2': return this._pos(this.x + this.width, this.y + this.height / 2);
-			case 'center-3': return this._pos(this.x + this.width / 2, this.y + this.height);
-			case 'center-4': return this._pos(this.x - 1, this.y + this.height / 2);
+			// case 'center-1': return this._pos(this.x + this.width / 2, this.y - 1);
+			// case 'center-2': return this._pos(this.x + this.width, this.y + this.height / 2);
+			// case 'center-3': return this._pos(this.x + this.width / 2, this.y + this.height);
+			// case 'center-4': return this._pos(this.x - 1, this.y + this.height / 2);
+
+			case 'center-1': return this._pos(this.x + this.width / 2, this.y);
+			case 'center-2': return this._pos(this.x + this.width - 1, this.y + this.height / 2);
+			case 'center-3': return this._pos(this.x + this.width / 2, this.y + this.height - 1);
+			case 'center-4': return this._pos(this.x, this.y + this.height / 2);
+
 
 			case 'random': return this._pos(
 				this.x + Styx.Random.int(this.width - 2) + 1, 

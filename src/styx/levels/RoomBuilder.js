@@ -19,6 +19,10 @@ Styx.levels.RoomBuilder = class
 
 	make(id, params = {})
 	{
+		if (id == 'corridor') {
+			return new Styx.levels.Corridor(3,3);
+		}
+
 		if (params.tag) {
 			id = this.find(params.tag).pickOne().value();
 		}
@@ -28,6 +32,6 @@ Styx.levels.RoomBuilder = class
 			return null;
 		}
 
-		return (id == 'corridor')? new Styx.levels.Corridor(3,3) : new Styx.levels.Room(id);
+		return new Styx.levels.Room(id);
 	}
 }

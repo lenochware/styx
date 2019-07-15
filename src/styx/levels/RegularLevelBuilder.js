@@ -49,8 +49,11 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 	chooseNextRoom()
 	{
-		if (Styx.Random.bet(.5)) {
+		if (Styx.Random.bet(.4)) {
 			return this.roomBuilder.make('corridor');
+		}
+		else if (Styx.Random.bet(.1)) {
+			return this.roomBuilder.make(null, {tag: 'corridor'});
 		}
 		else {
 			return this.roomBuilder.make(null, {tag: 'room'});
