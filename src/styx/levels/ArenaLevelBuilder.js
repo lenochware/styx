@@ -20,7 +20,7 @@ Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 		var c = this.level.size.getPoint('center');
 		this.add(first.center(c.x, c.y), null);
 
-		var maxRooms = 20;
+		var maxRooms = this.level.getAttrib('max-rooms', 20);
 
 		while(maxRooms--)
 		{

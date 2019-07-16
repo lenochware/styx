@@ -22,6 +22,7 @@
 		"name": "Test level",
 		"type": "test",
 		"tags": ["small"],
+		"max-rooms": 5,
 		"exits": []
 	},
 

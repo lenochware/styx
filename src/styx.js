@@ -17,7 +17,7 @@ game.load('world:first').then(function()
 
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 	//level.set(level.find('floor').pickOne().value(), 'actor', player);
-	level.setXY(10, 6, 'actor', player);
+	level.setXY(7, 2, 'actor', player);
 
 	// var c = level.size.getPoint('center');
 	// level.set(c, 'actor', player);

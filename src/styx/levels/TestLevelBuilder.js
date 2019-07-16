@@ -10,26 +10,18 @@ Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 
 		super.createLevel(id);
 
-		this.spawn(16,6, 'monster', {id: "snake"});
-		this.spawn(6,7, 'item', {id: "rusty_dagger"});
-		this.spawn(7,7, 'item', {id: "short_sword"});
-		this.spawn(8,7, 'item', {id: "wooden_club"});
-		this.spawn(10,7, 'item', {id: "small_shield"});
-		this.spawn(12,7, 'item', {id: "copper_coins"});
-		this.spawn(14,7, 'item', {id: "bread"});
-		this.spawn(16,7, 'item', {id: "bones"});
-		this.spawn(16,8, 'item', {id: "soft_leather_armor"});
+		this.spawnAll('items', 'item', 3);
+		this.spawnAll('tiles', 'tile', 6);
+		this.spawnAll('actors', 'monster', 14);
 
-		var m = this.spawn(16,16, 'monster', {id: "ghost"});
-		m.conditions.add('Bleeding', 10);
-
-		this.level.setXY(5,4, 'id', 'door');
+		// var m = this.spawn(16,16, 'monster', {id: "ghost"});
+		// m.conditions.add('Bleeding', 10);
 
 		var pool = new Styx.Rectangle(8,10,5,4);
 		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'shallow_water'));
 		_.each(pool.move(1,0).coords(), (pos) => this.level.set(pos, 'id', 'water'));
 
-		pool.assign(14,5);
+		pool.move(5,0);
 		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'high_grass'));
 
 		var water = this.level.find('shallow_water');
@@ -66,6 +58,22 @@ Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 
 		this.level.setXY(x, y, type, obj);
 		return obj;
+	}
+
+	spawnAll(category, className, row)
+	{
+		var objects = this.game.db.getCategory(category);
+		var i = 9;
+
+		for (let id in objects) {
+			if (id == 'player') continue;
+			if (className == 'tile') {
+				this.level.setXY(i++, row, 'id', id);
+			}
+			else {
+				this.spawn(i++, row, className, {id:id});
+			}
+		}		
 	}
 
 	buildRandomMap()
