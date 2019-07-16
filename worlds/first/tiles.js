@@ -20,6 +20,13 @@
 		"desc": "You see nothing interesting."
 	},
 
+	"rubble": {
+		"render": {"char": ":", "color": "gray" },
+		"tags": ["hiding"],
+		"name": "rubble",
+		"desc": "Pile of rubble is blocking a way."
+	},
+
 	"water": {
 		"render": {"char": "~", "color": "light-blue" },
 		"tags": ["water", "hiding"],
@@ -39,6 +46,13 @@
 		"render": {"char": ";", "color": "dark-green" },
 		"tags": ["hiding", "hiding_mon"],
 		"name": "high grass",
+		"desc": "You see nothing interesting."
+	},
+
+	"tree": {
+		"render": {"char": "%", "color": "green" },
+		"tags": ["hiding", "hiding_mon", "blocking"],
+		"name": "high tree",
 		"desc": "You see nothing interesting."
 	},
 

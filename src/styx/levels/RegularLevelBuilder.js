@@ -36,6 +36,11 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		return this.level;
 	}
 
+	addSecrets() {}
+	addBoss() {}
+	addGoals() {}
+	addBadPlace() {}
+
 	addStairs()
 	{
 		var rooms = this.findRoom('room');
@@ -44,19 +49,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		for (let exit of exits) {
 			var pos = rooms.pickOne().value().getPoint('random');
 			this.addExit(pos, exit);
-		}
-	}
-
-	chooseNextRoom()
-	{
-		if (Styx.Random.bet(.4)) {
-			return this.roomBuilder.make('corridor');
-		}
-		else if (Styx.Random.bet(.1)) {
-			return this.roomBuilder.make(null, {tag: 'corridor'});
-		}
-		else {
-			return this.roomBuilder.make(null, {tag: 'room'});
 		}
 	}
 
@@ -94,6 +86,19 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		console.log('freeent: ' + entrances.length + ' found rms: ' + found);
 
+	}
+
+	chooseNextRoom()
+	{
+		if (Styx.Random.bet(.4)) {
+			return this.roomBuilder.make('corridor');
+		}
+		else if (Styx.Random.bet(.1)) {
+			return this.roomBuilder.make(null, {tag: 'corridor'});
+		}
+		else {
+			return this.roomBuilder.make(null, {tag: 'room'});
+		}
 	}
 
   drawXY(room, x, y, attrib, value)

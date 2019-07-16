@@ -5,6 +5,28 @@
 		"name": "bones",
 		"desc": "Who left his bones in this sad place?"
 	},
+
+	"slime": {
+		"render": {"char": "~", "color": "green" },
+		"tags": ["item", "useless"],
+		"name": "green slime",
+		"desc": "Piece of strange green slime."
+	},
+
+	"dust": {
+		"render": {"char": "~", "color": "gray" },
+		"tags": ["item", "useless"],
+		"name": "dust",
+		"desc": "You see dust."
+	},
+
+	"rock": {
+		"render": {"char": "~", "color": "gray" },
+		"tags": ["item", "useless"],
+		"name": "rock",
+		"desc": "You see rock."
+	},
+
 	"rusty_dagger": {
 		"render": {"char": "|", "color": "gray" },
 		"tags": ["item", "wearable", "weapon", "light"],

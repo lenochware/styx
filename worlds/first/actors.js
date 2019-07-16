@@ -13,18 +13,6 @@
 		"desc": "Warriors start with 11 points of Strength."
 	},
 
-	"kobold": {
-		"lvl": 1,
-		"xp": 3,
-		"tags": ["actor", "kobold", "fast"],
-		"render": {"char": "k", "color": "green" },
-		"health": 20,
-		"attacks": ["hit"],
-		"bones": "skull",
-		"name": "gnoll kobold",
-		"desc": "Kobolds are the largest, strongest and toughest of all gnolls. When severely wounded, they go berserk, inflicting even more damage to their enemies."
-	},
-
 	"ghost": {
 		"lvl": 1,
 		"xp": 3,
@@ -35,6 +23,41 @@
 		"name": "green ghost",
 		"desc": "Strange transparent humanoid form.",
 		"death-message": "{0} disappears."
+	},
+
+	"rat": {
+		"lvl": 1,
+		"xp": 3,
+		"tags": ["actor", "rat", "fast"],
+		"render": {"char": "r", "color": "brown" },
+		"health": 20,
+		"attacks": ["hit"],
+		"bones": "skull",
+		"name": "giant rat",
+		"desc": "It is rat with size of lion and red glowing eyes."
+	},
+
+	"worm": {
+		"lvl": 1,
+		"xp": 6,
+		"tags": ["actor", "worm"],
+		"render": {"char": "w", "color": "white" },
+		"health": 25,
+		"attacks": ["hit"],
+		"name": "huge worm",
+		"desc": "Huge worm with giant mouth filled with teeth."
+	},
+
+	"skeleton": {
+		"lvl": 2,
+		"xp": 10,
+		"tags": ["actor", "skeleton", "fast"],
+		"render": {"char": "S", "color": "white" },
+		"health": 20,
+		"attacks": ["hit"],
+		"bones": "skull",
+		"name": "skeleton",
+		"desc": "Skeleton with sword and shield is moving to you."
 	},
 
 	"snake": {
