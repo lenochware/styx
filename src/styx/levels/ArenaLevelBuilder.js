@@ -9,9 +9,9 @@ Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.roomBuilder = new Styx.levels.RoomBuilder();
 	}
 
-	createLevel()
+	createLevel(id)
 	{
-		//game.dbgBuild = this;
+		super.createLevel(id);
 
 		this.level.tiles = this.createTiles(this.level.size, 'floor');
 

@@ -81,10 +81,9 @@ Styx.Game = class
 
 	createLevel(id)
 	{
-		var level = new Styx.levels.Level(id);
-		var builder = this.getLevelBuilder(level.getAttrib('type'));
-		builder.level = level;
-		return builder.createLevel();
+		var type = this.db.getAttrib('levels', id, 'type');
+		var builder = this.getLevelBuilder(type);
+		return builder.createLevel(id);
 	}
 
 	changeLevel(id)

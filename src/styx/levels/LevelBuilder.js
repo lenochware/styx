@@ -11,9 +11,9 @@ Styx.levels.LevelBuilder = class
 		this.rooms = [];
 	}
 
-	createLevel()
+	createLevel(id)
 	{
-		throw new Error('Not implemented.');
+		this.level = new Styx.levels.Level(id);
 	}
 
 	populate() 

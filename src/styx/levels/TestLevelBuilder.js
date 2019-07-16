@@ -3,12 +3,12 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 {
-	createLevel()
+	createLevel(id)
 	{
 		// if (this.params.type == 'test-level')	this.buildTestMap();
 		// else this.buildRandomMap();
 
-		super.createLevel();
+		super.createLevel(id);
 
 		this.spawn(16,6, 'monster', {id: "snake"});
 		this.spawn(6,7, 'item', {id: "rusty_dagger"});
