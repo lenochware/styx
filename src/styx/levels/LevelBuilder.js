@@ -77,8 +77,10 @@ Styx.levels.LevelBuilder = class
 				return true;
 			}
 			else {
-				var test = this.digCorridor(en);
-				this.makeConnection(en, occupied);
+				var r = this.findNearRoom(en);
+				if (r) {
+					if (this.makeConnection(en, r)) return false;
+				}
 			}
 		}
 
@@ -96,22 +98,14 @@ Styx.levels.LevelBuilder = class
 		var en2 = room.getEntranceBySide(en.oppositeSide());
 		if (!en2 || en2.connected) return;
 		var con = new Styx.levels.Connector(en, en2);
-		if (con.isValid()) this.add(con, en);
-	}
 
-	digCorridor(en, maxLen = 5)
-	{
-		var pos = en.getPos();
-		if (en.isVertical()) {
-			var cor = new Styx.levels.Corridor(3, maxLen);
-		}
-		else {
-			var cor = new Styx.levels.Corridor(maxLen, 3);
+		if (con.isValid()) {
+			console.log(en.getPos(),en2.getPos(), en2);
+			this.add(con, en);
+			return true;
 		}
 
-		en.alignRoom(cor);
-		var rooms = this.findIntersecting(cor);
-		console.log(cor, rooms);
+		return false;
 	}
 
 	isOccupied(newRoom)
@@ -122,6 +116,26 @@ Styx.levels.LevelBuilder = class
 		}
 
 		return false;
+	}
+
+	findNearRoom(en)
+	{
+		var ray = en.getRay(8);
+		var rooms = this.findIntersecting(ray);
+		if (rooms.length == 0) return null;
+
+		var en2, test;
+
+		for (let r of rooms) {
+			test = r.getEntranceBySide(en.oppositeSide());
+			if (!test || test.connected) continue;
+
+			if (!en2 || (test.distance(en) < en2.distance(en))) {
+				en2 = test;
+			}
+		}
+
+		return en2? en2.room : null;
 	}
 
 	findIntersecting(testRoom)

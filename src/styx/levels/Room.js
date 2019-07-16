@@ -23,6 +23,13 @@ Styx.levels.Entrance = class
 		}
 	}
 
+	distance(en)
+	{
+		var p1 = this.getPos();
+		var p2 = en.getPos();
+		return Math.max(Math.abs(p1.x - p2.x), Math.abs(p1.y - p2.y));
+	}
+
 	isVertical()
 	{
 		return (this.side == 'north' || this.side == 'south');
@@ -31,6 +38,35 @@ Styx.levels.Entrance = class
 	getPos()
 	{
 		return {x: this.pos.x + this.room.x, y: this.pos.y + this.room.y};
+	}
+
+	getRay(len)
+	{
+		var pos = this.getPos();
+		var dir = this.getDir();
+
+		var ray = new Styx.Rectangle(pos.x, pos.y, 1, 1);
+
+		if (dir.x) ray.width = len;
+		else ray.height = len;
+
+		if (dir.x > 0 || dir.y > 0) {
+			ray.move(dir.x, dir.y);
+		}
+		else {
+			ray.move(dir.x * len, dir.y * len);
+		}
+
+		return ray;
+	}
+
+	getDir() {
+		switch(this.side) {
+			case 'north': return {x: 0, y:-1};
+			case 'south': return {x: 0, y: 1};
+			case 'east':  return {x: 1, y: 0};
+			case 'west':  return {x:-1, y: 0};
+		}
 	}
 
 	connect(room)
@@ -205,6 +241,12 @@ Styx.levels.Room = class extends Styx.levels.GenericRoom
 		return this.cells[y][x];
 	}
 
+	getCellAbs(x,y)
+	{
+		if (!this.pointInside(x,y)) return null;
+		return this.getCell(x - this.x, y - this.y);
+	}
+
 	findChar(char)
 	{
 		var pos = [];
@@ -366,6 +408,9 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 		}
 
 		//var pos = pos.concat(this.line(this.entrances[0].getPos(), this.entrances[1].getPos()));
+
+		pos = _.reject(pos, (p) => _.isEqual(p, p1) || _.isEqual(p, p2));
+
 		return pos;
 	}
 
