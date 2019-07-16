@@ -76,12 +76,13 @@ Styx.levels.LevelBuilder = class
 				this.add(nextRoom, en);
 				return true;
 			}
-			else {
-				var r = this.findNearRoom(en);
-				if (r) {
-					if (this.makeConnection(en, r)) return false;
-				}
-			}
+
+			// else {
+			// 	var r = this.findNearRoom(en);
+			// 	if (r) {
+			// 		if (this.makeConnection(en, r)) return false;
+			// 	}
+			// }
 		}
 
 		return false;
@@ -100,7 +101,7 @@ Styx.levels.LevelBuilder = class
 		var con = new Styx.levels.Connector(en, en2);
 
 		if (con.isValid()) {
-			console.log(en.getPos(),en2.getPos(), en2);
+			//console.log(en.getPos(),en2.getPos(), en2);
 			this.add(con, en);
 			return true;
 		}
@@ -136,6 +137,16 @@ Styx.levels.LevelBuilder = class
 		}
 
 		return en2? en2.room : null;
+	}
+
+	getFreeEntrances()
+	{
+		var list = [];
+		for(let room of this.rooms) {
+			list.push(room.getFreeEntrances());
+		}
+
+		return _.flatten(list);
 	}
 
 	findIntersecting(testRoom)
