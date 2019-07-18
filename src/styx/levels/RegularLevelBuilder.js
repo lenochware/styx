@@ -3,13 +3,6 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 {
-	constructor()
-	{
-		super();
-		//this.roomCells = [];
-		this.roomBuilder = new Styx.levels.RoomBuilder();
-	}
-
 	createLevel(id)
 	{
 		super.createLevel(id);
@@ -67,7 +60,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			if (added) { 
 
 				if (Styx.Random.bet(.2)) {
-					var sideRoom = this.roomBuilder.make(null, {tag: 'room'});
+					var sideRoom = this.createRoom(null, {tag: 'room'});
 					this.addNextRoom(room, sideRoom);
 				}
 
@@ -95,13 +88,13 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	chooseNextRoom()
 	{
 		if (Styx.Random.bet(.4)) {
-			return this.roomBuilder.make('corridor');
+			return this.createRoom('corridor');
 		}
 		else if (Styx.Random.bet(.1)) {
-			return this.roomBuilder.make(null, {tag: 'corridor'});
+			return this.createRoom(null, {tag: 'corridor'});
 		}
 		else {
-			return this.roomBuilder.make(null, {tag: 'room'});
+			return this.createRoom(null, {tag: 'room'});
 		}
 	}
 

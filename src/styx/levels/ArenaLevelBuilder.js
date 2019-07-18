@@ -3,12 +3,6 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 {
-	constructor()
-	{
-		super();
-		this.roomBuilder = new Styx.levels.RoomBuilder();
-	}
-
 	createLevel(id)
 	{
 		super.createLevel(id);
@@ -56,7 +50,7 @@ Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 
 	chooseNextRoom(room)
 	{
-		return this.roomBuilder.make(null, {tag: 'room'});
+		return this.createRoom(null, {tag: 'room'});
 	}
 
 	drawXY(room, x, y, attrib, value)

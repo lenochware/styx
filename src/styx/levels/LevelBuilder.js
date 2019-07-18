@@ -16,9 +16,9 @@ Styx.levels.LevelBuilder = class
 		this.level = new Styx.levels.Level(id);
 	}
 
-	populate() 
+	populate()
 	{
-		throw new Error('Not implemented.');		
+		throw new Error('Not implemented.');
 	}
 
 	chooseNextRoom()
@@ -29,6 +29,24 @@ Styx.levels.LevelBuilder = class
 	findRoom(tag)
 	{
 		return _.chain(this.rooms).filter(obj => obj.is(tag));
+	}
+
+	createRoom(id, params = {})
+	{
+		if (id == 'corridor') {
+			return new Styx.levels.Corridor(3,3);
+		}
+
+		if (params.tag) {
+			id = this.game.db.findKey('rooms', params.tag).pickOne().value();
+		}
+
+		if (!id) {
+			console.warn('Room id not found.');
+			return null;
+		}
+
+		return new Styx.levels.Room(id);
 	}
 
 
@@ -184,6 +202,7 @@ Styx.levels.LevelBuilder = class
 		this.addObjectGroup(biom.tiles);
 		this.addObjectGroup(biom.items);
 		this.addObjectGroup(biom.monsters);
+		this.addSpecialRooms(biom.specialRooms)
 	}
 
 	addObjectGroup(group)
@@ -202,6 +221,12 @@ Styx.levels.LevelBuilder = class
 				this.addObject(obj, pos);				
 			}
 		}
+	}
+
+	addSpecialRooms(group)
+	{
+
+
 	}
 
 	pickPosition(type, location)

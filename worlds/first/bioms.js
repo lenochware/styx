@@ -31,11 +31,10 @@
 			"list": ["r1", "r2", "r3", "r4", "r5", "r6"]
 		},
 
-		"special-rooms": {
-			"type": "rooms",
-			"chance": 0.5,
+		"specialRooms": {
+			"type": "special-rooms",
 			"list": ["rat-room"],
-			"count": [1,1]
+			"chances": [0.5]
 		}
 
 
