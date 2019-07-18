@@ -35,6 +35,8 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.drawAll();
 		this.addStairs();
 
+		this.addBiom('rats');
+
 		return this.level;
 	}
 

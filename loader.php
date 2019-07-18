@@ -19,7 +19,9 @@ if (strpos($id, 'world:') === 0) {
 	$world = [];
 
 	foreach ($worldParts as $part) {
-		$world[$part] = json_decode(file_get_contents("worlds/$name/$part.js"));
+		$jsonString = removeComments(file_get_contents("worlds/$name/$part.js"));
+		$world[$part] = json_decode($jsonString);
+
 		if (json_last_error() != JSON_ERROR_NONE) {
 			die("worlds/$name/$part.js: " . json_last_error_msg());
 		}
@@ -45,6 +47,11 @@ function outputJson(array $data)
 {
   header('Content-Type: application/json; charset=utf-8');
   die(json_encode($data, JSON_UNESCAPED_UNICODE/*|JSON_PRETTY_PRINT*/));
+}
+
+function removeComments($s)
+{
+	return preg_replace('/\/\/.*/', '', $s);
 }
 
 ?>
