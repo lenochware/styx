@@ -172,6 +172,11 @@ Styx.levels.LevelBuilder = class
 		return tiles;
 	}
 
+	getBiom(id)
+	{
+		return this.game.db.getObject('bioms', id);
+	}
+
 	drawXY(room, x, y, attrib, value)
 	{
 		throw new Error('Not implemented.');
