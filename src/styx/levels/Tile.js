@@ -47,8 +47,8 @@ Styx.levels.Tile = class
 
 		if (attack) {
 		  if (!actor.is("flying") && !actor.is("swimmer")) {
-				if (actor.isNear()) actor.game.message('attack-' + a.type, "msg-info", actor);
-				actor.damage(this, a.type, a.points);
+				if (actor.isNear()) actor.game.message('attack-' + attack.type, "msg-info", actor);
+				actor.damage(this, attack.type, attack.points);
 
 			}
 		}		

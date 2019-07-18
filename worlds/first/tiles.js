@@ -15,14 +15,14 @@
 
 	"fake_wall": {
 		"render": {"char": "#", "color": "gray" },
-		"tags": ["hiding"],
-		"name": "stone wall",
-		"desc": "You see nothing interesting."
+		"tags": ["hiding", "opaque"],
+		"name": "fake wall",
+		"desc": "It looks like a wall but it is only image created by wizzard."
 	},
 
 	"rubble": {
 		"render": {"char": ":", "color": "gray" },
-		"tags": ["hiding"],
+		"tags": ["hiding", "blocking"],
 		"name": "rubble",
 		"desc": "Pile of rubble is blocking a way."
 	},
