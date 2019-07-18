@@ -190,71 +190,12 @@ Styx.levels.LevelBuilder = class
 		return tiles;
 	}
 
-	getBiom(id)
-	{
-		return this.game.db.getObject('bioms', id);
-	}
-
 	addBiom(id)
 	{
-		var biom = this.getBiom(id);
-
-		this.addObjectGroup(biom.tiles);
-		this.addObjectGroup(biom.items);
-		this.addObjectGroup(biom.monsters);
-		this.addSpecialRooms(biom.specialRooms)
+		var biom = new Styx.levels.Biom(this.level);
+		biom.add(id);
 	}
 
-	addObjectGroup(group)
-	{
-		var count = Styx.Random.int(group.count[0], group.count[1]);
-
-		while (count--) {
-			var id = group.list[Styx.Random.chances(group.chances)];
-			var pos = this.pickPosition(group.type, group.location);
-
-			if (group.type == 'tiles') {
-				this.level.set(pos, 'id', id);
-			}
-			else {
-				var obj = this.createObject(group.type, id);
-				this.addObject(obj, pos);				
-			}
-		}
-	}
-
-	addSpecialRooms(group)
-	{
-
-
-	}
-
-	pickPosition(type, location)
-	{
-  	var pos = null;
-
-  	for (let i = 0; i < 10; i++) {
-  		pos = this.level.find('floor').pickOne().value();
-  		if (!this.level.get(pos, type == 'actors'? 'actor' : 'item')) return pos;
-  	}
-
-  	throw new Error('Cannot find free pos.');
-	}
-
-	addObject(obj, pos)
-	{
-  	var type = obj.is('actor')? 'actor' : 'item';
-		this.level.set(pos, type, obj);
-	}
-
-	createObject(type, id)
-	{
-		switch (type) {
-			case 'actors': return new Styx.actors.Monster({id: id});
-			case 'items': return new Styx.items.Item({id: id});
-			default: throw `Unknown entity ${type}`;
-		}
-	}
 
 	drawXY(room, x, y, attrib, value)
 	{
