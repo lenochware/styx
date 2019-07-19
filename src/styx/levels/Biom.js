@@ -3,10 +3,11 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.Biom = class
 {
-	constructor(level)
+	constructor(id)
 	{
 		this.game = game;
-		this.level = level;
+		this.id = id;
+		this.level = null;
 	}
 
 	addObjectGroup(group)
@@ -60,9 +61,10 @@ Styx.levels.Biom = class
 		}
 	}
 
-	add(id)
+	add(level)
 	{
-		var biom = this.game.db.getObject('bioms', id);
+		this.level = level;
+		var biom = this.game.db.getObject('bioms', this.id);
 
 		this.addObjectGroup(biom.tiles);
 		this.addObjectGroup(biom.items);

@@ -192,8 +192,8 @@ Styx.levels.LevelBuilder = class
 
 	addBiom(id)
 	{
-		var biom = new Styx.levels.Biom(this.level);
-		biom.add(id);
+		var biom = new Styx.levels.Biom(id);
+		biom.add(this.level);
 	}
 
 

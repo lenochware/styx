@@ -417,7 +417,7 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 	draw(drawCellCallback)
 	{
 		for (let pos of this.coords()) {
-			drawCellCallback(this, pos.x, pos.y , 'id', 'shallow_water');
+			drawCellCallback(this, pos.x, pos.y , 'id', 'floor');
 		}
 	}
 

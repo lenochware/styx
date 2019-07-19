@@ -122,7 +122,7 @@ Styx.actors.conditions = {
 	{
 		onRemove()
 		{
-			this.message("{0} wake up!", 'msg-info', this.target);
+			this.message("{0} wake[s] up!", 'msg-info', this.target);
 		}
 	},
 
