@@ -38,7 +38,7 @@ Styx.levels.LevelBuilder = class
 		}
 
 		if (params.tag) {
-			id = this.game.db.findKey('rooms', params.tag).pickOne().value();
+			id = this.game.db.findKey('rooms', params.tag).sample().value();
 		}
 
 		if (!id) {
@@ -192,8 +192,8 @@ Styx.levels.LevelBuilder = class
 
 	addBiom(id)
 	{
-		var biom = new Styx.levels.Biom(id);
-		biom.add(this.level);
+		var biom = new Styx.levels.Biom(this.level, this.rooms, id, this.level.size);
+		biom.add();
 	}
 
 

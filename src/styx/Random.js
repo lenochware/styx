@@ -59,11 +59,11 @@ Styx.Random = class
 	}	
 }
 
-_.mixin({
-    pickOne: function (list) {
-        return ROT.RNG.getItem(list);
-    }
-
-    // ,otherFunc: function () {
-    // }
-});
+// Return a random integer between min and max (inclusive).
+_.random = function(min, max) {
+  if (max == null) {
+    max = min;
+    min = 0;
+  }
+  return min + Math.floor(ROT.RNG.getUniform() * (max - min + 1));
+};

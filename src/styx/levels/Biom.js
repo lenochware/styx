@@ -3,11 +3,13 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.Biom = class
 {
-	constructor(id)
+	constructor(level, rooms, id, size)
 	{
 		this.game = game;
-		this.id = id;
-		this.level = null;
+		this.data = this.game.db.getObject('bioms', id);
+		this.level = level;
+		this.rooms = rooms;
+		this.size = size;
 	}
 
 	addObjectGroup(group)
@@ -28,9 +30,23 @@ Styx.levels.Biom = class
 		}
 	}
 
+	findRoom(tag)
+	{
+		return _.chain(this.rooms).filter(obj => obj.is(tag));
+	}
+
 	addSpecialRooms(group)
 	{
+		var rooms = this.findRoom('room').sample(4).value();
 
+		for (let i in group.list) {
+			if (!Styx.Random.bet(group.chances[i])) continue;
+			this.addSpecialRoom(this.data[group.list[i]]);
+		}
+	}
+
+	addSpecialRoom(group)
+	{
 
 	}
 
@@ -39,7 +55,7 @@ Styx.levels.Biom = class
   	var pos = null;
 
   	for (let i = 0; i < 10; i++) {
-  		pos = this.level.find('floor').pickOne().value();
+  		pos = this.level.find('floor').sample().value();
   		if (!this.level.get(pos, type == 'actors'? 'actor' : 'item')) return pos;
   	}
 
@@ -61,15 +77,12 @@ Styx.levels.Biom = class
 		}
 	}
 
-	add(level)
+	add()
 	{
-		this.level = level;
-		var biom = this.game.db.getObject('bioms', this.id);
-
-		this.addObjectGroup(biom.tiles);
-		this.addObjectGroup(biom.items);
-		this.addObjectGroup(biom.monsters);
-		this.addSpecialRooms(biom.specialRooms);		
+		this.addObjectGroup(this.data.tiles);
+		this.addObjectGroup(this.data.items);
+		this.addObjectGroup(this.data.monsters);
+		this.addSpecialRooms(this.data.specialRooms);		
 	}
 
 }

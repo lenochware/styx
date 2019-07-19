@@ -25,9 +25,9 @@ Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 		_.each(pool.coords(), (pos) => this.level.set(pos, 'id', 'high_grass'));
 
 		var water = this.level.find('shallow_water');
-		//this.level.set(water.pickOne().value(), 'item', this.make('item', {id: 'copper_coins'}));
-		this.level.set(water.pickOne().value(), 'item', this.make('item', {id: 'fish_food'}));
-		this.level.set(water.pickOne().value(), 'item', this.make('item', {id: 'rusty_dagger'}));
+		//this.level.set(water.sample().value(), 'item', this.make('item', {id: 'copper_coins'}));
+		this.level.set(water.sample().value(), 'item', this.make('item', {id: 'fish_food'}));
+		this.level.set(water.sample().value(), 'item', this.make('item', {id: 'rusty_dagger'}));
 
 		return this.level;
 	}
