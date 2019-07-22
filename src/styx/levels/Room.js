@@ -1,7 +1,7 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
-Styx.levels.Entrance = class
+Styx.levels.Door = class
 {
 	constructor(room, id, pos)
 	{
@@ -23,10 +23,10 @@ Styx.levels.Entrance = class
 		}
 	}
 
-	distance(en)
+	distance(door)
 	{
 		var p1 = this.getPos();
-		var p2 = en.getPos();
+		var p2 = door.getPos();
 		return Math.max(Math.abs(p1.x - p2.x), Math.abs(p1.y - p2.y));
 	}
 
@@ -71,30 +71,29 @@ Styx.levels.Entrance = class
 
 	connect(room)
 	{
-		//var en = this.alignRoom(room);
-		var en = this.getMatchingEntrance(room);
-		this.connected = en;
-		en.connected = this;
+		var door = this.getMatchingDoor(room);
+		this.connected = door;
+		door.connected = this;
 	}
 
-	getMatchingEntrance(room)
+	getMatchingDoor(room)
 	{
-		var en = room.getEntranceBySide(this.oppositeSide());
-		if (!en) {
-			throw new Error("Entrance does not exists.");
+		var door = room.getDoorBySide(this.oppositeSide());
+		if (!door) {
+			throw new Error("Door does not exists.");
 		}
-		if ((en.connected && en.connected.room != this) || this.connected && this.connected.room != room) {
-			throw new Error("Entrance is already connected.");
+		if ((door.connected && door.connected.room != this) || this.connected && this.connected.room != room) {
+			throw new Error("Door is already connected.");
 		}
 
-		return en;
+		return door;
 	}
 
 	alignRoom(room)
 	{
-		var en = this.getMatchingEntrance(room);
+		var door = this.getMatchingDoor(room);
 
-		room.move(this.getPos().x - en.getPos().x, this.getPos().y - en.getPos().y); //nastavi prekryvajici mistnost
+		room.move(this.getPos().x - door.getPos().x, this.getPos().y - door.getPos().y); //nastavi prekryvajici mistnost
 
 		switch(this.side) {
 			case 'north': room.move(0,-1);  break;
@@ -103,17 +102,28 @@ Styx.levels.Entrance = class
 			case 'west':  room.move(-1, 0); break;
 		}
 
-		return en;
+		return door;
 	}
 }
 
-Styx.levels.GenericRoom = class extends Styx.Rectangle
+Styx.levels.Room = class extends Styx.Rectangle
 {
 	constructor(width, height)
 	{
 		super(0, 0, width, height, {});
 		this.game = game;
-		this.entrances = [];
+		this.doors = this.createDoors();
+	}
+
+	createDoors()
+	{
+		var list = [];
+		list.push(new Styx.levels.Door(this, 'north', this.getPoint('center-1')));
+		list.push(new Styx.levels.Door(this, 'east', this.getPoint('center-2')));
+		list.push(new Styx.levels.Door(this, 'south', this.getPoint('center-3')));
+		list.push(new Styx.levels.Door(this, 'west', this.getPoint('center-4')));
+
+		return list;
 	}
 
 	is(tag)
@@ -121,20 +131,20 @@ Styx.levels.GenericRoom = class extends Styx.Rectangle
 		return false;
 	}
 
-	getEntrance(x, y)
+	getDoor(x, y)
 	{
-		return _.find(this.entrances, en => en.pos.x == x && en.pos.y == y);
+		return _.find(this.doors, door => door.pos.x == x && door.pos.y == y);
 	}
 
-	getEntranceBySide(side)
+	getDoorBySide(side)
 	{
-		return _.find(this.entrances, en => en.side == side);
+		return _.find(this.doors, door => door.side == side);
 	}
 
-	getFreeEntrances()
+	getFreeDoors()
 	{
 		var list = [];
-		_.each(this.entrances, en => {if(!en.connected) list.push(en)});
+		_.each(this.doors, door => {if(!door.connected) list.push(door)});
 		return Styx.Random.shuffle(list);
 	}
 
@@ -190,7 +200,7 @@ Styx.levels.GenericRoom = class extends Styx.Rectangle
 
 }
 
-Styx.levels.Room = class extends Styx.levels.GenericRoom
+Styx.levels.FixedRoom = class extends Styx.levels.Room
 {
 	constructor(name)
 	{
@@ -198,7 +208,7 @@ Styx.levels.Room = class extends Styx.levels.GenericRoom
 		this.name = name;
 		this.cells = this.getCells();
 		this.assign(0, 0, this.cells[0].length, this.cells.length);		
-		this.entrances = this.createEntrances();
+		this.doors = this.createDoors();
 	}
 
 	getAttrib(attrib)
@@ -232,7 +242,7 @@ Styx.levels.Room = class extends Styx.levels.GenericRoom
 
 		[this.width, this.height] = [this.height, this.width];
 
-		this.entrances = this.createEntrances();
+		this.doors = this.createDoors();
 		return this;
 	}
 
@@ -260,15 +270,17 @@ Styx.levels.Room = class extends Styx.levels.GenericRoom
 		return pos;
 	}
 
-	createEntrances()
+	createDoors()
 	{
+		if (!this.name) return;
+
 		var list = [];
 		var listPos = this.findChar('+');
 		for (let pos of listPos) {
 			var side = this._getSide(pos);
 			if (!side) continue;
 
-			list.push(new Styx.levels.Entrance(this, side, pos));
+			list.push(new Styx.levels.Door(this, side, pos));
 		}
 
 		return list;
@@ -284,17 +296,17 @@ Styx.levels.Room = class extends Styx.levels.GenericRoom
 				if (cell == ' ') continue;
 
 				if (cell == '+') {
-					var en = this.getEntrance(x, y);
-						if (en) {
-						if (!en.connected) continue;
+					var door = this.getDoor(x, y);
+						if (door) {
+						if (!door.connected) continue;
 
 						if (this.is('corridor')) {
 							cell = '.';
 						}
 
 						//prevent double door
-						if (!en.connected.room.is('corridor') && (en.room.x > en.connected.room.x 
-							|| (en.room.x == en.connected.room.x && en.room.y > en.connected.room.y))
+						if (!door.connected.room.is('corridor') && (door.room.x > door.connected.room.x 
+							|| (door.room.x == door.connected.room.x && door.room.y > door.connected.room.y))
 						) {
 							cell = '.';
 						}
@@ -312,14 +324,8 @@ Styx.levels.Room = class extends Styx.levels.GenericRoom
 
 //Corridor
 
-Styx.levels.Corridor = class extends Styx.levels.GenericRoom
+Styx.levels.Corridor = class extends Styx.levels.Room
 {
-	constructor(w, h)
-	{
-		super(w,h);
-		this.entrances = this.createEntrances();
-	}
-
 	is(tag)
 	{
 		return (tag == 'corridor');
@@ -331,8 +337,8 @@ Styx.levels.Corridor = class extends Styx.levels.GenericRoom
 		var pos = [];
 		var center = this.getPoint('center');
 
-		_.each(this.entrances, 
-			(en) => { if (en.connected) pos = pos.concat(this.line(en.getPos(), center)); }
+		_.each(this.doors, 
+			door => { if (door.connected) pos = pos.concat(this.line(door.getPos(), center)); }
 		);
 
 		return pos;
@@ -345,24 +351,29 @@ Styx.levels.Corridor = class extends Styx.levels.GenericRoom
 		}
 	}
 
-	createEntrances()
+	createDoors()
 	{
 		var list = [];
-		list.push(new Styx.levels.Entrance(this, 'north', this.getPoint('center-1')));
-		list.push(new Styx.levels.Entrance(this, 'east', this.getPoint('center-2')));
-		list.push(new Styx.levels.Entrance(this, 'south', this.getPoint('center-3')));
-		list.push(new Styx.levels.Entrance(this, 'west', this.getPoint('center-4')));
+		list.push(new Styx.levels.Door(this, 'north', this.getPoint('center-1')));
+		list.push(new Styx.levels.Door(this, 'east', this.getPoint('center-2')));
+		list.push(new Styx.levels.Door(this, 'south', this.getPoint('center-3')));
+		list.push(new Styx.levels.Door(this, 'west', this.getPoint('center-4')));
 
 		return list;
 	}
 }
 
-Styx.levels.Connector = class extends Styx.levels.GenericRoom
+Styx.levels.Connector = class extends Styx.levels.Room
 {
-	constructor(en1, en2)
+	constructor(d1, d2)
 	{
 		super(0,0);
-		this.entrances.push(en1, en2);
+		this.doors.push(d1, d2);
+	}
+
+	createDoors()
+	{
+		return [];
 	}
 
 	is(tag)
@@ -372,10 +383,10 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 
 	isValid()
 	{
-		var p1 = this.entrances[0].getPos();
-		var p2 = this.entrances[1].getPos();
+		var p1 = this.doors[0].getPos();
+		var p2 = this.doors[1].getPos();
 
-		if (this.entrances[0].isVertical()) {
+		if (this.doors[0].isVertical()) {
 			return (Math.abs(p1.y - p2.y) > 1);
 		}
 		else {
@@ -387,13 +398,13 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 	{
 		var pos = [];
 
-		var p1 = this.entrances[0].getPos();
-		var p2 = this.entrances[1].getPos();
+		var p1 = this.doors[0].getPos();
+		var p2 = this.doors[1].getPos();
 
 		var xm = p1.x + Math.floor((p2.x - p1.x) / 2);
 		var ym = p1.y + Math.floor((p2.y - p1.y) / 2);
 
-		if (this.entrances[0].isVertical()) {
+		if (this.doors[0].isVertical()) {
 			pos = pos.concat(
 				this.line(p1, {x:p1.x, y:ym}),
 				this.line({x:p1.x, y:ym}, {x:p2.x, y:ym}),
@@ -407,7 +418,7 @@ Styx.levels.Connector = class extends Styx.levels.GenericRoom
 			);
 		}
 
-		//var pos = pos.concat(this.line(this.entrances[0].getPos(), this.entrances[1].getPos()));
+		//var pos = pos.concat(this.line(this.doors[0].getPos(), this.doors[1].getPos()));
 
 		pos = _.reject(pos, (p) => _.isEqual(p, p1) || _.isEqual(p, p2));
 

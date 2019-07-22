@@ -9,17 +9,17 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		
 		this.level.tiles = this.createTiles(this.level.size, 'wall');
 
-		var first = new Styx.levels.Room('room13x5');
+		var first = new Styx.levels.FixedRoom('room13x5');
 		var added = this.addToRandomPlace(first);
 		if (added) this.addRoomsStream(first);
 
-		var first = new Styx.levels.Room('room13x5');
+		var first = new Styx.levels.FixedRoom('room13x5');
 		var added = this.addToRandomPlace(first);
 		if (added) this.addRoomsStream(first);
 
 		this.addConnections();
 
-		// var first = new Styx.levels.Room('room13x5');
+		// var first = new Styx.levels.FixedRoom('room13x5');
 		// var added = this.addToRandomPlace(first);
 		// if (added) this.addRoomsStream(first);
 
@@ -72,16 +72,16 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	addConnections()
 	{
 		var found = 0;
-		var entrances = this.getFreeEntrances();
-		for (let en of entrances) {
-			var r = this.findNearRoom(en);
+		var doors = this.getFreeDoors();
+		for (let door of doors) {
+			var r = this.findNearRoom(door);
 			if (r) {
-				this.makeConnection(en, r);
+				this.makeConnection(door, r);
 				found++;
 			}
 		}
 
-		console.log('freeent: ' + entrances.length + ' found rms: ' + found);
+		console.log('freeent: ' + doors.length + ' found rms: ' + found);
 
 	}
 

@@ -46,7 +46,7 @@ Styx.levels.LevelBuilder = class
 			return null;
 		}
 
-		return new Styx.levels.Room(id);
+		return new Styx.levels.FixedRoom(id);
 	}
 
 
@@ -81,24 +81,24 @@ Styx.levels.LevelBuilder = class
 
 	addNextRoom(room, nextRoom)
 	{
-		for(let en of room.getFreeEntrances()) {
+		for(let door of room.getFreeDoors()) {
 
-			if (!nextRoom.getEntranceBySide(en.oppositeSide())) continue;
+			if (!nextRoom.getDoorBySide(door.oppositeSide())) continue;
 
-			en.alignRoom(nextRoom);
+			door.alignRoom(nextRoom);
 
 			if (!nextRoom.inside(this.level.size)) continue;
 			var occupied = this.isOccupied(nextRoom);
 
 			if (!occupied) {
-				this.add(nextRoom, en);
+				this.add(nextRoom, door);
 				return true;
 			}
 
 			// else {
-			// 	var r = this.findNearRoom(en);
+			// 	var r = this.findNearRoom(door);
 			// 	if (r) {
-			// 		if (this.makeConnection(en, r)) return false;
+			// 		if (this.makeConnection(door, r)) return false;
 			// 	}
 			// }
 		}
@@ -112,15 +112,15 @@ Styx.levels.LevelBuilder = class
 		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos};
 	}
 
-	makeConnection(en, room)
+	makeConnection(door, room)
 	{
-		var en2 = room.getEntranceBySide(en.oppositeSide());
-		if (!en2 || en2.connected) return;
-		var con = new Styx.levels.Connector(en, en2);
+		var door2 = room.getDoorBySide(door.oppositeSide());
+		if (!door2 || door2.connected) return;
+		var con = new Styx.levels.Connector(door, door2);
 
 		if (con.isValid()) {
-			//console.log(en.getPos(),en2.getPos(), en2);
-			this.add(con, en);
+			//console.log(door.getPos(),door2.getPos(), door2);
+			this.add(con, door);
 			return true;
 		}
 
@@ -137,31 +137,31 @@ Styx.levels.LevelBuilder = class
 		return false;
 	}
 
-	findNearRoom(en)
+	findNearRoom(door)
 	{
-		var ray = en.getRay(8);
+		var ray = door.getRay(8);
 		var rooms = this.findIntersecting(ray);
 		if (rooms.length == 0) return null;
 
-		var en2, test;
+		var door2, test;
 
 		for (let r of rooms) {
-			test = r.getEntranceBySide(en.oppositeSide());
+			test = r.getDoorBySide(door.oppositeSide());
 			if (!test || test.connected) continue;
 
-			if (!en2 || (test.distance(en) < en2.distance(en))) {
-				en2 = test;
+			if (!door2 || (test.distance(door) < door2.distance(door))) {
+				door2 = test;
 			}
 		}
 
-		return en2? en2.room : null;
+		return door2? door2.room : null;
 	}
 
-	getFreeEntrances()
+	getFreeDoors()
 	{
 		var list = [];
 		for(let room of this.rooms) {
-			list.push(room.getFreeEntrances());
+			list.push(room.getFreeDoors());
 		}
 
 		return _.flatten(list);
