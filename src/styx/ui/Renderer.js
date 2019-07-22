@@ -20,13 +20,13 @@ Styx.ui.Renderer = class
 
 	lightPasses(x, y)
 	{
-		if (!this.view.pointInside(x, y)) return false;
+		if (!this.view.isInsidePoint(x, y)) return false;
 		return !this.level.getXY(x, y, 'tile').is('opaque');
 	}
 
 	writeFov(x, y, r, vis)
 	{
-		if (!this.view.pointInside(x, y)) return;
+		if (!this.view.isInsidePoint(x, y)) return;
 		this.level.fov[x + ',' + y] = true;
 	}
 

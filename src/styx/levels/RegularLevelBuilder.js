@@ -9,7 +9,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		
 		this.level.tiles = this.createTiles(this.level.size, 'wall');
 
-		var first = new Styx.levels.FixedRoom('room13x5');
+		var first = new Styx.levels.Room(13, 5);
 		var added = this.addToRandomPlace(first);
 		if (added) this.addRoomsStream(first);
 

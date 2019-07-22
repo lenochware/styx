@@ -196,7 +196,19 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 	draw(drawCellCallback)
 	{
+		for (let pos of this.coords()) {
+			let id = this.isBorderPoint(pos.x, pos.y)? 'wall' : 'floor';
+			drawCellCallback(this, pos.x, pos.y , 'id', id);
+		}
+	
+		for (let door of this.doors) {
+			if (!door.connected) continue;
+			let pos = door.getPos();
+			drawCellCallback(this, pos.x, pos.y , 'id', 'door');
+		}
+
 	}
+
 
 }
 
@@ -253,7 +265,7 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 
 	getCellAbs(x,y)
 	{
-		if (!this.pointInside(x,y)) return null;
+		if (!this.isInsidePoint(x,y)) return null;
 		return this.getCell(x - this.x, y - this.y);
 	}
 

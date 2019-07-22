@@ -154,9 +154,14 @@ Styx.Rectangle = class
 		return this.equals(this.getIntersection(rect));
 	}
 
-	pointInside(x, y)
+	isInsidePoint(x, y)
 	{
 		return (x >= this.x && y >= this.y && x < this.x + this.width && y < this.y + this.height);
+	}
+
+	isBorderPoint(x, y)
+	{
+		return (x == this.x || y == this.y || x == this.x + this.width - 1 || y == this.y + this.height - 1);
 	}
 
 	isEmpty()
