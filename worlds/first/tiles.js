@@ -20,6 +20,14 @@
 		"desc": "It looks like a wall but it is only image created by wizzard."
 	},
 
+	"invisible_wall": {
+		"render": {"char": ".", "color": "gray" },
+		"tags": ["wall", "blocking"],
+		"name": "invisible wall",
+		"desc": "Mage applied invisibility spell on this wall."
+	},
+
+
 	"rubble": {
 		"render": {"char": ":", "color": "gray" },
 		"tags": ["hiding", "blocking"],

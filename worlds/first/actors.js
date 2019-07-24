@@ -60,6 +60,18 @@
 		"desc": "Skeleton with sword and shield is moving to you."
 	},
 
+	"wall_monster": {
+		"lvl": 2,
+		"xp": 10,
+		"tags": ["actor", "wall_monster", "unmovable"],
+		"render": {"char": "m", "color": "brown" },
+		"health": 20,
+		"attacks": ["hit"],
+		"bones": "skull",
+		"name": "wall monster",
+		"desc": "Massive slime with big mouth, grown on the wall."
+	},
+
 	"snake": {
 		"lvl": 1,
 		"xp": 6,
