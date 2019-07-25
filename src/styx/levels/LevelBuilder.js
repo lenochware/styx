@@ -167,6 +167,18 @@ Styx.levels.LevelBuilder = class
 		return _.flatten(list);
 	}
 
+	getFloorSize(rect)
+	{
+		var list = this.findIntersecting(rect);
+		var num = 0;
+
+		for (let room of list) {
+			num += (room.width - 1) * (room.height - 1);
+		}
+
+		return num;
+	}
+
 	findIntersecting(testRoom)
 	{
 		var list = [];
