@@ -42,11 +42,17 @@ Styx.levels.Spawner = class
 		return floors;
 	}
 
+	setArea(x, y, w, h)
+	{
+		this.area = new Styx.Rectangle(x, y, w, h);
+		this.floorCache = this.getFloors();
+	}
+
 	spawnObjects(type, list, density)
 	{
 		if (!list) return;
 
-		var num = Math.floor(this.builder.getFloorSize(this.area) * density);
+		var num = Styx.Random.int(1, Math.floor(this.builder.getFloorSize(this.area) * density / 100) + 1);
 		while (num--) {
 			var id = _.sample(list);
 			var pos = this.pickPos(type);
@@ -65,16 +71,30 @@ Styx.levels.Spawner = class
 		}
 	}
 
+	transform(list)
+	{
+		for(let pos of this.area.coords()) {
+			let id = this.level.get(pos, 'id');
+			if (id in list) {
+				this.level.set(pos, 'id', list[id]);
+			}
+		}
+	}
+
 	spawn(id)
 	{
 		var group = this.game.db.getObject('groups', id);
-		this.spawnObjects('actor', group['common-monsters'], 0.05);
-		this.spawnObjects('actor', group['rare-monsters'], 0.01);
-		this.spawnObjects('item', group['common-items'], 0.05);
-		this.spawnObjects('item', group['rare-items'], 0.01);
-		this.spawnObjects('tile', group['common-tiles'], 0.05);
-		this.spawnObjects('tile', group['rare-tiles'], 0.01);
-		//this.trasformTiles()
+
+		this.spawnObjects('actor', group['common-monsters'], 2);
+		this.spawnObjects('actor', group['rare-monsters'], 0.5);
+		this.spawnObjects('item', group['common-items'], 2);
+		this.spawnObjects('item', group['rare-items'], 0.5);
+		this.spawnObjects('tile', group['common-tiles'], 2);
+		this.spawnObjects('tile', group['rare-tiles'], 0.5);
+
+		if (group.transform) {
+			this.transform(group.transform);
+		}
 	}
 
 }

@@ -6,6 +6,13 @@
 		"rare-tiles": ["high_grass", "blood_floor"]
 	},
 
+	"forest": {
+	  "common-tiles": ["tree", "shallow_water"],
+	  "common-monsters": ["snake"],
+	  "rare-monsters": ["ghost"],
+	  "transform": {"floor": "high_grass"}
+	},
+
 	"rat-room": {
 		"name": "Rat room",
 
@@ -30,19 +37,6 @@
 			"chances": [1],
 			"count": [0,5]
 		}
-	},
-
-	"water-room": {
-		"name": "Water room"
-	},
-
-
-	"water": {
-		"name": "Water biom"
-	},
-
-	"forest": {
-		"name": "Forest biom"
 	}
 
 }
