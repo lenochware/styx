@@ -11,6 +11,7 @@ Styx.levels.Spawner = class
 		this.area = area;
 		this.floorCache = this.getFloors();
 		this.bindings = null;
+		this._bindLevel = 0;
 	}
 
 	createObject(type, id)
@@ -43,6 +44,11 @@ Styx.levels.Spawner = class
 		return floors;
 	}
 
+	getGroup(id)
+	{
+		return this.game.db.getObject('groups', id);
+	}
+
 	setArea(x, y, w, h)
 	{
 		this.area = new Styx.Rectangle(x, y, w, h);
@@ -51,7 +57,7 @@ Styx.levels.Spawner = class
 
 	setBindings(id)
 	{
-		this.bindings = this.game.db.getObject('groups', id);
+		this.bindings = this.getGroup(id);
 	}
 
 	spawnObjects(type, list, density)
@@ -77,12 +83,50 @@ Styx.levels.Spawner = class
 		}
 
 		if (this.bindings && this.bindings[id]) {
-			this.spawnBindings(this.bindings[id]);
+			this.spawnBindings(this.bindings[id], pos);
 		}
+
+		if (this._bindLevel) console.log(id);
 	}
 
-	spawnBindings(group)
+	spawnBindings(group, pos)
 	{
+		if (this._bindLevel > 2) return;
+		this._bindLevel++;
+
+		if (group.groups) {
+			group = this.bindings[_.sample(group.groups)];
+		}
+
+		let rarity = 1;
+		if (group.tags.includes("common")) rarity = 0;
+		if (group.tags.includes("rare")) rarity = 2;
+		let d = [1, 0.5, 0.2][rarity];
+
+		if (group.tags.includes("anywhere")) {
+			this.spawnObjects('actor', group.actor, d);
+			this.spawnObjects('item', group.item, d);
+			this.spawnObjects('tile', group.tile, d);
+		}
+		else if(group.tags.includes("in-place")) {
+			
+			for(let type of ['actor', 'item', 'tile']) {
+				if (!group[type] || !Styx.Random.bet(d*d)) continue;
+				let id = _.sample(group[type]);
+				this.spawnObj(type, id, pos);
+			}
+		}
+		else if(group.tags.includes("around")) {
+			
+			for(let type of ['actor', 'item', 'tile']) {
+				if (!group[type] || !Styx.Random.bet(d*d)) continue;
+				let id = _.sample(group[type]);
+				let tpos = {x: pos.x + Styx.Random.int(-1,1), y: pos.y + Styx.Random.int(-1,1)};
+				this.spawnObj(type, id, tpos);
+			}
+		}
+
+		this._bindLevel--;
 	}
 
 	transform(list)
@@ -98,7 +142,7 @@ Styx.levels.Spawner = class
 
 	spawn(id)
 	{
-		var group = this.game.db.getObject('groups', id);
+		var group = this.getGroup(id);
 
 		this.spawnObjects('actor', group['common-monsters'], 2);
 		this.spawnObjects('actor', group['rare-monsters'], 0.5);
