@@ -10,6 +10,7 @@ Styx.levels.Spawner = class
 		this.level = builder.level;
 		this.area = area;
 		this.floorCache = this.getFloors();
+		this.bindings = null;
 	}
 
 	createObject(type, id)
@@ -48,6 +49,11 @@ Styx.levels.Spawner = class
 		this.floorCache = this.getFloors();
 	}
 
+	setBindings(id)
+	{
+		this.bindings = this.game.db.getObject('groups', id);
+	}
+
 	spawnObjects(type, list, density)
 	{
 		if (!list) return;
@@ -69,6 +75,14 @@ Styx.levels.Spawner = class
 			var obj = this.createObject(type, id);
 			this.level.set(pos, type, obj);
 		}
+
+		if (this.bindings && this.bindings[id]) {
+			this.spawnBindings(this.bindings[id]);
+		}
+	}
+
+	spawnBindings(group)
+	{
 	}
 
 	transform(list)
@@ -76,7 +90,8 @@ Styx.levels.Spawner = class
 		for(let pos of this.area.coords()) {
 			let id = this.level.get(pos, 'id');
 			if (id in list) {
-				this.level.set(pos, 'id', list[id]);
+				var newId = _.isArray(list[id])? _.sample(list[id]) : list[id];
+				this.level.set(pos, 'id', newId);
 			}
 		}
 	}

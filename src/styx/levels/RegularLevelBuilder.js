@@ -29,6 +29,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.addStairs();
 
 		var spawner = new Styx.levels.Spawner(this, this.level.size);
+		spawner.setBindings('common_bindings');
 		spawner.spawn('rats');
 
 		spawner.setArea(first.x,first.y,15,10);

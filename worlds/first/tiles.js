@@ -50,6 +50,20 @@
 		"desc": "You see nothing interesting."
 	},
 
+	"mud": {
+		"render": {"char": ".", "color": "brown" },
+		"tags": [],
+		"name": "mud",
+		"desc": "You see nothing interesting."
+	},
+
+	"earth_wall": {
+		"render": {"char": "#", "color": "brown" },
+		"tags": ["wall", "hiding", "opaque", "blocking"],
+		"name": "earth wall",
+		"desc": "You see nothing interesting."
+	},
+
 	"high_grass": {
 		"render": {"char": ";", "color": "dark-green" },
 		"tags": ["hiding", "hiding_mon"],

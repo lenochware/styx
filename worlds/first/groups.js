@@ -10,32 +10,36 @@
 	  "common-tiles": ["tree", "shallow_water"],
 	  "common-monsters": ["snake"],
 	  "rare-monsters": ["ghost"],
-	  "transform": {"floor": "high_grass"}
+	  "transform": {"floor": ["high_grass", "mud"], "wall": "earth_wall"}
 	},
 
-	"rat-room": {
-		"name": "Rat room",
+	"water-room": {
+	  "transform": {"floor": "shallow_water"}
+	},
 
-		"monsters": {
-			"list": ["rat"],
-			"fill-percent": 50
+	"dead-hero-site": {
+	   "common-tiles": ["blood_floor"],
+	   "common-items": ["weapon", "food", "bones"]
+	},
+
+	"common_bindings": {
+		"rat": {
+			"groups": ["rat1", "rat2"]
 		},
 
-		"boss": {
-			"list": ["rat-king"],
-			"count": 0.5
-		},
+		"rat1": {
+	    "items": ["food"],
+	    "tags": ["rare", "around"]
+	  },
 
-		"items": {
-			"list": ["food", "bones", "coins", "sword"],
-			"chances": [3, 3, 2, 1],
-			"count": [3,6]
-		},
+	  "rat2": {
+	    "items": ["bones"],
+	    "tags": ["common", "anywhere"]
+	  },
 
-		"tiles": {
-			"list": ["blood_floor"],
-			"chances": [1],
-			"count": [0,5]
+		"shallow_water": {
+	    "items": ["rusty_dagger", "copper_coins", "fish_food"],
+	    "tags": ["rare", "in-place"]			
 		}
 	}
 
