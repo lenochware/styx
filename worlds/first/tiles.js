@@ -30,7 +30,7 @@
 
 	"rubble": {
 		"render": {"char": ":", "color": "gray" },
-		"tags": ["hiding", "blocking"],
+		"tags": ["hiding", "blocking", "diggable"],
 		"name": "rubble",
 		"desc": "Pile of rubble is blocking a way."
 	},
@@ -59,7 +59,7 @@
 
 	"earth_wall": {
 		"render": {"char": "#", "color": "brown" },
-		"tags": ["wall", "hiding", "opaque", "blocking"],
+		"tags": ["wall", "hiding", "opaque", "blocking", "diggable"],
 		"name": "earth wall",
 		"desc": "You see nothing interesting."
 	},

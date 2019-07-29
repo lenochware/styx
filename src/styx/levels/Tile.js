@@ -62,6 +62,19 @@ Styx.levels.Tile = class
 			this.id = 'open_door';
 			actor.spendTime();
 		}
+
+		if (!actor.isPlayer()) return;
+
+		if (this.is('diggable')) {
+			actor.game.message("You dig into {0}", "msg-info", this);
+			if (Styx.Random.bet(.2)) {
+				actor.game.message("You destroyed {0}", "msg-info", this);
+				this.id = 'floor';
+				if (this.actor || this.item) {
+					actor.game.message("You found something!", "msg-info");
+				}
+			}
+		}
 	}
 
 	pickAttackId()
