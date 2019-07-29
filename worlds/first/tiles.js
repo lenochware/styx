@@ -73,7 +73,7 @@
 
 	"tree": {
 		"render": {"char": "%", "color": "green" },
-		"tags": ["hiding", "hiding_mon", "blocking"],
+		"tags": ["hiding", "hiding_mon", "blocking", "diggable"],
 		"name": "high tree",
 		"desc": "You see nothing interesting."
 	},

@@ -16,11 +16,25 @@ Styx.levels.Spawner = class
 
 	createObject(type, id)
 	{
+		var obj = null;
+
 		switch (type) {
-			case 'actor': return new Styx.actors.Monster({id: id});
-			case 'item': return new Styx.items.Item({id: id});
+			case 'actor': obj = new Styx.actors.Monster({id: id}); break;
+			case 'item': obj = new Styx.items.Item({id: id}); break;
 			default: throw `Unknown entity ${type}`;
 		}
+
+		if (id == 'corpse') {
+			var mon = _.sample(this.level.actors);
+			if (mon) {
+				var corpse = mon.getAttrib('corpse');
+				if (corpse) {
+					obj.params.name = _.isArray(corpse)? _.sample(corpse) : corpse;
+				}
+			}
+		}
+
+		return obj;
 	}
 
 	pickPos(type)
