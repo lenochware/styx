@@ -122,14 +122,33 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		this.level.set(this.pos, 'item', item);
 	}
 
+	dropStuff()
+	{
+		var stuff = this.getAttrib('drop');
+		if (!stuff) return;
+		var chances = this.getAttrib('drop-chances');
+		
+		var id = Styx.Random.pick(stuff, chances);
+
+		if (id == 'none') return;
+
+		var categ = this.game.db.categoryOf(id);
+		if (categ == 'tiles') {
+			this.level.set(this.pos, 'id', id);
+		}
+		else if (categ == 'actors') {
+			this.level.set(this.pos, 'actor', new Styx.actors.Monster({id: id}));
+		}
+		else if (categ == 'items') {
+			var item = new Styx.items.Item({id: id});
+			if (id == 'corpse') item.params.name = this.getAttrib('corpse');
+			this.level.set(this.pos, 'item', item);
+		}
+	}
+
 	die(src)
 	{
-		var name = this.getAttrib('bones');
-		if (name && Styx.Random.percent(50)) {
-			var bones = new Styx.items.Item({id: "bones", actor: this, name: name});
-			this.drop(bones);
-		}
-
+		this.dropStuff();
 		super.die(src);
 	}
 
