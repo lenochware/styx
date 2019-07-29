@@ -32,7 +32,8 @@
 		"render": {"char": "r", "color": "brown" },
 		"health": 20,
 		"attacks": ["hit"],
-		"bones": "skull",
+		"corpse": "rat's skull",
+		"drop": ["none", "corpse"],
 		"name": "giant rat",
 		"desc": "It is rat with size of lion and red glowing eyes."
 	},
@@ -55,7 +56,8 @@
 		"render": {"char": "S", "color": "white" },
 		"health": 20,
 		"attacks": ["hit"],
-		"bones": "skull",
+		"corpse": "skeleton",
+		"drop": ["none", "corpse"],
 		"name": "skeleton",
 		"desc": "Skeleton with sword and shield is moving to you."
 	},
@@ -67,7 +69,8 @@
 		"render": {"char": "m", "color": "brown" },
 		"health": 20,
 		"attacks": ["hit"],
-		"bones": "skull",
+		"drop": ["none", "rock"],
+		"drop-chances": [1,1],
 		"name": "wall monster",
 		"desc": "Massive slime with big mouth, grown on the wall."
 	},
@@ -81,6 +84,8 @@
 		"attacks": ["bite", "poison-bite"],
 		"attack-chances": [3,1],
 		"name": "great yellow snake",
+		"drop": ["none", "fish_food"],
+		"drop-chances": [1,1],
 		"desc": "Great yellow snake is moving slowly on the floor."
 	}
 }

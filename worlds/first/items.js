@@ -1,8 +1,8 @@
 {
-	"bones": {
+	"corpse": {
 		"render": {"char": "~", "color": "gray" },
 		"tags": ["item", "useless"],
-		"name": "bones",
+		"name": "corpse",
 		"desc": "Who left his bones in this sad place?"
 	},
 

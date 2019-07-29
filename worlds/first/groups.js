@@ -19,7 +19,7 @@
 
 	"dead-hero-site": {
 	   "common-tiles": ["blood_floor"],
-	   "common-items": ["weapon", "food", "bones"]
+	   "common-items": ["weapon", "food", "corpse"]
 	},
 
 	"common_bindings": {
@@ -33,7 +33,7 @@
 	  },
 
 	  "rat2": {
-	    "item": ["bones"],
+	    "item": ["corpse"],
 	    "tags": ["rare", "anywhere"]
 	  },
 

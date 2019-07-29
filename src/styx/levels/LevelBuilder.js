@@ -202,13 +202,6 @@ Styx.levels.LevelBuilder = class
 		return tiles;
 	}
 
-	addBiom(id)
-	{
-		var biom = new Styx.levels.Biom(this.level, this.rooms, id, this.level.size);
-		biom.add();
-	}
-
-
 	drawXY(room, x, y, attrib, value)
 	{
 		throw new Error('Not implemented.');
