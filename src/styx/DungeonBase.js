@@ -41,6 +41,14 @@ Styx.DungeonBase = class
 		}
 	}
 
+	categoryOf(id)
+	{
+		for(let category of ['actors', 'items', 'tiles']) {
+			if (this.data[category][id]) return category;
+		}
+		return null;
+	}
+
 	find(category, tag)
 	{
 		return _.chain(this.data[category]).filter(obj => obj.tags.includes(tag));

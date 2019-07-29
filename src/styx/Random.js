@@ -48,9 +48,14 @@ Styx.Random = class
 		}
 	}
 
-	static pick(list)
+	static pick(list, chances = null)
 	{
-		return ROT.RNG.getItem(list);
+		if (chances) {
+			return list[Styx.Random.chances(chances)];
+		}
+		else {
+			return ROT.RNG.getItem(list);
+		}
 	}
 
 	static shuffle(list)
