@@ -2,7 +2,7 @@
 	"rats": {
 		"common-monsters": ["rat"],
 		"rare-monsters": ["rat","worm","skeleton"],
-		"common-items": ["bread", "bones", "copper_coins", "rusty_dagger"],
+		"common-items": ["bread", "copper_coins", "rusty_dagger"],
 		"rare-tiles": ["high_grass", "blood_floor"]
 	},
 
@@ -28,18 +28,18 @@
 		},
 
 		"rat1": {
-	    "items": ["food"],
-	    "tags": ["rare", "around"]
+	    "item": ["bread"],
+	    "tags": ["common", "around"]
 	  },
 
 	  "rat2": {
-	    "items": ["bones"],
-	    "tags": ["common", "anywhere"]
+	    "item": ["bones"],
+	    "tags": ["rare", "anywhere"]
 	  },
 
 		"shallow_water": {
-	    "items": ["rusty_dagger", "copper_coins", "fish_food"],
-	    "tags": ["rare", "in-place"]			
+	    "item": ["rusty_dagger", "copper_coins", "fish_food"],
+	    "tags": ["common", "in-place"]			
 		}
 	}
 

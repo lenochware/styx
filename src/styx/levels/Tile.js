@@ -71,6 +71,7 @@ Styx.levels.Tile = class
 				actor.game.message("You destroyed {0}", "msg-info", this);
 				this.id = 'floor';
 				if (this.actor || this.item) {
+					if (this.actor) this.actor.params.insideWall = false;
 					actor.game.message("You found something!", "msg-info");
 				}
 			}
@@ -101,7 +102,7 @@ Styx.levels.Tile = class
 	{
 		var obj = null;
 		
-		if (this.actor && !this.actor.isPlayer()) obj = this.actor;
+		if (this.actor && !this.actor.isPlayer() && !this.actor.params.insideWall) obj = this.actor;
 		else if (this.is("hiding")) obj = this;
 		else if (this.item) obj = this.item;
 		else obj = this;

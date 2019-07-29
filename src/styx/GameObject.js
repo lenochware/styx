@@ -30,7 +30,18 @@ Styx.GameObject = class
 		this.params[attrib] = value;
 	}
 
-	addTag(tag)	{}
+	addTag(tag)
+	{
+		if (!this.params['tags']) this.params['tags'] = [];
+		if (this.params['tags'].includes(tag)) return;
+		this.params['tags'].push(tag);
+	}
+
+	removeTag(tag)
+	{
+		if (!this.params['tags']) return;
+		this.params['tags'] = _.without(this.params['tags'], tag);
+	}
 
 	is(tag)
 	{

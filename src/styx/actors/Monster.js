@@ -37,6 +37,11 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	update()
 	{
 		if (this.isDestroyed()) return;
+
+		if (this.params.insideWall) {
+			this.wait();
+			return;
+		}
 		
 		while (this.time + this.tick < this.game.time)
 		{
@@ -62,6 +67,10 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 
 	damage(src, type, points)
 	{
+		if (this.conditions.is('Asleep')) {
+			this.conditions.remove('Asleep');
+		}
+
 		if (src && src.is('actor') && this.health < this.maxHealth / 3 && !this.conditions.is('Afraid')) {
 			this.conditions.add('Afraid', 15);
 		}
