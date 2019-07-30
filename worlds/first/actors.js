@@ -82,12 +82,18 @@
 		"tags": ["actor", "neutral", "moving-random", "awake", "slow", "swimmer"],
 		"render": {"char": "J", "color": "yellow" },
 		"health": 10,
-		"attacks": ["bite", "poison-bite"],
-		"attack-chances": [3,1],
+		"attacks": ["bite"],
 		"name": "great yellow snake",
 		"corpse": "snake skin",
 		"drop": ["none", "fish_food"],
 		"drop-chances": [5,1],
 		"desc": "Great yellow snake is moving slowly on the floor."
+	},
+
+	"poisonous_snake": {
+		"extends": "snake",
+		"attacks": ["bite", "poison-bite"],
+		"attack-chances": [3,1]
 	}
+
 }

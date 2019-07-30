@@ -8,7 +8,7 @@
 
 	"forest": {
 	  "common-tiles": ["tree", "shallow_water"],
-	  "common-monsters": ["snake"],
+	  "common-monsters": ["snake", "poisonous_snake"],
 	  "rare-monsters": ["ghost"],
 	  "transform": {"floor": ["high_grass", "mud"], "wall": "earth_wall"}
 	},
