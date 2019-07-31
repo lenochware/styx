@@ -37,6 +37,23 @@ Styx.levels.Spawner = class
 		return obj;
 	}
 
+	/*
+		Pick objects with level near to lvl.
+		probability based on lvl diff: (1, 0.5, 0.2, 0.1, ...)
+	*/
+	pickObjectByLvl(category, lvl, tag)
+	{
+		if (tag) {
+			var list = this.game.db.find(category, tag).value();
+		}
+		else {
+			var list = _.values(this.game.db.getCategory(category));
+		}
+
+		var chances = _.map(list, obj => obj.lvl? 1 / (Math.pow(obj.lvl - lvl, 2) + 1) : 1);
+		return Styx.Random.pick(list, chances);
+	}
+
 	pickPos(type)
 	{
 		var num = 20;
@@ -99,8 +116,6 @@ Styx.levels.Spawner = class
 		if (this.bindings && this.bindings[id]) {
 			this.spawnBindings(this.bindings[id], pos);
 		}
-
-		if (this._bindLevel) console.log(id);
 	}
 
 	spawnBindings(group, pos)

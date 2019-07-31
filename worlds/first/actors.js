@@ -53,7 +53,7 @@
 	"skeleton": {
 		"lvl": 2,
 		"xp": 10,
-		"tags": ["actor", "skeleton", "fast"],
+		"tags": ["actor", "skeleton", "fast", "swimmer"],
 		"render": {"char": "S", "color": "white" },
 		"health": 20,
 		"attacks": ["hit"],
