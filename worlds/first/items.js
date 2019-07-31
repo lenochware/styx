@@ -8,7 +8,7 @@
 
 	"slime": {
 		"render": {"char": "~", "color": "green" },
-		"tags": ["item", "useless"],
+		"tags": ["item"],
 		"name": "green slime",
 		"desc": "Piece of strange green slime."
 	},
@@ -22,7 +22,7 @@
 
 	"rock": {
 		"render": {"char": "~", "color": "gray" },
-		"tags": ["item", "useless"],
+		"tags": ["item"],
 		"name": "rock",
 		"desc": "You see rock."
 	},

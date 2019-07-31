@@ -44,7 +44,12 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		if (!this.canOccupy(tile)) return false;
 
 		if (tile.actor) {
-			return this.attack(tile.actor);
+			if (this.isPlayer() || this.target == tile.actor || this.is('aggresive')) {
+				return this.attack(tile.actor);
+			}
+			else {
+				return false;
+			}
 		}
 
 		this.leave(this.pos);

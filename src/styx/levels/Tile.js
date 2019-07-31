@@ -51,7 +51,12 @@ Styx.levels.Tile = class
 				actor.damage(this, attack.type, attack.points);
 
 			}
-		}		
+		}
+
+		if (this.item && this.item.is('useless') && Styx.Random.bet(0.3)) {
+			actor.game.message("{0} falls apart.","msg-info", this.item);
+			actor.level.remove(this.item);
+		}
 	};
 	
 	leave(actor) {};

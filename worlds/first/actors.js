@@ -28,10 +28,10 @@
 	"rat": {
 		"lvl": 1,
 		"xp": 3,
-		"tags": ["actor", "rat", "fast"],
+		"tags": ["actor", "rat", "fast", "aggresive"],
 		"render": {"char": "r", "color": "brown" },
 		"health": 20,
-		"attacks": ["hit"],
+		"attacks": ["bite"],
 		"corpse": ["rat's skull", "bones", "bone"],
 		"drop": ["none", "corpse"],
 		"name": "giant rat",
@@ -44,7 +44,7 @@
 		"tags": ["actor", "worm"],
 		"render": {"char": "w", "color": "white" },
 		"health": 25,
-		"attacks": ["hit"],
+		"attacks": ["bite"],
 		"corpse": "strange slime",
 		"name": "huge worm",
 		"desc": "Huge worm with giant mouth filled with teeth."

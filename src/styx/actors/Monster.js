@@ -141,7 +141,10 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		}
 		else if (categ == 'items') {
 			var item = new Styx.items.Item({id: id});
-			if (id == 'corpse') item.params.name = this.getAttrib('corpse');
+			if (id == 'corpse') {
+				var corpse = this.getAttrib('corpse');
+				item.params.name = _.isArray(corpse)? _.sample(corpse) : corpse;
+			}
 			this.level.set(this.pos, 'item', item);
 		}
 	}

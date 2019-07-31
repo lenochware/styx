@@ -12,6 +12,7 @@ Styx.levels.Spawner = class
 		this.floorCache = this.getFloors();
 		this.bindings = null;
 		this._bindLevel = 0;
+		this.game.get('player');
 	}
 
 	createObject(type, id)
@@ -38,8 +39,8 @@ Styx.levels.Spawner = class
 	}
 
 	/*
-		Pick objects with level near to lvl.
-		probability based on lvl diff: (1, 0.5, 0.2, 0.1, ...)
+		Pick object with obj.lvl near to lvl.
+		Probability based on level diff: (1, 0.5, 0.2, 0.1, ...)
 	*/
 	pickObjectByLvl(category, lvl, tag)
 	{
