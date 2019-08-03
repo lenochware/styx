@@ -218,12 +218,18 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	spendTime(time = null)
 	{
+		this.tileEffect();
 		this.time += time || this.tick;
 	}
 
 	update()
 	{
 		this.conditions.update();
+	}
+
+	tileEffect()
+	{
+		this.level.get(this.pos, 'tile').applyEffect(this);		
 	}
 
 	wait()

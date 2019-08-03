@@ -87,11 +87,17 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		var tile = this.level.get(pos, 'tile');
 
-		if (tile.item && tile.item.is('gold')) {
-			var amount = tile.item.getAttrib('amount', 10);
-			this.gold += amount;
-			this.game.info("You collected {1} {0}.", tile.item, amount);
-			this.level.remove(tile.item);
+		if (tile.item) {
+			if (tile.item.is('useless') && Styx.Random.bet(0.3)) {
+				this.game.info("{0} falls apart.", tile.item);
+				this.level.remove(tile.item);
+			}
+			else if (tile.item.is('gold')) {
+				var amount = tile.item.getAttrib('amount', 10);
+				this.gold += amount;
+				this.game.info("You collected {1} {0}.", tile.item, amount);
+				this.level.remove(tile.item);
+			}
 		}
 
 		if (tile.item) {
@@ -202,6 +208,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 	spendTime(time = null)
 	{
+		this.tileEffect();
 		this.game.time += (time || this.tick);
 		this.level.updated = false;
 	}

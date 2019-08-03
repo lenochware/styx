@@ -41,18 +41,10 @@ Styx.levels.Tile = class
 		return this.name();
 	}
 
-	enter(actor)
-	{
-		this.applyEffects(actor);
-		if (this.item && this.item.is('useless') && Styx.Random.bet(0.3)) {
-			actor.game.message("{0} falls apart.","msg-info", this.item);
-			actor.level.remove(this.item);
-		}
-	};
-	
+	enter(actor) {};
 	leave(actor) {};
 
-	applyEffects(actor)
+	applyEffect(actor)
 	{
 		var attack = this.pickAttack();
 
