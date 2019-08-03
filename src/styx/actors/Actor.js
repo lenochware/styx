@@ -111,6 +111,11 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	defense(attack)
 	{
+		if (attack.id == 'drowning') {
+			if (this.is("flying") || this.is("swimmer")) attack.points = 0;
+			return attack;
+		}
+
 		attack.points = Math.ceil(1/(1 + this.armor/50) * attack.points);
 		return attack;
 	}
@@ -220,4 +225,10 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	{
 		this.conditions.update();
 	}
+
+	wait()
+	{
+		this.spendTime();
+	}
+	
 }

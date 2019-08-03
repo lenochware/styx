@@ -43,16 +43,7 @@ Styx.levels.Tile = class
 
 	enter(actor)
 	{
-		var attack = this.pickAttack();
-
-		if (attack) {
-		  if (!actor.is("flying") && !actor.is("swimmer")) {
-				if (actor.isNear()) actor.game.message('attack-' + attack.type, "msg-info", actor);
-				actor.damage(this, attack.type, attack.points);
-
-			}
-		}
-
+		this.applyEffects(actor);
 		if (this.item && this.item.is('useless') && Styx.Random.bet(0.3)) {
 			actor.game.message("{0} falls apart.","msg-info", this.item);
 			actor.level.remove(this.item);
@@ -60,6 +51,27 @@ Styx.levels.Tile = class
 	};
 	
 	leave(actor) {};
+
+	applyEffects(actor)
+	{
+		var attack = this.pickAttack();
+
+		if (attack) {
+			attack = actor.defense(attack);
+		  if (attack.points) {
+				if (actor.isNear()) actor.game.message('attack-' + attack.type, "msg-info", actor);
+				actor.damage(this, attack.type, attack.points);
+			}
+		}
+	}
+
+	isDangerous(actor)
+	{
+		var attack = this.pickAttack();
+		if (!attack) return false;
+		attack = actor.defense(attack);
+		return (attack.points > 0);
+	}
 
 	touch(actor)
 	{
@@ -91,7 +103,8 @@ Styx.levels.Tile = class
 
 	getAction(id)
 	{
-		return game.db.getObject('actions', id);
+		var a = game.db.getObject('actions', id);
+		return {'id': a.id, 'points': a.points, 'tags': a.tags};
 	}
 
 	pickAttack()

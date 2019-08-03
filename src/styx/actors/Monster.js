@@ -90,6 +90,13 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		}		
 	}
 
+	canOccupy(tile)
+	{
+		if (!super.canOccupy(tile)) return false;
+		if (this.is('smart') && tile.isDangerous(this)) return false;
+		return true;
+	}
+
 	simpleWalk()
 	{
 		if (!this.target) return;
@@ -153,11 +160,6 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	{
 		this.dropStuff();
 		super.die(src);
-	}
-
-	wait()
-	{
-		this.spendTime();
 	}
 
 }

@@ -28,7 +28,7 @@
 	"rat": {
 		"lvl": 1,
 		"xp": 3,
-		"tags": ["actor", "rat", "fast", "aggresive"],
+		"tags": ["actor", "rat", "fast", "aggresive", "smart"],
 		"render": {"char": "r", "color": "brown" },
 		"health": 20,
 		"attacks": ["bite"],
