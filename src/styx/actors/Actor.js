@@ -41,7 +41,10 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 		var tile = this.level.getXY(this.pos.x + dx, this.pos.y + dy, 'tile');
 
-		if (!this.canOccupy(tile)) return false;
+		if (!this.canOccupy(tile)) {
+			if (tile.is('blocking')) tile.touch(this);
+			return false;
+		}
 
 		if (tile.actor) {
 			if (this.isPlayer() || this.target == tile.actor || this.is('aggresive')) {
@@ -143,13 +146,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	canOccupy(tile)
 	{
 		if (this.is('ghost') && !tile.is('inpenetrable')) return true;
-
-		if (tile.is('blocking')) {
-			tile.touch(this);
-			return false;
-		}
-
-		return true;
+		return !tile.is('blocking');
 	}
 
 	isVisible()
@@ -161,6 +158,24 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		if (tile.is('hiding_mon') && Styx.Random.bet(0.7)) return false;
 		return true;
 	}
+
+	findPath(pos)
+	{
+		if (!this.pos) return [];
+		if (!this._isPassable(pos.x, pos.y)) return [];
+
+		var path = [];
+		var astar = new ROT.Path.AStar(pos.x, pos.y, (x,y) => this._isPassable(x,y));
+		astar.compute(this.pos.x, this.pos.y, (x, y) => path.push({x:x, y:y}));
+		return path;
+	}
+
+	_isPassable(x, y) {
+		var tile = this.level.getXY(x, y, 'tile');
+		if (tile.actor && tile.actor != this) return false;
+		return (this.canOccupy(tile) || tile.is('door'));
+	}
+
 
 	die(src)
 	{

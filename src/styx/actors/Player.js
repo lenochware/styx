@@ -154,7 +154,11 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 	run(pos)
 	{
-		console.log(pos);
+		var path = this.findPath(pos);
+		if (path.length < 2) return;
+		this.move(path[1].x - this.pos.x, path[1].y - this.pos.y);
+		this.game.get('window-manager').render();
+		setTimeout(() => this.run(pos), 10);
 	}
 
 	defense(attack)
