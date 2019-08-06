@@ -152,6 +152,11 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
+	run(pos)
+	{
+		console.log(pos);
+	}
+
 	defense(attack)
 	{
 		var attack = super.defense(attack);

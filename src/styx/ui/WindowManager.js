@@ -31,7 +31,20 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 	{
 		var level = this.getPanel('level-map').level;
 		var obj = level.isVisible(x, y)? level.getXY(x, y, 'tile').getVisible() : level.getXY(x, y, 'tile');
-		this.showObjectInfo(obj);
+
+		var cmds = {};
+		cmds['run'] = {	command: 'run', label: `<span class="command" data-key="." data-pos="${x},${y}">Run</span>` };
+
+		$("#object-info").html(
+			this.template('object-info', 
+				{
+					item: obj,
+					conditions: obj.is('actor')? obj.getConditions() : [],
+					commands: cmds
+				}
+			)
+		);
+
 		$("#quick-message").html("You see {0}.".format(obj));
 	}
 

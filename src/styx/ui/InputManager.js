@@ -25,7 +25,8 @@ Styx.ui.InputManager = class
 				'g': {command: 'get'},
 				's': {command: 'search'},
 				'i': {command: 'inventory'},
-				'r': {command: 'rest'}
+				'r': {command: 'rest'},
+				'.': {command: 'run'}
 			},
 			main: {
 				'Escape': {command: 'game-menu'},
@@ -56,8 +57,8 @@ Styx.ui.InputManager = class
 	initMouse()
 	{
 		$("body").on("click", ".command", (e) => {
-			var key = $(e.target).data("key");
-			var cmd = this.getCommand({key: key});
+			var data = $(e.target).data();
+			var cmd = this.getCommand(data);
 			this.handle(cmd);
 			this.game.player.level.update();
 			this.wm.render();
@@ -65,26 +66,26 @@ Styx.ui.InputManager = class
 
 		$("body").on("click", ".tile-info", (e) => {
 			var level = this.wm.getPanel('level-map').level;
-			var pos = $(e.target).data("pos").split(",");
+			var spos = $(e.target).data("pos");
 			this.wm.openTileWindow({
 				level: level,
-				pos: {x:Number(pos[0]),y:Number(pos[1])}
+				pos: this.strToPos(spos)
 			});
 		});
 
 		$("#level-map").on("dblclick", (e) => {
 			var level = this.wm.getPanel('level-map').level;
-			var pos = $(e.target).data("pos").split(",");
+			var spos = $(e.target).data("pos");
 			this.wm.openTileWindow({
 				level: level,
-				pos: {x:Number(pos[0]),y:Number(pos[1])}
+				pos: this.strToPos(spos)
 			});
 		});
 
 		$("#level-map").on("click", "span", (e) => {
-			var pos = $(e.target).data("pos").split(",");
-			this.wm.showTileInfo(Number(pos[0]), Number(pos[1]));
-		});				
+			var pos = this.strToPos($(e.target).data("pos"));
+			this.wm.showTileInfo(pos.x, pos.y);
+		});
 	}
 
 	initKeyboard()
@@ -113,6 +114,12 @@ Styx.ui.InputManager = class
 	isCharKey(event)
 	{
 		return event.key.toString().length == 1;
+	}
+
+	strToPos(str)
+	{
+		var p = str.split(",");
+		return {x:Number(p[0]),y:Number(p[1])};
 	}
 
 	getCommand(event)
@@ -150,7 +157,13 @@ Styx.ui.InputManager = class
 		var cmd = this.keyBinddings[category][key];
 
 		if (!cmd) return {command: key, category: 'undefined' };
+
 		cmd.category = category;
+		
+		if (event.pos) {
+			cmd.pos = this.strToPos(event.pos);
+		}
+
 		return cmd;
 	}
 
@@ -204,6 +217,7 @@ Styx.ui.InputManager = class
 			case 'inventory': this.wm.openInventory(); break;
 			case 'search': p.search(); break;
 			case 'rest': p.rest(); break;
+			case 'run': p.run(command.pos); break;
 			// case 'attack': break;
 		}
 	}
