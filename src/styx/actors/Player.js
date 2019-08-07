@@ -14,6 +14,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.xp = this.getAttrib('xp');
 		this.nextXp = 20 * Math.pow(2, this.lvl - 1);
 		this.tick = 10;
+		this.disturbed = false;
 		this.game.player = this;
 	}
 
@@ -154,10 +155,19 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 	run(pos)
 	{
+		if (this.disturbed) {
+			this.disturbed = false;
+			return;
+		}
+
 		var path = this.findPath(pos);
 		if (path.length < 2) return;
 		this.move(path[1].x - this.pos.x, path[1].y - this.pos.y);
+
+		this.game.trigger('game-loop');
+		this.level.update();
 		this.game.get('window-manager').render();
+
 		setTimeout(() => this.run(pos), 10);
 	}
 
@@ -198,6 +208,17 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		super.die(src);
 		this.params.render = {char: '~', color: 'red'};
+	}
+
+	damage(src, type, points)
+	{
+		this.disturb();
+		super.damage(src, type, points);
+	}
+
+	disturb()
+	{
+		this.disturbed = true;
 	}
 
 	addExperience(src)

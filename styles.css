@@ -34,6 +34,17 @@ body {
 	color: white;
 }
 
+.ui-button {
+	display: inline-block;
+	margin: 4px 0px;
+	padding: 5px;
+	border:1px solid brown;
+}
+
+.ui-button:hover {
+	background-color: #333;
+}
+
 #level-map {
 	cursor: pointer;
 	-moz-user-select: none; 

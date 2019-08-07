@@ -33,7 +33,7 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 		var obj = level.isVisible(x, y)? level.getXY(x, y, 'tile').getVisible() : level.getXY(x, y, 'tile');
 
 		var cmds = {};
-		cmds['run'] = {	command: 'run', label: `<span class="command" data-key="." data-pos="${x},${y}">Run</span>` };
+		cmds['run'] = {	command: 'run', label: `<div class="command ui-button" data-key="." data-pos="${x},${y}">Run</div>` };
 
 		$("#object-info").html(
 			this.template('object-info', 
