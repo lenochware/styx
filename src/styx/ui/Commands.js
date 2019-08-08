@@ -15,6 +15,11 @@ Styx.ui.Commands = class
 		return _.find(this.list, obj => obj.hotkey == hotkey);
 	}
 
+	getDefaultCommand()
+	{
+		return _.last(this.list);
+	}
+
 	getList()
 	{
 		var list = [];

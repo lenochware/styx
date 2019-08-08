@@ -253,9 +253,12 @@ Styx.ui.InputManager = class
 	{
 		var p = this.game.player;
 		var item = p.inventory.get(command.key);
-		if (!item) return; 
+		if (!item) return;
 
-		this.wm.openItemWindow({item: item, key: command.key});
+		var cmds = new Styx.ui.Commands(item);
+		var cmd = cmds.getDefaultCommand();
+		cmd.key = command.key;
+		this.handleItemCmd(cmd);
 	}
 
 	handleItemCmd(command)
