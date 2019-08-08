@@ -42,7 +42,7 @@ Styx.actors.Inventory = class
 			return false;
 		}
 
-		var wearKey = this.getWearKey(item);
+		var wearKey = this._getWearKey(item);
 		var wearItem = this.remove(wearKey);
 
 		this.set(wearKey, item);
@@ -87,7 +87,29 @@ Styx.actors.Inventory = class
 		return _.find(this.slots, key => this.belongings[key] == null);
 	}
 
-	getWearKey(item)
+	getKey(item)
+	{
+		for (let key in this.belongings) {
+			if (this.belongings[key] == item) return key;
+		}
+
+		return null;
+	}
+
+	has(item)
+	{
+		return this.getKey(item);
+	}
+
+	isWearing(item)
+	{
+		var key = this._getWearKey(item);
+		if (!key || !item) return false;
+		
+		return (this.belongings[key] == item);
+	}
+
+	_getWearKey(item)
 	{
 		if (item.is('weapon')) return "3";
 		else if (item.is('shield')) return "4";

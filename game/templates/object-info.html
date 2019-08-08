@@ -11,6 +11,6 @@
 <% } %>
 </div>
 
-<% for (let cmd of _.values(commands)) { %>
-<%= cmd.label %> 
+<% for (let cmd of commands) { %>
+<div class="command ui-button" data-key="<%= cmd.key %>" data-pos="<%= item.pos.x %>,<%= item.pos.y %>"><%= cmd.label %></div> 
 <% } %>

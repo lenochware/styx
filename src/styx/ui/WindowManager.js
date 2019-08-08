@@ -32,15 +32,14 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 		var level = this.getPanel('level-map').level;
 		var obj = level.isVisible(x, y)? level.getXY(x, y, 'tile').getVisible() : level.getXY(x, y, 'tile');
 
-		var cmds = {};
-		cmds['run'] = {	command: 'run', label: `<div class="command ui-button" data-key="." data-pos="${x},${y}">Run</div>` };
+		var cmdRun = { command: 'run', label: "Run", key: "." };
 
 		$("#object-info").html(
 			this.template('object-info', 
 				{
 					item: obj,
 					conditions: obj.is('actor')? obj.getConditions() : [],
-					commands: cmds
+					commands: [cmdRun]
 				}
 			)
 		);
@@ -50,14 +49,12 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 
 	showObjectInfo(obj)
 	{
-		var commands = {};
-
 		$("#object-info").html(
 			this.template('object-info', 
 				{
 					item: obj,
 					conditions: obj.is('actor')? obj.getConditions() : [],
-					commands: commands
+					commands: []
 				}
 			)
 		);
@@ -73,6 +70,14 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 		});
 	}
 
+	openUseList()
+	{
+		this.openWindow('use-list', 600, 400, {
+			template: 'inventory',
+			player: this.game.player
+		});
+	}
+
 	openGameMenu()
 	{
 		this.openWindow('game-menu', 600, 400, {
@@ -81,46 +86,26 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 		});
 	}
 
-	_addCmd(cmds, id, key, label, cmd)
-	{
-		cmds[key] = _.extend({command: id, label: `<span class="command" data-key="${key}">${label}</span>`}, cmd);
-	}
-
 	openItemWindow(options)
 	{
-		var cmds = {};
-		var cmd = {category: "item-window", key: options.key};
-
-		this._addCmd(cmds, 'drop', 'd', '<kbd>D</kbd>rop', cmd);
-
-		if (/^[0-9]+$/.test(options.key)) {
-			this._addCmd(cmds, 'unwear', 't', '<kbd>T</kbd>ake off', cmd);
-		}
-		else if (options.item.is('wearable')) {
-			this._addCmd(cmds, 'wear', 'w', '<kbd>W</kbd>ear', cmd);
-		}
-		else if (options.item.is('food')) {
-			this._addCmd(cmds, 'eat', 'e', '<kbd>E</kbd>at', cmd);
-		}
+		var cmds = new Styx.ui.Commands(options.item);
 
 		this.openWindow('item-window', 400, 200, {
 			template: 'item-window',			
 			item: options.item,
-			commands: cmds
+			commands: cmds.list
 		});
 	}
 
 	openTileWindow(options)
 	{
-		var commands = {};
-
 		var obj = options.level.get(options.pos, 'tile').getVisible();
 
 		this.openWindow('tile-window', 400, 200, {
 			template: 'tile-window',			
 			item: obj,
 			conditions: obj.is('actor')? obj.getConditions() : [],
-			commands: commands
+			commands: []
 		});
 	}
 

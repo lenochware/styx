@@ -21,6 +21,7 @@ src/styx/levels/ArenaLevelBuilder.js
 src/styx/levels/TestLevelBuilder.js
 src/styx/levels/Level.js
 src/styx/levels/Tile.js
+src/styx/ui/Commands.js
 src/styx/ui/InputManager.js
 src/styx/ui/Window.js
 src/styx/ui/BaseWindowManager.js

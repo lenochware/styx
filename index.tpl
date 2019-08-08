@@ -47,9 +47,10 @@
 			<div id="sidebar"></div>
 			<div id="level-map"></div>
 			<div id="messages"></div>
-			<div id="quick-message"></div>		
+			<div id="quick-message"></div>
 			<div id="statusbar">
 				<span class="command" data-key="Esc"><kbd>[Esc]</kbd> Menu</span> 
+				<span class="command" data-key="u"><kbd>U</kbd>se</span> 
 				<span class="command" data-key="i"><kbd>I</kbd>nventory</span> 
 				<span class="command" data-key="s"><kbd>S</kbd>earch</span> 
 				<span class="command" data-key="g"><kbd>G</kbd>et</span> 

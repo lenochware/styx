@@ -25,6 +25,7 @@ Styx.ui.InputManager = class
 				'g': {command: 'get'},
 				's': {command: 'search'},
 				'i': {command: 'inventory'},
+				'u': {command: 'use-list'},
 				'r': {command: 'rest'},
 				'.': {command: 'run'}
 			},
@@ -150,8 +151,19 @@ Styx.ui.InputManager = class
 			return {command: 'examine', category: 'inventory', key: key };
 		}
 
+		if (category == 'use-list' && isCharKey) {
+			return {command: 'use', category: 'use-list', key: key };
+		}
+
 		if (category == 'item-window') {
-			return activeWindow.content.commands[key] || {command: key, category: 'undefined' };
+			var item = activeWindow.content.item;
+			var cmds = new Styx.ui.Commands(item);
+			var cmd = cmds.getCommand(key);
+			if (cmd) {
+				cmd.category = category;
+				cmd.key = this.game.player.inventory.getKey(item);
+				return cmd;
+			}
 		}
 
 		var cmd = this.keyBinddings[category][key];
@@ -175,6 +187,7 @@ Styx.ui.InputManager = class
 			case 'game-menu': this.handleGameMenuCmd(command); break;
 			case 'player': this.handlePlayerCmd(command); break;
 			case 'inventory': this.handleInventoryCmd(command); break;
+			case 'use-list': this.handleUseListCmd(command); break;
 			case 'item-window': this.handleItemCmd(command); break;
 			case 'window': 
 				if (command.command == 'close-window') {
@@ -215,6 +228,7 @@ Styx.ui.InputManager = class
 			case 'move': p.move(command.dir[0], command.dir[1]); break;
 			case 'get': p.get(); break;
 			case 'inventory': this.wm.openInventory(); break;
+			case 'use-list': this.wm.openUseList(); break;
 			case 'search': p.search(); break;
 			case 'rest': p.rest(); break;
 			case 'run': p.run(command.pos); break;
@@ -233,6 +247,15 @@ Styx.ui.InputManager = class
 				}
 			break;
 		}
+	}
+
+	handleUseListCmd(command)
+	{
+		var p = this.game.player;
+		var item = p.inventory.get(command.key);
+		if (!item) return; 
+
+		this.wm.openItemWindow({item: item, key: command.key});
 	}
 
 	handleItemCmd(command)
