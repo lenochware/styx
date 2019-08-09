@@ -4,12 +4,13 @@ Styx.actors = Styx.actors || {};
 
 Styx.actors.Inventory = class
 {
-	constructor(owner)
+	constructor(owner, items = [])
 	{
 		this.owner = owner;
 		this.belongings = {};
 		this.slots = "abcdefghijklmn".split("");
 		this.bodySlots = {1: "on head", 2: "on body", 3: "in right hand", 4: "in left hand", 5: "on feet"};
+		this.fill(items);
 	}
 
 	remove(key)
@@ -32,6 +33,14 @@ Styx.actors.Inventory = class
 		}
 
 		this.belongings[key] = item;
+	}
+
+	fill(items)
+	{
+		for(let id of items) {
+			let item = new Styx.items.Item({id: id});
+			this.set(this.getFreeKey(), item);
+		}
 	}
 
 	wear(key)

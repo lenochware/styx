@@ -10,6 +10,7 @@
 		"strength": 3,
 		"attacks": ["punch"],
 		"lvl-ups": ["hp", "str", "ac", "hp", "spd"],
+		"start-items": ["short_sword", "small_shield", "soft_leather_armor", "bread"],
 		"name": "you",
 		"desc": "Warriors start with 11 points of Strength."
 	},

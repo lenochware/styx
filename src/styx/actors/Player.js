@@ -16,6 +16,9 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.tick = 10;
 		this.disturbed = false;
 		this.baseArmor = this.getAttrib('armor');
+
+		var startItems = this.getAttrib('start-items');
+		if (startItems) this.inventory.fill(startItems);
 		this.inventory.updateOwner();
 		this.game.player = this;
 	}
@@ -226,6 +229,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	addExperience(src)
 	{
 		this.xp += src.getAttrib('xp');
+		//this.xp += 20;
 		if (this.xp >= this.nextXp) {
 			this.levelUp();
 			this.nextXp *= 2;
@@ -253,6 +257,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 			break;
 			case 'ac':
 				this.baseArmor += 10;
+				this.armor = this.baseArmor + this.inventory.getArmorPoints();
 			break;
 			case 'spd':
 				if (this.tick < 2) return;
