@@ -9,6 +9,7 @@
 		"health": 100,
 		"strength": 3,
 		"attacks": ["punch"],
+		"lvl-ups": ["hp", "str", "ac", "hp", "spd"],
 		"name": "you",
 		"desc": "Warriors start with 11 points of Strength."
 	},
@@ -53,7 +54,7 @@
 	"skeleton": {
 		"lvl": 2,
 		"xp": 10,
-		"tags": ["actor", "skeleton", "fast", "swimmer"],
+		"tags": ["actor", "skeleton", "fast", "swimmer", "fearless"],
 		"render": {"char": "S", "color": "white" },
 		"health": 20,
 		"attacks": ["hit"],

@@ -15,6 +15,8 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.nextXp = 20 * Math.pow(2, this.lvl - 1);
 		this.tick = 10;
 		this.disturbed = false;
+		this.baseArmor = this.getAttrib('armor');
+		this.inventory.updateOwner();
 		this.game.player = this;
 	}
 
@@ -234,6 +236,31 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		this.lvl++;
 		this.game.message("Welcome to level {0}!", "msg-good", this.lvl);
+		var bonuses = this.getAttrib('lvl-ups');
+		var bonus = bonuses[this.lvl - 2];
+		if (!bonus) return;
+		this.addBonus(bonus);
+	}
+
+	addBonus(id)
+	{
+		switch(id) {
+			case 'hp':
+				this.maxHealth += 10;
+			break;
+			case 'str':
+				this.strength += 10;
+			break;
+			case 'ac':
+				this.baseArmor += 10;
+			break;
+			case 'spd':
+				if (this.tick < 2) return;
+				this.tick -= 1;
+			break;
+		}
+
+		this.game.message("You improved your {0}!", "msg-good", id);
 	}
 
 	spendTime(time = null)

@@ -120,7 +120,7 @@ Styx.actors.Inventory = class
 
 	updateOwner()
 	{
-		this.owner.armor = this.getArmorPoints();
+		this.owner.armor = this.owner.baseArmor + this.getArmorPoints();
 	}
 
 	getArmorPoints()
