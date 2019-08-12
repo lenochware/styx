@@ -6,8 +6,8 @@ Styx.levels.ArenaLevelBuilder = class extends Styx.levels.LevelBuilder
 	createLevel(id)
 	{
 		super.createLevel(id);
-
-		this.level.tiles = this.createTiles(this.level.size, 'floor');
+		
+		this.level.clear('floor');
 
 		var first = new Styx.levels.FixedRoom('room13x5');
 

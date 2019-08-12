@@ -195,17 +195,6 @@ Styx.levels.LevelBuilder = class
 		return list;
 	}
 
-	createTiles(size, tileId)
-	{
-		var tiles = [];
-
-		for (var i = 0; i < size.width * size.height; i++) {
-			tiles[i] = new Styx.levels.Tile(i % size.width, Math.floor(i / size.width), tileId);
-		}
-
-		return tiles;
-	}
-
 	drawXY(room, x, y, attrib, value)
 	{
 		throw new Error('Not implemented.');

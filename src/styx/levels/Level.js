@@ -73,6 +73,15 @@ Styx.levels.Level = class extends Styx.GameObject
 		return new Styx.Rectangle(0,0,80,30);
 	}
 
+	clear(tileId)
+	{
+		this.tiles = [];
+
+		for (let i = 0; i < this.size.width * this.size.height; i++) {
+			this.tiles[i] = new Styx.levels.Tile(i % this.size.width, Math.floor(i / this.size.width), tileId);
+		}
+	}
+
 	get(pos, attrib)
 	{
 		if (_.isObject(pos)) {
