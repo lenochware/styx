@@ -1,0 +1,29 @@
+actors
+------
+neutral - do not attack player by default (target is not set after born)
+awake - monster is born awake (active)
+flying, swimmer - not drowning in deep water
+moving-random - do not walk shortest path
+ghost - walking through walls
+fast/slow - moving ~30% faster/slower 
+smart - do not walk into dangerous tiles
+aggresive - attack other nearby monsters
+fearless - never afraid - it is attacking until death
+unmovable - cannot move
+
+items
+-----
+useless - can be destroyed when player step on it
+wearable, weapon - can be weared / used as weapon
+light / heavy weapon - can give multiple attacks / slow down attacks
+shield / gold / food / armor
+
+tiles
+-----
+blocking - cannot pass this tile
+opaque - cannot see through
+inpenetrable - nobody, including ghost cannot pass - borders of the dungeon
+hiding - item inside is hidden
+hiding_mon - monster can hide into this tile (e.g. high grass)
+diggable - player can dig into and remove this tile
+exit - tile is exit (stairs)

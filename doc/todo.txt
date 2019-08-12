@@ -1,7 +1,6 @@
 - stun, speed of attacks podle heavy/light wpn + strenght radsi xtra attact - aby to bylo videt
 - hungry, eat
 - poskozovani zbrani
-- ui: "use" otevre inv. a umozni pouzit objekt - wear/eat/quaff
 - barevne conditions, lepsi popisy monster (health v object-info okne)
 
 -starsi message mizet? matouci
@@ -19,8 +18,6 @@
 - Tile nejak z DungeonObject... minimalizovat atrib. pro tile?
 
 - touch-afraid, invisibility
-- save, menu
-- drop: ['none', 'corpse', 'copper_coins'], drop-chances: [10,2,1]
 - doplnit commands pro tile/monster/item: run to, attack/target
 
 
@@ -31,10 +28,13 @@
 = BUGS =
 
 - kdyz se utopi zustane viset jeho info v sidebaru
-- Snake bites null msg
 
 = DONE =
 
+x Snake bites null msg
+x save, menu
+x drop: ['none', 'corpse', 'copper_coins'], drop-chances: [10,2,1]
+x ui: "use" otevre inv. a umozni pouzit objekt - wear/eat/quaff
 x ghost is afraid msg i po smrti
 x klik na wielded v inv nefunguje
 x klik close - zmizi i close v okne pod nim
