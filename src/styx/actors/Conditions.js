@@ -1,6 +1,11 @@
 var Styx = Styx || {};
 Styx.actors = Styx.actors || {};
 
+/**
+ * Actor temporary conditions, such as poisoned, bleeding or hungry.
+ * Each condition (see also Styx.actors.Condition) has id, duration and points (strength).
+ * Condition.update() is called on each turn.
+ */
 Styx.actors.ConditionGroup = class
 {
 	constructor(target)

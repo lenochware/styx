@@ -1,6 +1,9 @@
 var Styx = Styx || {};
 Styx.ui = Styx.ui || {};
 
+/**
+ * Draw html window - see WindowManager.
+ */
 Styx.ui.Window = class
 {
 	constructor(id, width, height, content)

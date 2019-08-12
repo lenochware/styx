@@ -1,6 +1,10 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
+/**
+ * Spawner.spawn() will populate level with monsters, items and stuff.
+ * It is used by LevelBuilder.
+ */
 Styx.levels.Spawner = class
 {
 	constructor(builder, area)

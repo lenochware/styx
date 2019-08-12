@@ -1,7 +1,10 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
-
+/**
+ * Base class for any level builder.
+ * Method createLevel() will create and return Level object by its definition in world/.../levels.js.
+ */
 Styx.levels.LevelBuilder = class
 {
 	constructor()
@@ -14,6 +17,7 @@ Styx.levels.LevelBuilder = class
 	createLevel(id)
 	{
 		this.level = new Styx.levels.Level(id);
+		return this.level;
 	}
 
 	populate()

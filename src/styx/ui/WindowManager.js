@@ -1,6 +1,12 @@
 var Styx = Styx || {};
 Styx.ui = Styx.ui || {};
 
+/**
+ * Draw game screen with wm.render() method.
+ * It contains methods for rendering of sidebar, inventory, menu, item or tile window 
+ * and other ui components.
+ * Appearance is defined with templates in game/templates directory.
+ */
 Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 {
 	render()

@@ -1,5 +1,11 @@
 var Styx = Styx || {};
-
+/**
+ * Querying and accessing informations about dungeon objects.
+ * It is database with data stored in json files internally.
+ * Category is json file - its similar to database table. It contains objects (table rows) and attributes (table cells).
+ * Example of the categories are monsters, items, tiles, levels, rooms...
+ * Database objects supports inheritance and can be different for different worlds.
+ */
 Styx.DungeonBase = class
 {
 	constructor()

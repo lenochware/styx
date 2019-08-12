@@ -2,6 +2,9 @@ var Styx = Styx || {};
 Styx.actors = Styx.actors || {};
 
 
+/**
+ * Player inventory, including wearing/wielded items.
+ */
 Styx.actors.Inventory = class
 {
 	constructor(owner, items = [])

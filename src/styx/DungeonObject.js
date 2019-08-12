@@ -1,5 +1,11 @@
 var Styx = Styx || {};
 
+/**
+ * Base class for any game entity, which appears in the dungeon.
+ * It has position and link to level, its update() method is called on each level update.
+ * It can be damaged and destroyed or create damage.
+ * It can check distance from other objects or surroundings.
+ */
 Styx.DungeonObject = class extends Styx.GameObject
 {
 	constructor(category, id, params)

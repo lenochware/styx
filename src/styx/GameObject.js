@@ -1,5 +1,12 @@
 var Styx = Styx || {};
 
+/**
+ * Base class for game objects.
+ * - It has link to game (class Game)
+ * - It can save and restore itself in bundle
+ * - It can get and set its attributes from/to dungeon database (class DungeonBase)
+ * - It has name and description
+ */
 Styx.GameObject = class
 {
 	constructor(category, id, params)

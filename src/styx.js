@@ -7,7 +7,7 @@ var game = new Styx.Game();
 
 game.load('world:first').then(function() 
 {
-	var testLevel = false; 
+	var testLevel = true; 
 
 	var level = game.createLevel(testLevel? 'test' : 'small-cave');
 	

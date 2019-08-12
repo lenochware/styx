@@ -1,6 +1,10 @@
 var Styx = Styx || {};
 Styx.actors = Styx.actors || {};
 
+/**
+ * Any monster is instance of this class.
+ * In update() it can do various monster activities - attack(), walk(), dropStuff()...
+ */
 Styx.actors.Monster = class extends Styx.actors.Actor
 {
 

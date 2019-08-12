@@ -1,5 +1,8 @@
 var Styx = Styx || {};
 
+/**
+ * Class for serialization (load/save) of the object tree.
+ */
 Styx.Bundle = class
 {
 	constructor(data = {})

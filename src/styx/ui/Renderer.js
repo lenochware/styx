@@ -1,6 +1,11 @@
 var Styx = Styx || {};
 Styx.ui = Styx.ui || {};
 
+/**
+ * Renderer.render() draw view (rectangle) of the level on the screen.
+ * This renderer uses text/html format - it can be replaced with graphic renderer in future.
+ * Each object keep its visuals in "render" attribute.
+ */
 Styx.ui.Renderer = class
 {
 	constructor()

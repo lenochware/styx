@@ -1,6 +1,12 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
+/**
+ * Tile (grid) of the level map - any level has (width * height) tiles.
+ * It can contain one item and actor (monster).
+ * It represent terrain such as floor or wall.
+ * It can be dangerous or has special features.
+ */
 Styx.levels.Tile = class
 {
 	constructor(x, y, id)

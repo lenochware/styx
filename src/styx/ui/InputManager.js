@@ -1,6 +1,10 @@
 var Styx = Styx || {};
 Styx.ui = Styx.ui || {};
 
+/**
+ * Get and handle mouse and kayboard commands.
+ * It translates user action into command object with getCommand() and dispatch command in handle() methods.
+ */
 Styx.ui.InputManager = class
 {
 	constructor()

@@ -1,6 +1,10 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
+/**
+ * Game level - it contains map tiles with items nad actors (monsters).
+ * level.update() is called on each game turn.
+ */
 Styx.levels.Level = class extends Styx.GameObject
 {
 	constructor(id)

@@ -1,6 +1,9 @@
 var Styx = Styx || {};
 Styx.ui = Styx.ui || {};
 
+/**
+ * Get list of commands (actions) which player can do with any item.
+ */
 Styx.ui.Commands = class
 {
 	constructor(item)

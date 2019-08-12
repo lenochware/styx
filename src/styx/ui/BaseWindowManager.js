@@ -1,6 +1,10 @@
 var Styx = Styx || {};
 Styx.ui = Styx.ui || {};
 
+/**
+ * Styx UI manager - open/close windows, draw panels and messages.
+ * Particular windows/panels are defined in its descendant WindowManager.
+ */
 Styx.ui.BaseWindowManager = class
 {
 	constructor()

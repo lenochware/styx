@@ -1,5 +1,12 @@
 var Styx = Styx || {};
 
+/**
+ * Top level game object.
+ * Almost any other object has link this.game.
+ * It contains top level methods, such as load/save/create game and link to current player.
+ * It is service container.
+ * It contains proxy methods for messaging and game event management.
+ */
 Styx.Game = class
 {
 	constructor()

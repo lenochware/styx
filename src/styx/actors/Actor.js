@@ -1,6 +1,10 @@
 var Styx = Styx || {};
 Styx.actors = Styx.actors || {};
 
+/**
+ * Ancestor of all live beings in the dungeon.
+ * It can move, attack, defense and die.
+ */
 Styx.actors.Actor = class extends Styx.DungeonObject
 {
 	constructor(params)

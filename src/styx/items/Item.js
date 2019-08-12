@@ -1,6 +1,9 @@
 var Styx = Styx || {};
 Styx.items = Styx.items || {};
 
+/**
+ * Item in the dungeon.
+ */
 Styx.items.Item = class extends Styx.DungeonObject
 {
 	constructor(params)

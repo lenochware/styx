@@ -1,6 +1,10 @@
 var Styx = Styx || {};
 Styx.actors = Styx.actors || {};
 
+/**
+ * Instance of the player. His activity methods (get, search, wear, eat, ...) are called by InputManager
+ * when user press key / touch / click.
+ */
 Styx.actors.Player = class extends Styx.actors.Actor
 {
 	constructor(params = {})

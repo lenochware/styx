@@ -1,5 +1,8 @@
 var Styx = Styx || {};
 
+/**
+ * The ROT.RNG wrapper. Main feature is that you can set fixed seed for random generator.
+ */
 Styx.Random = class
 {
 	static setSeed(seed)
