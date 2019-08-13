@@ -36,6 +36,11 @@ Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 		this.level.set(pos, 'actor', worm);
 		//this.level.set(pos, 'item', this.make('item', {id: 'copper_coins'}));
 
+		var tile = this.level.getXY(10, 2, 'tile');
+		tile.id = 'wall';
+		//tile.setAttrib('secret', ['floor', 'rat']);
+		tile.setAttrib('secret', 'door');
+
 		return this.level;
 	}
 

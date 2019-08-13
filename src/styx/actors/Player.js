@@ -59,6 +59,17 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 	search()
 	{
+		this.game.message("You search your surroundings.", "msg-info");
+		
+		for(let pos of this.surroundings())
+		{
+			var secret = this.level.get(pos, 'tile').getAttrib('secret');
+			if (!secret || !Styx.Random.bet(.2)) continue;
+			if (!_.isArray(secret)) secret = [secret];
+			_.each(secret, id => this.level.spawn(pos, id));
+			this.game.message("You found something!", "msg-info");
+		}
+
 		this.spendTime();
 	}
 

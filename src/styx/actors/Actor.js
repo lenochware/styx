@@ -16,7 +16,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		this.tick = 10;
 		this.target = null;
 		this.conditions = new Styx.actors.ConditionGroup(this);
-		this.time = 0;
+		this.time = this.game.time;
 	}
 
 	storeInBundle(bundle) {
