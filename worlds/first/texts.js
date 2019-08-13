@@ -1,5 +1,8 @@
 {
 	"attack-hit": "{0} hit[s] {1}",
+	"attack-hack": "{0} hack[s] {1}",
+	"attack-slash": "{0} slash {1}",
+	"attack-cut": "{0} cut {1}",
 	"attack-touch": "{0} touches {1}",
 	"attack-punch": "{0} punches {1}",
 	"attack-bite": "{0} bites {1}",

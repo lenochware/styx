@@ -3,6 +3,8 @@
 - poskozovani zbrani
 - barevne conditions, lepsi popisy monster (health v object-info okne)
 
+- random.bet(.2) u dig a u search - pridat fci success('dig'), ktera se podiva do atrib. skill_dig s hodnotou .2
+
 -starsi message mizet? matouci
 
 - prepsat loader.php

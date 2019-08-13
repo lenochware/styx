@@ -148,20 +148,11 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 
 		if (id == 'none') return;
 
-		var categ = this.game.db.categoryOf(id);
-		if (categ == 'tiles') {
-			this.level.set(this.pos, 'id', id);
-		}
-		else if (categ == 'actors') {
-			this.level.set(this.pos, 'actor', new Styx.actors.Monster({id: id}));
-		}
-		else if (categ == 'items') {
-			var item = new Styx.items.Item({id: id});
-			if (id == 'corpse') {
-				var corpse = this.getAttrib('corpse');
-				item.params.name = _.isArray(corpse)? _.sample(corpse) : corpse;
-			}
-			this.level.set(this.pos, 'item', item);
+		var obj = this.level.spawn(this.pos, id);
+
+		if (id == 'corpse') {
+			var corpse = this.getAttrib('corpse');
+			obj.params.name = _.isArray(corpse)? _.sample(corpse) : corpse;
 		}
 	}
 
