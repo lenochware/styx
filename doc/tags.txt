@@ -27,3 +27,8 @@ hiding - item inside is hidden
 hiding_mon - monster can hide into this tile (e.g. high grass)
 diggable - player can dig into and remove this tile
 exit - tile is exit (stairs)
+
+tiles attrib (usage: tile.setAttrib('name', 'value') )
+------------------------------------------------------
+secret - hidden items/monsters/terrains which can by found by 'search' value: obj|list
+buried - hidden items/monsters/terrains which can by found by digging into tile value: obj|list

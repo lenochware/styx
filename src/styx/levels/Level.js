@@ -190,7 +190,7 @@ Styx.levels.Level = class extends Styx.GameObject
 
 	find(tag)
 	{
-		return _.chain(_.keys(this.tiles)).filter(i => this.tiles[i].is(tag));
+		return _.chain(this.tiles).filter(tile => tile.is(tag)).map(tile => tile.pos);
 	}
 
 	isVisible(x, y)

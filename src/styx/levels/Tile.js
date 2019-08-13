@@ -27,7 +27,7 @@ Styx.levels.Tile = class extends Styx.GameObject
 		if (attack) {
 			attack = actor.defense(attack);
 		  if (attack.points) {
-				if (actor.isNear()) actor.game.message('attack-' + attack.type, "msg-info", actor);
+				if (actor.isNear()) this.game.message('attack-' + attack.type, "msg-info", actor);
 				actor.damage(this, attack.type, attack.points);
 			}
 		}
@@ -51,13 +51,15 @@ Styx.levels.Tile = class extends Styx.GameObject
 		if (!actor.isPlayer()) return;
 
 		if (this.is('diggable')) {
-			actor.game.message("You dig into {0}", "msg-info", this);
+			this.game.message("You dig into {0}", "msg-info", this);
 			if (Styx.Random.bet(.2)) {
-				actor.game.message("You destroyed {0}", "msg-info", this);
+				this.game.message("You destroyed {0}", "msg-info", this);
 				this.id = 'floor';
-				if (this.actor || this.item) {
-					if (this.actor) this.actor.params.insideWall = false;
-					actor.game.message("You found something!", "msg-info");
+				var buried = this.getAttrib('buried');
+				if (buried) {
+					if (!_.isArray(buried)) buried = [buried];
+					_.each(buried, id => actor.level.spawn(this.pos, id));
+					this.game.message("You found something!", "msg-info");
 				}
 			}
 		}
@@ -88,7 +90,7 @@ Styx.levels.Tile = class extends Styx.GameObject
 	{
 		var obj = null;
 		
-		if (this.actor && !this.actor.isPlayer() && !this.actor.params.insideWall) obj = this.actor;
+		if (this.actor && !this.actor.isPlayer()) obj = this.actor;
 		else if (this.is("hiding")) obj = this;
 		else if (this.item) obj = this.item;
 		else obj = this;

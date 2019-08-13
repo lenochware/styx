@@ -29,12 +29,12 @@ Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 		this.level.set(water.sample().value(), 'item', this.make('item', {id: 'fish_food'}));
 		this.level.set(water.sample().value(), 'item', this.make('item', {id: 'rusty_dagger'}));
 
+		for (let pos of this.level.find('earth_wall').value()) {
+			this.level.get(pos, 'tile').setAttrib('buried', 'worm');
+		};
 
-		var pos = this.level.find('earth_wall').sample().value();
-		var worm =  this.make('monster', {id: 'worm', insideWall:true});
-		worm.conditions.remove('Asleep');
-		this.level.set(pos, 'actor', worm);
-		//this.level.set(pos, 'item', this.make('item', {id: 'copper_coins'}));
+		// worm.conditions.remove('Asleep');
+		// this.level.set(pos, 'actor', worm);
 
 		var tile = this.level.getXY(10, 2, 'tile');
 		tile.id = 'wall';

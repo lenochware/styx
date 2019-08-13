@@ -155,7 +155,6 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	isVisible()
 	{
-		if (this.params.insideWall) return false;
 		if (this.isPlayer() || this.distance(this.game.player) == 1) return true;
 		if (this.conditions.is('Invisible')) return false;
 		var tile = this.level.get(this.pos, 'tile');
