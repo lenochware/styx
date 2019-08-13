@@ -7,44 +7,14 @@ Styx.levels = Styx.levels || {};
  * It represent terrain such as floor or wall.
  * It can be dangerous or has special features.
  */
-Styx.levels.Tile = class
+Styx.levels.Tile = class extends Styx.GameObject
 {
 	constructor(x, y, id)
 	{
-		this.id = id;
+		super('tiles', id, {});
 		this.pos = {x:x, y:y};
 		this.actor = null;
 		this.item = null;
-	}
-
-	getAttrib(attrib, defaultValue = null)
-	{
-		return game.db.getAttrib('tiles', this.id, attrib) || defaultValue;
-	}
-
-	is(tag)
-	{
-		return (this.id == tag || this.getAttrib("tags").includes(tag));
-	}
-
-	name()
-	{
-		return this.getAttrib("name");
-	}
-
-	shortDesc()
-	{
-		return this.getAttrib("name");
-	}
-
-	longDesc()
-	{
-		return this.getAttrib("desc");
-	}
-
-	toString()
-	{
-		return this.name();
 	}
 
 	enter(actor) {};

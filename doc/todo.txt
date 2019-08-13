@@ -15,7 +15,7 @@
 - odstranit offscreen messages?
 - string.format colors, a/an?
 
-- Tile nejak z DungeonObject... minimalizovat atrib. pro tile?
+- Tile nejak z DungeonObject... minimalizovat atrib. pro tile? (nebo z GameObject a category predelat na getCategory() - zabere mene mista)
 
 - touch-afraid, invisibility
 - doplnit commands pro tile/monster/item: run to, attack/target

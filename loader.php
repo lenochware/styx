@@ -60,6 +60,16 @@ class Loader {
 		return preg_replace('/\/\/.*/', '', $s);
 	}
 
+	function getLookup(array $list)
+	{
+		$tags = [];
+		foreach ($list as $id) {
+			$tags[$id] = true;
+		}
+
+		return $tags;
+	}
+
 	function loadJsonFile($path)
 	{
 		$s = $this->removeComments(file_get_contents($path));
@@ -73,6 +83,11 @@ class Loader {
 		foreach ($this->json as $k => $obj) {
 			if (!is_array($obj)) continue;
 			$this->json[$k]['id'] = $k;
+			
+			// if ($this->json[$k]['tags']) {
+			// 	$this->json[$k]['tags_lookup'] = $this->getLookup($this->json[$k]['tags']);
+			// }
+
 		}
 
 		return $this->json;
