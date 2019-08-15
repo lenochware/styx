@@ -247,7 +247,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	tileEffect()
 	{
-		this.level.get(this.pos, 'tile').applyEffect(this);		
+		this.getTile().applyEffect(this);		
 	}
 
 	wait()

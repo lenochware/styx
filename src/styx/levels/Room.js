@@ -324,6 +324,9 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 						}
 					}
 				}
+
+				//skip drawing border walls - better merge
+				if (cell == '#' && this.isBorderPoint(this.x + x, this.y + y)) continue;
 				
 				var id = features[cell].id;
 				drawCellCallback(this, this.x + x, this.y + y, 'id', id);

@@ -9,39 +9,97 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		
 		this.level.clear('wall');
 
-		var first = new Styx.levels.Room(13, 5);
-		var added = this.addToRandomPlace(first);
-		if (added) this.addRoomsStream(first);
+		var layout = 4;
 
 		var first = new Styx.levels.FixedRoom('room13x5');
-		var added = this.addToRandomPlace(first);
-		if (added) this.addRoomsStream(first);
 
-		this.addConnections();
+		if (layout == 1) {
+			var pos = this.level.size.getPoint('center-4');
+			first.center(pos.x, pos.y).align(this.level.size);
+			this.add(first);
+			this.addRoomsLine(first, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5'], 'east');			
+		}
+		else if (layout == 2) {
+			var pos = this.level.size.getPoint('center');
+			first.center(pos.x, pos.y).align(this.level.size);
+			this.add(first);
+			this.addRoomsLine(first, ['r1', 'r1', 'r1'], 'east');
+			this.addRoomsLine(first, ['r1', 'r1', 'r1'], 'west');
+			this.addRoomsLine(first, ['r1', 'r1'], 'north');
+			this.addRoomsLine(first, ['r1', 'r1'], 'south');
+		}
+		else if (layout == 3) {
+			var pos = this.level.size.getPoint('center');
+			first.center(pos.x, pos.y).align(this.level.size);
+			this.add(first);
+			var line = this.addRoomsLine(first, ['room13x5'], 'east');
+			line = this.addRoomsLine(_.last(line), ['room13x5'], 'south');
+			line = this.addRoomsLine(_.last(line), ['room13x5'], 'west');
+			_.last(line).getDoorBySide('north').connect(first);
+			//this.makeConnection(first.getDoorBySide('south'), next);
+		}
+
+		else if (layout == 4) {
+			var pos = this.level.size.getPoint('center-4');
+			first.center(pos.x, pos.y).align(this.level.size);
+			this.add(first);
+			var line = this.addRoomsLine(first, ['corridor', 'corridor', 'corridor', 'corridor', 'corridor'], 'east');
+			
+			this.addRoomsLine(line[1], ['small-pillar-room'], 'south');
+			this.addRoomsLine(line[1], ['small-pillar-room'], 'north');
+
+			this.addRoomsLine(line[3], ['small-pillar-room'], 'south');
+			this.addRoomsLine(line[3], ['small-pillar-room'], 'north');
+		}
+
+		var colis = new Styx.levels.FixedRoom('r5');
+		colis.move(20,11);
+		this.add(colis);
+
+		// var first = new Styx.levels.Room(13, 5);
+		// var added = this.addToRandomPlace(first);
+		// if (added) this.addRoomsStream(first);
 
 		// var first = new Styx.levels.FixedRoom('room13x5');
 		// var added = this.addToRandomPlace(first);
 		// if (added) this.addRoomsStream(first);
 
-		//this.populate();
+		// this.addConnections();
 
 		this.drawAll();
-		this.addStairs();
+		//this.addStairs();
 
+/*
 		var spawner = new Styx.levels.Spawner(this, this.level.size);
 		spawner.setBindings('common_bindings');
 		spawner.spawn('rats');
 
 		spawner.setArea(first.x,first.y,15,10);
 		spawner.spawn('forest');
-
+*/
 		return this.level;
 	}
 
-	addSecrets() {}
-	addBoss() {}
-	addGoals() {}
-	addBadPlace() {}
+	addRoomsLine(first, rooms, side)
+	{
+		var line = [];
+		var exit = first.getDoorBySide(side);
+
+		for(let id of rooms) {
+			var room = this.createRoom(id);
+			exit.alignRoom(room);
+			this.add(room, exit);
+			exit = room.getDoorBySide(side);
+			line.push(room);
+		}
+
+		return line;
+	}
+
+	// addSecrets() {}
+	// addBoss() {}
+	// addGoals() {}
+	// addBadPlace() {}
 
 	addStairs()
 	{
@@ -105,8 +163,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
   drawXY(room, x, y, attrib, value)
   {
-      this.level.setXY(x, y, attrib, value);
-      //this.roomCells[y * this.level.size.width + x] = room;
+    this.level.setXY(x, y, attrib, value);
   }
 
 }
