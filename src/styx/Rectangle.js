@@ -182,5 +182,28 @@ Styx.Rectangle = class
 		var y2 = Math.min(this.y + this.height, rect.y + rect.height);
 
 		return new Styx.Rectangle(x1, y1, x2 - x1, y2 - y1);
-	}	
+	}
+
+	split(sx, sy)
+	{
+		var list = [];
+		var w = Math.round(this.width / sx);
+		var h = Math.round(this.height / sy);
+
+		var first = new Styx.Rectangle(this.x, this.y, w, h);
+
+		for(let y = 0; y < sy; y++) {
+			for(let x = 0; x < sx; x++) {
+				var sub = first.clone().move(x, y, 'rel');
+
+				if (x == sx - 1) sub.resize(this.width - sx * w, 0, 'abs');
+				if (y == sy - 1) sub.resize(0, this.height - sy * h, 'abs');
+
+				list.push(sub);
+			}
+		}
+
+		return list;
+	}
+
 }
