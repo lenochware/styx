@@ -206,5 +206,69 @@ Styx.levels.LevelBuilder = class
 			room.draw(this.drawXY.bind(this));
 		}
 	}
+}
+
+
+Styx.levels.Area = class
+{
+	constructor(id)
+	{
+		this.id = id;
+		this.game = game;
+		this.rooms = [];
+		//this.size = new Styx.Rectangle(0,0,0,0);
+	}
+
+	addRoom(room, exit)
+	{
+		if (exit) {
+			exit.connect(room);
+		}
+
+		this.rooms.push(room);
+		room.params.area = this.id;
+		return room;
+	}
+
+	newRoom(id, params = {})
+	{
+		var room = null;
+
+		if (id == 'corridor') {
+			room = new Styx.levels.Corridor(3,3);
+		}
+		else {
+			if (!id) id = this.game.db.findKey('rooms', params.tag).sample().value();
+			if (!id) throw Error('Room id not found.');
+			room = new Styx.levels.FixedRoom(id);
+		}
+
+		return room;
+	}
+
+	addLine(first, rooms, side)
+	{
+		var exit = first.getDoorBySide(side);
+
+		for(let id of rooms) {
+			var room = this.newRoom(id);
+			exit.alignRoom(room);
+			this.addRoom(room, exit);
+			exit = room.getDoorBySide(side);
+		}
+
+		return this;
+	}
+
+	getRooms()
+	{
+		return this.rooms;
+	}
+
+	//vrati pocet prekryvajicich se tiles?
+	getCollisions(level) {}
+
+	//vykresleni do levelu
+	draw(level) {}
 
 }
