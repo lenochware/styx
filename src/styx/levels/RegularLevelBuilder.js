@@ -9,73 +9,21 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		
 		this.level.clear('wall');
 
+		this.areas = [];
+
 		var first = new Styx.levels.FixedRoom('room13x5');
 		var pos = this.level.size.getPoint('center');
 		first.center(pos.x, pos.y);
 
-		var areas = [];
+		var a1 = this.addCrossRoad(first, 'cross1');
+		this.addStream(a1.getOutsideDoor('north'), 's1');
+		this.addStream(a1.getOutsideDoor('west'), 's2');
+		this.addStream(a1.getOutsideDoor('east'), 's3');
+		this.addStream(a1.getOutsideDoor('south'), 's4');
 
-		areas.push(this.addCrossRoad(first, 'cross1'));
-
-
-		this.rooms.push(...areas[0].rooms);
-		areas[0].draw(this.level);
-
-		// var d = area.getOutsideDoor('south');
-		// console.log(d);
-		// this.level.set(d.getPos(), 'id', 'high_grass');
-
-
-		// if (layout == 1) {
-		// 	var pos = this.level.size.getPoint('center-4');
-		// 	first.center(pos.x, pos.y).align(this.level.size);
-		// 	area.addRoom(first);
-		// 	area.addLine(first, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5'], 'east');
-		// }
-		// else if (layout == 2) {
-		// 	var pos = this.level.size.getPoint('center');
-		// 	first.center(pos.x, pos.y).align(this.level.size);
-		// 	area.addRoom(first);
-		// 	area.addLine(first, ['r1', 'r1', 'r1'], 'east');
-		// 	area.addLine(first, ['r1', 'r1', 'r1'], 'west');
-		// 	area.addLine(first, ['r1', 'r1'], 'north');
-		// 	area.addLine(first, ['r1', 'r1'], 'south');
-		// }
-		// else if (layout == 3) {
-		// 	var pos = this.level.size.getPoint('center');
-		// 	first.center(pos.x, pos.y).align(this.level.size);
-		// 	area.addRoom(first);
-		// 	area.addLine(first, ['room13x5'], 'east');
-		// 	area.addLine(_.last(area.rooms), ['room13x5'], 'south');
-		// 	area.addLine(_.last(area.rooms), ['room13x5'], 'west');
-		// 	_.last(area.rooms).getDoorBySide('north').connect(first);
-			
-		// 	//this.makeConnection(first.getDoorBySide('south'), next);
-		// }
-
-		// else if (layout == 4) {
-		// 	var pos = this.level.size.getPoint('center-4');
-		// 	first.center(pos.x, pos.y).align(this.level.size);
-		// 	area.addRoom(first);
-		// 	area.addLine(first, ['corridor', 'corridor', 'corridor', 'corridor', 'corridor'], 'east');
-			
-		// 	area.addLine(area.rooms[1], ['small-pillar-room'], 'south');
-		// 	area.addLine(area.rooms[1], ['small-pillar-room'], 'north');
-
-		// 	area.addLine(area.rooms[3], ['small-pillar-room'], 'south');
-		// 	area.addLine(area.rooms[3], ['small-pillar-room'], 'north');
-
-		// 	area.addRandom(['r2', 'r2', 'r2']);
-		// }
-		// else if (layout == 5) {
-		// 	var pos = this.level.size.getPoint('center');
-		// 	first.center(pos.x, pos.y).align(this.level.size);
-
-		// 	area.addRoom(first);
-		// 	area.addStream(first, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5']);
-		// 	//area.addStream(first, ['corridor', 'corridor', 'corridor', 'corridor', 'corridor', 'corridor','corridor', 'corridor', 'corridor']);
-		// }
-
+		for (let a of this.areas) {
+			a.draw(this.level);
+		}
 
 		//this.addStairs();
 
@@ -93,11 +41,24 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	addCrossRoad(room, id)
 	{
 		var area = new Styx.levels.Area(id);
+		this.areas.push(area);
+
 		area.addRoom(room);
 		area.addLine(room, ['r1', 'r1', 'r1'], 'east');
 		area.addLine(room, ['r1', 'r1', 'r1'], 'west');
 		area.addLine(room, ['r1', 'r1'], 'north');
 		area.addLine(room, ['r1', 'r1'], 'south');
+		return area;
+	}
+
+	addStream(exit, id)
+	{
+		var area = new Styx.levels.Area(id);
+		this.areas.push(area);
+		var room = area.newRoom('corridor');
+		area.addRoom(room, exit);
+		area.addStream(room, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5']);
+
 		return area;
 	}
 

@@ -222,6 +222,7 @@ Styx.levels.Area = class
 	addRoom(room, exit)
 	{
 		if (exit) {
+			exit.alignRoom(room);
 			exit.connect(room);
 		}
 
@@ -252,7 +253,6 @@ Styx.levels.Area = class
 
 		for(let id of rooms) {
 			var room = this.newRoom(id);
-			exit.alignRoom(room);
 			this.addRoom(room, exit);
 			exit = room.getDoorBySide(side);
 		}
@@ -267,7 +267,6 @@ Styx.levels.Area = class
 		for(let id of rooms) {
 			if (!exit) break;
 			var room = this.newRoom(id);
-			exit.alignRoom(room);
 			this.addRoom(room, exit);
 			exit = room.getFreeDoors()[0];
 		}
@@ -283,7 +282,6 @@ Styx.levels.Area = class
 			var room = this.newRoom(id);
 			var door = doors.pop();
 			if (!door) break;
-			door.alignRoom(room);
 			this.addRoom(room, door);
 		}
 

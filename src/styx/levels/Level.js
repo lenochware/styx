@@ -127,7 +127,8 @@ Styx.levels.Level = class extends Styx.GameObject
 	{
 		var pos = y * this.size.width + x;
 		if (pos < 0 || pos >= this.tiles.length) {
-			throw "Tile position out of bounds.";
+			console.warn("Tile position out of bounds.");
+			return;
 		}
 
 		switch (attrib) {
