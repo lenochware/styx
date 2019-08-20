@@ -260,6 +260,73 @@ Styx.levels.Area = class
 		return this;
 	}
 
+	addStream(first, rooms)
+	{
+		var exit = first.getFreeDoors()[0];
+
+		for(let id of rooms) {
+			if (!exit) break;
+			var room = this.newRoom(id);
+			exit.alignRoom(room);
+			this.addRoom(room, exit);
+			exit = room.getFreeDoors()[0];
+		}
+
+		return this;		
+	}
+
+	addRandom(rooms)
+	{
+		var doors = Styx.Random.shuffle(this.getFreeDoors());
+
+		for(let id of rooms) {
+			var room = this.newRoom(id);
+			var door = doors.pop();
+			if (!door) break;
+			door.alignRoom(room);
+			this.addRoom(room, door);
+		}
+
+		return this;
+	}
+
+	getFreeDoors(side = null)
+	{
+		var list = [];
+		for(let room of this.rooms) {
+			if (side) {
+				var door = room.getDoorBySide(side);
+				if (door && !door.connected) list.push(door);
+			}
+			else {
+				list.push(room.getFreeDoors());
+			}
+		}
+
+		return _.flatten(list);
+	}
+
+	getOutsideDoor(side)
+	{
+		var doors = Styx.Random.shuffle(this.getFreeDoors(side));
+		if (!doors) return null;
+		for (let door of doors) {
+			var ray = door.getRay(6);
+			if (!this.collides(ray)) return door;
+		}
+		return null;
+	}
+
+	collides(rect)
+	{
+		for(let room of this.rooms)
+		{
+			if (rect.intersect(room)) return room;
+		}
+
+		return false;
+	}
+
 	getRooms()
 	{
 		return this.rooms;

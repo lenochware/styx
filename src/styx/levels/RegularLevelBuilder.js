@@ -9,7 +9,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		
 		this.level.clear('wall');
 
-		var layout = 4;
+		var layout = 5;
 
 		var first = new Styx.levels.FixedRoom('room13x5');
 		var area = new Styx.levels.Area('a1');
@@ -52,10 +52,23 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 			area.addLine(area.rooms[3], ['small-pillar-room'], 'south');
 			area.addLine(area.rooms[3], ['small-pillar-room'], 'north');
+
+			area.addRandom(['r2', 'r2', 'r2']);
+		}
+		else if (layout == 5) {
+			var pos = this.level.size.getPoint('center');
+			first.center(pos.x, pos.y).align(this.level.size);
+
+			area.addRoom(first);
+			area.addStream(first, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5']);
+			//area.addStream(first, ['corridor', 'corridor', 'corridor', 'corridor', 'corridor', 'corridor','corridor', 'corridor', 'corridor']);
 		}
 
 		this.rooms.push(...area.rooms);
-		console.log(this.rooms);
+
+		var d = area.getOutsideDoor('south');
+		console.log(d);
+		this.level.set(d.getPos(), 'id', 'high_grass');
 
 /*
 		var colis = new Styx.levels.FixedRoom('r5');
