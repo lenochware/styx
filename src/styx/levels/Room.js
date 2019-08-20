@@ -194,21 +194,19 @@ Styx.levels.Room = class extends Styx.Rectangle
     return pos;
 	}
 
-	draw(drawCellCallback)
+	draw(level)
 	{
 		for (let pos of this.coords()) {
-			let id = this.isBorderPoint(pos.x, pos.y)? 'wall' : 'floor';
-			drawCellCallback(this, pos.x, pos.y , 'id', id);
+			if (this.isBorderPoint(pos.x, pos.y)) continue;
+			level.setXY(pos.x, pos.y , 'id', 'floor');
 		}
 	
 		for (let door of this.doors) {
 			if (!door.connected) continue;
 			let pos = door.getPos();
-			drawCellCallback(this, pos.x, pos.y , 'id', 'door');
+			level.setXY(pos.x, pos.y , 'id', 'door');
 		}
-
 	}
-
 
 }
 
@@ -298,7 +296,7 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 		return list;
 	}
 
-	draw(drawCellCallback)
+	draw(level)
 	{
 		var features = this.getAttrib('features');
 
@@ -329,7 +327,7 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 				if (cell == '#' && this.isBorderPoint(this.x + x, this.y + y)) continue;
 				
 				var id = features[cell].id;
-				drawCellCallback(this, this.x + x, this.y + y, 'id', id);
+				level.setXY(this.x + x, this.y + y, 'id', id);
 			}
 		}
 
@@ -359,10 +357,10 @@ Styx.levels.Corridor = class extends Styx.levels.Room
 		return pos;
 	}
 
-	draw(drawCellCallback)
+	draw(level)
 	{
 		for (let pos of this.coords()) {
-			drawCellCallback(this, pos.x, pos.y , 'id', 'floor');
+			level.setXY(pos.x, pos.y , 'id', 'floor');
 		}
 	}
 
@@ -440,10 +438,10 @@ Styx.levels.Connector = class extends Styx.levels.Room
 		return pos;
 	}
 
-	draw(drawCellCallback)
+	draw(level)
 	{
 		for (let pos of this.coords()) {
-			drawCellCallback(this, pos.x, pos.y , 'id', 'floor');
+			level.setXY(pos.x, pos.y , 'id', 'floor');
 		}
 	}
 

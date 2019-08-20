@@ -335,7 +335,11 @@ Styx.levels.Area = class
 	//vrati pocet prekryvajicich se tiles?
 	getCollisions(level) {}
 
-	//vykresleni do levelu
-	draw(level) {}
+	draw(level)
+	{
+		for(let room of this.rooms) {
+			room.draw(level);
+		}
+	}
 
 }
