@@ -15,6 +15,7 @@ src/styx/Game.js
 src/styx/Rectangle.js
 src/styx/levels/Room.js
 src/styx/levels/Spawner.js
+src/styx/levels/Area.js
 src/styx/levels/LevelBuilder.js
 src/styx/levels/RegularLevelBuilder.js
 src/styx/levels/ArenaLevelBuilder.js

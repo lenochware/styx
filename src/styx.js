@@ -1,13 +1,15 @@
 
 /* Styx */
 
-Styx.Random.setSeed(123);
+//Styx.Random.setSeed(123);
+var view = new Styx.Rectangle(0,0,80,30);
+//var view = new Styx.Rectangle(0,0,40,20);
 
 var game = new Styx.Game();
 
 game.load('world:first').then(function() 
 {
-	var testLevel = true; 
+	var testLevel = false; 
 
 	var level = game.createLevel(testLevel? 'test' : 'small-cave');
 	
@@ -29,7 +31,7 @@ game.load('world:first').then(function()
 	wm = game.get('window-manager');
 	wm.setPanel({id: "messages", container: "messages"});
 	wm.setPanel({id: "sidebar", container: "sidebar"});
-	wm.setPanel({id: "level-map", container: "level-map", level: level, view: new Styx.Rectangle(0,0,40,20)});
+	wm.setPanel({id: "level-map", container: "level-map", level: level, view: view});
 
 	game.on('render', updateView);
 
