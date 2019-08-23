@@ -11,7 +11,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		this.areas = [];
 
-		var first = new Styx.levels.FixedRoom('room13x5');
+		var first = new Styx.levels.Room(13,5);
 		var pos = this.level.size.getPoint('center');
 		first.center(pos.x, pos.y);
 
@@ -44,10 +44,10 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.areas.push(area);
 
 		area.addRoom(room);
-		area.addLine(room, ['r1', 'r1', 'r1'], 'east');
-		area.addLine(room, ['r1', 'r1', 'r1'], 'west');
-		area.addLine(room, ['r1', 'r1'], 'north');
-		area.addLine(room, ['r1', 'r1'], 'south');
+		area.addLine(room, ['room-5x5', 'room-5x5', 'room-5x5'], 'east');
+		area.addLine(room, ['room-5x5', 'room-5x5', 'room-5x5'], 'west');
+		area.addLine(room, ['room-5x5', 'room-5x5'], 'north');
+		area.addLine(room, ['room-5x5', 'room-5x5'], 'south');
 		return area;
 	}
 

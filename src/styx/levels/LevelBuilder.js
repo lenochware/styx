@@ -238,6 +238,10 @@ Styx.levels.Area = class
 		if (id == 'corridor') {
 			room = new Styx.levels.Corridor(3,3);
 		}
+		else if (id.startsWith('room-')) {
+			var size = id.substring(5).split('x');
+			room = new Styx.levels.Room(parseInt(size[0]), parseInt(size[1]));
+		}
 		else {
 			if (!id) id = this.game.db.findKey('rooms', params.tag).sample().value();
 			if (!id) throw Error('Room id not found.');
