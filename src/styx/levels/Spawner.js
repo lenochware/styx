@@ -100,7 +100,7 @@ Styx.levels.Spawner = class
 	{
 		if (!list) return;
 
-		var num = Styx.Random.int(1, Math.floor(this.builder.getFloorSize(this.area) * density / 100) + 1);
+		var num = Styx.Random.int(1, Math.floor(this.floorCache.length * density / 100) + 1);
 		while (num--) {
 			var id = _.sample(list);
 			var pos = this.pickPos(type);

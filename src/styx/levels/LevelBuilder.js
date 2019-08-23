@@ -11,7 +11,7 @@ Styx.levels.LevelBuilder = class
 	{
 		this.game = game;
 		this.level = null;
-		this.rooms = [];
+		this.areas = [];
 	}
 
 	createLevel(id)
@@ -20,94 +20,9 @@ Styx.levels.LevelBuilder = class
 		return this.level;
 	}
 
-	populate()
-	{
-		throw new Error('Not implemented.');
-	}
-
-	chooseNextRoom()
-	{
-		throw new Error('Not implemented.');
-	}
-
 	findRoom(tag)
 	{
 		return _.chain(this.rooms).filter(obj => obj.is(tag));
-	}
-
-	createRoom(id, params = {})
-	{
-		if (id == 'corridor') {
-			return new Styx.levels.Corridor(3,3);
-		}
-
-		if (params.tag) {
-			id = this.game.db.findKey('rooms', params.tag).sample().value();
-		}
-
-		if (!id) {
-			console.warn('Room id not found.');
-			return null;
-		}
-
-		return new Styx.levels.FixedRoom(id);
-	}
-
-
-	add(room, exit)
-	{
-		if (exit) {
-			exit.connect(room);
-		}
-
-		this.rooms.push(room);
-		return room;
-	}
-
-	addToRandomPlace(room)
-	{
-		var tests = 10;
-		while (tests--) {
-
-			room.assign(
-				Styx.Random.int(this.level.size.width - room.width), 
-				Styx.Random.int(this.level.size.height - room.height)
-			);
-
-			if (!this.isOccupied(room)) {
-				this.add(room, null);
-				return true;
-			}
-		}
-		
-		return false;
-	}
-
-	addNextRoom(room, nextRoom)
-	{
-		for(let door of room.getFreeDoors()) {
-
-			if (!nextRoom.getDoorBySide(door.oppositeSide())) continue;
-
-			door.alignRoom(nextRoom);
-
-			if (!nextRoom.inside(this.level.size)) continue;
-			var occupied = this.isOccupied(nextRoom);
-
-			if (!occupied) {
-				this.add(nextRoom, door);
-				return true;
-			}
-
-			// else {
-			// 	var r = this.findNearRoom(door);
-			// 	if (r) {
-			// 		if (this.makeConnection(door, r)) return false;
-			// 	}
-			// }
-		}
-
-		return false;
 	}
 
 	addExit(pos, exit)
@@ -116,96 +31,85 @@ Styx.levels.LevelBuilder = class
 		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos};
 	}
 
-	makeConnection(door, room)
-	{
-		var door2 = room.getDoorBySide(door.oppositeSide());
-		if (!door2 || door2.connected) return;
-		var con = new Styx.levels.Connector(door, door2);
+	// makeConnection(door, room)
+	// {
+	// 	var door2 = room.getDoorBySide(door.oppositeSide());
+	// 	if (!door2 || door2.connected) return;
+	// 	var con = new Styx.levels.Connector(door, door2);
 
-		if (con.isValid()) {
-			//console.log(door.getPos(),door2.getPos(), door2);
-			this.add(con, door);
-			return true;
-		}
+	// 	if (con.isValid()) {
+	// 		this.add(con, door);
+	// 		return true;
+	// 	}
 
-		return false;
-	}
+	// 	return false;
+	// }
 
-	isOccupied(newRoom)
-	{
-		for(let room of this.rooms)
-		{
-			if (newRoom.intersect(room)) return room;
-		}
+	// findNearRoom(door)
+	// {
+	// 	var ray = door.getRay(8);
+	// 	var rooms = this.findIntersecting(ray);
+	// 	if (rooms.length == 0) return null;
 
-		return false;
-	}
+	// 	var door2, test;
 
-	findNearRoom(door)
-	{
-		var ray = door.getRay(8);
-		var rooms = this.findIntersecting(ray);
-		if (rooms.length == 0) return null;
+	// 	for (let r of rooms) {
+	// 		test = r.getDoorBySide(door.oppositeSide());
+	// 		if (!test || test.connected) continue;
 
-		var door2, test;
+	// 		if (!door2 || (test.distance(door) < door2.distance(door))) {
+	// 			door2 = test;
+	// 		}
+	// 	}
 
-		for (let r of rooms) {
-			test = r.getDoorBySide(door.oppositeSide());
-			if (!test || test.connected) continue;
+	// 	return door2? door2.room : null;
+	// }
 
-			if (!door2 || (test.distance(door) < door2.distance(door))) {
-				door2 = test;
-			}
-		}
+	// getFreeDoors()
+	// {
+	// 	var list = [];
+	// 	for(let room of this.rooms) {
+	// 		list.push(room.getFreeDoors());
+	// 	}
 
-		return door2? door2.room : null;
-	}
+	// 	return _.flatten(list);
+	// }
 
-	getFreeDoors()
-	{
-		var list = [];
-		for(let room of this.rooms) {
-			list.push(room.getFreeDoors());
-		}
+	// getFloorSize(rect)
+	// {
+	// 	var list = this.findIntersecting(rect);
+	// 	var num = 0;
 
-		return _.flatten(list);
-	}
+	// 	for (let room of list) {
+	// 		num += (room.width - 1) * (room.height - 1);
+	// 	}
 
-	getFloorSize(rect)
-	{
-		var list = this.findIntersecting(rect);
-		var num = 0;
+	// 	return num;
+	// }
 
-		for (let room of list) {
-			num += (room.width - 1) * (room.height - 1);
-		}
+	// isOccupied(newRoom)
+	// {
+	// 	for(let room of this.rooms)
+	// 	{
+	// 		if (newRoom.intersect(room)) return room;
+	// 	}
 
-		return num;
-	}
+	// 	return false;
+	// }
+	
 
-	findIntersecting(testRoom)
-	{
-		var list = [];
+	// findIntersecting(testRoom)
+	// {
+	// 	var list = [];
 
-		for(let room of this.rooms)
-		{
-			if (testRoom.intersect(room)) list.push(room);
-		}
+	// 	for(let room of this.rooms)
+	// 	{
+	// 		if (testRoom.intersect(room)) list.push(room);
+	// 	}
 
-		return list;
-	}
+	// 	return list;
+	// }
 
-	drawXY(room, x, y, attrib, value)
-	{
-		throw new Error('Not implemented.');
-	}
-
-	drawAll()
-	{
-		for(let room of this.rooms) {
-			room.draw(this.drawXY.bind(this));
-		}
-	}
 }
 
 

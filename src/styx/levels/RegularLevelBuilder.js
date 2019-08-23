@@ -9,8 +9,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		
 		this.level.clear('wall');
 
-		this.areas = [];
-
 		var first = new Styx.levels.Room(13,5);
 		var pos = this.level.size.getPoint('center');
 		first.center(pos.x, pos.y);
@@ -27,14 +25,13 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		//this.addStairs();
 
-/*
 		var spawner = new Styx.levels.Spawner(this, this.level.size);
 		spawner.setBindings('common_bindings');
 		spawner.spawn('rats');
 
 		spawner.setArea(first.x,first.y,15,10);
 		spawner.spawn('forest');
-*/
+
 		return this.level;
 	}
 

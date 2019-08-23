@@ -314,12 +314,12 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 							cell = '.';
 						}
 
-						//prevent double door
-						if (!door.connected.room.is('corridor') && (door.room.x > door.connected.room.x 
-							|| (door.room.x == door.connected.room.x && door.room.y > door.connected.room.y))
-						) {
-							cell = '.';
-						}
+						// //prevent double door
+						// if (!door.connected.room.is('corridor') && (door.room.x > door.connected.room.x 
+						// 	|| (door.room.x == door.connected.room.x && door.room.y > door.connected.room.y))
+						// ) {
+						// 	cell = '.';
+						// }
 					}
 				}
 
