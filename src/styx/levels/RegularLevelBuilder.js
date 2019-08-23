@@ -23,6 +23,8 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			a.draw(this.level);
 		}
 
+		this.cleanUp();
+
 		//this.addStairs();
 
 		var spawner = new Styx.levels.Spawner(this, this.level.size);

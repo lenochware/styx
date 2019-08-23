@@ -39,6 +39,30 @@ Styx.levels.LevelBuilder = class
 		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos};
 	}
 
+	cleanUp()
+	{
+		for(let tile of this.level.tiles) {
+			if (tile.id != 'door') continue;
+			
+			for (let pos of tile.surroundings()) {
+				if (this.level.get(pos, 'id') == 'door') {
+					this.level.set(pos, 'id', 'floor');
+				}
+			}
+
+			//TODO: Point.left(pos), Point.surroundings(pos)
+
+			var left  = {x: tile.pos.x - 1, y: tile.pos.y};
+			var right = {x: tile.pos.x - 1, y: tile.pos.y};
+			var up = {x: tile.pos.x, y: tile.pos.y - 1};
+			var dn = {x: tile.pos.x, y: tile.pos.y + 1};
+
+			if (this.level.get(left, 'tile').is('blocking') && this.level.get(right, 'tile').is('blocking')) continue;
+			if (this.level.get(up, 'tile').is('blocking') && this.level.get(dn, 'tile').is('blocking')) continue;
+			this.level.set(tile.pos, 'id', 'floor');
+		}
+	}
+
 	// makeConnection(door, room)
 	// {
 	// 	var door2 = room.getDoorBySide(door.oppositeSide());

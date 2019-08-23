@@ -108,4 +108,17 @@ Styx.levels.Tile = class extends Styx.GameObject
 		return Math.max(Math.abs(this.pos.x - entity.pos.x), Math.abs(this.pos.y - entity.pos.y));
 	}	
 
+	surroundings()
+	{
+		return [
+			{x: this.pos.x - 1, y: this.pos.y - 1},
+			{x: this.pos.x    , y: this.pos.y - 1},
+			{x: this.pos.x + 1, y: this.pos.y - 1},
+			{x: this.pos.x - 1, y: this.pos.y},
+			{x: this.pos.x + 1, y: this.pos.y},
+			{x: this.pos.x - 1, y: this.pos.y + 1},
+			{x: this.pos.x    , y: this.pos.y + 1},
+			{x: this.pos.x + 1, y: this.pos.y + 1}
+		];
+	}
 }
