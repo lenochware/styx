@@ -112,6 +112,8 @@ Styx.levels.Room = class extends Styx.Rectangle
 	{
 		super(0, 0, width, height, {});
 		this.game = game;
+		this.params = {};
+		this.name = null;
 		this.doors = this.createDoors();
 	}
 
@@ -126,15 +128,41 @@ Styx.levels.Room = class extends Styx.Rectangle
 		return list;
 	}
 
+	getAttrib(attrib, defaultValue = null)
+	{
+		if (this.params[attrib] !== undefined) return this.params[attrib];
+		if (!this.name) return null;
+		var value = this.game.db.getAttrib('rooms', this.name, attrib);
+		return (value !== undefined)? value : defaultValue;
+	}
+
+	setAttrib(attrib, value)
+	{
+		this.params[attrib] = value;
+	}
+
+	addTag(tag)
+	{
+		if (!this.params['tags']) this.params['tags'] = [];
+		if (this.params['tags'].includes(tag)) return;
+		this.params['tags'].push(tag);
+	}
+
+	removeTag(tag)
+	{
+		if (!this.params['tags']) return;
+		this.params['tags'] = _.without(this.params['tags'], tag);
+	}
+
 	is(tag)
 	{
-		return false;
+    return (this.id == tag || this.getAttrib("tags").includes(tag));
 	}
 
 	intersect(rect)
 	{
 		var ri = this.getIntersection(rect); 
-		return (ri.width < 1 && ri.height < 1);
+		return (ri.width > 1 && ri.height > 1);
 	}
 
 	getDoor(x, y)
@@ -227,11 +255,6 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 		this.doors = this.createDoors();
 	}
 
-	getAttrib(attrib)
-	{
-		return this.game.db.getAttrib('rooms', this.name, attrib);
-	}
-
 	getCells()
 	{
 		var cells = [];
@@ -241,11 +264,6 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 		}
 
 		return cells;
-	}
-
-	is(tag)
-	{
-		return (this.getAttrib("tags").indexOf(tag) != -1);
 	}
 
 	/**

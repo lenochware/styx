@@ -79,14 +79,24 @@ Styx.levels.Area = class
 		return this;		
 	}
 
-	addRandom(rooms)
+	addRandom(rooms, allowCollision = true)
 	{
 		var doors = Styx.Random.shuffle(this.getFreeDoors());
 
 		for(let id of rooms) {
 			var room = this.newRoom(id);
 			var door = doors.pop();
+			
+			if (!allowCollision) {
+				while (door) {
+					door.alignRoom(room);
+					if (!this.collides(room)) break;
+					door = doors.pop();
+				}
+			}
+
 			if (!door) break;
+
 			this.addRoom(room, door);
 		}
 

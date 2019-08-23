@@ -19,6 +19,8 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.addStream(a1.getOutsideDoor('east'), 's3');
 		this.addStream(a1.getOutsideDoor('south'), 's4');
 
+		this.addSecrets();
+
 		this.area.draw(this.level);
 
 		this.cleanUp();
@@ -62,6 +64,14 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		return area;
 	}
 
+	addSecrets()
+	{
+		//var area = new Styx.levels.Area(this, 'secret');
+		this.area.addRandom(['r6', 'r6', 'r6'], false);
+		
+		// this.area.addArea(area);
+		// return area;
+	}
 
 	addStairs()
 	{
