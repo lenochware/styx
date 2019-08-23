@@ -1,7 +1,7 @@
 var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
-Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
+Styx.levels.TestLevelBuilder = class extends Styx.levels.LevelBuilder
 {
 	createLevel(id)
 	{
@@ -9,6 +9,7 @@ Styx.levels.TestLevelBuilder = class extends Styx.levels.ArenaLevelBuilder
 		// else this.buildRandomMap();
 
 		super.createLevel(id);
+		this.level.clear('floor');
 
 		this.spawnAll('items', 'item', 3);
 		this.spawnAll('tiles', 'tile', 6);

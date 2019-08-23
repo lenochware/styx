@@ -12,7 +12,7 @@
 	"small-cave": {
 		"name": "Small cave",
 		"type": "regular",
-		"tags": ["small"],
+		"tags": [],
 		"exits": [
 			{"id": "first", "tile": "stairs-up"}
 		]

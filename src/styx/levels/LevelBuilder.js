@@ -17,6 +17,14 @@ Styx.levels.LevelBuilder = class
 	createLevel(id)
 	{
 		this.level = new Styx.levels.Level(id);
+
+		if (this.level.is('small')) {
+			this.level.size.assign(0 , 0, 40, 15);
+		}
+		else if (this.level.is('large')) {
+			this.level.size.assign(0 , 0, 198, 66);			
+		}
+
 		return this.level;
 	}
 
@@ -96,7 +104,7 @@ Styx.levels.LevelBuilder = class
 
 	// 	return false;
 	// }
-	
+
 
 	// findIntersecting(testRoom)
 	// {
