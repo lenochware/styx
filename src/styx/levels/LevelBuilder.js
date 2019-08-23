@@ -11,7 +11,7 @@ Styx.levels.LevelBuilder = class
 	{
 		this.game = game;
 		this.level = null;
-		this.areas = [];
+		this.area = new Styx.levels.Area(this, 'root');
 	}
 
 	createLevel(id)
@@ -119,11 +119,11 @@ Styx.levels.LevelBuilder = class
 	// 	return num;
 	// }
 
-	// isOccupied(newRoom)
+	// collides(rect)
 	// {
-	// 	for(let room of this.rooms)
+	// 	for(let area of this.areas)
 	// 	{
-	// 		if (newRoom.intersect(room)) return room;
+	// 		if (area.collides(rect)) return true;
 	// 	}
 
 	// 	return false;

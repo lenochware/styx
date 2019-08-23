@@ -6,9 +6,10 @@ Styx.levels = Styx.levels || {};
  */
 Styx.levels.Area = class
 {
-	constructor(id)
+	constructor(builder, id)
 	{
 		this.id = id;
+		this.builder = builder;
 		this.game = game;
 		this.rooms = [];
 		//this.size = new Styx.Rectangle(0,0,0,0);
@@ -44,6 +45,11 @@ Styx.levels.Area = class
 		}
 
 		return room;
+	}
+
+	addArea(area)
+	{
+		this.rooms.push(...area.rooms);
 	}
 
 	addLine(first, rooms, side)

@@ -19,45 +19,46 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.addStream(a1.getOutsideDoor('east'), 's3');
 		this.addStream(a1.getOutsideDoor('south'), 's4');
 
-		for (let a of this.areas) {
-			a.draw(this.level);
-		}
+		this.area.draw(this.level);
 
 		this.cleanUp();
 
 		//this.addStairs();
 
+/*
 		var spawner = new Styx.levels.Spawner(this, this.level.size);
 		spawner.setBindings('common_bindings');
 		spawner.spawn('rats');
 
 		spawner.setArea(first.x,first.y,15,10);
 		spawner.spawn('forest');
+*/		
 
 		return this.level;
 	}
 
 	addCrossRoad(room, id)
 	{
-		var area = new Styx.levels.Area(id);
-		this.areas.push(area);
+		var area = new Styx.levels.Area(this, id);
 
 		area.addRoom(room);
 		area.addLine(room, ['room-5x5', 'room-5x5', 'room-5x5'], 'east');
 		area.addLine(room, ['room-5x5', 'room-5x5', 'room-5x5'], 'west');
 		area.addLine(room, ['room-5x5', 'room-5x5'], 'north');
 		area.addLine(room, ['room-5x5', 'room-5x5'], 'south');
+
+		this.area.addArea(area);
 		return area;
 	}
 
 	addStream(exit, id)
 	{
-		var area = new Styx.levels.Area(id);
-		this.areas.push(area);
+		var area = new Styx.levels.Area(this, id);
 		var room = area.newRoom('corridor');
 		area.addRoom(room, exit);
 		area.addStream(room, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5']);
 
+		this.area.addArea(area);
 		return area;
 	}
 

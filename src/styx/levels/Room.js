@@ -95,12 +95,12 @@ Styx.levels.Door = class
 
 		room.move(this.getPos().x - door.getPos().x, this.getPos().y - door.getPos().y); //nastavi prekryvajici mistnost
 
-		switch(this.side) {
-			case 'north': room.move(0,-1);  break;
-			case 'south': room.move(0, 1);  break;
-			case 'east':  room.move(1, 0);  break;
-			case 'west':  room.move(-1, 0); break;
-		}
+		// switch(this.side) {
+		// 	case 'north': room.move(0,-1);  break;
+		// 	case 'south': room.move(0, 1);  break;
+		// 	case 'east':  room.move(1, 0);  break;
+		// 	case 'west':  room.move(-1, 0); break;
+		// }
 
 		return door;
 	}
@@ -129,6 +129,12 @@ Styx.levels.Room = class extends Styx.Rectangle
 	is(tag)
 	{
 		return false;
+	}
+
+	intersect(rect)
+	{
+		var ri = this.getIntersection(rect); 
+		return (ri.width < 1 && ri.height < 1);
 	}
 
 	getDoor(x, y)
