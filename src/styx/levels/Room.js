@@ -324,6 +324,8 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 	{
 		var features = this.getAttrib('features');
 
+		var isSecret = this.is('secret');
+
 		for (var y = 0; y < this.height; y++) {
 			for (var x = 0; x < this.width; x++) {
 				var cell = this.cells[y][x];
@@ -337,13 +339,6 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 						if (this.is('corridor')) {
 							cell = '.';
 						}
-
-						// //prevent double door
-						// if (!door.connected.room.is('corridor') && (door.room.x > door.connected.room.x 
-						// 	|| (door.room.x == door.connected.room.x && door.room.y > door.connected.room.y))
-						// ) {
-						// 	cell = '.';
-						// }
 					}
 				}
 
@@ -352,6 +347,12 @@ Styx.levels.FixedRoom = class extends Styx.levels.Room
 				
 				var id = features[cell].id;
 				level.setXY(this.x + x, this.y + y, 'id', id);
+
+				if (id == 'door' && isSecret) {
+					var tile = level.getXY(this.x + x, this.y + y, 'tile');
+					tile.params['secret'] = 'door';
+					tile.id = 'wall';
+				}
 			}
 		}
 

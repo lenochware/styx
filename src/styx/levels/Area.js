@@ -13,6 +13,7 @@ Styx.levels.Area = class
 		this.game = game;
 		this.rooms = [];
 		//this.size = new Styx.Rectangle(0,0,0,0);
+		this.onAddCallback = null;
 	}
 
 	addRoom(room, exit)
@@ -22,9 +23,18 @@ Styx.levels.Area = class
 			exit.connect(room);
 		}
 
+		if (this.onAddCallback) {
+			this.onAddCallback(room, exit);
+		}
+
 		this.rooms.push(room);
 		room.params.area = this.id;
 		return room;
+	}
+
+	onAdd(f)
+	{
+		this.onAddCallback = f;
 	}
 
 	newRoom(id, params = {})

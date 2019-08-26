@@ -67,7 +67,11 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	addSecrets()
 	{
 		//var area = new Styx.levels.Area(this, 'secret');
+		this.area.onAdd(r => r.addTag('secret'));
+
 		this.area.addRandom(['r6', 'r6', 'r6'], false);
+
+		this.area.onAdd(null);
 		
 		// this.area.addArea(area);
 		// return area;
