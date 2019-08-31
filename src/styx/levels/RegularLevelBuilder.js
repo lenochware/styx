@@ -6,6 +6,8 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	createLevel(id)
 	{
 		super.createLevel(id);
+
+		this.debugDraw = false;
 		
 		this.level.clear('wall');
 
@@ -21,7 +23,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		this.addSecrets();
 
-		this.area.draw(this.level);
+		this.area.draw();
 
 		this.cleanUp();
 
@@ -58,7 +60,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		var area = new Styx.levels.Area(this, id);
 		var room = area.newRoom('corridor');
 		area.addRoom(room, exit);
-		area.addStream(room, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5']);
+		area.addStream(room, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5'], exit.side);
 
 		this.area.addArea(area);
 		return area;

@@ -28,6 +28,7 @@ Styx.levels.Area = class
 		}
 
 		this.rooms.push(room);
+		if (this.builder.debugDraw) this.debugDraw(room);
 		room.params.area = this.id;
 		return room;
 	}
@@ -75,15 +76,18 @@ Styx.levels.Area = class
 		return this;
 	}
 
-	addStream(first, rooms)
+	addStream(first, rooms, side)
 	{
-		var exit = first.getFreeDoors()[0];
+		var d = first.getFreeDoors();
+		var exit = (d[0].oppositeSide() == side)? d[1] : d[0];
 
 		for(let id of rooms) {
 			if (!exit) break;
 			var room = this.newRoom(id);
 			this.addRoom(room, exit);
-			exit = room.getFreeDoors()[0];
+
+			d = room.getFreeDoors();
+			exit = (d[0].oppositeSide() == side)? d[1] : d[0];
 		}
 
 		return this;		
@@ -158,10 +162,17 @@ Styx.levels.Area = class
 	//vrati pocet prekryvajicich se tiles?
 	getCollisions(level) {}
 
-	draw(level)
+	debugDraw(room)
+	{
+		var level = this.builder.level;
+		room.draw(level);
+		this.game.get('renderer').render(level, "level-map", {view: level.size});
+	}
+
+	draw()
 	{
 		for(let room of this.rooms) {
-			room.draw(level);
+			room.draw(this.builder.level);
 		}
 	}
 

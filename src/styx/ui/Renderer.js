@@ -18,6 +18,11 @@ Styx.ui.Renderer = class
 	computeFov()
 	{
 		this.level.fov = {};
+		if (!this.game.player) {
+			console.warn('No player - skipped fov calc.');
+			return;
+		}
+
 		var pos = this.game.player.pos;
 		var fov = new ROT.FOV.PreciseShadowcasting((x, y) => this.lightPasses(x,y) );
 		fov.compute(pos.x, pos.y, 50, (x, y, r, vis) => this.writeFov(x, y, r, vis) );
