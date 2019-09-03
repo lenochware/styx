@@ -17,9 +17,6 @@ Styx.levels.Tile = class extends Styx.GameObject
 		this.item = null;
 	}
 
-	enter(actor) {};
-	leave(actor) {};
-
 	applyEffect(actor)
 	{
 		var attack = this.pickAttack();
@@ -39,6 +36,12 @@ Styx.levels.Tile = class extends Styx.GameObject
 		if (!attack) return false;
 		attack = actor.defense(attack);
 		return (attack.points > 0);
+	}
+
+	isSticking(actor)
+	{
+		if (!this.is('sticky')) return false;
+		return Styx.Random.bet(.6);
 	}
 
 	touch(actor)

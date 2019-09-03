@@ -27,6 +27,7 @@ hiding - item inside is hidden
 hiding_mon - monster can hide into this tile (e.g. high grass)
 diggable - player can dig into and remove this tile
 exit - tile is exit (stairs)
+sticky - actor cannot leave this terrain in 2/3 cases
 
 tiles attrib (usage: tile.setAttrib('name', 'value') )
 ------------------------------------------------------

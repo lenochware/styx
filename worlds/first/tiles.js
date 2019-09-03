@@ -37,7 +37,7 @@
 
 	"water": {
 		"render": {"char": "~", "color": "light-blue" },
-		"tags": ["water", "hiding"],
+		"tags": ["water", "hiding", "sticky"],
 		"name": "deep water",
 		"attacks": ["drowning"],
 		"desc": "You see nothing interesting."
@@ -54,6 +54,13 @@
 		"render": {"char": ".", "color": "brown" },
 		"tags": [],
 		"name": "mud",
+		"desc": "You see nothing interesting."
+	},
+
+	"rocks": {
+		"render": {"char": "^", "color": "gray" },
+		"tags": ["sticky"],
+		"name": "rocks",
 		"desc": "You see nothing interesting."
 	},
 

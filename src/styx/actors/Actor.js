@@ -43,23 +43,31 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	{
 		if (dx == 0 && dy == 0) return false;
 
-		var tile = this.level.getXY(this.pos.x + dx, this.pos.y + dy, 'tile');
+		var nextTile = this.level.getXY(this.pos.x + dx, this.pos.y + dy, 'tile');
 
-		if (!this.canOccupy(tile)) {
-			if (tile.is('blocking')) tile.touch(this);
+		if (!this.canOccupy(nextTile)) {
+			if (nextTile.is('blocking')) nextTile.touch(this);
 			return false;
 		}
 
-		if (tile.actor) {
-			if (this.isPlayer() || this.target == tile.actor || this.is('aggresive')) {
-				return this.attack(tile.actor);
+		if (nextTile.actor) {
+			if (this.isPlayer() || this.target == nextTile.actor || this.is('aggresive')) {
+				return this.attack(nextTile.actor);
 			}
 			else {
 				return false;
 			}
 		}
 
-		this.leave(this.pos);
+		//this.leave(this.pos);
+
+		var tile = this.level.get(this.pos, 'tile');
+		if (tile.isSticking(this)) {
+			if (this.isPlayer()) this.game.message('You are forcing way through {0}', 'msg-info', tile);
+			this.spendTime();
+			return true;
+		}
+
 		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);
 		this.enter(this.pos);
 
@@ -67,15 +75,9 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		return true;
 	}
 
-	enter(pos)
-	{
-		this.level.get(pos, 'tile').enter(this);
-	};
+	enter(pos) {};
 
-	leave(pos)
-	{
-		this.level.get(pos, 'tile').leave(this);		
-	};
+	//leave(pos) {};
 
 	attack(target = null)
 	{
