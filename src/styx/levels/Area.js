@@ -166,13 +166,21 @@ Styx.levels.Area = class
 		return false;
 	}
 
-	getRooms()
+	getBorderRooms()
 	{
-		return this.rooms;
-	}
+		var r = this.rooms[0];
+		var br = {'north': r, 'south': r, 'west': r, 'east': r};
 
-	//vrati pocet prekryvajicich se tiles?
-	getCollisions(level) {}
+		for(let room of this.rooms)
+		{
+			if (room.x < br.west.x) br.west = room;
+			if (room.y < br.north.y) br.north = room;
+			if (room.x > br.east.x) br.east = room;
+			if (room.y > br.south.y) br.south = room;
+		}
+
+		return br;
+	}
 
 	debugDraw(room)
 	{

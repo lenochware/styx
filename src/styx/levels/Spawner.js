@@ -7,12 +7,12 @@ Styx.levels = Styx.levels || {};
  */
 Styx.levels.Spawner = class
 {
-	constructor(builder, area)
+	constructor(builder, rect)
 	{
 		this.game = game;
 		this.builder = builder;
 		this.level = builder.level;
-		this.area = area;
+		this.rect = rect;
 		this.floorCache = this.getFloors();
 		this.bindings = null;
 		this._bindLevel = 0;
@@ -73,7 +73,7 @@ Styx.levels.Spawner = class
 	getFloors()
 	{
 		var floors = [];
-		for(let pos of this.area.coords()) {
+		for(let pos of this.rect.coords()) {
 			if (this.level.get(pos, 'id') == 'floor') floors.push(pos);
 		}
 
@@ -85,9 +85,9 @@ Styx.levels.Spawner = class
 		return this.game.db.getObject('groups', id);
 	}
 
-	setArea(x, y, w, h)
+	setRect(x, y, w, h)
 	{
-		this.area = new Styx.Rectangle(x, y, w, h);
+		this.rect = new Styx.Rectangle(x, y, w, h);
 		this.floorCache = this.getFloors();
 	}
 
@@ -165,7 +165,7 @@ Styx.levels.Spawner = class
 
 	transform(list)
 	{
-		for(let pos of this.area.coords()) {
+		for(let pos of this.rect.coords()) {
 			let id = this.level.get(pos, 'id');
 			if (id in list) {
 				var newId = _.isArray(list[id])? _.sample(list[id]) : list[id];

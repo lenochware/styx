@@ -83,19 +83,31 @@ Styx.Rectangle = class
 		return this.move(x - pos.x, y - pos.y);
 	}
 
-	align(rect)
+	/**
+	 * Align this rectangle inside bounding rectangle.
+	 */
+	align(boundRect)
 	{
 		var dx, dy;
 
-		dx = this.x + this.width - (rect.x + rect.width);
-		dy = this.y + this.height - (rect.y + rect.height);
+		dx = this.x + this.width - (boundRect.x + boundRect.width);
+		dy = this.y + this.height - (boundRect.y + boundRect.height);
 		this.move((dx>0)? -dx : 0, (dy>0)? -dy : 0);
 
-		dx = rect.x - this.x;
-		dy = rect.y - this.y;
+		dx = boundRect.x - this.x;
+		dy = boundRect.y - this.y;
 		this.move((dx>0)? dx : 0, (dy>0)? dy : 0);
 
 		return this;
+	}
+
+	/**
+	 * Align rect on relative position (dx,dy) in this rectangle.
+	 */
+	alignOf(rect, dx, dy)
+	{
+		rect.assign(dx * this.width, dy * this.height);
+		rect.align(this);
 	}
 
 	clone()
