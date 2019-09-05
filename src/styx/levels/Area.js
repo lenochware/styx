@@ -48,11 +48,11 @@ Styx.levels.Area = class
 	{
 		var room = null;
 
-		if (id == 'corridor') {
+		if (id == 'c1') {
 			room = new Styx.levels.Corridor(3,3);
 		}
-		else if (id.startsWith('room-')) {
-			var size = id.substring(5).split('x');
+		else if (id.startsWith('r-')) {
+			var size = id.substring(2).split('x');
 			room = new Styx.levels.Room(parseInt(size[0]), parseInt(size[1]));
 		}
 		else {
@@ -77,6 +77,8 @@ Styx.levels.Area = class
 			var room = this.newRoom(id);
 			if (!this.canAddRoom(room, exit)) return this;
 			this.addRoom(room, exit);
+			if (this.builder.area.collides(room)) return this;
+
 			exit = room.getDoorBySide(side);
 		}
 
@@ -93,6 +95,7 @@ Styx.levels.Area = class
 			var room = this.newRoom(id);
 			if (!this.canAddRoom(room, exit)) return this;			
 			this.addRoom(room, exit);
+			if (this.builder.area.collides(room)) return this;			
 
 			d = room.getFreeDoors();
 			exit = (d[0].oppositeSide() == side)? d[1] : d[0];

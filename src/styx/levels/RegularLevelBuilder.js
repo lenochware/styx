@@ -21,6 +21,17 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.addStream(a1.getOutsideDoor('east'), 's3');
 		this.addStream(a1.getOutsideDoor('south'), 's4');
 
+
+		var area = new Styx.levels.Area(this, id);
+		area.addRoom(new Styx.levels.Room(8,8).move(5,3));
+		area.addLine(area.rooms[0], [
+			'c1', 'c1', 'r1', 
+			'c1', 'c1', 'r1', 
+			'c1', 'c1', 'r1', 
+			'c1', 'c1', 'r1', 
+			'c1', 'c1', 'r1'], 'east');
+		this.area.addArea(area);		
+
 		this.addSecrets();
 
 		this.area.draw();
@@ -45,11 +56,24 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	{
 		var area = new Styx.levels.Area(this, id);
 
+		var lines = [
+			['r-5x5', 'r-5x5', 'r-5x5'],
+			['r1', 'r1', 'r1'],
+			['r-5x5', 'r-6x5', 'r-7x5', 'r6'],
+			['r-5x5', 'r-5x5', 'r1', 'r-5x5']
+		];
+
 		area.addRoom(room);
-		area.addLine(room, ['room-5x5', 'room-5x5', 'room-5x5'], 'east');
-		area.addLine(room, ['room-5x5', 'room-5x5', 'room-5x5'], 'west');
-		area.addLine(room, ['room-5x5', 'room-5x5'], 'north');
-		area.addLine(room, ['room-5x5', 'room-5x5'], 'south');
+
+		// area.addLine(room, _.sample(lines), 'east');
+		// area.addLine(room, _.sample(lines), 'west');
+		// area.addLine(room, _.sample(lines), 'north');
+		// area.addLine(room, _.sample(lines), 'south');
+
+		area.addLine(room, ['r-5x5', 'r-5x5', 'r-5x5'], 'east');
+		area.addLine(room, ['r-5x5', 'r-5x5', 'r-5x5'], 'west');
+		area.addLine(room, ['r-5x5', 'r-5x5'], 'north');
+		area.addLine(room, ['r-5x5', 'r-5x5'], 'south');
 
 		this.area.addArea(area);
 		return area;
@@ -58,9 +82,9 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	addStream(exit, id)
 	{
 		var area = new Styx.levels.Area(this, id);
-		var room = area.newRoom('corridor');
+		var room = area.newRoom('c1');
 		area.addRoom(room, exit);
-		area.addStream(room, ['corridor', 'r1', 'corridor', 'r3', 'corridor', 'r5'], exit.side);
+		area.addStream(room, ['c1', 'r-5x5', 'c1', 'r-7x5', 'c1', 'r5'], exit.side);
 
 		this.area.addArea(area);
 		return area;
