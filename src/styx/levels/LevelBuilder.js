@@ -62,21 +62,7 @@ Styx.levels.LevelBuilder = class
 			this.level.set(tile.pos, 'id', 'floor');
 		}
 	}
-
-	// makeConnection(door, room)
-	// {
-	// 	var door2 = room.getDoorBySide(door.oppositeSide());
-	// 	if (!door2 || door2.connected) return;
-	// 	var con = new Styx.levels.Connector(door, door2);
-
-	// 	if (con.isValid()) {
-	// 		this.add(con, door);
-	// 		return true;
-	// 	}
-
-	// 	return false;
-	// }
-
+	
 	// findNearRoom(door)
 	// {
 	// 	var ray = door.getRay(8);
