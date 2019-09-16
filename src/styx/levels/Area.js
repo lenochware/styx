@@ -51,6 +51,14 @@ Styx.levels.Area = class
 		if (id == 'c1') {
 			room = new Styx.levels.Corridor(3,3);
 		}
+		else if (id == 'c2') {
+			room = new Styx.levels.Corridor(5,5);
+		}
+		else if (id.startsWith('m-')) {
+			var size = id.substring(2).split('x');
+			room = new Styx.levels.Maze(parseInt(size[0]), parseInt(size[1]));
+		}
+
 		else if (id.startsWith('r-')) {
 			var size = id.substring(2).split('x');
 			room = new Styx.levels.Room(parseInt(size[0]), parseInt(size[1]));

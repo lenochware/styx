@@ -191,43 +191,6 @@ Styx.levels.Room = class extends Styx.Rectangle
 		return false;
 	}
 
-	/** Bresenham line */
-	line (p1, p2) {
-    var pos = [];
-    // Translate coordinates
-    var x1 = p1.x;
-    var y1 = p1.y;
-    var x2 = p2.x;
-    var y2 = p2.y;
-
-    // Define differences and error check
-    var dx = Math.abs(x2 - x1);
-    var dy = Math.abs(y2 - y1);
-    var sx = (x1 < x2) ? 1 : -1;
-    var sy = (y1 < y2) ? 1 : -1;
-    var err = dx - dy;
-
-    // Set first coordinates
-    pos.push({x:x1, y: y1});
-
-    // Main loop
-    while (!((x1 == x2) && (y1 == y2))) {
-        var e2 = err << 1;
-        if (e2 > -dy) {
-            err -= dy;
-            x1 += sx;
-        }
-        if (e2 < dx) {
-            err += dx;
-            y1 += sy;
-        }
-        // Set coordinates
-        pos.push({x:x1, y: y1});
-    }
-    // Return the result
-    return pos;
-	}
-
 	draw(level)
 	{
 		for (let pos of this.coords()) {
@@ -369,6 +332,42 @@ Styx.levels.Corridor = class extends Styx.levels.Room
 		return (tag == 'corridor');
 	}
 
+	/** Bresenham line */
+	line (p1, p2) {
+    var pos = [];
+    // Translate coordinates
+    var x1 = p1.x;
+    var y1 = p1.y;
+    var x2 = p2.x;
+    var y2 = p2.y;
+
+    // Define differences and error check
+    var dx = Math.abs(x2 - x1);
+    var dy = Math.abs(y2 - y1);
+    var sx = (x1 < x2) ? 1 : -1;
+    var sy = (y1 < y2) ? 1 : -1;
+    var err = dx - dy;
+
+    // Set first coordinates
+    pos.push({x:x1, y: y1});
+
+    // Main loop
+    while (!((x1 == x2) && (y1 == y2))) {
+        var e2 = err << 1;
+        if (e2 > -dy) {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y1 += sy;
+        }
+        // Set coordinates
+        pos.push({x:x1, y: y1});
+    }
+    // Return the result
+    return pos;
+	}
 
 	coords()
 	{
@@ -385,7 +384,8 @@ Styx.levels.Corridor = class extends Styx.levels.Room
 	draw(level)
 	{
 		for (let pos of this.coords()) {
-			level.setXY(pos.x, pos.y , 'id', 'floor');
+			var id = level.getXY(pos.x, pos.y , 'id');
+			if (id == 'wall') level.setXY(pos.x, pos.y , 'id', 'floor');
 		}
 	}
 
@@ -398,5 +398,22 @@ Styx.levels.Corridor = class extends Styx.levels.Room
 		list.push(new Styx.levels.Door(this, 'west', this.getPoint('center-4')));
 
 		return list;
+	}
+}
+
+Styx.levels.Maze = class extends Styx.levels.Room
+{
+	draw(level)
+	{
+		var maze = new ROT.Map.IceyMaze(this.width, this.height, 10);
+		maze.create((x,y,i) => level.setXY(this.x + x, this.y + y, 'id', i? 'wall' : 'floor'));
+		
+		for (let door of this.doors) {
+			if (!door.connected) continue;
+			let pos = door.getPos();
+			level.setXY(pos.x, pos.y , 'id', 'door');
+			let dir = door.getDir();
+			level.setXY(pos.x - dir.x, pos.y - dir.y, 'id', 'floor'); //fix door into wall...
+		}		
 	}
 }
