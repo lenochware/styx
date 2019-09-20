@@ -108,24 +108,13 @@ Styx.levels.Door = class
 
 Styx.levels.Room = class extends Styx.Rectangle
 {
-	constructor(width, height)
+	constructor(x, y, width, height)
 	{
-		super(0, 0, width, height, {});
+		super(x, y, width, height);
 		this.game = game;
 		this.params = {};
+		this.neighbours = [];
 		this.name = null;
-		this.doors = this.createDoors();
-	}
-
-	createDoors()
-	{
-		var list = [];
-		list.push(new Styx.levels.Door(this, 'north', this.getPoint('center-1')));
-		list.push(new Styx.levels.Door(this, 'east', this.getPoint('center-2')));
-		list.push(new Styx.levels.Door(this, 'south', this.getPoint('center-3')));
-		list.push(new Styx.levels.Door(this, 'west', this.getPoint('center-4')));
-
-		return list;
 	}
 
 	getAttrib(attrib, defaultValue = null)
@@ -156,53 +145,50 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 	is(tag)
 	{
-    return (this.id == tag || this.getAttrib("tags").includes(tag));
+    return (this.name == tag || this.getAttrib("tags").includes(tag));
 	}
 
-	intersect(rect)
+	addNeighbour(r)
 	{
-		var ri = this.getIntersection(rect); 
-		return (ri.width > 1 && ri.height > 1);
+		var portal = this.getPortal(r);
+		if (!portal) return;		
+		this.neighbours.push(r);
+		r.neighbours.push(this);
 	}
 
-	getDoor(x, y)
+	getPortal(rect)
 	{
-		return _.find(this.doors, door => door.pos.x == x && door.pos.y == y);
+		var x1 = Math.max(this.x, rect.x);
+		var y1 = Math.max(this.y, rect.y);
+		var x2 = Math.min(this.x + this.width, rect.x + rect.width);
+		var y2 = Math.min(this.y + this.height, rect.y + rect.height);
+
+		var dx = (this.x < rect.x)? rect.x - (this.x + this.width) : this.x - (rect.x + rect.width);
+		var dy = (this.y < rect.y)? rect.y - (this.y + this.height) : this.y - (rect.y + rect.height);
+
+		if (dx > 0 && dy > 0) return null;
+
+		if ((dx < 0 && dy == 1) || (dy < 0 && dx == 1))
+		{
+			if (y2 > y1) {
+				return new this.constructor(x1, y1, x2 - x1, y2 - y1);
+			}
+			else {
+				return new this.constructor(x1, y2, x2 - x1, y1 - y2);
+			}
+		}
+
+		return null;
 	}
 
-	getDoorBySide(side)
-	{
-		return _.find(this.doors, door => door.side == side);
-	}
-
-	getFreeDoors()
-	{
-		var list = [];
-		_.each(this.doors, door => {if(!door.connected) list.push(door)});
-		return Styx.Random.shuffle(list);
-	}
-
-	_getSide(pos)
-	{
-		if (pos.x == 0) return 'west';
-		if (pos.y == 0) return 'north';
-		if (pos.y == this.height - 1) return 'south';
-		if (pos.x == this.width - 1) return 'east';
-		return false;
-	}
 
 	draw(level)
 	{
-		for (let pos of this.coords()) {
-			if (this.isBorderPoint(pos.x, pos.y)) continue;
-			level.setXY(pos.x, pos.y , 'id', 'floor');
-		}
-	
-		for (let door of this.doors) {
-			if (!door.connected) continue;
-			let pos = door.getPos();
-			level.setXY(pos.x, pos.y , 'id', 'door');
-		}
+		for (var y = 0; y < this.height; y++) {
+			for (var x = 0; x < this.width; x++) {
+				level.setXY(this.x + x, this.y + y , 'id', 'floor');
+			}
+		}	
 	}
 
 }

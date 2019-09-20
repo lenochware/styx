@@ -11,7 +11,7 @@ Styx.levels.LevelBuilder = class
 	{
 		this.game = game;
 		this.level = null;
-		this.area = new Styx.levels.Area(this, 'root');
+		this.rooms = [];
 	}
 
 	createLevel(id)
@@ -28,104 +28,44 @@ Styx.levels.LevelBuilder = class
 		return this.level;
 	}
 
-	findRoom(tag)
+	splitRect(r)
 	{
-		return _.chain(this.rooms).filter(obj => obj.is(tag));
+		var min = Math.min(r.width, r.height);
+		var max = Math.max(r.width, r.height);
+
+		if (min < 5 || max < 8 || (Styx.Random.bet(.03) && max < 16)) {
+			var room = new Styx.levels.Room(r.x, r.y, r.width - 1, r.height - 1);
+			this.rooms.push(room);
+			return;
+		}
+
+		//console.log(r.width, r.height);
+
+		if (r.height * 1.5 < r.width) {
+
+			var rs = r.splitX(Styx.Random.int(4, r.width - 4));
+		}
+		else {
+			var rs = r.splitY(Styx.Random.int(4, r.height - 4));
+		}
+
+		this.splitRect(rs[0]);
+		this.splitRect(rs[1]);
 	}
+
+	addNeighbours()
+	{
+		for (let i=0; i < this.rooms.length-1; i++) {
+			for (let j=i+1; j < this.rooms.length; j++) {
+				this.rooms[i].addNeighbour( this.rooms[j] );
+			}
+		}
+	}
+
 
 	addExit(pos, exit)
 	{
 		this.level.set(pos, 'id', exit.tile);
 		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos};
 	}
-
-	cleanUp()
-	{
-		for(let tile of this.level.tiles) {
-			if (tile.id != 'door') continue;
-			
-			for (let pos of tile.surroundings()) {
-				if (this.level.get(pos, 'id') == 'door') {
-					this.level.set(pos, 'id', 'floor');
-				}
-			}
-
-			//TODO: Point.left(pos), Point.surroundings(pos)
-
-			var left  = {x: tile.pos.x - 1, y: tile.pos.y};
-			var right = {x: tile.pos.x - 1, y: tile.pos.y};
-			var up = {x: tile.pos.x, y: tile.pos.y - 1};
-			var dn = {x: tile.pos.x, y: tile.pos.y + 1};
-
-			if (this.level.get(left, 'tile').is('blocking') && this.level.get(right, 'tile').is('blocking')) continue;
-			if (this.level.get(up, 'tile').is('blocking') && this.level.get(dn, 'tile').is('blocking')) continue;
-			this.level.set(tile.pos, 'id', 'floor');
-		}
-	}
-	
-	// findNearRoom(door)
-	// {
-	// 	var ray = door.getRay(8);
-	// 	var rooms = this.findIntersecting(ray);
-	// 	if (rooms.length == 0) return null;
-
-	// 	var door2, test;
-
-	// 	for (let r of rooms) {
-	// 		test = r.getDoorBySide(door.oppositeSide());
-	// 		if (!test || test.connected) continue;
-
-	// 		if (!door2 || (test.distance(door) < door2.distance(door))) {
-	// 			door2 = test;
-	// 		}
-	// 	}
-
-	// 	return door2? door2.room : null;
-	// }
-
-	// getFreeDoors()
-	// {
-	// 	var list = [];
-	// 	for(let room of this.rooms) {
-	// 		list.push(room.getFreeDoors());
-	// 	}
-
-	// 	return _.flatten(list);
-	// }
-
-	// getFloorSize(rect)
-	// {
-	// 	var list = this.findIntersecting(rect);
-	// 	var num = 0;
-
-	// 	for (let room of list) {
-	// 		num += (room.width - 1) * (room.height - 1);
-	// 	}
-
-	// 	return num;
-	// }
-
-	// collides(rect)
-	// {
-	// 	for(let area of this.areas)
-	// 	{
-	// 		if (area.collides(rect)) return true;
-	// 	}
-
-	// 	return false;
-	// }
-
-
-	// findIntersecting(testRoom)
-	// {
-	// 	var list = [];
-
-	// 	for(let room of this.rooms)
-	// 	{
-	// 		if (testRoom.intersect(room)) list.push(room);
-	// 	}
-
-	// 	return list;
-	// }
-
 }

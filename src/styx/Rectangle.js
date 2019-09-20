@@ -2,15 +2,14 @@ var Styx = Styx || {};
 
 Styx.Rectangle = class
 {
-	constructor(x, y, w, h, params = {})
+	constructor(x, y, w, h)
 	{
-		this.params = params;
 		this.assign(x, y, w, h);
 	}
 
 	storeInBundle(bundle) {
 		bundle.put('_className_', 'Styx.Rectangle');
-		bundle.put('_args_', [this.x, this.y, this.width, this.height, this.params]);
+		bundle.put('_args_', [this.x, this.y, this.width, this.height]);
 	}
 
 	restoreFromBundle(bundle) {
@@ -112,7 +111,7 @@ Styx.Rectangle = class
 
 	clone()
 	{
-		return new this.constructor(this.x, this.y, this.width, this.height, this.params);
+		return new this.constructor(this.x, this.y, this.width, this.height);
 	}
 
   _pos(x, y)
@@ -193,23 +192,23 @@ Styx.Rectangle = class
 		var x2 = Math.min(this.x + this.width, rect.x + rect.width);
 		var y2 = Math.min(this.y + this.height, rect.y + rect.height);
 
-		return new Styx.Rectangle(x1, y1, x2 - x1, y2 - y1);
+		return new this.constructor(x1, y1, x2 - x1, y2 - y1);
 	}
 
-	split(sx, sy)
+	split(nx, ny)
 	{
 		var list = [];
-		var w = Math.round(this.width / sx);
-		var h = Math.round(this.height / sy);
+		var w = Math.round(this.width / nx);
+		var h = Math.round(this.height / ny);
 
-		var first = new Styx.Rectangle(this.x, this.y, w, h);
+		var first = new this.constructor(this.x, this.y, w, h);
 
-		for(let y = 0; y < sy; y++) {
-			for(let x = 0; x < sx; x++) {
+		for(let y = 0; y < ny; y++) {
+			for(let x = 0; x < nx; x++) {
 				var sub = first.clone().move(x, y, 'rel');
 
-				if (x == sx - 1) sub.resize(this.width - sx * w, 0, 'abs');
-				if (y == sy - 1) sub.resize(0, this.height - sy * h, 'abs');
+				if (x == nx - 1) sub.resize(this.width - nx * w, 0, 'abs');
+				if (y == ny - 1) sub.resize(0, this.height - ny * h, 'abs');
 
 				list.push(sub);
 			}
@@ -218,4 +217,27 @@ Styx.Rectangle = class
 		return list;
 	}
 
+	splitX(sx, jed = 'abs')
+	{
+		if (jed == 'rel') {
+			sx = Math.round(this.width * sx);
+		}
+
+		var list = [];
+		list.push(new this.constructor(this.x, this.y, sx, this.height));
+		list.push(new this.constructor(this.x + sx, this.y, this.width - sx, this.height));
+		return list;
+	}
+
+	splitY(sy, jed = 'abs')
+	{
+		if (jed == 'rel') {
+			sy = Math.round(this.width * sy);
+		}
+
+		var list = [];
+		list.push(new this.constructor(this.x, this.y, this.width, sy));
+		list.push(new this.constructor(this.x, this.y + sy, this.width, this.height - sy));
+		return list;
+	}
 }
