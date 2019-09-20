@@ -38,6 +38,17 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			room.draw(this.level);
 		}
 
+		var room = this.rooms[0];
+		while (true) {
+			var next = _.sample(room.neighbours);
+			if (next.connected) break;
+			var p = room.getPortal(next);
+			this.level.set(p.getPoint('random'), 'id', 'door');
+			console.log('aaa', room, next, p);
+			room.connected = next;
+			next.connected = room;
+			room = next;			
+		}
 	
 /*
 		var spawner = new Styx.levels.Spawner(this, this.level.size);

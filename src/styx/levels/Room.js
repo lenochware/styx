@@ -114,6 +114,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 		this.game = game;
 		this.params = {};
 		this.neighbours = [];
+		this.connected = null;
 		this.name = null;
 	}
 
@@ -170,12 +171,19 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 		if ((dx < 0 && dy == 1) || (dy < 0 && dx == 1))
 		{
-			if (y2 > y1) {
+			if (x1 < x2 && y1 < y2) {
 				return new this.constructor(x1, y1, x2 - x1, y2 - y1);
 			}
-			else {
+			else if (x2 < x1 && y2 < y1) {
+				return new this.constructor(x2, y2, x1 - x2, y1 - y2);
+			}
+			else if (x1 < x2 && y2 < y1) {
 				return new this.constructor(x1, y2, x2 - x1, y1 - y2);
 			}
+			else if (x1 > x2 && y1 < y2) {
+				return new this.constructor(x2, y1, x1 - x2, y2 - y1);
+			}
+
 		}
 
 		return null;
