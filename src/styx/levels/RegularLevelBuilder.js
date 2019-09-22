@@ -44,7 +44,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			if (next.connected) break;
 			var p = room.getPortal(next);
 			this.level.set(p.getPoint('random'), 'id', 'door');
-			console.log('aaa', room, next, p);
+			//console.log('aaa', room, next, p);
 			room.connected = next;
 			next.connected = room;
 			room = next;			

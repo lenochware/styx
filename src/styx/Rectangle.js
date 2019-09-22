@@ -147,8 +147,8 @@ Styx.Rectangle = class
 
 
 			case 'random': return this._pos(
-				this.x + Styx.Random.int(this.width - 2) + 1, 
-				this.y + Styx.Random.int(this.height - 2) + 1
+				this.x + Styx.Random.int(this.width - 1), 
+				this.y + Styx.Random.int(this.height - 1)
 			);
 
 			default: console.warn('Unknown point name.');
