@@ -115,7 +115,6 @@ Styx.levels.Room = class extends Styx.Rectangle
 		this.level = level;
 		this.params = {};
 		this.neighbours = [];
-		this.connected = null;
 		this.doors = [];
 		this.name = null;
 	}
@@ -169,6 +168,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 		if (p.y >= this.y + this.height) dir.y = 1;
 
 		this.doors.push({room: r, pos: p, dir: dir});
+		r.doors.push({room: this, pos: p, dir: {x: dir.x * -1, y: dir.y * -1}});
 	}
 
 	getPortal(rect)
