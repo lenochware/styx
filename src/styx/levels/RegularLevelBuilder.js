@@ -35,7 +35,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		//console.log(this.rooms);
 
 		for(let room of this.rooms) {
-			room.draw(this.level);
+			room.fill('floor');
 		}
 
 		var room = this.rooms[0];

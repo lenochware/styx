@@ -108,10 +108,11 @@ Styx.levels.Door = class
 
 Styx.levels.Room = class extends Styx.Rectangle
 {
-	constructor(x, y, width, height)
+	constructor(level, x, y, width, height)
 	{
 		super(x, y, width, height);
 		this.game = game;
+		this.level = level;
 		this.params = {};
 		this.neighbours = [];
 		this.connected = null;
@@ -185,16 +186,16 @@ Styx.levels.Room = class extends Styx.Rectangle
 		if ((dx < 0 && dy == 1) || (dy < 0 && dx == 1))
 		{
 			if (x1 < x2 && y1 < y2) {
-				return new this.constructor(x1, y1, x2 - x1, y2 - y1);
+				return new Styx.Rectangle(x1, y1, x2 - x1, y2 - y1);
 			}
 			else if (x2 < x1 && y2 < y1) {
-				return new this.constructor(x2, y2, x1 - x2, y1 - y2);
+				return new Styx.Rectangle(x2, y2, x1 - x2, y1 - y2);
 			}
 			else if (x1 < x2 && y2 < y1) {
-				return new this.constructor(x1, y2, x2 - x1, y1 - y2);
+				return new Styx.Rectangle(x1, y2, x2 - x1, y1 - y2);
 			}
 			else if (x1 > x2 && y1 < y2) {
-				return new this.constructor(x2, y1, x1 - x2, y2 - y1);
+				return new Styx.Rectangle(x2, y1, x1 - x2, y2 - y1);
 			}
 
 		}
@@ -203,11 +204,11 @@ Styx.levels.Room = class extends Styx.Rectangle
 	}
 
 
-	draw(level)
+	fill(id)
 	{
 		for (var y = 0; y < this.height; y++) {
 			for (var x = 0; x < this.width; x++) {
-				level.setXY(this.x + x, this.y + y , 'id', 'floor');
+				this.level.setXY(this.x + x, this.y + y , 'id', id);
 			}
 		}	
 	}

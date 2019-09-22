@@ -34,7 +34,7 @@ Styx.levels.LevelBuilder = class
 		var max = Math.max(r.width, r.height);
 
 		if (min < 5 || max < 8 || (Styx.Random.bet(.03) && max < 16)) {
-			var room = new Styx.levels.Room(r.x, r.y, r.width - 1, r.height - 1);
+			var room = new Styx.levels.Room(this.level, r.x, r.y, r.width - 1, r.height - 1);
 			this.rooms.push(room);
 			return;
 		}
