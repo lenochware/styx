@@ -29,6 +29,30 @@ Styx.Rectangle = class
 		return pos;
 	}
 
+	getBorderPoints()
+	{
+		var pos = [];
+		var b = this.getPoint('corner-3');
+
+		for (let i = 0; i < this.width; i++) {
+			pos.push(this.x + i, this.y);
+		}
+
+		for (let i = 1; i < this.height; i++) {
+			pos.push(b.x, this.y + i);
+		}
+
+		for (let i = 1; i < this.width; i++) {
+			pos.push(b.x - i, b.y);
+		}
+
+		for (let i = 1; i < this.height; i++) {
+			pos.push(this.x, b.y - i);
+		}
+
+		return pos;
+	}
+
 	static from(rect)
 	{
 		return new this(rect.x, rect.y, rect.width, rect.height);
