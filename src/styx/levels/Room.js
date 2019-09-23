@@ -113,7 +113,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 		super(x, y, width, height);
 		this.game = game;
 		this.level = level;
-		this.params = {};
+		this.params = {tags: []};
 		this.neighbours = [];
 		this.doors = [];
 		this.name = null;
@@ -134,7 +134,6 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 	addTag(tag)
 	{
-		if (!this.params['tags']) this.params['tags'] = [];
 		if (this.params['tags'].includes(tag)) return;
 		this.params['tags'].push(tag);
 	}

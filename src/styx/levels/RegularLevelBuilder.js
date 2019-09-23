@@ -85,6 +85,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	drawCorridor(room, d1, d2)
 	{
 		room.fill('wall');
+		room.addTag('corridor');
 
 		//class Point?
 		var p1 = {x: d1.pos.x - d1.dir.x, y: d1.pos.y - d1.dir.y };
@@ -92,6 +93,9 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		var borders = room.getBorderPoints();
 		borders = borders.concat(borders);
+		if (Styx.Random.bet(.5)) {
+			borders = borders.reverse();
+		}
 
 
 		var tile = 'wall';
@@ -112,6 +116,12 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			else {
 				break;
 			}
+		}
+
+		//no doors between corridors
+		var x = room.doors[0];
+		if (x && x.room.is('corridor')) {
+			this.level.set(x.pos, 'id', 'floor');
 		}
 	}
 
