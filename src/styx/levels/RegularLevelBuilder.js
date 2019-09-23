@@ -38,14 +38,11 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			room.fill('floor');
 		}
 
-		var room = this.rooms[0];
-		while (true) {
-			var next = _.sample(room.neighbours);
-			if (next.doors.length > 0) break;
-			var p = room.getPortal(next).getPoint('random');
-			this.level.set(p, 'id', 'door');
-			room.addDoor(next, p);
-			room = next;			
+		this.buildPath(this.rooms[0]);
+
+
+		for(let room of this.rooms) {
+			if (room.doors.length == 0) room.fill('null');
 		}
 	
 /*
@@ -58,6 +55,64 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 */		
 
 		return this.level;
+	}
+
+
+	buildPath(room)
+	{
+		var next = null;
+
+		while (true) {
+			for (next of _.sample(room.neighbours, 3)) {
+				if (next.doors.length == 0) break;
+			}
+
+			if (next.doors.length > 0) break;
+
+			var p = room.getPortal(next).getPoint('random');
+			this.level.set(p, 'id', 'door');
+			room.addDoor(next, p);
+
+			//corridor
+			if (Styx.Random.bet(.5) && room.doors.length > 1) {
+				this.drawCorridor(room, room.doors[0], room.doors[1]);
+			}
+
+			room = next;			
+		}
+	}
+
+	drawCorridor(room, d1, d2)
+	{
+		room.fill('wall');
+
+		//class Point?
+		var p1 = {x: d1.pos.x - d1.dir.x, y: d1.pos.y - d1.dir.y };
+		var p2 = {x: d2.pos.x - d2.dir.x, y: d2.pos.y - d2.dir.y };
+
+		var borders = room.getBorderPoints();
+		borders = borders.concat(borders);
+
+
+		var tile = 'wall';
+
+		for (let pos of borders)
+		{
+			this.level.set(pos, 'id', tile);
+
+			if ((pos.x != p1.x || pos.y != p1.y) 
+				&& (pos.x != p2.x || pos.y != p2.y)) {
+					continue;
+				}
+
+			if (tile == 'wall') {
+				tile = 'floor';
+				this.level.set(pos, 'id', tile);
+			}
+			else {
+				break;
+			}
+		}
 	}
 
 	addSecrets()

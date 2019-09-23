@@ -35,19 +35,19 @@ Styx.Rectangle = class
 		var b = this.getPoint('corner-3');
 
 		for (let i = 0; i < this.width; i++) {
-			pos.push(this.x + i, this.y);
+			pos.push({x:this.x + i, y:this.y});
 		}
 
 		for (let i = 1; i < this.height; i++) {
-			pos.push(b.x, this.y + i);
+			pos.push({x:b.x, y:this.y + i});
 		}
 
 		for (let i = 1; i < this.width; i++) {
-			pos.push(b.x - i, b.y);
+			pos.push({x:b.x - i, y:b.y});
 		}
 
 		for (let i = 1; i < this.height; i++) {
-			pos.push(this.x, b.y - i);
+			pos.push({x:this.x, y:b.y - i});
 		}
 
 		return pos;
