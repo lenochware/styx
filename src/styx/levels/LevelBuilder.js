@@ -12,6 +12,12 @@ Styx.levels.LevelBuilder = class
 		this.game = game;
 		this.level = null;
 		this.rooms = [];
+
+		this.params = {
+			room_max_size: 15,
+			big_rooms_ratio: 0.03,
+			corridor_ratio: 0.5
+		}
 	}
 
 	createLevel(id)
@@ -33,7 +39,7 @@ Styx.levels.LevelBuilder = class
 		var min = Math.min(r.width, r.height);
 		var max = Math.max(r.width, r.height);
 
-		if (min < 5 || max < 8 || (Styx.Random.bet(.03) && max < 16)) {
+		if (min < 5 || max < 8 || (Styx.Random.bet(this.params.big_rooms_ratio) && max <= this.params.room_max_size)) {
 			var room = new Styx.levels.Room(this.level, r.x, r.y, r.width - 1, r.height - 1);
 			this.rooms.push(room);
 			return;
@@ -62,10 +68,99 @@ Styx.levels.LevelBuilder = class
 		}
 	}
 
-
 	addExit(pos, exit)
 	{
 		this.level.set(pos, 'id', exit.tile);
 		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos};
 	}
+
+	//maximalni/minimalni delka, protinani sebe sama, jinych cest, preferovany smer?...
+	// buildPath(room)
+	// {
+	// 	var next = null;
+	// 	var rooms = [];
+	// 	rooms.push(room);
+
+	// 	while (true) {
+	// 		for (next of _.sample(room.neighbours, 3)) {
+	// 			if (next.doors.length == 0) break;
+	// 		}
+
+	// 		if (next.doors.length > 0) break;
+
+	// 		room = next;
+	// 		rooms.push(room);
+	// 	}
+
+	// 	rooms.push(room);
+	// 	return rooms;
+	// }
+
+
+	buildPath(room)
+	{
+		var next = null;
+
+		while (true) {
+			for (next of _.sample(room.neighbours, 3)) {
+				if (next.doors.length == 0) break;
+			}
+
+			if (next.doors.length > 0) break;
+
+			var p = room.getPortal(next).getPoint('random');
+			this.level.set(p, 'id', 'door');
+			room.addDoor(next, p);
+
+			//corridor
+			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
+				this.drawCorridor(room, room.doors[0], room.doors[1]);
+			}
+
+			room = next;			
+		}
+	}
+
+	drawCorridor(room, d1, d2)
+	{
+		room.fill('wall');
+		room.addTag('corridor');
+
+		//class Point?
+		var p1 = {x: d1.pos.x - d1.dir.x, y: d1.pos.y - d1.dir.y };
+		var p2 = {x: d2.pos.x - d2.dir.x, y: d2.pos.y - d2.dir.y };
+
+		var borders = room.getBorderPoints();
+		borders = borders.concat(borders);
+		if (Styx.Random.bet(.5)) {
+			borders = borders.reverse();
+		}
+
+
+		var tile = 'wall';
+
+		for (let pos of borders)
+		{
+			this.level.set(pos, 'id', tile);
+
+			if ((pos.x != p1.x || pos.y != p1.y) 
+				&& (pos.x != p2.x || pos.y != p2.y)) {
+					continue;
+				}
+
+			if (tile == 'wall') {
+				tile = 'floor';
+				this.level.set(pos, 'id', tile);
+			}
+			else {
+				break;
+			}
+		}
+
+		//no doors between corridors
+		var x = room.doors[0];
+		if (x && x.room.is('corridor')) {
+			this.level.set(x.pos, 'id', 'floor');
+		}
+	}	
 }
