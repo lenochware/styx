@@ -42,7 +42,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 
 		for(let room of this.rooms) {
-			if (room.doors.length == 0) room.fill('null');
+			if (room.doors.length == 0) room.fill('wall');
 		}
 	
 /*
