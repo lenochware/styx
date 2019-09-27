@@ -34,16 +34,21 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		
 		//console.log(this.rooms);
 
-		for(let room of this.rooms) {
-			room.fill('floor');
-		}
+		var xxx = this.addStream('first', this.rooms[0]);
+		console.log(xxx);
 
-		this.buildPath(this.rooms[0]);
+		// for(let room of this.rooms) {
+		// 	room.fill('floor');
+		// }
+
+		this.buildStream('first');
+
+		// this.buildPath(this.rooms[0]);
 
 
-		for(let room of this.rooms) {
-			if (room.doors.length == 0) room.fill('wall');
-		}
+		// for(let room of this.rooms) {
+		// 	if (room.doors.length == 0) room.fill('wall');
+		// }
 	
 /*
 		var spawner = new Styx.levels.Spawner(this, this.level.size);

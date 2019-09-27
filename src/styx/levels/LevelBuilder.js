@@ -12,6 +12,7 @@ Styx.levels.LevelBuilder = class
 		this.game = game;
 		this.level = null;
 		this.rooms = [];
+		this.streams = {};
 
 		this.params = {
 			room_max_size: 15,
@@ -75,50 +76,62 @@ Styx.levels.LevelBuilder = class
 	}
 
 	//maximalni/minimalni delka, protinani sebe sama, jinych cest, preferovany smer?...
-	// buildPath(room)
-	// {
-	// 	var next = null;
-	// 	var rooms = [];
-	// 	rooms.push(room);
-
-	// 	while (true) {
-	// 		for (next of _.sample(room.neighbours, 3)) {
-	// 			if (next.doors.length == 0) break;
-	// 		}
-
-	// 		if (next.doors.length > 0) break;
-
-	// 		room = next;
-	// 		rooms.push(room);
-	// 	}
-
-	// 	rooms.push(room);
-	// 	return rooms;
-	// }
-
-
-	buildPath(room)
+	addStream(id, room, params)
 	{
 		var next = null;
+		this.streams[id] = new Set([room]);
 
 		while (true) {
-			for (next of _.sample(room.neighbours, 3)) {
-				if (next.doors.length == 0) break;
+			var nb = _.shuffle(room.neighbours);
+			for (next of nb) {
+				if (!this.getStreamId(next)) break;
 			}
 
-			if (next.doors.length > 0) break;
+			if (this.getStreamId(next)) break;
 
-			var p = room.getPortal(next).getPoint('random');
+			room = next;
+			this.streams[id].add(room);
+		}
+
+		//rooms.add(room);
+
+		return this.streams[id];
+	}
+
+	getStreamId(room) {
+		for (let id in this.streams) {
+			if (this.streams[id].has(room)) return id;
+		}
+
+		return null;
+	}
+
+	buildStream(id)
+	{
+		var prev = null;
+		var stream = Array.from(this.streams[id]);
+
+		for(let i = 0; i < stream.length - 1; i++) {
+			var room = stream[i];
+
+			if (!stream[i+1]) {
+				room.fill('floor');
+				return;
+			}
+
+			var p = room.getPortal(stream[i+1]).getPoint('random');
 			this.level.set(p, 'id', 'door');
-			room.addDoor(next, p);
+			room.addDoor(stream[i+1], p);
 
 			//corridor
 			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
 				this.drawCorridor(room, room.doors[0], room.doors[1]);
 			}
-
-			room = next;			
+			else {
+				room.fill('floor');
+			}
 		}
+
 	}
 
 	drawCorridor(room, d1, d2)

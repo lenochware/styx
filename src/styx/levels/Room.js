@@ -14,6 +14,11 @@ Styx.levels.Room = class extends Styx.Rectangle
 		this.name = null;
 	}
 
+	id()
+	{
+		return "Room_".concat(this.x, '_', this.y);
+	}
+
 	getAttrib(attrib, defaultValue = null)
 	{
 		if (this.params[attrib] !== undefined) return this.params[attrib];
@@ -63,6 +68,9 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 		this.doors.push({room: r, pos: p, dir: dir});
 		r.doors.push({room: this, pos: p, dir: {x: dir.x * -1, y: dir.y * -1}});
+
+		// this.neighbours = _.without(this.neighbours, r);
+		// r.neighbours = _.without(r.neighbours, this);
 	}
 
 	getPortal(rect)
