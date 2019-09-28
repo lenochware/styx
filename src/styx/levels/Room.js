@@ -58,6 +58,22 @@ Styx.levels.Room = class extends Styx.Rectangle
 		r.neighbours.push(this);
 	}
 
+	isFree()
+	{
+		return (this.streamId == null);
+	}
+
+	freeNeighbours()
+	{
+		var rooms = [];
+
+		for (let r of this.neighbours) {
+			if (r.isFree()) rooms.push(r);
+		}
+
+		return rooms;
+	}
+
 	addDoor(r, p)
 	{
 		var dir = {x: 0, y: 0};
@@ -69,9 +85,6 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 		this.doors.push({room: r, pos: p, dir: dir});
 		r.doors.push({room: this, pos: p, dir: {x: dir.x * -1, y: dir.y * -1}});
-
-		// this.neighbours = _.without(this.neighbours, r);
-		// r.neighbours = _.without(r.neighbours, this);
 	}
 
 	getPortal(rect)
