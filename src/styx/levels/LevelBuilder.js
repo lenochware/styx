@@ -12,7 +12,7 @@ Styx.levels.LevelBuilder = class
 		this.game = game;
 		this.level = null;
 		this.rooms = [];
-		this.streams = {};
+		this.streams = [];
 
 		this.params = {
 			room_max_size: 15,
@@ -76,62 +76,78 @@ Styx.levels.LevelBuilder = class
 	}
 
 	//maximalni/minimalni delka, protinani sebe sama, jinych cest, preferovany smer?...
-	addStream(id, room, params)
+	findPath(room, params)
 	{
 		var next = null;
-		this.streams[id] = new Set([room]);
+		var rooms = new Set([room]);
 
 		while (true) {
 			var nb = _.shuffle(room.neighbours);
 			for (next of nb) {
-				if (!this.getStreamId(next)) break;
+				if (!next.streamId && !rooms.has(next)) break;
 			}
 
-			if (this.getStreamId(next)) break;
+			if (next.streamId || rooms.has(next)) break;
 
 			room = next;
-			this.streams[id].add(room);
+			rooms.add(room);
 		}
 
-		//rooms.add(room);
-
-		return this.streams[id];
+		return Array.from(rooms);
 	}
 
-	getStreamId(room) {
-		for (let id in this.streams) {
-			if (this.streams[id].has(room)) return id;
-		}
-
-		return null;
-	}
-
-	buildStream(id)
+	addStream(id, start)
 	{
-		var prev = null;
-		var stream = Array.from(this.streams[id]);
+		var rooms = this.findPath(start);
 
-		for(let i = 0; i < stream.length - 1; i++) {
-			var room = stream[i];
+		for(let i = 0; i < rooms.length - 1; i++) {
+			var room = rooms[i];
 
-			if (!stream[i+1]) {
-				room.fill('floor');
-				return;
+			room.streamId = id;
+
+			if (!rooms[i+1]) {
+				room.addTag('room');
+				break;
 			}
 
-			var p = room.getPortal(stream[i+1]).getPoint('random');
-			this.level.set(p, 'id', 'door');
-			room.addDoor(stream[i+1], p);
+			var p = room.getPortal(rooms[i+1]).getPoint('random');
+			//this.level.set(p, 'id', 'door');
+			room.addDoor(rooms[i+1], p);
 
 			//corridor
 			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
-				this.drawCorridor(room, room.doors[0], room.doors[1]);
+				room.addTag('corridor');
 			}
 			else {
-				room.fill('floor');
+				room.addTag('room');
 			}
 		}
 
+		this.streams.push(rooms);
+	}
+
+	buildRoom(room)
+	{
+		if (room.is('corridor')) {
+			room.fill('floor');
+			//this.drawCorridor(room, room.doors[0], room.doors[1]);
+		}
+		else {
+			room.fill('floor');
+		}
+
+		for (let door of room.doors) {
+			this.level.set(door.pos, 'id', 'door');
+		}
+	}
+
+	build()
+	{
+		for (let stream of this.streams) {
+			for (let room of stream) {
+				this.buildRoom(room);
+			}
+		}
 	}
 
 	drawCorridor(room, d1, d2)

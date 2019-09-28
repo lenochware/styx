@@ -10,45 +10,10 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.level.clear('wall');
 		this.splitRect(this.level.size);
 
-		this.addNeighbours();
-
-		// $("body").on("click", (e) => {
-		// 	var p = $(e.target).data().pos.split(',');
-		// 	var pos = {x:Number(p[0]),y:Number(p[1])}
-		// 	var room = null;
-		// 	for (room of this.rooms) {
-		// 		if (room.isInsidePoint(pos.x, pos.y)) break;
-		// 	}
-
-		// 	console.log('room', room, 'nbs');
-
-		// 	$('[data-pos="'+$(e.target).data().pos+'"]').css('color', 'green');
-
-		// 	for (let r of room.neighbours) {
-		// 		var pos = r.getPoint('center');
-		// 		$('[data-pos="'+pos.x+','+pos.y+'"]').css('color', 'red');
-		// 		console.log(r);
-		// 	}
-
-		// });
-		
-		//console.log(this.rooms);
-
-		var xxx = this.addStream('first', this.rooms[0]);
-		console.log(xxx);
-
-		// for(let room of this.rooms) {
-		// 	room.fill('floor');
-		// }
-
-		this.buildStream('first');
-
-		// this.buildPath(this.rooms[0]);
-
-
-		// for(let room of this.rooms) {
-		// 	if (room.doors.length == 0) room.fill('wall');
-		// }
+		this.addNeighbours();		
+		this.addStream('first', this.rooms[0]);
+		this.build();
+		console.log(this.streams);
 	
 /*
 		var spawner = new Styx.levels.Spawner(this, this.level.size);
@@ -76,5 +41,26 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			this.addExit(pos, exit);
 		}
 	}
+
+		// $("body").on("click", (e) => {
+		// 	var p = $(e.target).data().pos.split(',');
+		// 	var pos = {x:Number(p[0]),y:Number(p[1])}
+		// 	var room = null;
+		// 	for (room of this.rooms) {
+		// 		if (room.isInsidePoint(pos.x, pos.y)) break;
+		// 	}
+
+		// 	console.log('room', room, 'nbs');
+
+		// 	$('[data-pos="'+$(e.target).data().pos+'"]').css('color', 'green');
+
+		// 	for (let r of room.neighbours) {
+		// 		var pos = r.getPoint('center');
+		// 		$('[data-pos="'+pos.x+','+pos.y+'"]').css('color', 'red');
+		// 		console.log(r);
+		// 	}
+
+		// });
+
 
 }

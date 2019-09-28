@@ -11,6 +11,7 @@ Styx.levels.Room = class extends Styx.Rectangle
 		this.params = {tags: []};
 		this.neighbours = [];
 		this.doors = [];
+		this.streamId = null;
 		this.name = null;
 	}
 
