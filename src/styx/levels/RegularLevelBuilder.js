@@ -15,6 +15,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.addSecrets('zzz', 10);
 		this.build();
 		console.log(this.streams);
+		this.debugClick();
 	
 /*
 		var spawner = new Styx.levels.Spawner(this, this.level.size);
@@ -37,8 +38,8 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			var nb = room.freeNeighbours();
 			if (nb.length == 0) continue;
 			var next = nb[0];
-			var p = room.getPortal(next).getPoint('random');
-			room.addDoor(next, p);
+			
+			room.addDoor(next);
 			next.addTag('secret');
 			next.addTag('room');
 			next.streamId = id;
@@ -47,6 +48,15 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		this.streams.push(secrets);
 	}
+
+	// addRoomTo(room)
+	// {
+	// 	var nb = room.freeNeighbours();
+	// 	if (nb.length == 0) return null;
+	// 	var next = nb[0];
+	// 	room.addDoor(next);
+	// 	return next;
+	// }
 
 	addStairs()
 	{
@@ -59,25 +69,28 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		}
 	}
 
-		// $("body").on("click", (e) => {
-		// 	var p = $(e.target).data().pos.split(',');
-		// 	var pos = {x:Number(p[0]),y:Number(p[1])}
-		// 	var room = null;
-		// 	for (room of this.rooms) {
-		// 		if (room.isInsidePoint(pos.x, pos.y)) break;
-		// 	}
+	debugClick()
+	{
+		$("body").on("click", (e) => {
+			var p = $(e.target).data().pos.split(',');
+			var pos = {x:Number(p[0]),y:Number(p[1])}
+			var room = null;
+			for (room of this.rooms) {
+				if (room.isInsidePoint(pos.x, pos.y)) break;
+			}
 
-		// 	console.log('room', room, 'nbs');
+			console.log(room);
 
-		// 	$('[data-pos="'+$(e.target).data().pos+'"]').css('color', 'green');
+			// $('[data-pos="'+$(e.target).data().pos+'"]').css('color', 'green');
 
-		// 	for (let r of room.neighbours) {
-		// 		var pos = r.getPoint('center');
-		// 		$('[data-pos="'+pos.x+','+pos.y+'"]').css('color', 'red');
-		// 		console.log(r);
-		// 	}
+			// for (let r of room.neighbours) {
+			// 	var pos = r.getPoint('center');
+			// 	$('[data-pos="'+pos.x+','+pos.y+'"]').css('color', 'red');
+			// 	console.log(r);
+			// }
 
-		// });
+		});
+	}
 
 
 }

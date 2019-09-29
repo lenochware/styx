@@ -74,7 +74,13 @@ Styx.levels.Room = class extends Styx.Rectangle
 		return rooms;
 	}
 
-	addDoor(r, p)
+	addDoor(next)
+	{
+		var p = this.getPortal(next).getPoint('random');
+		this.addDoorPos(next, p);
+	}
+
+	addDoorPos(r, p)
 	{
 		var dir = {x: 0, y: 0};
 
