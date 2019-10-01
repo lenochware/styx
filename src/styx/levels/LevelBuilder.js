@@ -17,7 +17,8 @@ Styx.levels.LevelBuilder = class
 		this.params = {
 			room_max_size: 15,
 			big_rooms_ratio: 0.03,
-			corridor_ratio: 0.5
+			corridor_ratio: 0.5,
+			door_type: 'door'
 		}
 	}
 
@@ -76,7 +77,7 @@ Styx.levels.LevelBuilder = class
 	}
 
 	//maximalni/minimalni delka, protinani sebe sama, jinych cest, preferovany smer?...
-	findPath(room, params)
+	findPath(room)
 	{
 		var next = null;
 		var rooms = new Set([room]);
@@ -96,6 +97,21 @@ Styx.levels.LevelBuilder = class
 		return Array.from(rooms);
 	}
 
+	// addStream(id, start)
+	// {
+	// 	if (start.isFree()) {
+	// 		return this._addStream(id, start);
+	// 	}
+	// 	else {
+	// 		var nb = start.freeNeighbours();
+	// 		if (nb.length == 0) return null;
+	// 		var next = _.sample(nb);
+			
+	// 		start.addDoor(next);
+	// 		return this._addStream(id, next);			
+	// 	}
+	// }
+
 	addStream(id, start)
 	{
 		var rooms = this.findPath(start);
@@ -104,7 +120,7 @@ Styx.levels.LevelBuilder = class
 			var room = rooms[i];
 
 			room.streamId = id;
-			if (rooms[i+1]) room.addDoor(rooms[i+1]);
+			if (rooms[i+1]) room.addDoor(rooms[i+1], this.params.door_type);
 
 			//corridor
 			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
@@ -116,12 +132,21 @@ Styx.levels.LevelBuilder = class
 		}
 
 		this.streams.push(rooms);
+		return rooms;
 	}
 
 	buildRoom(room)
 	{
 		for (let door of room.doors) {
-			this.level.set(door.pos, 'id', 'door');
+			if (door.id == 'gate') {
+				var p = room.getPortal(door.room);
+				for (let pos of p.coords()) {
+					this.level.set(pos, 'id', 'floor');
+				}
+			}
+			else {
+				this.level.set(door.pos, 'id', door.id);
+			}
 		}
 
 		if (room.is('corridor')) 
