@@ -58,18 +58,18 @@ Styx.levels.Room = class extends Styx.Rectangle
 		r.neighbours.push(this);
 	}
 
-	isFree()
+	isConnected()
 	{
-		return (this.streamId == null);
+		return (this.doors.length > 0);
 	}
 
-	isConnected(room)
-	{
-		for(let door of this.doors) {
-			if (door.room == room) return true;
-		}
-		return false;
-	}
+	// isConnected(room)
+	// {
+	// 	for(let door of this.doors) {
+	// 		if (door.room == room) return true;
+	// 	}
+	// 	return false;
+	// }
 
 	freeNeighbours()
 	{

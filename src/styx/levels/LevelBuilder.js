@@ -12,7 +12,7 @@ Styx.levels.LevelBuilder = class
 		this.game = game;
 		this.level = null;
 		this.rooms = [];
-		this.streams = [];
+		this.connected = [];
 
 		this.params = {
 			room_max_size: 15,
@@ -76,63 +76,20 @@ Styx.levels.LevelBuilder = class
 		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos};
 	}
 
-	//maximalni/minimalni delka, protinani sebe sama, jinych cest, preferovany smer?...
-	findPath(room)
+	connect(room, next)
 	{
-		var next = null;
-		var rooms = new Set([room]);
-
-		while (true) {
-			var nb = _.shuffle(room.neighbours);
-			for (next of nb) {
-				if (next.isFree() && !rooms.has(next)) break;
-			}
-
-			if (!next.isFree() || rooms.has(next)) break;
-
-			room = next;
-			rooms.add(room);
-		}
-
-		return Array.from(rooms);
+		room.addDoor(next, this.params.door_type);
+		this.connected.push(next);
 	}
 
-	// addStream(id, start)
-	// {
-	// 	if (start.isFree()) {
-	// 		return this._addStream(id, start);
-	// 	}
-	// 	else {
-	// 		var nb = start.freeNeighbours();
-	// 		if (nb.length == 0) return null;
-	// 		var next = _.sample(nb);
-			
-	// 		start.addDoor(next);
-	// 		return this._addStream(id, next);			
-	// 	}
-	// }
-
-	addStream(id, start)
+	populate(room)
 	{
-		var rooms = this.findPath(start);
-
-		for(let i = 0; i < rooms.length; i++) {
-			var room = rooms[i];
-
-			room.streamId = id;
-			if (rooms[i+1]) room.addDoor(rooms[i+1], this.params.door_type);
-
-			//corridor
-			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
-				room.addTag('corridor');
-			}
-			else {
-				room.addTag('room');
-			}
+		if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
+			room.addTag('corridor');
 		}
-
-		this.streams.push(rooms);
-		return rooms;
+		else {
+			room.addTag('room');
+		}
 	}
 
 	buildRoom(room)
@@ -164,10 +121,8 @@ Styx.levels.LevelBuilder = class
 
 	build()
 	{
-		for (let stream of this.streams) {
-			for (let room of stream) {
-				this.buildRoom(room);
-			}
+		for (let room of this.connected) {
+			this.buildRoom(room);
 		}
 	}
 

@@ -11,10 +11,8 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.splitRect(this.level.size);
 
 		this.addNeighbours();
-		var s1 = this.addStream('first', this.rooms[0]);
-		//var s2 = this.addStream('second', _.sample(s1));
-
-		//this.addSecrets('zzz', 10);
+		
+		this.addRooms(20);
 
 		this.build();
 		console.log(this.streams, this.rooms.length);
@@ -47,35 +45,28 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	// 	}
 	// }
 
-	addSecrets(id, n)
+	addRooms(n)
 	{
-		var secrets = [];
 
-		for (let i = 0; i < n; i++) {
-			var room = _.sample(_.sample(this.streams));
-			var nb = room.freeNeighbours();
-			if (nb.length == 0) continue;
-			var next = nb[0];
-			
-			room.addDoor(next);
-			next.addTag('secret');
-			next.addTag('room');
-			next.streamId = id;
-			secrets.push(next);
+		var start = _.sample(this.rooms);
+		var next = _.sample(start.neighbours);
+
+		start.addTag('room');
+		this.connected.push(start);
+
+		for(let i = 0; i < n; i++) {
+
+			while(next.isConnected()) {
+				start = _.sample(this.connected);
+				next = _.sample(start.neighbours);
+			}
+
+			//console.log(start, next);
+
+			this.connect(start, next);
+			this.populate(start);
 		}
-
-		this.streams.push(secrets);
-		return secrets;
 	}
-
-	// addRoomTo(room)
-	// {
-	// 	var nb = room.freeNeighbours();
-	// 	if (nb.length == 0) return null;
-	// 	var next = nb[0];
-	// 	room.addDoor(next);
-	// 	return next;
-	// }
 
 	addStairs()
 	{
