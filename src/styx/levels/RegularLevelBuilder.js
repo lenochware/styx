@@ -12,7 +12,8 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		this.addNeighbours();
 		
-		this.addRooms(20);
+		//this.addRooms(20);
+		this.addPath(this.rooms[0], {x:70,y:25});
 
 		this.build();
 		console.log(this.streams, this.rooms.length);
@@ -65,6 +66,26 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 			this.connect(start, next);
 			this.populate(start);
+		}
+	}
+
+	addPath(start, pos)
+	{
+		start.addTag('room');
+		this.connected.push(start);
+
+		while (true) {
+			var next = null;
+			for (let nb of start.neighbours) {
+				if (!next || next.distance(pos) > nb.distance(pos)) {
+					next = nb;
+				}
+			}
+			if (start.distance(pos) <= next.distance(pos)) return;
+
+			this.connect(start, next);
+			this.populate(start);
+			start = next;
 		}
 	}
 

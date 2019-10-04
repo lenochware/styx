@@ -78,8 +78,13 @@ Styx.levels.LevelBuilder = class
 
 	connect(room, next)
 	{
-		room.addDoor(next, this.params.door_type);
-		this.connected.push(next);
+		if (!next.isConnected()) {
+			this.connected.push(next);
+		}
+
+		if (!room.isConnectedWith(next)) {
+			room.addDoor(next, this.params.door_type);
+		}
 	}
 
 	populate(room)

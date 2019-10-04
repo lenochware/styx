@@ -11,7 +11,6 @@ Styx.levels.Room = class extends Styx.Rectangle
 		this.params = {tags: []};
 		this.neighbours = [];
 		this.doors = [];
-		this.streamId = null;
 		this.name = null;
 	}
 
@@ -63,23 +62,12 @@ Styx.levels.Room = class extends Styx.Rectangle
 		return (this.doors.length > 0);
 	}
 
-	// isConnected(room)
-	// {
-	// 	for(let door of this.doors) {
-	// 		if (door.room == room) return true;
-	// 	}
-	// 	return false;
-	// }
-
-	freeNeighbours()
+	isConnectedWith(room)
 	{
-		var rooms = [];
-
-		for (let r of this.neighbours) {
-			if (r.isFree()) rooms.push(r);
+		for(let door of this.doors) {
+			if (door.room == room) return true;
 		}
-
-		return rooms;
+		return false;
 	}
 
 	addDoor(next, id = 'door')

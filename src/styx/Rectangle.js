@@ -204,6 +204,12 @@ Styx.Rectangle = class
 		return (this.width == 0 || this.height == 0);
 	}
 
+	distance(pos)
+	{
+		var c = this.getPoint('center');
+		return Math.hypot(c.x - pos.x, c.y - pos.y);
+	}
+
 	intersect(rect)
 	{
 		return !this.getIntersection(rect).isEmpty();
