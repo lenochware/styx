@@ -135,7 +135,7 @@ Styx.Rectangle = class
 
 	clone()
 	{
-		return new this.constructor(this.x, this.y, this.width, this.height);
+		return new Styx.Rectangle(this.x, this.y, this.width, this.height);
 	}
 
   _pos(x, y)

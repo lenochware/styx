@@ -7,7 +7,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	{
 		super.createLevel(id);
 
-		this.level.clear('wall');
+		this.level.clear('floor');
 
 		// //broken level
 		// for(let pos of this.level.size.coords()) {
@@ -35,8 +35,9 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		// this.addPath({x:1,y:28}, {x:1,y:1});
 
 
+		this.addBorders();
+
 		this.build();
-		console.log(this.streams, this.rooms.length);
 		this.debugClick();
 	
 /*
@@ -49,6 +50,13 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 */		
 
 		return this.level;
+	}
+
+	addBorders()
+	{
+		for (let room of this.connected) {
+			room.clone().expand(1,1).fill('wall');
+		}
 	}
 
 	addRooms(n)

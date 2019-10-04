@@ -14,9 +14,9 @@ Styx.levels.Room = class extends Styx.Rectangle
 		this.name = null;
 	}
 
-	id()
+	clone()
 	{
-		return "Room_".concat(this.x, '_', this.y);
+		return new Styx.levels.Room(this.level, this.x, this.y, this.width, this.height);
 	}
 
 	getAttrib(attrib, defaultValue = null)
@@ -123,9 +123,16 @@ Styx.levels.Room = class extends Styx.Rectangle
 
 	fill(id)
 	{
-		for (var y = 0; y < this.height; y++) {
-			for (var x = 0; x < this.width; x++) {
-				this.level.setXY(this.x + x, this.y + y , 'id', id);
+		var xmax = this.x + this.width;
+		var ymax = this.y + this.height;
+
+		for (var y = this.y; y < ymax; y++) {
+			for (var x = this.x; x < xmax; x++) {
+				if (x < 0 || y < 0 || x >= this.level.size.width || y >= this.level.size.height) {
+					continue;
+				}
+
+				this.level.setXY(x, y , 'id', id);
 			}
 		}	
 	}
