@@ -8,12 +8,32 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		super.createLevel(id);
 
 		this.level.clear('wall');
+
+		// //broken level
+		// for(let pos of this.level.size.coords()) {
+		// 	if (Styx.Random.bet(.03)) this.level.set(pos, 'id', 'floor');
+		// }
+
 		this.splitRect(this.level.size);
 
 		this.addNeighbours();
 		
-		//this.addRooms(20);
-		this.addPath(this.rooms[0], {x:70,y:25});
+		this.addRooms(20);
+
+		// // X
+		// this.addPath({x:1,y:1}, {x:70,y:25});
+		// this.addPath({x:70,y:1}, {x:1,y:25});
+
+		// // +
+		// this.addPath({x:40,y:1}, {x:40,y:30});
+		// this.addPath({x:1,y:15}, {x:80,y:15});
+
+		// // O
+		// this.addPath({x:1,y:1}, {x:78,y:1});
+		// this.addPath({x:78,y:1}, {x:78,y:28});
+		// this.addPath({x:78,y:28}, {x:1,y:28});
+		// this.addPath({x:1,y:28}, {x:1,y:1});
+
 
 		this.build();
 		console.log(this.streams, this.rooms.length);
@@ -30,21 +50,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		return this.level;
 	}
-
-	// addLoops(stream, n)
-	// {
-	// 	for(let room of _.shuffle(stream)) {
-	// 		if (n <= 0) return;
-
-	// 		for (let next of room.neighbours) {
-	// 			if (!next.isFree() && !room.isConnected(next)) {
-	// 				room.addDoor(next);
-	// 				n--;
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// }
 
 	addRooms(n)
 	{
@@ -69,19 +74,26 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		}
 	}
 
-	addPath(start, pos)
+	addPath(pos1, pos2)
 	{
-		start.addTag('room');
-		this.connected.push(start);
+		var start = this.findRoom(pos1.x, pos1.y);
+		if (!start) return;
+
+		if (!start.isConnected()) {
+			start.addTag('room');
+			this.connected.push(start);			
+		}
+
+		console.log(pos1, pos2);
 
 		while (true) {
 			var next = null;
 			for (let nb of start.neighbours) {
-				if (!next || next.distance(pos) > nb.distance(pos)) {
+				if (!next || next.distance(pos2) > nb.distance(pos2)) {
 					next = nb;
 				}
 			}
-			if (start.distance(pos) <= next.distance(pos)) return;
+			if (start.distance(pos2) <= next.distance(pos2)) return;
 
 			this.connect(start, next);
 			this.populate(start);
