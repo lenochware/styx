@@ -70,10 +70,11 @@ Styx.levels.LevelBuilder = class
 		}
 	}
 
-	addExit(pos, exit)
+	addExit(room, exit)
 	{
-		this.level.set(pos, 'id', exit.tile);
-		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos};
+		room.addTag('exit');
+		var pos = room.getPoint('random');
+		this.level.exits[pos.x + ',' + pos.y] = {id: exit.id, pos: pos, tile: exit.tile};
 	}
 
 	connect(room, next)
@@ -120,9 +121,6 @@ Styx.levels.LevelBuilder = class
 		}
 		else {
 			room.fill(room.is('secret')? 'water': 'floor');
-			if (room.is('exit')) {
-				this.addExit(room.getPoint('random'), room.params.exit);
-			}
 		}
 
 	}
@@ -131,6 +129,10 @@ Styx.levels.LevelBuilder = class
 	{
 		for (let room of this.connected) {
 			this.buildRoom(room);
+		}
+
+		for (let exit of _.values(this.level.exits)) {
+			this.level.set(exit.pos, 'id', exit.tile);
 		}
 	}
 

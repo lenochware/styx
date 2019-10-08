@@ -127,8 +127,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		var exits = this.level.getAttrib('exits');
 		for (let exit of exits) {
 			var room = _.sample(rooms);
-			room.addTag('exit');
-			room.params.exit = exit;
+			this.addExit(room, exit);
 		}
 	}
 
