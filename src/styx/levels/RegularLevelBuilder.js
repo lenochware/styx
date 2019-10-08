@@ -7,7 +7,12 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	{
 		super.createLevel(id);
 
-		this.level.clear('floor');
+		if (this.level.is('arena')) {
+			this.level.clear('floor');
+		}
+		else {
+			this.level.clear('wall');			
+		}
 
 		// //broken level
 		// for(let pos of this.level.size.coords()) {
@@ -18,7 +23,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		this.addNeighbours();
 		
-		this.addRooms(20);
+		this.addRooms(this.rooms[0], 20);
 
 		// // X
 		// this.addPath({x:1,y:1}, {x:70,y:25});
@@ -35,8 +40,11 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		// this.addPath({x:1,y:28}, {x:1,y:1});
 
 
-		this.addBorders();
+		if (this.level.is('arena')) {
+			this.addBorders();
+		}
 
+		this.addStairs();
 		this.build();
 		this.debugClick();
 	
@@ -59,40 +67,43 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		}
 	}
 
-	addRooms(n)
+	addRooms(start, n)
 	{
+		var path = [];
 
-		var start = _.sample(this.rooms);
+		this.connected.push(start);
+		path.push(start);
 		var next = _.sample(start.neighbours);
 
-		start.addTag('room');
-		this.connected.push(start);
-
+		main:
 		for(let i = 0; i < n; i++) {
+
+			var tried = 0;
 
 			while(next.isConnected()) {
 				start = _.sample(this.connected);
 				next = _.sample(start.neighbours);
+				if (++tried > 20) break main;
 			}
 
-			//console.log(start, next);
-
 			this.connect(start, next);
-			this.populate(start);
+			path.push(next);
+		}
+
+		for (let r of path) {
+			this.populate(r);
 		}
 	}
 
 	addPath(pos1, pos2)
 	{
-		var start = this.findRoom(pos1.x, pos1.y);
+		var start = this.findRoomAt(pos1.x, pos1.y);
 		if (!start) return;
 
 		if (!start.isConnected()) {
 			start.addTag('room');
 			this.connected.push(start);			
 		}
-
-		console.log(pos1, pos2);
 
 		while (true) {
 			var next = null;
@@ -111,12 +122,13 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 	addStairs()
 	{
-		var rooms = this.findRoom('room');
+		var rooms = this.findAll('room');
 
 		var exits = this.level.getAttrib('exits');
 		for (let exit of exits) {
-			var pos = rooms.sample().value().getPoint('random');
-			this.addExit(pos, exit);
+			var room = _.sample(rooms);
+			room.addTag('exit');
+			room.params.exit = exit;
 		}
 	}
 

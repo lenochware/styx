@@ -120,6 +120,9 @@ Styx.levels.LevelBuilder = class
 		}
 		else {
 			room.fill(room.is('secret')? 'water': 'floor');
+			if (room.is('exit')) {
+				this.addExit(room.getPoint('random'), room.params.exit);
+			}
 		}
 
 	}
@@ -131,7 +134,7 @@ Styx.levels.LevelBuilder = class
 		}
 	}
 
-	findRoom(x,y)
+	findRoomAt(x,y)
 	{
 		for (let room of this.rooms) {
 			if (x >= room.x && y >= room.y && x <= room.x + room.width && y <= room.y + room.height) {
@@ -140,6 +143,18 @@ Styx.levels.LevelBuilder = class
 		}
 		return null;
 	}
+
+	findAll(tag)
+	{
+		var found = [];
+
+		for (let room of this.connected) {
+			if (room.is(tag)) found.push(room);
+		}
+
+		return found;
+	}
+
 
 	drawCorridor(room, d1, d2)
 	{

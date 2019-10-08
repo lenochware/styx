@@ -1,7 +1,7 @@
 {
 	"first": {
 		"name": "The Town",
-		"type": "arena",
+		"type": "regular",
 		"tags": ["small"],
 		"exits": [
 			{"id": "small-cave", "tile": "stairs-down"},
@@ -28,7 +28,7 @@
 
 	"wilderness": {
 		"name": "Wilderness",
-		"type": "arena",
+		"type": "regular",
 		"tags": ["big"],
 		"exits": [
 			{"id": "first", "tile": "stairs-up"}

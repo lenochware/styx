@@ -112,6 +112,7 @@ Styx.Game = class
 			return;
 		}
 
+		currentLevel.remove(this.player);
 		level.set(exitFound.pos, 'actor', this.player);
 		wm.getPanel('level-map').level = level;
 		
