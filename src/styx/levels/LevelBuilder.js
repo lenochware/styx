@@ -100,6 +100,8 @@ Styx.levels.LevelBuilder = class
 
 	buildRoom(room)
 	{
+		var secret = room.is('secret');
+
 		for (let door of room.doors) {
 			if (door.id == 'gate') {
 				var p = room.getPortal(door.room);
@@ -108,7 +110,14 @@ Styx.levels.LevelBuilder = class
 				}
 			}
 			else {
-				this.level.set(door.pos, 'id', door.id);
+				var tile = this.level.get(door.pos, 'tile');
+				if (secret) {
+					tile.params.secret = door.id;
+					tile.id = 'wall';
+				}
+				else {
+					tile.id = door.id;
+				}
 			}
 		}
 
@@ -120,7 +129,8 @@ Styx.levels.LevelBuilder = class
 			}
 		}
 		else {
-			room.fill(room.is('secret')? 'water': 'floor');
+			//room.fill(room.is('secret')? 'water': 'floor');
+			room.fill('floor');
 		}
 
 	}
