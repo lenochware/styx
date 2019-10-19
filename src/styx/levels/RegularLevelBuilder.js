@@ -25,6 +25,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		
 		this.addRooms(this.rooms[0], 18);
 		this.addSecrets(_.sample(this.connected), 3);
+		this.addTags();
 
 		// // X
 		// this.addPath({x:1,y:1}, {x:70,y:25});
@@ -78,7 +79,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		var path = [];
 
 		if (!start.isConnected()) {
-			start.addTag('room');
 			this.connected.push(start);
 			if (f) f(start);
 		}
@@ -102,10 +102,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			path.push(next);
 			if (f) f(next);
 		}
-
-		for (let r of path) {
-			this.populate(r);
-		}
 	}
 
 	addPath(pos1, pos2)
@@ -114,7 +110,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		if (!start) return;
 
 		if (!start.isConnected()) {
-			start.addTag('room');
 			this.connected.push(start);			
 		}
 
@@ -128,7 +123,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			if (start.distance(pos2) <= next.distance(pos2)) return;
 
 			this.connect(start, next);
-			this.populate(start);
 			start = next;
 		}
 	}

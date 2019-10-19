@@ -204,6 +204,11 @@ Styx.Rectangle = class
 		return (this.width == 0 || this.height == 0);
 	}
 
+	size()
+	{
+		return this.width * this.height;
+	}
+
 	distance(pos)
 	{
 		var c = this.getPoint('center');

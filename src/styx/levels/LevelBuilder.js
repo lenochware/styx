@@ -88,13 +88,22 @@ Styx.levels.LevelBuilder = class
 		}
 	}
 
-	populate(room)
+	addTags()
 	{
-		if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
-			room.addTag('corridor');
-		}
-		else {
-			room.addTag('room');
+		for (let room of this.connected) {
+			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
+				room.addTag('corridor');
+			}
+			else {
+				room.addTag('room');
+			}
+
+			if (room.doors.length == 1) room.addTag('dead-end');
+			if (room.doors.length > 2) room.addTag('crossroad');
+
+			if (room.size() <= 20) room.addTag('small');
+			else if (room.size() < 50) room.addTag('big');
+			else room.addTag('huge');
 		}
 	}
 
