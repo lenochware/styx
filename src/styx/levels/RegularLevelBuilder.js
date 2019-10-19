@@ -26,6 +26,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.addRooms(this.rooms[0], 18);
 		this.addSecrets(_.sample(this.connected), 3);
 		this.addTags();
+		this.addDependencies();
 
 		// // X
 		// this.addPath({x:1,y:1}, {x:70,y:25});

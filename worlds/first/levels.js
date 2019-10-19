@@ -15,7 +15,18 @@
 		"tags": [],
 		"exits": [
 			{"id": "first", "tile": "stairs-up"}
-		]
+		],
+		
+ 		"dependencies": {
+			"small": { "empty": 0.5, "crap": 0.5, "center-pillar": 0.1, "monsters": -0.1 },
+			"big": {"special": 0.7, "monsters": 0.3, "decor": 0.2},
+			"corridor": {"monsters": -0.1, "trap": 0.3, "obstacle": 0.1 },
+			"end-room": {"monsters": 0.5, "treasure": 0.5, "crap": 0.3},
+			"secret": {"special": 0.7, "valuables": 0.7, "treasure": 0.5},
+			"center-pillar": {"monster": 0.5, "item": 0.5, "hidden": 0.5}
+		}
+
+
 	},
 
 	"test": {

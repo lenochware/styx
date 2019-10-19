@@ -13,6 +13,7 @@ Styx.levels.LevelBuilder = class
 		this.level = null;
 		this.rooms = [];
 		this.connected = [];
+		this.dependencies = null;
 
 		this.params = {
 			room_max_size: 15,
@@ -105,6 +106,50 @@ Styx.levels.LevelBuilder = class
 			else if (room.size() < 50) room.addTag('big');
 			else room.addTag('huge');
 		}
+	}
+
+	addDependencies()
+	{
+		for (let room of this.connected) {
+			var tags = room.params.new_tags || room.params.tags;
+			var deps = this.computeDeps(tags);
+			
+			room.params.new_tags = this.computeTags(deps);
+			room.params.tags = _.union(room.params.tags, room.params.new_tags);
+
+			//console.log(deps, room.params.tags);
+		}
+
+	}
+
+	computeDeps(tags) {
+		var aku = {};
+
+		if (!this.dependencies) {
+			this.dependencies = this.level.getAttrib('dependencies');
+		}
+
+		for (let tag of tags) {
+			var deps = this.dependencies[tag];
+			if (!deps) continue;
+			for (let k in deps) {
+				aku[k] = (aku[k] == null)? deps[k] : aku[k] + deps[k];
+			}
+		}
+
+		return aku;
+	}
+
+	computeTags(deps)
+	{
+		var tags = [];
+		
+		for (let k in deps) {
+			if (deps[k] <= 0) continue;
+			if (Math.random() < deps[k]) tags.push(k); //aku > 1? multiplier
+		}
+
+		return tags;
 	}
 
 	buildRoom(room)
