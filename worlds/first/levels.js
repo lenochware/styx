@@ -26,7 +26,9 @@
 			"crossroad": {"treasure": 0.2, "crap": 0.3},
 			"secret": {"special": 0.7, "valuables": 0.7, "treasure": 0.5},
 			"center-pillar": {"monster": 0.5, "item": 0.5, "hidden": 0.5}
-		}
+		},
+
+		"paint": {}
 
 
 	},

@@ -49,7 +49,26 @@ Styx.levels.Painter = class
 			//room.fill(room.is('secret')? 'water': 'floor');
 			room.fill('floor');
 		}
+
+		for(let tag of room.params.tags) {
+			this.paintFeature(room, tag);
+		}
 	}
+
+	paintFeature(room, tag)
+	{
+		var params = this.params[tag];
+		if (!params) return;
+		if (params.painter == 'random') {
+			this.paintRandom(room, params);
+		}
+		else {
+			console.warn('Painter not found.');
+		}
+	}
+
+	paintRandom(room, params)
+	{}
 
 	drawCorridor(room, d1, d2)
 	{
