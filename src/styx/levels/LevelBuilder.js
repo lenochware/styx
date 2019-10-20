@@ -103,21 +103,24 @@ Styx.levels.LevelBuilder = class
 			if (room.doors.length > 2) room.addTag('crossroad');
 
 			if (room.size() <= 20) room.addTag('small');
-			else if (room.size() < 50) room.addTag('big');
+			else if (room.size() < 50) room.addTag('large');
 			else room.addTag('huge');
 		}
 	}
 
 	addDependencies()
 	{
-		for (let room of this.connected) {
-			var tags = room.params.new_tags || room.params.tags;
-			var deps = this.computeDeps(tags);
-			
-			room.params.new_tags = this.computeTags(deps);
-			room.params.tags = _.union(room.params.tags, room.params.new_tags);
+		for (let i =0; i < 3 /*generations*/; i++) {
+			for (let room of this.connected) {
+				var tags = room.params.new_tags || room.params.tags;
+				var deps = this.computeDeps(tags);
+				
+				room.params.new_tags = this.computeTags(deps);
+				room.params.tags = _.union(room.params.tags, room.params.new_tags);
 
-			//console.log(deps, room.params.tags);
+				//console.log(deps, room.params.tags);
+			}
+			//console.log('---');
 		}
 
 	}
