@@ -2,154 +2,95 @@ var Styx = Styx || {};
 Styx.levels = Styx.levels || {};
 
 /**
- * Create various shapes in level layout using canvas painting.
+ * Draw room tiles.
  * It is used by LevelBuilder.
  */
 Styx.levels.Painter = class
 {
 
-	constructor(width, height)
+	constructor(builder)
 	{
-		var canvas = document.createElement('canvas');
-		canvas.width = width;
-		canvas.height = height;
-		this.ctx = canvas.getContext("2d");
-		this.ctx.fillStyle = 'rgb(0,0,0)';
+		this.builder = builder;
+		this.level = this.builder.level;
+		this.params = this.level.getAttrib('paint');
 	}
 
-	clear()
+	paint(room)
 	{
-		this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-		return this;
-	}
+		var secret = room.is('secret');
 
-	setBlending(id)
-	{
-		this.ctx.globalCompositeOperation = id;
-		return this;
-	}
-
-	setLine(width, dash = [1, 1])
-	{
-		this.ctx.lineWidth = width;
-		this.ctx.setLineDash(dash);
-		return this;
-	}
-
-	ellipse(x, y, rx, ry, fill = true)
-	{
-		this.ctx.beginPath();
-		this.ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI*2);
-		this.ctx.closePath();
-
-		if (fill) this.ctx.fill();
-		else this.ctx.stroke();
-
-		return this;
-	}
-
-	polygon(points, fill = true)
-	{
-		this.ctx.beginPath();
-		this.ctx.moveTo(points[0].x, points[0].y);
-		for(let i = 1; i < points.length; i++) {
-			this.ctx.lineTo(points[i].x, points[i].y);
-		}
-
-		this.ctx.closePath();
-
-		if (fill) this.ctx.fill();
-		else this.ctx.stroke();
-
-		return this;
-	}
-
-	polyline(points)
-	{
-		this.ctx.beginPath();
-		this.ctx.moveTo(points[0].x, points[0].y);
-		for(let i = 1; i < points.length; i++) {
-			this.ctx.lineTo(points[i].x, points[i].y);
-		}
-
-		this.ctx.stroke();
-
-		return this;
-	}
-
-	spline(points, fill = false, closed = false)
-	{
-		this.ctx.moveTo(points[0].x, points[0].y);
-
-		for (var i = 1; i < points.length - 2; i ++)
-		{
-				var xc = (points[i].x + points[i + 1].x) / 2;
-				var yc = (points[i].y + points[i + 1].y) / 2;
-				this.ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
-		}
-		// curve through the last two points
-		this.ctx.quadraticCurveTo(points[i].x, points[i].y, points[i+1].x,points[i+1].y);
-
-		if (closed) this.ctx.closePath();
-
-		if (fill) this.ctx.fill();
-		else this.ctx.stroke();
-
-		return this;
-	}
-
-	points(pointsList)
-	{
-		for (let pos of pointsList) {
-			this.ctx.fillRect(pos.x, pos.y, 1, 1);
-		}
-	}
-
-	rect(x, y, w, h, fill = true)
-	{
-		this.ctx.beginPath();
-		this.ctx.rect(x, y, w, h);
-
-		if (fill) this.ctx.fill();
-		else this.ctx.stroke();
-
-		return this;
-	}
-
-	grid(x, y, w, h, dx, dy, offset = 0)
-	{
-		var list = [];
-
-		for(let i = 0; i < h; i += dy) {
-			for(let j = 0; j < w; j += dx) {
-				list.push({x: x+j + ((i%(2*dy) == 0)? offset: 0), y: y+i});
+		for (let door of room.doors) {
+			if (door.id == 'gate') {
+				var p = room.getPortal(door.room);
+				for (let pos of p.coords()) {
+					this.level.set(pos, 'id', 'floor');
+				}
+			}
+			else {
+				var tile = this.level.get(door.pos, 'tile');
+				if (secret) {
+					tile.params.secret = door.id;
+					tile.id = 'wall';
+				}
+				else {
+					tile.id = door.id;
+				}
 			}
 		}
 
-		this.points(list);
-	}
-
-	getPixels(w = null, h = null)
-	{
-		if (!w) {
-			w = this.ctx.canvas.width;
-			h = this.ctx.canvas.height;
-		}
-
-		return this.ctx.getImageData(0, 0, w, h).data;
-	}
-
-	getAlpha(x, y, w, h)
-	{
-		var alpha = [];
-
-		var data = this.ctx.getImageData(x, y, w, h).data;
-		for(let i = 3; i < data.length; i+=4)
+		if (room.is('corridor')) 
 		{
-			alpha.push(data[i]);
+			room.fill('wall');
+			for (let i = 0; i < room.doors.length - 1; i++) {
+				this.drawCorridor(room, room.doors[i], room.doors[i+1]);
+			}
+		}
+		else {
+			//room.fill(room.is('secret')? 'water': 'floor');
+			room.fill('floor');
+		}
+	}
+
+	drawCorridor(room, d1, d2)
+	{
+		var tile = 'floor';
+
+		//class Point?
+		var p1 = {x: d1.pos.x - d1.dir.x, y: d1.pos.y - d1.dir.y };
+		var p2 = {x: d2.pos.x - d2.dir.x, y: d2.pos.y - d2.dir.y };
+
+		var borders = room.getBorderPoints();
+		borders = borders.concat(borders);
+		if (Styx.Random.bet(.5)) {
+			borders = borders.reverse();
 		}
 
-		return alpha;
-	}
+
+		var draw = false;
+
+		for (let pos of borders)
+		{
+			if (draw) this.level.set(pos, 'id', tile);
+
+			if ((pos.x != p1.x || pos.y != p1.y) 
+				&& (pos.x != p2.x || pos.y != p2.y)) {
+					continue;
+				}
+
+			if (!draw) {
+				draw = true;
+				this.level.set(pos, 'id', tile);
+			}
+			else {
+				break;
+			}
+		}
+
+		//no doors between corridors
+		var x = room.doors[0];
+		if (x && x.room.is('corridor')) {
+			this.level.set(x.pos, 'id', 'floor');
+		}
+	}	
 
 }

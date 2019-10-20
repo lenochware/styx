@@ -48,7 +48,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		}
 
 		this.addStairs();
-		this.build();
+		this.paint();
 		this.debugClick();
 	
 /*
@@ -138,29 +138,5 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			this.addExit(room, exit);
 		}
 	}
-
-	debugClick()
-	{
-		$("body").on("click", (e) => {
-			var p = $(e.target).data().pos.split(',');
-			var pos = {x:Number(p[0]),y:Number(p[1])}
-			var room = null;
-			for (room of this.rooms) {
-				if (room.isInsidePoint(pos.x, pos.y)) break;
-			}
-
-			console.log(room);
-
-			// $('[data-pos="'+$(e.target).data().pos+'"]').css('color', 'green');
-
-			// for (let r of room.neighbours) {
-			// 	var pos = r.getPoint('center');
-			// 	$('[data-pos="'+pos.x+','+pos.y+'"]').css('color', 'red');
-			// 	console.log(r);
-			// }
-
-		});
-	}
-
 
 }

@@ -192,10 +192,12 @@ Styx.levels.LevelBuilder = class
 
 	}
 
-	build()
+	paint()
 	{
+		let painter = new Styx.levels.Painter(this);
+
 		for (let room of this.connected) {
-			this.buildRoom(room);
+			painter.paint(room);
 		}
 
 		for (let exit of _.values(this.level.exits)) {
@@ -224,46 +226,27 @@ Styx.levels.LevelBuilder = class
 		return found;
 	}
 
-
-	drawCorridor(room, d1, d2)
+	debugClick()
 	{
-		var tile = 'floor';
-
-		//class Point?
-		var p1 = {x: d1.pos.x - d1.dir.x, y: d1.pos.y - d1.dir.y };
-		var p2 = {x: d2.pos.x - d2.dir.x, y: d2.pos.y - d2.dir.y };
-
-		var borders = room.getBorderPoints();
-		borders = borders.concat(borders);
-		if (Styx.Random.bet(.5)) {
-			borders = borders.reverse();
-		}
-
-
-		var draw = false;
-
-		for (let pos of borders)
-		{
-			if (draw) this.level.set(pos, 'id', tile);
-
-			if ((pos.x != p1.x || pos.y != p1.y) 
-				&& (pos.x != p2.x || pos.y != p2.y)) {
-					continue;
-				}
-
-			if (!draw) {
-				draw = true;
-				this.level.set(pos, 'id', tile);
+		$("body").on("click", (e) => {
+			var p = $(e.target).data().pos.split(',');
+			var pos = {x:Number(p[0]),y:Number(p[1])}
+			var room = null;
+			for (room of this.rooms) {
+				if (room.isInsidePoint(pos.x, pos.y)) break;
 			}
-			else {
-				break;
-			}
-		}
 
-		//no doors between corridors
-		var x = room.doors[0];
-		if (x && x.room.is('corridor')) {
-			this.level.set(x.pos, 'id', 'floor');
-		}
-	}	
+			console.log(room);
+
+			// $('[data-pos="'+$(e.target).data().pos+'"]').css('color', 'green');
+
+			// for (let r of room.neighbours) {
+			// 	var pos = r.getPoint('center');
+			// 	$('[data-pos="'+pos.x+','+pos.y+'"]').css('color', 'red');
+			// 	console.log(r);
+			// }
+
+		});
+	}
+
 }
