@@ -189,9 +189,32 @@ Styx.levels.Level = class extends Styx.GameObject
 		throw new Error(`Unknown entity ${id}.`);
 	}
 
-	find(tag)
+	find(tag, source)
 	{
-		return _.chain(this.tiles).filter(tile => tile.is(tag)).map(tile => tile.pos);
+		var coords = [];
+
+		if (!source) source = this.size;
+
+		if (source instanceof Styx.Rectangle)
+		{
+			for (var y = source.y; y < source.y + source.height; y++) {
+				for (var x = source.x; x < source.x + source.width; x++) {
+					if (x < 0 || y < 0 || x >= this.size.width || y >= this.size.height) {
+						continue;
+					}
+					var tile = this.getXY(x, y, 'tile');
+					if (tile.contains(tag)) coords.push(tile.pos);
+				}
+			}
+		}
+		else {
+			for (pos of source) {
+				var tile = this.get(pos, 'tile');
+				if (tile.contains(tag)) coords.push(tile.pos);
+			}
+		}
+
+		return coords;
 	}
 
 	isVisible(x, y)

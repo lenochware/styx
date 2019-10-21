@@ -44,6 +44,14 @@ Styx.levels.Tile = class extends Styx.GameObject
 		return Styx.Random.bet(.6);
 	}
 
+	contains(tag)
+	{
+		if (this.is(tag)) return true;
+		if (this.actor && this.actor.is(tag)) return true;
+		if (this.item && this.item.is(tag)) return true;
+		return false;
+	}
+
 	touch(actor)
 	{
 		if (this.id == 'door') {

@@ -20,7 +20,7 @@ game.load('world:first').then(function()
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 
 	if (testLevel) level.setXY(7, 2, 'actor', player);
-	else level.set(level.find('floor').sample().value(), 'actor', player);
+	else level.set(_.sample(level.find('floor')), 'actor', player);
 
 	// var c = level.size.getPoint('center');
 	// level.set(c, 'actor', player);
