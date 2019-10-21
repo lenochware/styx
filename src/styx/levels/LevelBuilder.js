@@ -226,6 +226,14 @@ Styx.levels.LevelBuilder = class
 		return found;
 	}
 
+	getRandomId(category, tag, lvl)
+	{
+		var list = this.game.db.find(category, tag).value();
+		var chances = _.map(list, obj => obj.lvl? 1 / (Math.pow(obj.lvl - lvl, 2) + 1) : 1);
+		var obj = Styx.Random.pick(list, chances);
+		return obj.id;
+	}
+
 	debugClick()
 	{
 		$("body").on("click", (e) => {

@@ -68,7 +68,23 @@ Styx.levels.Painter = class
 	}
 
 	paintRandom(room, params)
-	{}
+	{
+		var coords = this.level.find(params.where || 'floor', room);
+		var id = this.getId(params.id);
+		this.level.spawn(_.sample(coords), id);
+	}
+
+	getId(spec)
+	{
+		var id = _.isArray(spec)? _.sample(spec) : spec;
+		
+		if (id.startsWith('#')) {
+			var oid = id.substr(1).split('.');
+			return this.builder.getRandomId(oid[0], oid[1], 1);
+		}
+
+		return id;
+	}
 
 	drawCorridor(room, d1, d2)
 	{

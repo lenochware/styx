@@ -28,7 +28,17 @@
 			"center-pillar": {"monster": 0.5, "item": 0.5, "hidden": 0.5}
 		},
 
-		"paint": {}
+		"paint": {
+			"monsters": {"painter": "random", "id": "rat"},
+			"treasure": {"painter": "random", "id": "copper_coins"},
+			"decor": {"painter": "random", "id": "shallow_water"},
+			"crap": {"painter": "random", "id": ["slime", "dust", "rock"] },
+			"obstacle": {"painter": "random", "id": "rubble"},
+			"center-pillar": {"painter": "random", "id": "wall"},
+			"item": {"painter": "random", "id": "small_shield"},
+			"valuables": {"painter": "random", "id": "bread"},
+			"special": {"painter": "random", "id": ["snake", "#items.weapon"]}
+		}
 
 
 	},
