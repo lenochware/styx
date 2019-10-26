@@ -59,19 +59,47 @@ Styx.levels.Painter = class
 	{
 		var params = this.params[tag];
 		if (!params) return;
-		if (params.painter == 'random') {
-			this.paintRandom(room, params);
-		}
-		else {
-			console.warn('Painter not found.');
+		if (!_.isArray(params)) params = [params];
+
+		for(let par of params) {
+			if (par.painter == 'random') {
+				this.paintRandom(room, par);
+			}
+			else {
+				console.warn('Painter not found.');
+			}			
 		}
 	}
 
 	paintRandom(room, params)
 	{
-		var coords = this.level.find(params.where || 'floor', room);
+		var coords = this.getCoords(room, params);
 		var id = this.getId(params.id);
 		this.level.spawn(_.sample(coords), id);
+	}
+
+	//corridory?
+	getCoords(room, params)
+	{
+		if (params.pos == 'center') return [room.getPoint('center')];
+		if (params.pos == 'walls') return room.getWalls(); //- vynechat dvere;
+		if (params.pos == 'side') return room.getBorderN(_.random(1,4));
+
+		//if (params.pos == 'top,top-wall?') return room.getInner(1);
+		// if (params.pos == 'doorstep') return room.getBorder(0);
+		// if (params.pos == 'door') return room.getBorder(0);
+
+		if (params.pos == 'corners') {
+			return [
+				room.getPoint('corner-1'),
+				room.getPoint('corner-2'),
+				room.getPoint('corner-3'),
+				room.getPoint('corner-4')
+			];
+		}
+
+
+		return this.level.find(params.where || 'floor', room);
 	}
 
 	getId(spec)
@@ -94,7 +122,7 @@ Styx.levels.Painter = class
 		var p1 = {x: d1.pos.x - d1.dir.x, y: d1.pos.y - d1.dir.y };
 		var p2 = {x: d2.pos.x - d2.dir.x, y: d2.pos.y - d2.dir.y };
 
-		var borders = room.getBorderPoints();
+		var borders = room.getBorders();
 		borders = borders.concat(borders);
 		if (Styx.Random.bet(.5)) {
 			borders = borders.reverse();

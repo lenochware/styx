@@ -121,6 +121,18 @@ Styx.levels.Room = class extends Styx.Rectangle
 		return null;
 	}
 
+	getWalls()
+	{
+		var walls = [];
+		var coords = this.clone().expand(1,1).getBorders();
+		for (let pos of coords) {
+			if (!this.level.size.isInsidePoint(pos.x, pos.y)) continue;
+			if (this.level.get(pos, 'id') == 'door') continue;
+			walls.push(pos);
+		}
+		return walls;
+	}
+
 	fill(id)
 	{
 		var xmax = this.x + this.width;

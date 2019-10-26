@@ -29,25 +29,27 @@ Styx.Rectangle = class
 		return pos;
 	}
 
-	getBorderPoints()
+	getBorders()
 	{
 		var pos = [];
-		var b = this.getPoint('corner-3');
 
-		for (let i = 0; i < this.width; i++) {
-			pos.push({x:this.x + i, y:this.y});
-		}
+		this.getBorderN(1, pos); pos.pop();		
+		this.getBorderN(2, pos); pos.pop();		
+		this.getBorderN(3, pos); pos.pop();		
+		this.getBorderN(4, pos); pos.pop();		
 
-		for (let i = 1; i < this.height; i++) {
-			pos.push({x:b.x, y:this.y + i});
-		}
+		return pos;
+	}
 
-		for (let i = 1; i < this.width; i++) {
-			pos.push({x:b.x - i, y:b.y});
-		}
+	getBorderN(n, pos = [])
+	{
+		var b = this.getPoint('corner-' + n);
 
-		for (let i = 1; i < this.height; i++) {
-			pos.push({x:this.x, y:b.y - i});
+		var max = n&1? this.width : this.height;
+		var sign = n>2? -1 : 1;
+
+		for (let i = 0; i < max; i++) {
+			pos.push({x:b.x + (n&1? i*sign : 0), y:b.y + (n&1? 0 : i*sign)});
 		}
 
 		return pos;
@@ -151,18 +153,7 @@ Styx.Rectangle = class
 			case 'corner-3': return this._pos(this.x + this.width - 1, this.y + this.height - 1);
 			case 'corner-4': return this._pos(this.x, this.y + this.height - 1);
 
-			case 'border-1': return this._pos(this.x - 1, this.y - 1);
-			case 'border-2': return this._pos(this.x + this.width, this.y - 1);
-			case 'border-3': return this._pos(this.x + this.width, this.y + this.height);
-			case 'border-4': return this._pos(this.x - 1, this.y + this.height);
-
-
 			case 'center': return this._pos(this.x + this.width / 2, this.y + this.height / 2);
-
-			// case 'center-1': return this._pos(this.x + this.width / 2, this.y - 1);
-			// case 'center-2': return this._pos(this.x + this.width, this.y + this.height / 2);
-			// case 'center-3': return this._pos(this.x + this.width / 2, this.y + this.height);
-			// case 'center-4': return this._pos(this.x - 1, this.y + this.height / 2);
 
 			case 'center-1': return this._pos(this.x + this.width / 2, this.y);
 			case 'center-2': return this._pos(this.x + this.width - 1, this.y + this.height / 2);

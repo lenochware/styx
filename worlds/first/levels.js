@@ -34,10 +34,13 @@
 			"decor": {"painter": "random", "id": "shallow_water"},
 			"crap": {"painter": "random", "id": ["slime", "dust", "rock"] },
 			"obstacle": {"painter": "random", "id": "rubble"},
-			"center-pillar": {"painter": "random", "id": "wall"},
+			"center-pillar": {"painter": "random", "id": "wall", "pos": "center"},
 			"item": {"painter": "random", "id": "small_shield"},
 			"valuables": {"painter": "random", "id": "bread"},
-			"special": {"painter": "random", "id": ["snake", "#items.weapon"]}
+			"special": [
+				{"painter": "random", "id": "earth_wall", "pos": "walls"},
+				{"painter": "random", "id": ["snake", "#items.weapon"]}
+				]
 		}
 
 
