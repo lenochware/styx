@@ -38,7 +38,7 @@
 			"item": {"painter": "random", "id": "small_shield"},
 			"valuables": {"painter": "random", "id": "bread"},
 			"special": [
-				{"painter": "random", "id": "earth_wall", "pos": "walls"},
+				{"painter": "mfill", "id": ["high_grass", "rubble"], "pos": "walls"},
 				{"painter": "random", "id": ["snake", "#items.weapon"]}
 				]
 		}

@@ -62,12 +62,12 @@ Styx.levels.Painter = class
 		if (!_.isArray(params)) params = [params];
 
 		for(let par of params) {
-			if (par.painter == 'random') {
-				this.paintRandom(room, par);
+			switch (par.painter) {
+				case 'random': this.paintRandom(room, par); break;
+				case 'fill': this.paintFill(room, par); break;
+				case 'mfill': this.paintMultiFill(room, par); break;
+				default:	console.warn('Painter not found.');
 			}
-			else {
-				console.warn('Painter not found.');
-			}			
 		}
 	}
 
@@ -76,6 +76,26 @@ Styx.levels.Painter = class
 		var coords = this.getCoords(room, params);
 		var id = this.getId(params.id);
 		this.level.spawn(_.sample(coords), id);
+	}
+
+	paintFill(room, params)
+	{
+		var coords = this.getCoords(room, params);
+		var id = this.getId(params.id);
+
+		for (let pos of coords) {
+			this.level.spawn(pos, id);
+		}
+	}
+
+	paintMultiFill(room, params)
+	{
+		var coords = this.getCoords(room, params);
+
+		for (let pos of coords) {
+			var id = this.getId(params.id);
+			this.level.spawn(pos, id);
+		}
 	}
 
 	//corridory?
