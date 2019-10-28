@@ -37,6 +37,7 @@
 			"center-pillar": {"painter": "random", "id": "wall", "pos": "center"},
 			"item": {"painter": "random", "id": "small_shield"},
 			"valuables": {"painter": "random", "id": "bread"},
+			"forest": {"painter": "simplex", "id": ["tree", "high_grass", "none", "none"], "weights": [0.2, 0.4, 0.6, 0.8]},
 			"special": [
 				{"painter": "mfill", "id": ["high_grass", "rubble"], "pos": "walls"},
 				{"painter": "random", "id": ["snake", "#items.weapon"]}

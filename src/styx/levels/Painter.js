@@ -66,6 +66,7 @@ Styx.levels.Painter = class
 				case 'random': this.paintRandom(room, par); break;
 				case 'fill': this.paintFill(room, par); break;
 				case 'mfill': this.paintMultiFill(room, par); break;
+				case 'simplex': this.paintSimplex(room, par); break;
 				default:	console.warn('Painter not found.');
 			}
 		}
@@ -75,7 +76,7 @@ Styx.levels.Painter = class
 	{
 		var coords = this.getCoords(room, params);
 		var id = this.getId(params.id);
-		this.level.spawn(_.sample(coords), id);
+		this.spawn(_.sample(coords), id);
 	}
 
 	paintFill(room, params)
@@ -84,7 +85,7 @@ Styx.levels.Painter = class
 		var id = this.getId(params.id);
 
 		for (let pos of coords) {
-			this.level.spawn(pos, id);
+			this.spawn(pos, id);
 		}
 	}
 
@@ -94,9 +95,36 @@ Styx.levels.Painter = class
 
 		for (let pos of coords) {
 			var id = this.getId(params.id);
-			this.level.spawn(pos, id);
+			this.spawn(pos, id);
 		}
 	}
+
+	paintSimplex(rect, params)
+	{
+		var noise = new ROT.Noise.Simplex();
+		var coords = rect.coords();
+		for (let pos of coords) {
+			var val = noise.get(pos.x/20, pos.y/20);
+			var id = params.id[this.getWeightedIndex(params.weights, val)];
+			this.spawn(pos, id);
+		}
+	}
+
+	getWeightedIndex(list, val)
+	{
+		var sum = list[0];
+		for(let i = 0; i < list.length; i++) {
+			if (sum >= val) return i;
+			sum += list[i + 1];
+		}
+	}
+
+	spawn(pos, id)
+	{
+		if (id == 'none') return;
+		this.level.spawn(pos, id);
+	}
+
 
 	//corridory?
 	getCoords(room, params)

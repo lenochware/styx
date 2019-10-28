@@ -203,6 +203,8 @@ Styx.levels.LevelBuilder = class
 		for (let exit of _.values(this.level.exits)) {
 			this.level.set(exit.pos, 'id', exit.tile);
 		}
+
+		//painter.paintFeature(this.level.size, "forest");
 	}
 
 	findRoomAt(x,y)
