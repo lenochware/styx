@@ -103,20 +103,27 @@ Styx.levels.Painter = class
 	{
 		var noise = new ROT.Noise.Simplex();
 		var coords = rect.coords();
+		var size = params.size || [10,10];
 		for (let pos of coords) {
-			var val = noise.get(pos.x/20, pos.y/20);
+			var val = noise.get(pos.x/size[0], pos.y/size[1]);
 			var id = params.id[this.getWeightedIndex(params.weights, val)];
+			
+			if (params.where && !this.level.get(pos, 'tile').is(params.where)) {
+				continue;
+			}
+
 			this.spawn(pos, id);
 		}
+
 	}
 
 	getWeightedIndex(list, val)
 	{
-		var sum = list[0];
 		for(let i = 0; i < list.length; i++) {
-			if (sum >= val) return i;
-			sum += list[i + 1];
+			if (list[i] > val) return i;
 		}
+
+		return list.length;
 	}
 
 	spawn(pos, id)

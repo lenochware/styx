@@ -45,14 +45,14 @@
 
 	"shallow_water": {
 		"render": {"char": "~", "color": "light-blue" },
-		"tags": ["water", "hiding"],
+		"tags": ["water", "hiding", "floor"],
 		"name": "shallow water",
 		"desc": "You see nothing interesting."
 	},
 
 	"mud": {
 		"render": {"char": ".", "color": "brown" },
-		"tags": [],
+		"tags": ["floor"],
 		"name": "mud",
 		"desc": "You see nothing interesting."
 	},
@@ -73,7 +73,7 @@
 
 	"high_grass": {
 		"render": {"char": ";", "color": "dark-green" },
-		"tags": ["hiding", "hiding_mon"],
+		"tags": ["hiding", "hiding_mon","floor"],
 		"name": "high grass",
 		"desc": "You see nothing interesting."
 	},
