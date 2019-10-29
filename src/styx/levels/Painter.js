@@ -67,6 +67,7 @@ Styx.levels.Painter = class
 				case 'fill': this.paintFill(room, par); break;
 				case 'mfill': this.paintMultiFill(room, par); break;
 				case 'simplex': this.paintSimplex(room, par); break;
+				case 'maze': this.paintMaze(room, par); break;
 				default:	console.warn('Painter not found.');
 			}
 		}
@@ -75,8 +76,12 @@ Styx.levels.Painter = class
 	paintRandom(room, params)
 	{
 		var coords = this.getCoords(room, params);
-		var id = this.getId(params.id);
-		this.spawn(_.sample(coords), id);
+		var maxcount = params.maxcount? _.random(1, params.maxcount) : 1;
+
+		for (let i = 0; i < maxcount; i++) {
+			var id = this.getId(params.id);
+			this.spawn(_.sample(coords), id);			
+		}
 	}
 
 	paintFill(room, params)
@@ -99,11 +104,21 @@ Styx.levels.Painter = class
 		}
 	}
 
+	paintMaze(room, params)
+	{
+		//console.log('maze', room);
+		var maze = new ROT.Map.IceyMaze(room.width, room.height, 1);
+		maze.create((x,y,i) => {
+			if (i) return;
+			this.spawn({x: room.x + x, y: room.y + y}, params.id);
+		});
+	}
+
 	paintSimplex(rect, params)
 	{
 		var noise = new ROT.Noise.Simplex();
 		var coords = rect.coords();
-		var size = params.size || [10,10];
+		var size = params.size || [18,10];
 		for (let pos of coords) {
 			var val = noise.get(pos.x/size[0], pos.y/size[1]);
 			var id = params.id[this.getWeightedIndex(params.weights, val)];

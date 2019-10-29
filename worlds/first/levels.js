@@ -30,7 +30,7 @@
 
 		"paint": {
 			"monsters": {"painter": "random", "id": "rat"},
-			"treasure": {"painter": "random", "id": "copper_coins"},
+			"treasure": {"painter": "random", "id": "copper_coins", "maxcount": 3},
 			"decor": {"painter": "random", "id": "shallow_water"},
 			"crap": {"painter": "random", "id": ["slime", "dust", "rock"] },
 			"obstacle": {"painter": "random", "id": "rubble"},
@@ -38,14 +38,18 @@
 			"item": {"painter": "random", "id": "small_shield"},
 			"valuables": {"painter": "random", "id": "bread"},
 			"forest": {"painter": "simplex", 
-				"id": ["none", "mud", "high_grass", "tree"],
+				//"id": ["none", "shallow_water", "high_grass", "tree"],
+				"id": ["none", "none", "none", "shallow_water"],
 				"weights": [0.2, 0.4, 0.6]
-				//,"where": "floor"
-			},
-			"special": [
-				{"painter": "mfill", "id": ["high_grass", "rubble"], "pos": "walls"},
-				{"painter": "random", "id": ["snake", "#items.weapon"]}
-				]
+				//"size": [6,3]
+				,"where": "floor"
+			}
+			//,"special": {"painter": "maze", "id": "wall"}
+
+			// ,"special": [
+			// 	{"painter": "mfill", "id": ["high_grass", "rubble"], "pos": "walls"},
+			// 	{"painter": "random", "id": ["snake", "#items.weapon"]}
+			// 	]
 		}
 
 
