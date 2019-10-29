@@ -68,6 +68,7 @@ Styx.levels.Painter = class
 				case 'mfill': this.paintMultiFill(room, par); break;
 				case 'simplex': this.paintSimplex(room, par); break;
 				case 'maze': this.paintMaze(room, par); break;
+				case 'pattern': this.paintPattern(room, par); break;
 				default:	console.warn('Painter not found.');
 			}
 		}
@@ -101,6 +102,20 @@ Styx.levels.Painter = class
 		for (let pos of coords) {
 			var id = this.getId(params.id);
 			this.spawn(pos, id);
+		}
+	}
+
+	paintPattern(room, params)
+	{
+		var pat = params.pattern; 
+		var px = pat[0].length;
+		var py = pat.length;
+		//var id = this.getId(params.id);
+
+		for (let y = 0;  y < room.height; y++) {
+			for (let x = 0;  x < room.width; x++) {
+				this.spawn({x: room.x + x, y: room.y + y}, pat[y%py][x%px]);
+			}
 		}
 	}
 

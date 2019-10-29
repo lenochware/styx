@@ -44,6 +44,8 @@
 				//"size": [6,3]
 				,"where": "floor"
 			}
+			,"special": {"painter": "pattern", "pattern": [["tree", "floor"], ["floor", "tree"]]}
+			//,"special": {"painter": "pattern", "pattern": [["wall", "floor"], ["floor", "floor"]]}
 			//,"special": {"painter": "maze", "id": "wall"}
 
 			// ,"special": [
