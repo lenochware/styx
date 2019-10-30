@@ -202,8 +202,9 @@ Styx.Rectangle = class
 
 	distance(pos)
 	{
-		var c = this.getPoint('center');
-		return Math.hypot(c.x - pos.x, c.y - pos.y);
+		var cx = this.x + this.width / 2;
+		var cy = this.y + this.height / 2;
+		return Math.hypot(cx - pos.x, cy - pos.y);
 	}
 
 	intersect(rect)
