@@ -7,20 +7,40 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	{
 		super.createLevel(id);
 
-		if (this.level.is('arena')) {
+		var baseTile = this.level.getAttrib('base-tile');
+
+		if (baseTile) {
+			this.level.clear(baseTile);
+		}
+		else if (this.level.is('arena')) {
 			this.level.clear('floor');
 		}
 		else {
-			this.level.clear('wall');			
+			this.level.clear('wall');
 		}
 
-		// //broken level
-		// for(let pos of this.level.size.coords()) {
-		// 	if (Styx.Random.bet(.03)) this.level.set(pos, 'id', 'floor');
-		// }
+		if (this.level.is('broken')) {
+			for(let pos of this.level.size.coords()) {
+				if (Styx.Random.bet(.03)) this.level.set(pos, 'id', 'floor');
+			}
+		}
+
+		if (this.level.is('lot-of-corridors')) {
+			this.params.corridor_ratio = 0.95;
+		}
+		else if (this.level.is('no-corridors')) {
+			this.params.corridor_ratio = 0;			
+		}
+
+		if (this.level.is('big-rooms')) {
+			this.params.big_rooms_ratio = 0.2;
+		}
+
+		if (this.level.is('huge-rooms')) {
+			this.params.room_max_size = 35;
+		}
 
 		this.splitRect(this.level.size);
-
 		this.addNeighbours();
 		
 		this.addRooms(this.rooms[0], 18);

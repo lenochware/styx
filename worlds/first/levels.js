@@ -2,7 +2,8 @@
 	"first": {
 		"name": "The Town",
 		"type": "regular",
-		"tags": ["small"],
+		"base-tile": "earth_wall",
+		"tags": ["small", "broken", "lot-of-corridors"],
 		"exits": [
 			{"id": "small-cave", "tile": "stairs-down"},
 			{"id": "wilderness", "tile": "stairs-down"}
@@ -68,7 +69,7 @@
 	"wilderness": {
 		"name": "Wilderness",
 		"type": "regular",
-		"tags": ["big"],
+		"tags": ["big", "huge-rooms", "big-rooms"],
 		"exits": [
 			{"id": "first", "tile": "stairs-up"}
 		]
