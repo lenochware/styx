@@ -155,43 +155,6 @@ Styx.levels.LevelBuilder = class
 		return tags;
 	}
 
-	buildRoom(room)
-	{
-		var secret = room.is('secret');
-
-		for (let door of room.doors) {
-			if (door.id == 'gate') {
-				var p = room.getPortal(door.room);
-				for (let pos of p.coords()) {
-					this.level.set(pos, 'id', 'floor');
-				}
-			}
-			else {
-				var tile = this.level.get(door.pos, 'tile');
-				if (secret) {
-					tile.params.secret = door.id;
-					tile.id = 'wall';
-				}
-				else {
-					tile.id = door.id;
-				}
-			}
-		}
-
-		if (room.is('corridor')) 
-		{
-			room.fill('wall');
-			for (let i = 0; i < room.doors.length - 1; i++) {
-				this.drawCorridor(room, room.doors[i], room.doors[i+1]);
-			}
-		}
-		else {
-			//room.fill(room.is('secret')? 'water': 'floor');
-			room.fill('floor');
-		}
-
-	}
-
 	paint()
 	{
 		let painter = new Styx.levels.Painter(this);

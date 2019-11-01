@@ -17,26 +17,6 @@ Styx.levels.Painter = class
 
 	paint(room)
 	{
-		var secret = room.is('secret');
-
-		for (let door of room.doors) {
-			if (door.id == 'gate') {
-				var p = room.getPortal(door.room);
-				for (let pos of p.coords()) {
-					this.level.set(pos, 'id', 'floor');
-				}
-			}
-			else {
-				var tile = this.level.get(door.pos, 'tile');
-				if (secret) {
-					tile.params.secret = door.id;
-					tile.id = 'wall';
-				}
-				else {
-					tile.id = door.id;
-				}
-			}
-		}
 
 		if (room.is('corridor')) 
 		{
@@ -46,13 +26,60 @@ Styx.levels.Painter = class
 			}
 		}
 		else {
-			//room.fill(room.is('secret')? 'water': 'floor');
 			room.fill('floor');
 		}
 
 		for(let tag of room.params.tags) {
 			this.paintFeature(room, tag);
 		}
+
+		this.paintDoors(room);
+		room.addTag('painted');
+	}
+
+	paintDoors(room)
+	{
+		var secret = room.is('secret');
+
+		if (!secret) {
+			if (room.is('doors-open')) {
+				for (let door of _.sample(room.doors, _.random(1, room.doors.length))) {
+					door.id = Styx.Random.bet(.5)? 'open_door' : 'floor';
+				}
+			}
+
+			if (room.is('passage')) {
+				_.sample(room.doors).id = 'passage';
+			}
+		}
+
+		for (let door of room.doors) {
+
+			if (door.room.is('painted') && !door.room.is('corridor')) continue;
+
+			if (room.is('corridor')) {
+				this.level.set(door.pos, 'id', 'floor');
+				continue;
+			}
+
+			var tile = this.level.get(door.pos, 'tile');
+
+			if (secret) {
+				tile.params.secret = door.id;
+				tile.id = 'wall';
+				continue;
+			}
+			
+			if (door.id == 'passage') {
+				var p = room.getPortal(door.room);
+				for (let pos of p.coords()) {
+					this.level.set(pos, 'id', 'floor');
+				}
+			}
+			else {
+				tile.id = door.id;
+			}
+		}		
 	}
 
 	paintFeature(room, tag)
@@ -232,12 +259,6 @@ Styx.levels.Painter = class
 			else {
 				break;
 			}
-		}
-
-		//no doors between corridors
-		var x = room.doors[0];
-		if (x && x.room.is('corridor')) {
-			this.level.set(x.pos, 'id', 'floor');
 		}
 	}	
 

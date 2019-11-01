@@ -19,8 +19,8 @@
 		],
 		
  		"dependencies": {
-			"small": { "empty": 0.5, "crap": 0.5, "center-pillar": 0.2, "monsters": -0.1 },
-			"large": {"monsters": 0.2, "decor": 0.2},
+			"small": { "empty": 0.5, "crap": 0.5, "center-pillar": 0.2, "monsters": -0.1, "doors-open": 0.5 },
+			"large": {"monsters": 0.2, "decor": 0.2, "passage": 0.5},
 			"huge": {"special": 0.7, "monsters": 0.3, "decor": 0.2},
 			"corridor": {"monsters": -0.1, "trap": 0.3, "obstacle": 0.1 },
 			"dead-end": {"monsters": 0.5, "treasure": 0.5, "crap": 0.3},
