@@ -7,6 +7,35 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 	{
 		super.createLevel(id);
 
+		this.initParams();
+
+		this.splitRect(this.level.size);
+		this.addNeighbours();
+	
+		this.addPaths('o');
+
+	  var connectedPercent = this.connected.length /  this.rooms.length;
+
+		// this.addRooms(this.rooms[0], 18);
+		// this.addSecrets(_.sample(this.connected), 3);
+
+		this.addTags();
+		this.addDependencies();
+
+		if (this.level.is('arena')) {
+			this.addBorders();
+			this.connectArena();
+		}
+
+		this.addStairs();
+		this.paint();
+		this.debugClick();	
+
+		return this.level;
+	}
+
+	initParams()
+	{
 		var baseTile = this.level.getAttrib('base-tile');
 
 		if (baseTile) {
@@ -39,31 +68,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		if (this.level.is('huge-rooms')) {
 			this.params.room_max_size = 35;
 		}
-
-		this.splitRect(this.level.size);
-		this.addNeighbours();
-		
-		// this.addRooms(this.rooms[0], 18);
-		// this.addSecrets(_.sample(this.connected), 3);
-
-		this.addPaths('o');
-
-		this.addTags();
-		this.addDependencies();
-
-
-
-
-		if (this.level.is('arena')) {
-			this.addBorders();
-			this.connectArena();
-		}
-
-		this.addStairs();
-		this.paint();
-		this.debugClick();	
-
-		return this.level;
 	}
 
 	addPaths(id)
