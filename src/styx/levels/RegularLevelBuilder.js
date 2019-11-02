@@ -12,12 +12,20 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.splitRect(this.level.size);
 		this.addNeighbours();
 	
-		this.addPaths('o');
+		this.addPaths('+');
 
-	  var connectedPercent = this.connected.length /  this.rooms.length;
+	  var filled = this.percentFilled();
 
-		// this.addRooms(this.rooms[0], 18);
-		// this.addSecrets(_.sample(this.connected), 3);
+	  if (filled < 0.6) {
+	  	var n = Math.floor((0.6 - filled) * this.rooms.length);
+	  	var first = _.sample(this.connected);
+	  	this.addRooms(first, n);
+	  }
+
+	  this.addSecrets();
+
+	  console.log(this.percentFilled());
+
 
 		this.addTags();
 		this.addDependencies();
@@ -70,6 +78,11 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		}
 	}
 
+	percentFilled()
+	{
+		return this.connected.length /  this.rooms.length;
+	}
+
 	addPaths(id)
 	{
 		var rect = this.level.size;
@@ -103,9 +116,14 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		}
 	}
 
-	addSecrets(start, n)
+	addSecrets()
 	{
-		this.addRooms(start, n, r => r.addTag('secret'));
+	  var n = _.random(0, 4);
+
+	  if (!n) return;
+
+	  var first = _.sample(this.connected);
+		this.addRooms(first, n, r => r.addTag('secret'));
 	}
 
 	addBorders()
