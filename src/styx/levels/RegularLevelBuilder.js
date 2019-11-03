@@ -11,35 +11,77 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 		this.splitRect(this.level.size);
 		this.addNeighbours();
+
+		// //o---o layout
+		// this.addRooms(this.rooms[0], 10, null, true);
+		// this.addRooms(this.findRoomAt(79, 20), 10, null, true);
+
+		// this.addPath({x:0,y:0}, {x:79,y:20}, (r) => {
+		// 	if (r.x > 20 && r.x < 50)	r.addTag('corridor');
+		// });
 	
 		this.addPaths('+');
 
 	  var filled = this.percentFilled();
 
-	  if (filled < 0.6) {
-	  	var n = Math.floor((0.6 - filled) * this.rooms.length);
-	  	var first = _.sample(this.connected);
-	  	this.addRooms(first, n);
-	  }
+	  // if (filled < 0.6) {
+	  // 	var n = Math.floor((0.6 - filled) * this.rooms.length);
+	  // 	var first = _.sample(this.connected);
+	  // 	this.addRooms(first, n);
+	  // }
 
-	  this.addSecrets();
+	  // this.addSecrets();
 
-	  console.log(this.percentFilled());
-
+		this.addArena(new Styx.levels.Room(this.level, 40,0,40,20));
 
 		this.addTags();
 		this.addDependencies();
 
-		if (this.level.is('arena')) {
-			this.addBorders();
-			this.connectArena();
-		}
+		// if (this.level.is('arena')) {
+		// 	this.addBorders(this.connected);
+		// 	this.connectArena(this.connected);
+		// }
 
 		this.addStairs();
 		this.paint();
 		this.debugClick();	
 
 		return this.level;
+	}
+
+	addArena(arena)
+	{
+		arena.fill('floor');
+
+		var intersect = [];
+		var inside = [];
+
+		for (let r of this.connected) {
+			if (r.intersect(arena)) {
+				if (r.inside(arena)) 
+					inside.push(r); 
+				else 
+					intersect.push(r);
+			}
+		}
+
+		//clean up
+		this.connected = _.difference(this.connected, inside);
+
+		//manage border rooms
+		this.addBorders(intersect);
+		this.connectArena(intersect);
+
+
+		// for (let r of this.rooms) {
+		// 	if (Styx.Random.bet(.2) && r.intersect(arena)) {
+		// 		rooms.push(r);
+		// 		this.connected.push(r);
+		// 	}
+		// }
+
+		//console.log(intersect, inside);
+
 	}
 
 	initParams()
@@ -126,16 +168,16 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		this.addRooms(first, n, r => r.addTag('secret'));
 	}
 
-	addBorders()
+	addBorders(rooms)
 	{
-		for (let room of this.connected) {
+		for (let room of rooms) {
 			room.clone().expand(1,1).fill('wall');
 		}
 	}
 
-	connectArena()
+	connectArena(rooms)
 	{
-		for (let room of this.connected) {
+		for (let room of rooms) {
 			for(let nb of room.neighbours) {				
 				if (!nb.isConnected()) {
 					if (Styx.Random.bet(.5)) {
@@ -147,8 +189,23 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		}
 	}
 
+	addRandom(n) {
+		for(let i = 0; i < n; i++) {
+			var room = null;
+			for (let j = 0; j < 10; j++) {
+				room = _.sample(this.rooms);
+				if (!room.isConnected()) break;
+			}
+			if (!room) return;
 
-	addRooms(start, n, f = null)
+			this.connected.push(room);
+			for (let nb of room.neighbours) {
+				if (nb.isConnected()) this.connect(room, nb);
+			}
+		}
+	}
+
+	addRooms(start, n, f = null, local = false)
 	{
 		var path = [];
 
@@ -167,7 +224,7 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			var tried = 0;
 
 			while(next.isConnected()) {
-				start = _.sample(this.connected);
+				start = _.sample(local? path : this.connected);
 				next = _.sample(start.neighbours);
 				if (++tried > 20) break main;
 			}
@@ -178,13 +235,14 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		}
 	}
 
-	addPath(pos1, pos2)
+	addPath(pos1, pos2, f = null)
 	{
 		var start = this.findRoomAt(pos1.x, pos1.y);
 		if (!start) return;
 
 		if (!start.isConnected()) {
-			this.connected.push(start);			
+			this.connected.push(start);
+			if (f) f(start);
 		}
 
 		while (true) {
@@ -197,6 +255,8 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			if (start.distance(pos2) <= next.distance(pos2)) return;
 
 			this.connect(start, next);
+			if (f) f(next);				
+			
 			start = next;
 		}
 	}
