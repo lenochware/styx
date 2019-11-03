@@ -51,34 +51,39 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 	addArena(arena)
 	{
-		arena.fill('floor');
+		arena.fill('blood_floor');
 
 		var intersect = [];
 		var inside = [];
+		var insideConnected = [];
 
-		for (let r of this.connected) {
+		for (let r of this.rooms) {
 			if (r.intersect(arena)) {
-				if (r.inside(arena)) 
+				if (r.inside(arena)) {
 					inside.push(r); 
-				else 
+					if (r.isConnected()) insideConnected.push(r); 
+				}
+				else {
 					intersect.push(r);
+				}
 			}
 		}
 
 		//clean up
-		this.connected = _.difference(this.connected, inside);
+		this.connected = _.difference(this.connected, insideConnected);
+
+		//add rooms
+		// for (let r of inside) {
+		// 	if (Styx.Random.bet(.2)) {
+		// 		intersect.push(r);
+		// 		this.connected.push(r);
+		// 	}
+		// }
 
 		//manage border rooms
 		this.addBorders(intersect);
 		this.connectArena(intersect);
 
-
-		// for (let r of this.rooms) {
-		// 	if (Styx.Random.bet(.2) && r.intersect(arena)) {
-		// 		rooms.push(r);
-		// 		this.connected.push(r);
-		// 	}
-		// }
 
 		//console.log(intersect, inside);
 
