@@ -95,7 +95,7 @@ Styx.levels.LevelBuilder = class
 			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
 				room.addTag('corridor');
 			}
-			else {
+			else if (!room.is('corridor')) { //can be tagged corridor from previous steps
 				room.addTag('room');
 			}
 
@@ -204,12 +204,10 @@ Styx.levels.LevelBuilder = class
 		$("body").on("click", (e) => {
 			var p = $(e.target).data().pos.split(',');
 			var pos = {x:Number(p[0]),y:Number(p[1])}
-			var room = null;
-			for (room of this.rooms) {
-				if (room.isInsidePoint(pos.x, pos.y)) break;
-			}
 
-			console.log(room);
+			var r = this.findRoomAt(pos.x, pos.y);
+
+			console.log(pos, r, r.params.tags);
 
 			// $('[data-pos="'+$(e.target).data().pos+'"]').css('color', 'green');
 

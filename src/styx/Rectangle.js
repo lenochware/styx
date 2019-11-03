@@ -219,7 +219,7 @@ Styx.Rectangle = class
 		var x2 = Math.min(this.x + this.width, rect.x + rect.width);
 		var y2 = Math.min(this.y + this.height, rect.y + rect.height);
 
-		return new this.constructor(x1, y1, x2 - x1, y2 - y1);
+		return new Styx.Rectangle(x1, y1, x2 - x1, y2 - y1);
 	}
 
 	split(nx, ny)
