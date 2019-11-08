@@ -26,7 +26,9 @@
 			"dead-end": {"monsters": 0.5, "treasure": 0.5, "crap": 0.3},
 			"crossroad": {"treasure": 0.2, "crap": 0.3},
 			"secret": {"special": 0.7, "valuables": 0.7, "treasure": 0.5},
-			"center-pillar": {"monster": 0.5, "item": 0.5, "hidden": 0.5}
+			"center-pillar": {"monster": 0.5, "item": 0.5, "hidden": 0.5},
+			"arena-border": { "walls": 1 },
+			"arena": { "walls": 1 }
 		},
 
 		"paint": {
@@ -38,6 +40,7 @@
 			"center-pillar": {"painter": "random", "id": "wall", "pos": "center"},
 			"item": {"painter": "random", "id": "small_shield"},
 			"valuables": {"painter": "random", "id": "bread"},
+			"walls": 	{"painter": "fill", "id": "wall", "pos": "walls"},
 			"forest": {"painter": "simplex", 
 				//"id": ["none", "shallow_water", "high_grass", "tree"],
 				"id": ["none", "none", "none", "shallow_water"],

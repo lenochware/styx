@@ -199,6 +199,12 @@ Styx.levels.LevelBuilder = class
 		return obj.id;
 	}
 
+	remove(rooms)
+	{
+		_.each(rooms, r => r.doors = []);
+		this.connected = _.difference(this.connected, rooms);
+	}
+
 	debugClick()
 	{
 		$("body").on("click", (e) => {

@@ -39,6 +39,8 @@ Styx.levels.Painter = class
 
 	paintDoors(room)
 	{
+		if (room.doors.length == 0) return;
+
 		var secret = room.is('secret');
 
 		if (!secret) {

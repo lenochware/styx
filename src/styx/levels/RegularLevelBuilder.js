@@ -32,61 +32,17 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 	  // this.addSecrets();
 
-		this.addArena(new Styx.levels.Room(this.level, 40,0,40,20));
+		var arena = new Styx.levels.Arena(this, 40,0,40,20);
+		arena.build();
 
 		this.addTags();
 		this.addDependencies();
-
-		// if (this.level.is('arena')) {
-		// 	this.addBorders(this.connected);
-		// 	this.connectArena(this.connected);
-		// }
 
 		this.addStairs();
 		this.paint();
 		this.debugClick();	
 
 		return this.level;
-	}
-
-	addArena(arena)
-	{
-		arena.fill('blood_floor');
-
-		var intersect = [];
-		var inside = [];
-		var insideConnected = [];
-
-		for (let r of this.rooms) {
-			if (r.intersect(arena)) {
-				if (r.inside(arena)) {
-					inside.push(r); 
-					if (r.isConnected()) insideConnected.push(r); 
-				}
-				else {
-					intersect.push(r);
-				}
-			}
-		}
-
-		//clean up
-		this.connected = _.difference(this.connected, insideConnected);
-
-		//add rooms
-		// for (let r of inside) {
-		// 	if (Styx.Random.bet(.2)) {
-		// 		intersect.push(r);
-		// 		this.connected.push(r);
-		// 	}
-		// }
-
-		//manage border rooms
-		this.addBorders(intersect);
-		this.connectArena(intersect);
-
-
-		//console.log(intersect, inside);
-
 	}
 
 	initParams()
@@ -171,27 +127,6 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 	  var first = _.sample(this.connected);
 		this.addRooms(first, n, r => r.addTag('secret'));
-	}
-
-	addBorders(rooms)
-	{
-		for (let room of rooms) {
-			room.clone().expand(1,1).fill('wall');
-		}
-	}
-
-	connectArena(rooms)
-	{
-		for (let room of rooms) {
-			for(let nb of room.neighbours) {				
-				if (!nb.isConnected()) {
-					if (Styx.Random.bet(.5)) {
-						room.addDoor(nb, this.params.door_type);
-					}
-					break;
-				}
-			}
-		}
 	}
 
 	addRandom(n) {
