@@ -92,7 +92,7 @@ Styx.levels.LevelBuilder = class
 	addTags()
 	{
 		for (let room of this.connected) {
-			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1) {
+			if (Styx.Random.bet(this.params.corridor_ratio) && room.doors.length > 1 && !room.is('arena')) {
 				room.addTag('corridor');
 			}
 			else if (!room.is('corridor')) { //can be tagged corridor from previous steps

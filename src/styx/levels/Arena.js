@@ -14,8 +14,10 @@ Styx.levels.Arena = class extends Styx.levels.Room
 	{
 		var garbage = [];
 
+		var bounds = this.clone().expand(1,1);
+
 		for (let r of this.builder.rooms) {
-			if (r.intersect(this)) {
+			if (r.intersect(bounds)) {
 				this.rooms.push(r);
 				if (r.inside(this)) {
 					r.addTag('arena');
@@ -32,24 +34,15 @@ Styx.levels.Arena = class extends Styx.levels.Room
 
 	connect()
 	{
-
+		for (let room of this.builder.connected) {
+			for(let nb of room.neighbours) {
+				if (nb.is('arena')) {
+					if (!nb.isConnectedWith(room)) room.addDoor(nb, 'door');
+					break;
+				}
+			}
+		}
 	}
-
-	// connectArena(rooms)
-	// {
-	// 	for (let room of rooms) {
-	// 		for(let nb of room.neighbours) {				
-	// 			if (!nb.isConnected()) {
-	// 				if (Styx.Random.bet(.5)) {
-	// 					room.addDoor(nb, this.params.door_type);
-	// 				}
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	//paintBorder(room)	{}
 
 	addRooms()
 	{
