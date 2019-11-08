@@ -55,15 +55,11 @@ Styx.levels.Arena = class extends Styx.levels.Room
 	add(room)
 	{
 		this.builder.connected.push(room);
-		//if (Styx.Random.bet(.5)) room.addTag('outside');
 	}
 
 	paint()
 	{
-		this.fill('blood_floor');
-		// for (let r of this.rooms) {
-		// 	if (r.isConnected() && !r.is('outside')) this.paintBorder(r);
-		// }
+		this.fill('floor');
 	}
 
 	build()
