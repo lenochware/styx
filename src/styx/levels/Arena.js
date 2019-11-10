@@ -37,7 +37,7 @@ Styx.levels.Arena = class extends Styx.levels.Room
 		for (let room of this.builder.connected) {
 			for(let nb of room.neighbours) {
 				if (nb.is('arena')) {
-					if (!nb.isConnectedWith(room)) room.addDoor(nb, 'door');
+					if (!room.isConnectedWith(nb)) room.addDoor(nb, 'door');
 					break;
 				}
 			}

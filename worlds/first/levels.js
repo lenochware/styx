@@ -28,7 +28,7 @@
 			"secret": {"special": 0.7, "valuables": 0.7, "treasure": 0.5},
 			"center-pillar": {"monster": 0.5, "item": 0.5, "hidden": 0.5},
 			"arena-border": { "walls": 1, "passage": -1 },
-			"arena": { "walls": 0.5, "passage": -1 }
+			"arena": { "walls": 0.5, "passage": -1, "special": 0.5 }
 		},
 
 		"paint": {
