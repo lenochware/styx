@@ -213,7 +213,7 @@ Styx.ui.InputManager = class
 	handleGameMenuCmd(command)
 	{
 		switch(command.command) {
-			case 'new-game': console.log('New game.'); break;
+			case 'new-game': this.wm.openNewGame(); break;
 			case 'save-game': 
 				this.game.saveLevel(this.game.player.level);
 			break;

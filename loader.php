@@ -60,6 +60,7 @@ class Loader {
 		return preg_replace('/\/\/.*/', '', $s);
 	}
 
+	//transform tag array to hashtable (more effective lookup)
 	function getLookup(array $list)
 	{
 		$tags = [];

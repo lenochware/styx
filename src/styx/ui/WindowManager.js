@@ -92,6 +92,15 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 		});
 	}
 
+	openNewGame()
+	{
+		this.openWindow('new-game', 600, 400, {
+			template: 'new-game',
+			player: this.game.player
+		});
+	}
+
+
 	openItemWindow(options)
 	{
 		var cmds = new Styx.ui.Commands(options.item);

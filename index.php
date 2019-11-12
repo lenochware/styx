@@ -1,18 +1,8 @@
 <?php
 
-$template = [];
-$template['game'] = $_GET['script'] ?: 'src/game.js';
-
-// foreach (rglob("src/boo/*.js") as $path) {
-//     $template['scripts'][]['path'] = $path;
-// }
-
-
-
-$template['scripts'] = scripts(file('build.txt'));
+$template = ['scripts' => scripts(file('build.txt'))];
 print paramStr(file_get_contents('index.tpl'), $template);
 die();
-
 
 function scripts($files)
 {
@@ -41,15 +31,6 @@ function paramStr($str, $param, $keepEmpty = false)
 		$newstr .= str_replace($from, $to, $str);
 	}
 	return $newstr;
-}
-
-// Does not support flag GLOB_BRACE
-function rglob($pattern, $flags = 0) {
-	$files = glob($pattern, $flags);
-	foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
-		$files = array_merge($files, rglob($dir.'/'.basename($pattern), $flags));
-	}
-	return $files;
 }
 
 ?>
