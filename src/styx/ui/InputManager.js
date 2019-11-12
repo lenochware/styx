@@ -63,6 +63,7 @@ Styx.ui.InputManager = class
 	{
 		$("body").on("click", ".command", (e) => {
 			var data = $(e.target).data();
+			if (_.isEmpty(data)) return;
 			var cmd = this.getCommand(data);
 			this.handle(cmd);
 			this.game.player.level.update();
@@ -96,7 +97,8 @@ Styx.ui.InputManager = class
 	initKeyboard()
 	{
 		$("body").on('keydown', (e) => {
-			
+
+			if (e.target.type == 'text' || e.target.type == 'textarea') return;
 			if (['Shift', 'Alt', 'Control'].includes(e.key)) return;
 
 			this.game.trigger('game-loop');
@@ -170,7 +172,7 @@ Styx.ui.InputManager = class
 			}
 		}
 
-		var cmd = this.keyBinddings[category][key];
+		var cmd = this.keyBinddings[category]? this.keyBinddings[category][key] : null;
 
 		if (!cmd) return {command: key, category: 'undefined' };
 

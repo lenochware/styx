@@ -218,7 +218,7 @@ Styx.levels.LevelBuilder = class
 	{
 		$("body").on("click", (e) => {
 			var data = $(e.target).data();
-			if (!data || !data.pos) return;
+			if (_.isEmpty(data) || !data.pos) return;
 			
 			var p = data.pos.split(',');
 			var pos = {x:Number(p[0]),y:Number(p[1])}
