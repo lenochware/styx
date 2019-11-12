@@ -3,29 +3,39 @@ Styx.levels = Styx.levels || {};
 
 Styx.levels.Arena = class extends Styx.levels.Room
 {
-	constructor(builder, x, y, width, height)
+	constructor(builder)
 	{
-		super(builder.level, x, y, width, height);
+		super(builder.level, 0, 0, 0, 0);
 		this.builder = builder;
 		this.rooms = [];
+		this.used = [];
+	}
+
+	setSize(x, y, width, height)
+	{
+		this.assign(x, y, width, height);
+		this.align(this.builder.level);
+		this.init();
 	}
 
 	init()
 	{
+		this.rooms = [];
 		var garbage = [];
 
 		var bounds = this.clone().expand(1,1);
 
 		for (let r of this.builder.rooms) {
-			if (r.intersect(bounds)) {
-				this.rooms.push(r);
-				if (r.inside(this)) {
-					r.addTag('arena');
-					if (r.isConnected()) garbage.push(r);
-				}
-				else {
-					r.addTag('arena-border');
-				}
+			if (!r.intersect(bounds)) continue;
+
+			this.rooms.push(r);
+
+			if (r.inside(this)) {
+				r.addTag('arena');
+				if (r.isConnected()) garbage.push(r);
+			}
+			else {
+				r.addTag('arena-border');
 			}
 		}
 
@@ -44,17 +54,18 @@ Styx.levels.Arena = class extends Styx.levels.Room
 		}
 	}
 
-	addRooms()
+	addRooms(p)
 	{
 		for (let r of this.rooms) {
 			if (!r.is('arena')) continue;
-			if (Styx.Random.bet(.2)) this.add(r);
+			if (Styx.Random.bet(p)) this.add(r);
 		}
 	}
 
 	add(room)
 	{
 		this.builder.connected.push(room);
+		this.used.push(room);
 	}
 
 	paint()
@@ -64,8 +75,6 @@ Styx.levels.Arena = class extends Styx.levels.Room
 
 	build()
 	{
-		this.init();
-		this.addRooms();
 		this.connect();
 		this.paint();
 	}

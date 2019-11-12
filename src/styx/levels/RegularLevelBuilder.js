@@ -32,8 +32,9 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 
 	  // this.addSecrets();
 
-		var arena = new Styx.levels.Arena(this, 40,0,40,20);
-		arena.build();
+		if (this.level.is('arena')) {
+			this.addArena(.2, .5);
+		}
 
 		this.addTags();
 		this.addDependencies();
@@ -52,9 +53,9 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 		if (baseTile) {
 			this.level.clear(baseTile);
 		}
-		else if (this.level.is('arena')) {
-			this.level.clear('floor');
-		}
+		// else if (this.level.is('arena')) {
+		// 	this.level.clear('floor');
+		// }
 		else {
 			this.level.clear('wall');
 		}
@@ -210,6 +211,24 @@ Styx.levels.RegularLevelBuilder = class extends Styx.levels.LevelBuilder
 			var room = _.sample(rooms);
 			this.addExit(room, exit);
 		}
+	}
+
+	addArena(min, max)
+	{
+		var arena = new Styx.levels.Arena(this);
+		var ls = this.level.size;
+
+		var width = Math.floor(this.level.size.width * Styx.Random.float(min, max));
+		var height = Math.min(ls.height, Math.floor(width * 0.5));
+		var x = _.random(0, ls.width - width);
+		var y = _.random(0, ls.height - height);
+
+		arena.setSize(x, y, width, height);
+
+		//console.log(arena);
+
+		arena.addRooms(Styx.Random.float(.4)+.2);
+		arena.build();
 	}
 
 }

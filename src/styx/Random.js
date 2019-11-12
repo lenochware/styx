@@ -35,10 +35,22 @@ Styx.Random = class
 		return this.integer(max - min) + min;
 	}
 
-	static float(max = null)
+	static floatmax(max)
 	{
-		return max? ROT.RNG.getUniform() * max : ROT.RNG.getUniform();
+		return max * ROT.RNG.getUniform();
 	}
+
+	static float(min, max = null)
+	{
+		if (max === null) {
+			max = min;
+			min = 0;
+			if (max === null) max = 1;
+		}
+
+		return this.floatmax(max - min) + min;
+	}
+
 
 	static chances(list)
 	{
