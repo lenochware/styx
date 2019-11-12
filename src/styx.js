@@ -11,7 +11,7 @@ game.load('world:first').then(function()
 {
 	var testLevel = false; 
 
-	var level = game.createLevel(testLevel? 'test' : 'small-cave');
+	var level = game.createLevel(testLevel? 'test' : 'first');
 	
 	player = game.get('player');
 	player.params.name = 'Conan';
@@ -20,7 +20,11 @@ game.load('world:first').then(function()
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 
 	if (testLevel) level.setXY(7, 2, 'actor', player);
-	else level.set(_.sample(level.find('floor')), 'actor', player);
+	else {
+		var tile = level.get(_.sample(level.find('floor')), 'tile');
+		if (tile.actor)	level.remove(tile.actor);
+		level.set(tile.pos, 'actor', player);
+	}
 
 	// var c = level.size.getPoint('center');
 	// level.set(c, 'actor', player);

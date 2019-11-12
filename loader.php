@@ -16,7 +16,7 @@ if ($action == 'saveLevel') {
 
 if (strpos($id, 'world:') === 0) {
 	list($temp, $name) = explode(":", $id);
-	$worldParts = ['tiles', 'items', 'actors', 'rooms', 'texts', 'actions', 'levels', 'groups'];
+	$worldParts = ['tiles', 'items', 'actors', 'texts', 'actions', 'levels'];
 
 	$world = [];
 

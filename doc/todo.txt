@@ -1,3 +1,10 @@
+- deadend, crossroad v arene nema smysl?
+- neighbours, not-x, x-only dependencies
+- vice worlds, new, load, save
+- msie - sekne se pri otevr. konzole?
+- lepsi vypocitavani small a large mistnosti (min width/height atp.)
+
+
 - stun, speed of attacks podle heavy/light wpn + strenght radsi xtra attact - aby to bylo videt
 - hungry, eat
 - poskozovani zbrani

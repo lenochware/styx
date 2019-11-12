@@ -110,6 +110,15 @@ Styx.levels.LevelBuilder = class
 
 	addDependencies()
 	{
+		if (!this.dependencies) {
+			this.dependencies = this.level.getAttrib('dependencies');
+		}
+		
+		if (!this.dependencies) {
+			console.warn('Level dependencies not found.');
+			return;
+		}
+
 		for (let i =0; i < 3 /*generations*/; i++) {
 			for (let room of this.connected) {
 				var tags = room.params.new_tags || room.params.tags;
@@ -129,7 +138,7 @@ Styx.levels.LevelBuilder = class
 		var aku = {};
 
 		if (!this.dependencies) {
-			this.dependencies = this.level.getAttrib('dependencies');
+			throw new Error('Missing dependencies.');
 		}
 
 		for (let tag of tags) {
@@ -208,7 +217,10 @@ Styx.levels.LevelBuilder = class
 	debugClick()
 	{
 		$("body").on("click", (e) => {
-			var p = $(e.target).data().pos.split(',');
+			var data = $(e.target).data();
+			if (!data || !data.pos) return;
+			
+			var p = data.pos.split(',');
 			var pos = {x:Number(p[0]),y:Number(p[1])}
 
 			var r = this.findRoomAt(pos.x, pos.y);

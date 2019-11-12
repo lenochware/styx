@@ -79,9 +79,7 @@ Styx.Game = class
 	{
 		switch (type) {
 			case 'regular': return new Styx.levels.RegularLevelBuilder();
-			case 'arena': return new Styx.levels.ArenaLevelBuilder();
 			case 'test': return new Styx.levels.TestLevelBuilder();
-			case 'random': return new Styx.levels.TestLevelBuilder();
 			default: throw new Error("Unknown level type.");
 		}
 	}

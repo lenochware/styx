@@ -12,7 +12,10 @@ Styx.levels.Painter = class
 	{
 		this.builder = builder;
 		this.level = this.builder.level;
-		this.params = this.level.getAttrib('paint');
+		this.params = this.level.getAttrib('paint', []);
+		if (this.params.length == 0) {
+			console.warn('No painters.');
+		}
 	}
 
 	paint(room)
