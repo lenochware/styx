@@ -59,7 +59,7 @@ Styx.Game = class
 
 	loadJson(id, serverId = null)
 	{
-		return $.getJSON('loader.php?id=' + (serverId || id))
+		return $.getJSON('api/?id=' + (serverId || id))
 		.done(data => {this.data[id] = data; console.log(`'${id}' loaded.`); })
 		.fail((jqxhr, textStatus, error) => { 
 			console.warn(`Loading of '${id}' failed.`); 
@@ -122,7 +122,7 @@ Styx.Game = class
 		var bundle = new Styx.Bundle();
 		bundle.put('level', level);
 
-		return $.post("loader.php?action=saveLevel&id=" + level.id, { 
+		return $.post("api/?action=saveLevel&id=" + level.id, { 
 			data: bundle.getData()})
 		.done(() => { console.log('Level saved.'); })
 		.fail((jqxhr, textStatus, error) => { 

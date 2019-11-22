@@ -2,3 +2,5 @@
 
 /_etc/*
 *.bak
+home/*
+!home/.gitkeep
