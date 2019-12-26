@@ -137,7 +137,7 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 
 	_renderLevel(panel)
 	{
-		this.game.get('renderer').render(panel.level, panel.container, {view: panel.view});
+		this.game.get('renderer').render(panel.level, panel.container, panel.view);
 	}
 
 	_renderMessages(options)

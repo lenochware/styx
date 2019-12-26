@@ -26,4 +26,5 @@ src/styx/ui/InputManager.js
 src/styx/ui/Window.js
 src/styx/ui/BaseWindowManager.js
 src/styx/ui/WindowManager.js
+src/styx/ui/Canvas.js
 src/styx/ui/Renderer.js

@@ -1,6 +1,6 @@
 {
 	"null": {
-		"render": {"char": "&nbsp;", "color": "black" },
+		"render": {"char": " ", "color": "black" },
 		"tags": ["wall", "inpenetrable", "opaque", "blocking"],
 		"name": "unknown grid",
 		"desc": "You see nothing."

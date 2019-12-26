@@ -13,6 +13,20 @@ Styx.ui.Renderer = class
 		this.game = game;
 		this.level = null;
 		this.view = null;
+		this.canvas = new Styx.ui.Canvas('#level-map', 800, 600);
+		this.canvas.setFont("bold 20px monospace");
+		this.setTileSize(15, 20);
+	}
+
+	setTileSize(w, h)
+	{
+		this.tileWidth = w;
+		this.tileHeight = h;
+	}
+
+	getTileCoords(mouseX, mouseY)
+	{
+		return {x: Math.floor(mouseX / this.tileWidth), y: Math.floor(mouseY / this.tileHeight) }
 	}
 
 	computeFov()
@@ -40,45 +54,45 @@ Styx.ui.Renderer = class
 		this.level.fov[x + ',' + y] = true;
 	}
 
-	render(level, container, params)
+
+	render(level, container, view)
 	{
 		this.level = level;
-		this.view = params.view;
+		this.view = view;
+
+		this.canvas.clear();
+		// this.rect(0,0,50,50, '#fc1090');
+		// this.text(50,50, 'pink', 'Hello world');
+		
 		this.computeFov();
 
-		$('#'+container).html(this._renderHtml());
-	}
-
-	_renderHtml(level, view)
-	{
-		var html = '';
 		for (var y = 0; y < this.view.height; y++) {
 			for (var x = 0; x < this.view.width; x++) {
-				html += this._renderTile(this.level, x + this.view.x, y + this.view.y);
+				this.renderTile(x + this.view.x, y + this.view.y);
 			}
+		}		
 
-			html += '<br>';
-		}
-
-		return html;
 	}
 
-	_renderTile(level, x, y)
+	renderTile(x, y)
 	{
 		var r = {char: "?", color: "white" };
-		var tile = level.getXY(x, y, 'tile');
+		var tile = this.level.getXY(x, y, 'tile');
 
-		if (!level.isVisible(x,y)) {
+		if (!this.level.isVisible(x,y)) {
 			r = tile.getAttrib('render');
-			return `<span class="ui-dark-gray" data-pos="${x},${y}">${r.char}</span>`;
+			this.canvas.text(x* this.tileWidth, y * this.tileHeight + 30, 'gray', r.char);
+			return;
 		}
 
-		if (tile.actor && tile.actor.isVisible()) r = tile.actor.getAttrib('render');
+		if (tile.actor && tile.actor.isVisible()) {
+			r = tile.actor.getAttrib('render');
+			if(r.char != '@') debugger;
+		}
 		else if (tile.is("hiding")) r = tile.getAttrib('render');
 		else if (tile.item)  r = tile.item.getAttrib('render');
-		else r = tile.getAttrib('render');			
-		
-		return `<span class="ui-${r.color}" data-pos="${x},${y}">${r.char}</span>`;
-	}
+		else r = tile.getAttrib('render');
 
+		this.canvas.text(x * this.tileWidth, y * this.tileHeight + 30, 'white', r.char);
+	}
 }
