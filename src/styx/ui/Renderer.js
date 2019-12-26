@@ -13,9 +13,9 @@ Styx.ui.Renderer = class
 		this.game = game;
 		this.level = null;
 		this.view = null;
-		this.canvas = new Styx.ui.Canvas('#level-map', 800, 600);
-		this.canvas.setFont("bold 20px monospace");
-		this.setTileSize(15, 20);
+		this.canvas = new Styx.ui.Canvas('#level-map', 1000, 600);
+		this.canvas.setFont("bold 18px monospace");
+		this.setTileSize(12, 18);
 	}
 
 	setTileSize(w, h)
@@ -60,10 +60,7 @@ Styx.ui.Renderer = class
 		this.level = level;
 		this.view = view;
 
-		this.canvas.clear();
-		// this.rect(0,0,50,50, '#fc1090');
-		// this.text(50,50, 'pink', 'Hello world');
-		
+		this.canvas.clear();		
 		this.computeFov();
 
 		for (var y = 0; y < this.view.height; y++) {
@@ -71,7 +68,6 @@ Styx.ui.Renderer = class
 				this.renderTile(x + this.view.x, y + this.view.y);
 			}
 		}		
-
 	}
 
 	renderTile(x, y)
@@ -81,18 +77,31 @@ Styx.ui.Renderer = class
 
 		if (!this.level.isVisible(x,y)) {
 			r = tile.getAttrib('render');
-			this.canvas.text(x* this.tileWidth, y * this.tileHeight + 30, 'gray', r.char);
+			this.canvas.text(x* this.tileWidth, y * this.tileHeight, 'gray', r.char);
 			return;
 		}
 
-		if (tile.actor && tile.actor.isVisible()) {
-			r = tile.actor.getAttrib('render');
-			if(r.char != '@') debugger;
-		}
+		if (tile.actor && tile.actor.isVisible()) r = tile.actor.getAttrib('render');
 		else if (tile.is("hiding")) r = tile.getAttrib('render');
 		else if (tile.item)  r = tile.item.getAttrib('render');
 		else r = tile.getAttrib('render');
 
-		this.canvas.text(x * this.tileWidth, y * this.tileHeight + 30, 'white', r.char);
+		this.canvas.text(x * this.tileWidth, y * this.tileHeight, Styx.ui.colors[r.color] || r.color, r.char);
 	}
+}
+
+Styx.ui.colors = {
+	'green': '#00ff00',
+	'dark-green': '#00af5f',
+	'yellow': '#ffff00',
+	'brown': '#d7af5f',
+	'dark-brown': '#af5f00',
+	'red': '#d70000',
+	'pink': '#d7005f',
+	'purple': '#ff00ff',
+	'cyan': '#00ffff',
+	'light-blue': '#5fffd7',
+	'blue': '#5c5cff',
+	'gray': '#878787',
+	'dark-gray': '#575757'
 }

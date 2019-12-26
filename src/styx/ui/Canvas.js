@@ -14,6 +14,7 @@ Styx.ui.Canvas = class
 		canvas.id = 'dungeon-view-canvas';
 		this.ctx = canvas.getContext("2d");
 		this.ctx.fillStyle = 'rgb(0,0,0)';
+		this.ctx.textBaseline = "top";
 		$(id).append(canvas);
 	}
 
