@@ -18,11 +18,6 @@ Styx.ui.Canvas = class
 		$(id).append(canvas);
 	}
 
-	on(events, f)
-	{
-		$('#dungeon-view-canvas').on(events, f);
-	}
-
 	clear()
 	{
 		this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);

@@ -24,9 +24,9 @@ Styx.ui.Renderer = class
 		this.tileHeight = h;
 	}
 
-	getTileCoords(mouseX, mouseY)
+	on(events, f)
 	{
-		return {x: Math.floor(mouseX / this.tileWidth), y: Math.floor(mouseY / this.tileHeight) }
+		$('#dungeon-view-canvas').on(events, f);
 	}
 
 	computeFov()
@@ -77,7 +77,7 @@ Styx.ui.Renderer = class
 
 		if (!this.level.isVisible(x,y)) {
 			r = tile.getAttrib('render');
-			this.canvas.text(x* this.tileWidth, y * this.tileHeight, 'gray', r.char);
+			this.canvas.text(x* this.tileWidth, y * this.tileHeight, '#666', r.char);
 			return;
 		}
 
@@ -102,6 +102,6 @@ Styx.ui.colors = {
 	'cyan': '#00ffff',
 	'light-blue': '#5fffd7',
 	'blue': '#5c5cff',
-	'gray': '#878787',
+	'gray': '#979797',
 	'dark-gray': '#575757'
 }

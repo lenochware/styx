@@ -88,10 +88,17 @@ Styx.ui.InputManager = class
 			});
 		});
 
-		$("#level-map").on("click", "span", (e) => {
-			var pos = this.strToPos($(e.target).data("pos"));
-			this.wm.showTileInfo(pos.x, pos.y);
-		});
+		$('#level-map').on('click',
+			e => {
+				var pos = this.getTilePos(e.offsetX, e.offsetY);
+				this.wm.showTileInfo(pos.x, pos.y);
+			}			
+		);
+
+		// $("#level-map").on("click", "span", (e) => {
+		// 	var pos = this.strToPos($(e.target).data("pos"));
+		// 	this.wm.showTileInfo(pos.x, pos.y);
+		// });
 	}
 
 	initKeyboard()
@@ -127,6 +134,11 @@ Styx.ui.InputManager = class
 	{
 		var p = str.split(",");
 		return {x:Number(p[0]),y:Number(p[1])};
+	}
+
+	getTilePos(mouseX, mouseY)
+	{
+		return {x: Math.floor(mouseX / 12), y: Math.floor(mouseY / 18) }
 	}
 
 	getCommand(event)
