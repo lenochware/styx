@@ -53,6 +53,7 @@ body {
 	user-select:none;
   font-weight: bold;
   font-size: 18px;
+  min-height: 600px;
 }
 
 

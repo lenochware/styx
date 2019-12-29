@@ -6,16 +6,18 @@ Styx.ui = Styx.ui || {};
  */
 Styx.ui.Canvas = class
 {
-	constructor(id, width, height)
+	constructor(containerId)
 	{
 		var canvas = document.createElement('canvas');
-		canvas.width = width;
-		canvas.height = height;
-		canvas.id = 'dungeon-view-canvas';
+		var container = $(containerId);
+		canvas.width = container.width();
+		canvas.height = container.height();
+		canvas.id = containerId + '-canvas';
 		this.ctx = canvas.getContext("2d");
 		this.ctx.fillStyle = 'rgb(0,0,0)';
 		this.ctx.textBaseline = "top";
-		$(id).append(canvas);
+		//this.ctx.scale(2, 2);
+		$(containerId).append(canvas);
 	}
 
 	clear()

@@ -13,8 +13,6 @@ Styx.ui.Renderer = class
 		this.game = game;
 		this.level = null;
 		this.view = null;
-		this.canvas = new Styx.ui.Canvas('#level-map', 1000, 600);
-		this.canvas.setFont("bold 18px monospace");
 		this.setTileSize(12, 18);
 	}
 
@@ -22,11 +20,6 @@ Styx.ui.Renderer = class
 	{
 		this.tileWidth = w;
 		this.tileHeight = h;
-	}
-
-	on(events, f)
-	{
-		$('#dungeon-view-canvas').on(events, f);
 	}
 
 	computeFov()
@@ -55,12 +48,19 @@ Styx.ui.Renderer = class
 	}
 
 
-	render(level, container, view)
+	render(panel)
 	{
-		this.level = level;
-		this.view = view;
+		this.level = panel.level;
+		this.view = panel.view;
 
+		if (!panel.canvas) {
+			panel.canvas = new Styx.ui.Canvas('#' + panel.container);
+			panel.canvas.setFont("bold 18px monospace");
+		}
+
+		this.canvas = panel.canvas;
 		this.canvas.clear();		
+
 		this.computeFov();
 
 		for (var y = 0; y < this.view.height; y++) {

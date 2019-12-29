@@ -37,6 +37,7 @@
 = BUGS =
 
 - kdyz se utopi zustane viset jeho info v sidebaru
+- use food - wear
 
 = DONE =
 
