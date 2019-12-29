@@ -80,25 +80,22 @@ Styx.ui.InputManager = class
 		});
 
 		$("#level-map").on("dblclick", (e) => {
-			var level = this.wm.getPanel('level-map').level;
-			var spos = $(e.target).data("pos");
+			var panel = this.wm.getPanel('level-map');
+			var pos = this.getTilePos(panel, e.offsetX, e.offsetY);
+			
 			this.wm.openTileWindow({
-				level: level,
-				pos: this.strToPos(spos)
+				level: panel.level,
+				pos: pos
 			});
 		});
 
 		$('#level-map').on('click',
 			e => {
-				var pos = this.getTilePos(e.offsetX, e.offsetY);
+				var panel = this.wm.getPanel('level-map');
+				var pos = this.getTilePos(panel, e.offsetX, e.offsetY);
 				this.wm.showTileInfo(pos.x, pos.y);
 			}			
 		);
-
-		// $("#level-map").on("click", "span", (e) => {
-		// 	var pos = this.strToPos($(e.target).data("pos"));
-		// 	this.wm.showTileInfo(pos.x, pos.y);
-		// });
 	}
 
 	initKeyboard()
@@ -136,9 +133,9 @@ Styx.ui.InputManager = class
 		return {x:Number(p[0]),y:Number(p[1])};
 	}
 
-	getTilePos(mouseX, mouseY)
+	getTilePos(panel, mouseX, mouseY)
 	{
-		return {x: Math.floor(mouseX / 12), y: Math.floor(mouseY / 18) }
+		return {x: Math.floor(mouseX / 12) + panel.view.x, y: Math.floor(mouseY / 18) + panel.view.y }
 	}
 
 	getCommand(event)

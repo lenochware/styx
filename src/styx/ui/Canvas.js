@@ -29,6 +29,7 @@ Styx.ui.Canvas = class
 	rect(x, y, w, h, color, fill = true)
 	{
 		this.ctx.fillStyle = color;
+		this.ctx.strokeStyle = color;
 		this.ctx.beginPath();
 		this.ctx.rect(x, y, w, h);
 

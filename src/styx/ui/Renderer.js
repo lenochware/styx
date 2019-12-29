@@ -65,19 +65,21 @@ Styx.ui.Renderer = class
 
 		for (var y = 0; y < this.view.height; y++) {
 			for (var x = 0; x < this.view.width; x++) {
-				this.renderTile(x + this.view.x, y + this.view.y);
+				this.renderTile(x, y);
 			}
-		}		
+		}
+
+		//this.canvas.rect(10, 10, 50, 50, 'green', false);
 	}
 
 	renderTile(x, y)
 	{
 		var r = {char: "?", color: "white" };
-		var tile = this.level.getXY(x, y, 'tile');
+		var tile = this.level.getXY(x + this.view.x, y + this.view.y, 'tile');
 
-		if (!this.level.isVisible(x,y)) {
+		if (!this.level.isVisible(x + this.view.x, y + this.view.y)) {
 			r = tile.getAttrib('render');
-			this.canvas.text(x* this.tileWidth, y * this.tileHeight, '#666', r.char);
+			this.canvas.text(x * this.tileWidth, y * this.tileHeight, '#666', r.char);
 			return;
 		}
 
