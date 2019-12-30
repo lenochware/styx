@@ -17,6 +17,10 @@ Styx.ui.Canvas = class
 		this.ctx.fillStyle = 'rgb(0,0,0)';
 		this.ctx.textBaseline = "top";
 		//this.ctx.scale(2, 2);
+
+		this.tileWidth = 12;
+		this.tileHeight = 18;
+
 		$(containerId).append(canvas);
 	}
 
@@ -49,4 +53,16 @@ Styx.ui.Canvas = class
 		this.ctx.fillStyle = color;
 		this.ctx.fillText(s, x, y); 
 	}
+
+	setTileSize(w, h)
+	{
+		this.tileWidth = w;
+		this.tileHeight = h;
+	}
+
+	tilePos(screenX, screenY)
+	{
+		return {x: Math.floor(screenX / this.tileWidth), y: Math.floor(screenY / this.tileHeight) }
+	}
+
 }

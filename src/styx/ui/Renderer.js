@@ -13,13 +13,6 @@ Styx.ui.Renderer = class
 		this.game = game;
 		this.level = null;
 		this.view = null;
-		this.setTileSize(12, 18);
-	}
-
-	setTileSize(w, h)
-	{
-		this.tileWidth = w;
-		this.tileHeight = h;
 	}
 
 	computeFov()
@@ -68,8 +61,6 @@ Styx.ui.Renderer = class
 				this.renderTile(x, y);
 			}
 		}
-
-		//this.canvas.rect(10, 10, 50, 50, 'green', false);
 	}
 
 	renderTile(x, y)
@@ -79,7 +70,7 @@ Styx.ui.Renderer = class
 
 		if (!this.level.isVisible(x + this.view.x, y + this.view.y)) {
 			r = tile.getAttrib('render');
-			this.canvas.text(x * this.tileWidth, y * this.tileHeight, '#666', r.char);
+			this.canvas.text(x * this.canvas.tileWidth, y * this.canvas.tileHeight, '#666', r.char);
 			return;
 		}
 
@@ -88,7 +79,7 @@ Styx.ui.Renderer = class
 		else if (tile.item)  r = tile.item.getAttrib('render');
 		else r = tile.getAttrib('render');
 
-		this.canvas.text(x * this.tileWidth, y * this.tileHeight, Styx.ui.colors[r.color] || r.color, r.char);
+		this.canvas.text(x * this.canvas.tileWidth, y * this.canvas.tileHeight, Styx.ui.colors[r.color] || r.color, r.char);
 	}
 }
 

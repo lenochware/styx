@@ -81,21 +81,35 @@ Styx.ui.InputManager = class
 
 		$("#level-map").on("dblclick", (e) => {
 			var panel = this.wm.getPanel('level-map');
-			var pos = this.getTilePos(panel, e.offsetX, e.offsetY);
+			var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
 			
 			this.wm.openTileWindow({
 				level: panel.level,
-				pos: pos
+				pos: {x: pos.x + panel.view.x, y: pos.y + panel.view.y}
 			});
 		});
 
 		$('#level-map').on('click',
 			e => {
 				var panel = this.wm.getPanel('level-map');
-				var pos = this.getTilePos(panel, e.offsetX, e.offsetY);
-				this.wm.showTileInfo(pos.x, pos.y);
+				var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
+				this.wm.showTileInfo(pos.x + panel.view.x, pos.y + panel.view.y);
+				this.markTile(panel, pos);
 			}			
 		);
+	}
+
+	markTile(panel, pos)
+	{
+		  //refresh
+			this.wm._renderLevel(panel);
+
+			panel.canvas.rect(
+				pos.x * panel.canvas.tileWidth, 
+				pos.y * panel.canvas.tileHeight, 
+				panel.canvas.tileWidth, 
+				panel.canvas.tileHeight, 'red', false
+			);		
 	}
 
 	initKeyboard()
@@ -131,11 +145,6 @@ Styx.ui.InputManager = class
 	{
 		var p = str.split(",");
 		return {x:Number(p[0]),y:Number(p[1])};
-	}
-
-	getTilePos(panel, mouseX, mouseY)
-	{
-		return {x: Math.floor(mouseX / 12) + panel.view.x, y: Math.floor(mouseY / 18) + panel.view.y }
 	}
 
 	getCommand(event)

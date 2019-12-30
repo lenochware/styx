@@ -2,8 +2,8 @@
 /* Styx */
 
 //Styx.Random.setSeed(123);
-var view = new Styx.Rectangle(0,0,80,30);
-//var view = new Styx.Rectangle(0,0,40,20);
+//var view = new Styx.Rectangle(0,0,80,30);
+var view = new Styx.Rectangle(0,0,40,20);
 
 var game = new Styx.Game();
 
