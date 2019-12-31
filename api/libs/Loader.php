@@ -4,13 +4,6 @@ class Loader {
 
 	protected $json;
 
-
-	function outputJson(array $data)
-	{
-	  header('Content-Type: application/json; charset=utf-8');
-	  die(json_encode($data, JSON_UNESCAPED_UNICODE/*|JSON_PRETTY_PRINT*/));
-	}
-
 	function removeComments($s)
 	{
 		return preg_replace('/\/\/.*/', '', $s);
@@ -29,8 +22,16 @@ class Loader {
 
 	function loadJsonFile($path)
 	{
+		if (!file_exists($path)) {
+			throw new Exception("File not found: ".$path);
+		}
+
 		$s = $this->removeComments(file_get_contents($path));
 		$this->json = json_decode($s, true);
+		
+		if (json_last_error() != JSON_ERROR_NONE) {
+			throw new Exception(json_last_error_msg());
+		}
 
 		foreach ($this->json as $k => $obj) {
 			if (!is_array($obj) or !$obj['extends']) continue;
