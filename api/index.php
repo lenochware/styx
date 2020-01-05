@@ -9,7 +9,7 @@ $restApi = new RestApi();
 $routes = function($r) {
     $r->addRoute('POST', 'login', 'login');
     $r->addRoute('GET', 'worlds', 'worlds/index');
-    $r->addRoute('GET', 'worlds/{name}', 'worlds/show');
+    $r->addRoute('GET', 'worlds/{name}', 'worlds/get');
     //$r->addRoute('GET', 'test/{id:\d+}[/{title}]', 'test/test');
     // // {id} must be a number (\d+)
     // $r->addRoute('GET', 'user/{id:\d+}', 'get_user_handler');
