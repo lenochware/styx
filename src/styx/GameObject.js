@@ -14,14 +14,18 @@ Styx.GameObject = class
 		this.game = game;
 		this.category = category;
 		this.id = id;
+
+		/** Parameters array. */
 		this.params = params;
 	}
 
+	/** Save game object into persistent storage. */
 	storeInBundle(bundle) {
 		bundle.put('_className_', 'Styx.GameObject');
 		bundle.put('_args_', [this.category, this.id, this.params]);
 	}
 
+	/** Load game object from persistent storage. */
 	restoreFromBundle(bundle) {
 	}	
 
