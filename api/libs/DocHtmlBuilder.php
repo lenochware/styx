@@ -29,7 +29,7 @@ class DocHtmlBuilder
 		$c['family'] = $this->linkedList($c['children']);
 		$c['properties'] = $this->memberList($c['properties']);
 		$c['methods'] = $this->memberList($c['methods']);
-		$c['parent'] = $c['parent']? $this->classLink($c['parent']) : 'none';
+		$c['parent'] = $this->parentList($c);
 
 		$html = $this->paramStr(
 			"<a name='{name}'></a><h2>{name}</h2><pre>{comment}</pre>
@@ -37,11 +37,23 @@ class DocHtmlBuilder
 			<h3>Properties</h3>
 			{properties}
 			<h3>Methods</h3>
-			{methods}
-			<h3>Family</h3>
-			{family}",
+			{methods}".($c['family']? "<h3>Family</h3>
+						{family}" : ""),
 			 $c);
 		return $html;
+	}
+
+	function parentList($c)
+	{
+		 if (!$c['parent'])  return '<pre>none</pre>';
+
+		 $parents = [];
+		 while ($c['parent']) {
+		 	$parents[] = $this->classLink($c['parent']);
+		 	$c = $this->classes[$c['parent']];
+		 }
+
+		 return implode(' : ', $parents);
 	}
 
 	function linkedList($names)
@@ -51,7 +63,7 @@ class DocHtmlBuilder
 		$html = '';
 
 		foreach ($names as $name) {
-			$html .= $this->classLink($name);
+			$html .= '<li>' . $this->classLink($name);
 			$children = $this->classes[$name]['children'];
 			if ($children) $html .= $this->linkedList($children);
 		}
@@ -61,12 +73,13 @@ class DocHtmlBuilder
 
 	function memberList($members)
 	{
-		if (!$mwmbers) return '';
+		if (!$members) return '<pre>undocumented / empty</pre>';
 
 		$html = '';
 
 		foreach ($members as $m) {
-			$html .= $this->paramStr("<pre>{comment}\n<b style='color:green'>{name}</b></pre>", $m);
+			$m['comment'] = str_replace("\t", "", $m['comment']);
+			$html .= $this->paramStr("<pre>{comment}\n<b style='color:blue'>{name}</b></pre>", $m);
 		}
 
 		return $html;
@@ -76,7 +89,7 @@ class DocHtmlBuilder
 
 	function classLink($name)
 	{
-		return "<li><a href=\"#$name\">$name</a>";
+		return "<a href=\"#$name\">$name</a>";
 	}
 
 	function paramStr($str, $param, $keepEmpty = false)
