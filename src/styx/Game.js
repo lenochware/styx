@@ -13,8 +13,14 @@ Styx.Game = class
 	{
 		this.services = {};
 		this.data = {};
+
+		/** Current game time in ticks (turns) from start. */
 		this.time = 0;
+
+		/** @param {Styx.DungeonBase} Database of game objects. */
 		this.db = null;
+
+		/** @param {Styx.actors.Player} Current player. */
 		this.player = null;
 	}
 
@@ -84,6 +90,10 @@ Styx.Game = class
 		}
 	}
 
+	/** 
+	 * Create new level.
+	 * @return {Styx.levels.Level}
+	 */
 	createLevel(id)
 	{
 		var type = this.db.getAttrib('levels', id, 'type');
@@ -91,6 +101,9 @@ Styx.Game = class
 		return builder.createLevel(id);
 	}
 
+	/** 
+	 * Change level to new level (id) (Usually when player goes to exit).
+	 */
 	changeLevel(id)
 	{
 		var wm = this.get('window-manager');
@@ -117,6 +130,7 @@ Styx.Game = class
 		console.log('changeLevel');
 	}
 
+	/** Save level to server. (Save game) */
 	saveLevel(level)
 	{
 		var bundle = new Styx.Bundle();
@@ -132,6 +146,7 @@ Styx.Game = class
 
 	}
 
+	/** Load level from server. (Load game) */
 	loadLevel(id)
 	{
 
