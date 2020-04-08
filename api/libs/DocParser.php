@@ -12,11 +12,12 @@ class DocParser
 	{
 		$this->str = file_get_contents($fileName);
 
-		preg_match_all(self::DOCBLOCK, $this->str, $matches);
+		preg_match_all(self::DOCBLOCK, $this->str, $matches, PREG_OFFSET_CAPTURE);
 
-		foreach ($matches[0] as $i => $comment) 
+		foreach ($matches[0] as $i => $found) 
 		{
-			$line = $this->getNextLine($comment);
+			$comment = $found[0];
+			$line = $this->getNextLine($found);
 			$c = $this->getClass($line);
 			
 			if ($c) {
@@ -71,10 +72,10 @@ class DocParser
 		return $this->classes;
 	}
 
-	protected function getNextLine($docBlock)
+	protected function getNextLine($found)
 	{
-		$pos = strpos($this->str, $docBlock);
-		$eol = strpos($this->str, "\n", $pos + strlen($docBlock));
+		$pos = $found[1];
+		$eol = strpos($this->str, "\n", $pos + strlen($found[0]));
 		$next = strpos($this->str, "\n", $eol + 1);
 
 		return trim(substr($this->str, $eol + 1, $next - $eol - 1));

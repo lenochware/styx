@@ -1,5 +1,8 @@
 var Styx = Styx || {};
 
+/**
+ * Rectangle class with methods such as resize, align, move, split, intersect etc.
+ */
 Styx.Rectangle = class
 {
 	constructor(x, y, w, h)

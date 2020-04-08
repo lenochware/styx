@@ -12,7 +12,10 @@ Styx.DungeonObject = class extends Styx.GameObject
 	{
 		super(category, id, params);
 
+		/** Link to {Styx.levels.Level} where object resides. */
 		this.level = null;
+
+		/** Position {x,y} in the level. */
 		this.pos = params.pos || null;
 	}
 
@@ -28,6 +31,7 @@ Styx.DungeonObject = class extends Styx.GameObject
 		this.pos = bundle.get('pos');
 	}	
 
+	/** Distance from another entity which has position (pos). */
 	distance(entity)
 	{
 		if (!this.pos || !entity.pos) {
@@ -38,11 +42,19 @@ Styx.DungeonObject = class extends Styx.GameObject
 		return Math.max(Math.abs(this.pos.x - entity.pos.x), Math.abs(this.pos.y - entity.pos.y));
 	}
 
+	/** 
+	 * Is object near the player?
+	 * For example nearby monsters activity will be reported.
+	 */
 	isNear()
 	{
 		return this.game.player? (this.distance(this.game.player) < 6) : false;
 	}
 
+	/** 
+	 * Return positions of surrounding tiles.
+	 * @return {array} pos
+	 */
 	surroundings()
 	{
 		return [
@@ -57,12 +69,20 @@ Styx.DungeonObject = class extends Styx.GameObject
 		];
 	}
 
+	/** 
+	 * Return tile where object is standing/placed or null.
+	 * @return {Styx.levels.Tile} tile
+	 */
 	getTile()
 	{
 		if (!this.level || !this.pos) return null;
 		return this.level.get(this.pos, 'tile');
 	}
 
+	/** 
+	 * Return action (id) from list of actions which object can perform.
+	 * @return {struct} action
+	 */
 	getAction(id)
 	{
 		var a = this.game.db.getObject('actions', id);
@@ -77,6 +97,10 @@ Styx.DungeonObject = class extends Styx.GameObject
 		return Styx.Random.pick(attacks, chances);
 	}
 
+	/** 
+	 * Choose attack type, if object can attack or damage something.
+	 * @return {struct} action
+	 */
 	pickAttack()
 	{
 		var id = this.pickAttackId();
@@ -85,14 +109,25 @@ Styx.DungeonObject = class extends Styx.GameObject
 		return a;
 	}
 
+	/** 
+	 * Perform defense on (attack) and return resulting (attack).
+	 * @abstract
+	 * @return {struct} action
+	 */
 	defense(attack)
 	{
 		return attack;
 	}
 
+	/** 
+	 * Damage this object with strenght (points) and damage type (type).
+	 * @abstract
+	 */
 	damage(src, type, points) {}
 
+	/** @abstract */
 	die()	{}
 
+	/** @abstract */
 	isDestroyed()	{}	
 }

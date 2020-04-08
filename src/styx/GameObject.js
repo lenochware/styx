@@ -22,7 +22,7 @@ Styx.GameObject = class
 		this.category = category;
 		this.id = id;
 
-		/** @param {dictionary} */
+		/** @param {struct} */
 		this.params = params;
 	}
 
