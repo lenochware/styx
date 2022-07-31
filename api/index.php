@@ -2,8 +2,8 @@
 
 require "libs/Loader.php";
 
-$id = $_GET['id'];
-$action = $_GET['r'];
+$id = $_GET['id'] ?? '';
+$action = $_GET['r'] ?? '';
 
 $baseDir = "../";
 

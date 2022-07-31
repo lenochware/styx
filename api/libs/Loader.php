@@ -33,7 +33,7 @@ class Loader {
 		$this->json = json_decode($s, true);
 
 		foreach ($this->json as $k => $obj) {
-			if (!is_array($obj) or !$obj['extends']) continue;
+			if (!is_array($obj) or empty($obj['extends'])) continue;
 			$this->extendObject($k, $obj['extends']);
 		}
 
@@ -52,7 +52,7 @@ class Loader {
 
 	function extendObject($id, $parentId, $level = 1)
 	{
-		if ($this->json[$parentId]['extends'] and $level < 50) {
+		if (isset($this->json[$parentId]['extends']) and $level < 50) {
 			$this->extendObject($parentId, $this->json[$parentId]['extends'], ++$level);
 		}
 

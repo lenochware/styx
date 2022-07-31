@@ -17,7 +17,7 @@ function paramStr($str, $param, $keepEmpty = false)
 {
 	preg_match_all("/{([a-z0-9_.]+)}/i", $str, $found);
 	if (!$found[1]) return $str;
-	if (!is_array($param[0])) $param = array($param);
+	if (!is_array(array_get($param, 0))) $param = array($param);
 
 	$n = count($param);
 	$newstr = '';
@@ -31,6 +31,15 @@ function paramStr($str, $param, $keepEmpty = false)
 		$newstr .= str_replace($from, $to, $str);
 	}
 	return $newstr;
+}
+
+function array_get($a, $key, $default = null)
+{
+	if (is_array($key)) {
+		return isset($a[$key[0]])? (isset($a[$key[0]][$key[1]])? $a[$key[0]][$key[1]] : $default) : $default;
+	}
+
+	return isset($a[$key])? $a[$key] : $default;
 }
 
 ?>
