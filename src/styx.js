@@ -11,7 +11,8 @@ game.load('world:first').then(function()
 {
 	var testLevel = false; 
 
-	var level = game.createLevel(testLevel? 'test' : 'first');
+	//var level = game.createLevel(testLevel? 'test' : 'first');
+  var level = game.createLevelJson('');
 	
 	player = game.get('player');
 	player.params.name = 'Conan';

@@ -42,6 +42,13 @@ elseif($id == 'templates')
 
 	$loader->outputJson($templates);
 }
+elseif($id == 'level')
+{
+	$json = file_get_contents('http://localhost/lgen/?r=api');
+
+	header('Content-Type: application/json; charset=utf-8');
+	die($json);
+}
 else {
 	header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
 	die("{error: \"Invalid loader id '$id'\"}");	
