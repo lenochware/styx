@@ -3,7 +3,7 @@
 		"name": "The Town",
 		"type": "regular",
 		"base-tile": "earth_wall",
-		"tags": ["small", "broken", "lot-of-corridors"],
+		"tags": ["large"],
 		"exits": [
 			{"id": "small-cave", "tile": "stairs-down"},
 			{"id": "wilderness", "tile": "stairs-down"}
