@@ -102,7 +102,7 @@ Styx.Game = class
     for (let i = 0; i < level.size.width * level.size.height; i++) {
       let tile = json.tiles[i];
       if (tile[0]) level.set(i, 'id', tile[0]);
-      if (tile[1]) level.set(i, 'item', new Styx.actors.Item({id: tile[1]}));
+      if (tile[1]) level.set(i, 'item', new Styx.items.Item({id: tile[1]}));
       if (tile[2]) level.set(i, 'actor', new Styx.actors.Monster({id: tile[2]}));
     }
 

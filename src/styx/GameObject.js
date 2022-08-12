@@ -52,7 +52,7 @@ Styx.GameObject = class
 
 	is(tag)
 	{
-    return (this.id == tag || this.getAttrib("tags").includes(tag));
+    return (this.id == tag || this.getAttrib("tags", []).includes(tag));
 	}
 
 	toString()
