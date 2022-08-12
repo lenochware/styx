@@ -6,8 +6,29 @@
 		"desc": "You see nothing."
 	},
 
+	"none": {
+		"render": {"char": " ", "color": "black" },
+		"tags": ["wall", "inpenetrable", "opaque", "blocking"],
+		"name": "unknown grid",
+		"desc": "You see nothing."
+	},
+
 	"wall": {
 		"render": {"char": "#", "color": "gray" },
+		"tags": ["wall", "hiding", "opaque", "blocking"],
+		"name": "stone wall",
+		"desc": "You see nothing interesting."
+	},
+
+	"granite-wall": {
+		"render": {"char": "#", "color": "gray" },
+		"tags": ["wall", "hiding", "opaque", "blocking"],
+		"name": "stone wall",
+		"desc": "You see nothing interesting."
+	},
+
+	"wall-moss": {
+		"render": {"char": "#", "color": "green" },
 		"tags": ["wall", "hiding", "opaque", "blocking"],
 		"name": "stone wall",
 		"desc": "You see nothing interesting."
@@ -57,6 +78,13 @@
 		"desc": "You see nothing interesting."
 	},
 
+	"dirt": {
+		"render": {"char": ".", "color": "brown" },
+		"tags": ["floor"],
+		"name": "mud",
+		"desc": "You see nothing interesting."
+	},
+
 	"rocks": {
 		"render": {"char": "^", "color": "gray" },
 		"tags": ["sticky"],
@@ -71,7 +99,7 @@
 		"desc": "You see nothing interesting."
 	},
 
-	"high_grass": {
+	"grass": {
 		"render": {"char": ";", "color": "dark-green" },
 		"tags": ["hiding", "hiding_mon","floor"],
 		"name": "high grass",
@@ -92,11 +120,25 @@
 		"desc": "You see nothing interesting."
 	},
 
+	"blood-floor": {
+		"render": {"char": ".", "color": "red" },
+		"tags": ["floor"],
+		"name": "blood stains",
+		"desc": "Blood stains on the floor looks suspicious."
+	},
+
 	"blood_floor": {
 		"render": {"char": ".", "color": "red" },
 		"tags": ["floor"],
 		"name": "blood stains",
 		"desc": "Blood stains on the floor looks suspicious."
+	},
+
+	"wet-floor": {
+		"render": {"char": ".", "color": "blue" },
+		"tags": ["floor"],
+		"name": "wet floor",
+		"desc": ""
 	},
 
 	"stairs-up": {
@@ -117,6 +159,13 @@
 		"render": {"char": "+", "color": "brown" },
 		"tags": ["hiding", "door", "opaque", "blocking"],
 		"name": "wooden door",
+		"desc": "You see nothing interesting."
+	},
+
+	"secret-door": {
+		"render": {"char": "%", "color": "gray" },
+		"family": ["ground", "device", "door"],
+		"name": "secret door",
 		"desc": "You see nothing interesting."
 	},
 

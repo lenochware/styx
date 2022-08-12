@@ -40,6 +40,78 @@
 		"desc": "It is rat with size of lion and red glowing eyes."
 	},
 
+	"frog": {
+		"lvl": 1,
+		"xp": 3,
+		"tags": ["actor", "rat", "fast", "aggresive", "smart"],
+		"render": {"char": "r", "color": "brown" },
+		"health": 20,
+		"attacks": ["bite"],
+		"corpse": ["rat's skull", "bones", "bone"],
+		"drop": ["none", "corpse"],
+		"name": "giant rat",
+		"desc": "It is rat with size of lion and red glowing eyes."
+},
+
+"shark": {
+		"lvl": 1,
+		"xp": 3,
+		"tags": ["actor", "rat", "fast", "aggresive", "smart"],
+		"render": {"char": "r", "color": "brown" },
+		"health": 20,
+		"attacks": ["bite"],
+		"corpse": ["rat's skull", "bones", "bone"],
+		"drop": ["none", "corpse"],
+		"name": "giant rat",
+		"desc": "It is rat with size of lion and red glowing eyes."
+},
+
+"mage": {
+		"lvl": 1,
+		"xp": 3,
+		"tags": ["actor", "rat", "fast", "aggresive", "smart"],
+		"render": {"char": "r", "color": "brown" },
+		"health": 20,
+		"attacks": ["bite"],
+		"corpse": ["rat's skull", "bones", "bone"],
+		"drop": ["none", "corpse"],
+		"name": "giant rat",
+		"desc": "It is rat with size of lion and red glowing eyes."
+},
+
+
+"spider": {
+
+},
+
+"kobold": {
+
+},
+
+"scorpion": {
+
+},
+
+"wild-dog": {
+
+},
+
+"wolf": {
+
+},
+
+"mummy": {
+
+},
+
+"golem": {
+
+},
+
+"dragon": {
+
+},
+
 	"worm": {
 		"lvl": 1,
 		"xp": 6,
@@ -51,6 +123,18 @@
 		"name": "huge worm",
 		"desc": "Huge worm with giant mouth filled with teeth."
 	},
+
+	"centipede": {
+		"lvl": 1,
+		"xp": 6,
+		"tags": ["actor", "worm"],
+		"render": {"char": "w", "color": "white" },
+		"health": 25,
+		"attacks": ["bite"],
+		"corpse": "strange slime",
+		"name": "huge worm",
+		"desc": "Huge worm with giant mouth filled with teeth."
+},
 
 	"skeleton": {
 		"lvl": 2,
@@ -76,6 +160,20 @@
 		"drop": ["none", "rock", "rubble"],
 		"name": "wall monster",
 		"desc": "Huge boulder with stone fist."
+	},
+
+	"white-snake": {
+		"lvl": 1,
+		"xp": 6,
+		"tags": ["actor", "neutral", "moving-random", "awake", "slow", "swimmer"],
+		"render": {"char": "J", "color": "yellow" },
+		"health": 10,
+		"attacks": ["bite"],
+		"name": "great yellow snake",
+		"corpse": "snake skin",
+		"drop": ["none", "fish_food"],
+		"drop-chances": [5,1],
+		"desc": "Great yellow snake is moving slowly on the floor."
 	},
 
 	"snake": {
