@@ -96,7 +96,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 			if (a.failed) {
 				//this.game.message('failed-' + a.failed, "msg-info", this, target);
 			}
-			else {
+			else if(this.isVisible()) {
 				this.game.message('attack-' + a.type, "msg-info", this, this.target);
 				if (a.special == 'multiple') {
 					this.game.message('attack-' + a.type, "msg-info", this, this.target); //hack
@@ -192,7 +192,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 			src.addExperience(this);
 		}
 		else {
-			this.game.message("{0} dies.", "msg-info", this);
+			if (this.isVisible()) this.game.message("{0} dies.", "msg-info", this);
 		}
 
 		var tile = this.getTile();

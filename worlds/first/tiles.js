@@ -28,9 +28,9 @@
 	},
 
 	"wall-moss": {
-		"render": {"char": "#", "color": "green" },
+		"render": {"char": "#", "color": "dark-green" },
 		"tags": ["wall", "hiding", "opaque", "blocking"],
-		"name": "stone wall",
+		"name": "moss covered wall",
 		"desc": "You see nothing interesting."
 	},
 

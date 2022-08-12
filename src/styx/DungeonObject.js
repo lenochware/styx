@@ -43,6 +43,11 @@ Styx.DungeonObject = class extends Styx.GameObject
 		return this.game.player? (this.distance(this.game.player) < 6) : false;
 	}
 
+  isVisible()
+  {
+    return this.level.isVisible(this.pos.x, this.pos.y);
+  }
+
 	surroundings()
 	{
 		return [
