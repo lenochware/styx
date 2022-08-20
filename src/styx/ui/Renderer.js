@@ -38,6 +38,7 @@ Styx.ui.Renderer = class
 	{
 		if (!this.view.isInsidePoint(x, y)) return;
 		this.level.fov[x + ',' + y] = true;
+		this.level.visited[x + ',' + y] = true;
 	}
 
 
@@ -70,6 +71,9 @@ Styx.ui.Renderer = class
 
 		if (!this.level.isVisible(x + this.view.x, y + this.view.y)) {
 			r = tile.getAttrib('render');
+
+			if (!this.level.visited[(x + this.view.x) + ',' + (y + this.view.y)]) return;
+
 			this.canvas.text(x * this.canvas.tileWidth, y * this.canvas.tileHeight, '#666', r.char);
 			return;
 		}

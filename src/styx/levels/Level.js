@@ -12,6 +12,7 @@ Styx.levels.Level = class extends Styx.GameObject
 		super('levels', id, {});
 		this.tiles = [];
 		this.fov = {};
+		this.visited = {};
 		this.size = this._createRect();
 		this.actors = [];
 		this.exits = {};
