@@ -3,7 +3,12 @@
 class Loader {
 
 	protected $json;
+	protected $dir;
 
+	function __construct($dir)
+	{
+		$this->dir = $dir;
+	}
 
 	function outputJson(array $data)
 	{
@@ -58,6 +63,23 @@ class Loader {
 		}
 
 		return $this->json;
+	}
+
+	function load($id)
+	{
+		$path = $this->dir."worlds/first/save/$id.json";
+		if (!file_exists($path)) return '';
+		return file_get_contents($path);
+	}
+
+	function save($id, $data)
+	{
+		file_put_contents($this->dir."worlds/first/save/$id.json", $_POST['data']);
+	}
+
+	function create($id)
+	{
+		return file_get_contents('http://localhost/lgen/?r=api&id='.$id);
 	}
 
 	function extendObject($id, $parentId, $level = 1)
