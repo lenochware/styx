@@ -11,6 +11,7 @@ Styx.ui.InputManager = class
 	{
 		this.game = game;
 		this.wm = this.game.get('window-manager');
+    this.paused = false;
 
 		this.keyBinddings = {
 			player: {
@@ -205,6 +206,8 @@ Styx.ui.InputManager = class
 
 	handle(command)
 	{
+		if (this.paused) return false;
+
 		switch (command.category)
 		{
 			case 'main': this.handleMainCmd(command); break;
