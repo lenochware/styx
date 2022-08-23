@@ -44,7 +44,7 @@ elseif($id == 'templates')
 }
 elseif($id == 'level')
 {
-	$json = file_get_contents('http://localhost/lgen/?r=api');
+	$json = file_get_contents('http://localhost/lgen/?r=api&id=cellars-1');
 
 	header('Content-Type: application/json; charset=utf-8');
 	die($json);
