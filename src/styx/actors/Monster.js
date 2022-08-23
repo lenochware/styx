@@ -58,6 +58,8 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 				continue;
 			}
 
+			if (this.isDestroyed()) return; //hack: skip dead by environment
+			
 			this.walk() || this.attack() || this.wait();
 		}
 
@@ -144,6 +146,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		if (id == 'none') return;
 
 		var obj = this.level.spawn(this.pos, id);
+		if (!obj /* pos occupied */) return;
 
 		if (id == 'corpse') {
 			var corpse = this.getAttrib('corpse');

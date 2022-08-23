@@ -95,7 +95,7 @@ Styx.Game = class
   createLevelJson(id)
   {
     let json = game.data.level;
-    let level = new Styx.levels.Level('test');
+    let level = new Styx.levels.Level(id);
     level.size.assign(0 , 0, json.width, json.height);
     level.clear('floor');
 
