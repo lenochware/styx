@@ -93,7 +93,7 @@ Styx.Game = class
 	}
 
   createLevelJson(id)
-  {
+  {``
     let json = game.data.level;
     let level = new Styx.levels.Level(id);
     level.size.assign(0 , 0, json.width, json.height);
@@ -112,27 +112,40 @@ Styx.Game = class
 	changeLevel(id)
 	{
 		var wm = this.get('window-manager');
+    var input = this.get('window-manager');
 		var currentLevel = this.player.level;
-		var level = this.createLevel(id);
-		var exitFound = null;
 		
-		for (let exit of _.values(level.exits)) {
-			if (exit.id == currentLevel.id) {
-				exitFound = exit;
-				break;
-			}
-		}
+    const promise = new Promise((resolve, reject) => {
+      input.paused = true;
+      this.loadJson('level', id);
+    });
 
-		if (!exitFound) {
-			console.warn('Missing exit in the level.');
-			return;
-		}
+    promise.then(
+    () => {
+      const level = this.createLevelJson(id);
 
-		currentLevel.remove(this.player);
-		level.set(exitFound.pos, 'actor', this.player);
-		wm.getPanel('level-map').level = level;
-		
-		console.log('changeLevel');
+      var exitFound = null;
+      
+      for (let exit of _.values(level.exits)) {
+        if (exit.id == currentLevel.id) {
+          exitFound = exit;
+          break;
+        }
+      }
+
+      if (!exitFound) {
+        console.warn('Missing exit in the level.');
+        return;
+      }
+
+      currentLevel.remove(this.player);
+      level.set(exitFound.pos, 'actor', this.player);
+      wm.getPanel('level-map').level = level;
+      
+      input.paused = false;
+      
+      console.log('changeLevel');
+    });
 	}
 
 	saveLevel(level)
