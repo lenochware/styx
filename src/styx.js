@@ -7,7 +7,7 @@ var view = new Styx.Rectangle(0,0,80,30);
 
 var game = new Styx.Game();
 
-game.load('world:first').then(function() 
+game.load().then(function() 
 {
 	var testLevel = false; 
 

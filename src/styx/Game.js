@@ -57,22 +57,22 @@ Styx.Game = class
 		console.log(msg);
 	}
 
-	loadJson(id, serverId = null)
+	loadJson(action, id = '')
 	{
-		return $.getJSON('api/?id=' + (serverId || id))
-		.done(data => {this.data[id] = data; console.log(`'${id}' loaded.`); })
+		return $.getJSON(`api/?r=${action}&id=${id}`)
+		.done(data => {this.data[action] = data; console.log(`'${action} ${id}' loaded.`); })
 		.fail((jqxhr, textStatus, error) => { 
-			console.warn(`Loading of '${id}' failed.`); 
-			console.warn(error); 
+			console.warn(`Loading of '${action} ${id}' failed.`); 
+			console.warn(error);
 		});
 	}
 
-	load(id)
+	load()
 	{
 		return Promise.all([
 			this.loadJson('templates'),
-			this.loadJson('dungeon-base', id),
-			this.loadJson('level'),
+			this.loadJson('dungeon-base'),
+			this.loadJson('level', 'cellars-1'),
 		]).then(() => this.db = this.get('dungeon-base'));
 	}
 

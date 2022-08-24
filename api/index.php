@@ -10,7 +10,7 @@ $loader = new Loader($baseDir);
 
 switch ($action)
 {	
-	case 'world':
+	case 'dungeon-base':
 		$worldParts = ['tiles', 'items', 'actors', 'texts', 'actions', 'levels'];
 
 		$world = [];
@@ -42,7 +42,7 @@ switch ($action)
 		$loader->save($id, $_POST['data']);
 	break;
 
-	case 'enter':
+	case 'level':
 		//$json = file_get_contents('../data/lgen.json');
 		$json = $loader->load($id) ?: $loader->create($id);
 		header('Content-Type: application/json; charset=utf-8');
