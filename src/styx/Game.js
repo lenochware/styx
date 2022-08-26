@@ -72,7 +72,7 @@ Styx.Game = class
 		return Promise.all([
 			this.loadJson('templates'),
 			this.loadJson('dungeon-base'),
-			this.loadJson('level', 'cellars-1'),
+			this.loadJson('level', 'city'),
 		]).then(() => this.db = this.get('dungeon-base'));
 	}
 
@@ -97,6 +97,7 @@ Styx.Game = class
     let json = game.data.level;
     let level = new Styx.levels.Level(id);
     level.size.assign(0 , 0, json.width, json.height);
+    level.exits = json.exits;
     level.clear('floor');
 
     for (let i = 0; i < level.size.width * level.size.height; i++) {
@@ -115,19 +116,15 @@ Styx.Game = class
     var input = this.get('window-manager');
 		var currentLevel = this.player.level;
 		
-    const promise = new Promise((resolve, reject) => {
-      input.paused = true;
-      this.loadJson('level', id);
-    });
-
-    promise.then(
+    input.paused = true;
+    this.loadJson('level', id).then(
     () => {
       const level = this.createLevelJson(id);
 
       var exitFound = null;
       
       for (let exit of _.values(level.exits)) {
-        if (exit.id == currentLevel.id) {
+        if (exit.levelId == currentLevel.id) {
           exitFound = exit;
           break;
         }
@@ -141,6 +138,7 @@ Styx.Game = class
       currentLevel.remove(this.player);
       level.set(exitFound.pos, 'actor', this.player);
       wm.getPanel('level-map').level = level;
+      wm.render();
       
       input.paused = false;
       
