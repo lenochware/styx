@@ -13,12 +13,6 @@ src/styx/actors/Monster.js
 src/styx/DungeonBase.js
 src/styx/Game.js
 src/styx/Rectangle.js
-src/styx/levels/Room.js
-src/styx/levels/Arena.js
-src/styx/levels/Painter.js
-src/styx/levels/LevelBuilder.js
-src/styx/levels/RegularLevelBuilder.js
-src/styx/levels/TestLevelBuilder.js
 src/styx/levels/Level.js
 src/styx/levels/Tile.js
 src/styx/ui/Commands.js
