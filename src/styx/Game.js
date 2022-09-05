@@ -59,8 +59,11 @@ Styx.Game = class
 
 	loadJson(action, id = '')
 	{
-		return $.getJSON(`api/?r=${action}&id=${id}`)
-		.done(data => {this.data[action] = data; console.log(`'${action} ${id}' loaded.`); })
+		return $.getJSON(`../../lgen/?r=api/${action}&id=${id}`)
+		.done(data => {
+			if (action == 'objects') action = 'dungeon-base';
+			this.data[action] = data; console.log(`'${action} ${id}' loaded.`); 
+		})
 		.fail((jqxhr, textStatus, error) => { 
 			console.warn(`Loading of '${action} ${id}' failed.`); 
 			console.warn(error);
@@ -71,7 +74,7 @@ Styx.Game = class
 	{
 		return Promise.all([
 			this.loadJson('templates'),
-			this.loadJson('dungeon-base'),
+			this.loadJson('objects'),
 			this.loadJson('level', 'city'),
 		]).then(() => this.db = this.get('dungeon-base'));
 	}
