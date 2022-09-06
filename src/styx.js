@@ -9,10 +9,10 @@ var game = new Styx.Game();
 
 game.load().then(function() 
 {
-	var testLevel = false; 
-
-  var level = game.createLevelJson('city');
 	
+	var level = game.createLevelJson('city');
+	
+	var testLevel = false; 
 	player = game.get('player');
 	player.params.name = 'Conan';
 

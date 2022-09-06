@@ -31,7 +31,6 @@ Styx.Game = class
 	make(className, options)
 	{
 		switch (className) {
-			case 'level-builder': return new Styx.levels.LevelBuilder;
 			case 'input-manager': return new Styx.ui.InputManager;
 			case 'renderer': return new Styx.ui.Renderer;
 			case 'player': return new Styx.actors.Player;
@@ -77,22 +76,6 @@ Styx.Game = class
 			this.loadJson('objects'),
 			this.loadJson('level', 'city'),
 		]).then(() => this.db = this.get('dungeon-base'));
-	}
-
-	getLevelBuilder(type)
-	{
-		switch (type) {
-			case 'regular': return new Styx.levels.RegularLevelBuilder();
-			case 'test': return new Styx.levels.TestLevelBuilder();
-			default: throw new Error("Unknown level type.");
-		}
-	}
-
-	createLevel(id)
-	{
-		var type = this.db.getAttrib('levels', id, 'type');
-		var builder = this.getLevelBuilder(type);
-		return builder.createLevel(id);
 	}
 
   createLevelJson(id)
