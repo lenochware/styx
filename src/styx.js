@@ -18,7 +18,9 @@ game.load().then(function()
 	//player.conditions.add('Poisoned', 5);
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 
-	var tile = level.get(_.sample(level.find('floor')), 'tile');
+	let pos = game.data.level['player-pos'] || _.sample(level.find('floor'));
+
+	let tile = level.get(pos, 'tile');
 	if (tile.actor)	level.remove(tile.actor);
 	level.set(tile.pos, 'actor', player);
 
