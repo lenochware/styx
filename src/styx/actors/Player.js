@@ -174,6 +174,13 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.spendTime();
 	}
 
+	drink(key)
+	{
+		var item = this.inventory.remove(key);
+		this.game.info("You drink {0}.", item);
+		this.spendTime();
+	}	
+
 	run(pos)
 	{
 		if (this.disturbed) {

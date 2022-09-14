@@ -32,15 +32,21 @@ Styx.ui.Commands = class
 
 		list.push({command: 'drop', label: '(D)rop', hotkey: 'd'});
 		
-		if (inv.isWearing(this.item)) {
-			list.push({command: 'unwear', label: '(T)ake off', hotkey: 't'});
-		}
-		else {
-			list.push({command: 'wear', label: '(W)ear', hotkey: 'w'});
+		if (this.item.is('wearable')) {
+			if (inv.isWearing(this.item)) {
+				list.push({command: 'unwear', label: '(T)ake off', hotkey: 't'});
+			}
+			else {
+				list.push({command: 'wear', label: '(W)ear', hotkey: 'w'});
+			}
 		}
 
 		if (this.item.is('food')) {
 			list.push({command: 'eat', label: '(E)at', hotkey: 'e'});
+		}
+
+		if (this.item.is('drink')) {
+			list.push({command: 'drink', label: '(Q)uaff', hotkey: 'q'});
 		}
 
 		return list;

@@ -309,6 +309,11 @@ Styx.ui.InputManager = class
 				p.eat(command.key);
 				this.wm.closeWindow();
 			break;
+			case 'drink':
+				p.drink(command.key);
+				this.wm.closeWindow();
+			break;
+
 		}
 	}
 }
