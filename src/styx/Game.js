@@ -130,12 +130,12 @@ Styx.Game = class
     });
   }
 
-	saveLevel(level)
+	saveLevel(id, level)
 	{
 		var bundle = new Styx.Bundle();
 		bundle.put('level', level);
 
-		return $.post("api/?action=saveLevel&id=" + level.id, { 
+		return $.post("api/?action=save&id=" + id, { 
 			data: bundle.getData()})
 		.done(() => { console.log('Level saved.'); })
 		.fail((jqxhr, textStatus, error) => { 
@@ -147,7 +147,7 @@ Styx.Game = class
 
 	loadLevel(id)
 	{
-
+		console.warn('Load level not implemented.');
 	}
 
 	on(eventName, callback, params = {})
