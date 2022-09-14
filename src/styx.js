@@ -10,21 +10,17 @@ var game = new Styx.Game();
 game.load().then(function() 
 {
 	
-	var level = game.createLevelJson('city');
+	var level = game.createLevelJson(game.data.level);
 	
-	var testLevel = false; 
 	player = game.get('player');
 	player.params.name = 'Conan';
 
 	//player.conditions.add('Poisoned', 5);
 	//level.find('door').each(pos => level.set(pos, 'id', 'open_door'));
 
-	if (testLevel) level.setXY(7, 2, 'actor', player);
-	else {
-		var tile = level.get(_.sample(level.find('floor')), 'tile');
-		if (tile.actor)	level.remove(tile.actor);
-		level.set(tile.pos, 'actor', player);
-	}
+	var tile = level.get(_.sample(level.find('floor')), 'tile');
+	if (tile.actor)	level.remove(tile.actor);
+	level.set(tile.pos, 'actor', player);
 
 	// var c = level.size.getPoint('center');
 	// level.set(c, 'actor', player);
