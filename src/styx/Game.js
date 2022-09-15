@@ -16,6 +16,7 @@ Styx.Game = class
 		this.time = 0;
 		this.db = null;
 		this.player = null;
+		this.API_URL = '../../lgen/?r=api/';
 	}
 
 	get(className, options)
@@ -58,7 +59,7 @@ Styx.Game = class
 
 	loadJson(action, id = '')
 	{
-		return $.getJSON(`../../lgen/?r=api/${action}&id=${id}`)
+		return $.getJSON(this.API_URL + `${action}&id=${id}`)
 		.done(data => {
 			if (action == 'objects') action = 'dungeon-base';
 			this.data[action] = data; console.log(`'${action} ${id}' loaded.`); 
@@ -135,7 +136,7 @@ Styx.Game = class
 		var bundle = new Styx.Bundle();
 		bundle.put('level', level);
 
-		return $.post("api/?action=save&id=" + id, { 
+		return $.post(this.API_URL + "save&id=" + id, { 
 			data: bundle.getData()})
 		.done(() => { console.log('Level saved.'); })
 		.fail((jqxhr, textStatus, error) => { 
@@ -147,7 +148,30 @@ Styx.Game = class
 
 	loadLevel(id)
 	{
-		console.warn('Load level not implemented.');
+		$.getJSON(this.API_URL + `load&id=${id}`)
+		.done(data => {
+
+			const wm = this.get('window-manager');
+			const input = this.get('window-manager');
+			const currentLevel = this.player.level;
+
+			input.paused = true;
+
+			const bundle = new Styx.Bundle(data);
+			const level = bundle.get('level');
+
+			currentLevel.remove(this.player);
+			level.setXY(20,10, 'actor', this.player);
+			wm.getPanel('level-map').level = level;
+			wm.render();
+			
+			input.paused = false;	  
+			
+			console.log('Level changed.');
+		})
+		.fail((jqxhr, textStatus, error) => { 
+			console.warn(`Load level failed.`); 
+		});	
 	}
 
 	on(eventName, callback, params = {})
