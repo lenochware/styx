@@ -11,7 +11,7 @@ Styx.ui.InputManager = class
 	{
 		this.game = game;
 		this.wm = this.game.get('window-manager');
-    this.paused = false;
+		this.paused = false;
 
 		this.keyBinddings = {
 			player: {
@@ -240,9 +240,14 @@ Styx.ui.InputManager = class
 			case 'new-game': this.wm.openNewGame(); break;
 			case 'save-game': 
 				this.game.saveLevel('test');
+				this.wm.closeWindow();
+				this.game.message("Game saved.");
 			break;
-			case 'load-game': 
+			case 'load-game':
+				if (!confirm("Load saved game?")) return;
 				this.game.loadLevel('test');
+				this.wm.closeWindow();
+				this.game.message("Game loaded.");
 			break;
 
 			case 'help': console.log('Help.'); break;
