@@ -239,7 +239,7 @@ Styx.ui.InputManager = class
 		switch(command.command) {
 			case 'new-game': this.wm.openNewGame(); break;
 			case 'save-game': 
-				this.game.saveLevel('test', this.game.player.level);
+				this.game.saveLevel('test');
 			break;
 			case 'load-game': 
 				this.game.loadLevel('test');

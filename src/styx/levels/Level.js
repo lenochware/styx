@@ -32,7 +32,7 @@ Styx.levels.Level = class extends Styx.GameObject
 
 		for (let tile of this.tiles) {
 			tiles.push(tile.id);
-			if (tile.actor) actors.push(tile.actor);
+			if (tile.actor && !tile.actor.isPlayer()) actors.push(tile.actor);
 			if (tile.item) items.push(tile.item);
 		}
 

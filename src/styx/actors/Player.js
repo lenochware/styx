@@ -298,4 +298,23 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.level.updated = false;
 	}
 
+	storeInBundle(bundle) {
+		super.storeInBundle(bundle);
+		bundle.put('_className_', 'Styx.actors.Player');
+		//bundle.put('_args_', [this.id]);
+		bundle.put('inventory', this.inventory);
+		bundle.put('gold', this.gold);
+		bundle.put('strength', this.strength);
+		bundle.put('lvl', this.lvl);
+	}
+
+	restoreFromBundle(bundle) {
+		super.restoreFromBundle(bundle);
+		this.inventory = bundle.get('inventory');
+		this.inventory.owner = this;
+		this.gold = bundle.get('gold');
+		this.strength = bundle.get('strength');
+		this.lvl = bundle.get('lvl');
+	}
+
 }

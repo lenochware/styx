@@ -148,6 +148,26 @@ Styx.actors.Inventory = class
 		return points;
 	}
 
+	storeInBundle(bundle) {
+		bundle.put('_className_', 'Styx.actors.Inventory');
+		//bundle.put('_args_', [this.id]);
+
+		const b = new Styx.Bundle();
+		for(let key of Object.keys(this.belongings)) {
+			b.put(key, this.belongings[key]);
+		}
+
+		bundle.put('belongings', b.data);
+	}
+
+	restoreFromBundle(bundle) {
+		const b = new Styx.Bundle();
+		b.data = bundle.get('belongings');
+		for(let key of Object.keys(b.data)) {
+			this.belongings[key] = b.get(key);
+		}
+
+	}
 
 	getContent()
 	{

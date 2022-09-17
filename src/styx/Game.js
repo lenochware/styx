@@ -99,7 +99,7 @@ Styx.Game = class
   changeLevel(id)
   {
 	var wm = this.get('window-manager');
-	var input = this.get('window-manager');
+	var input = this.get('input-manager');
 	var currentLevel = this.player.level;
 	
 	input.paused = true;
@@ -131,10 +131,11 @@ Styx.Game = class
     });
   }
 
-	saveLevel(id, level)
+	saveLevel(id)
 	{
 		var bundle = new Styx.Bundle();
-		bundle.put('level', level);
+		bundle.put('level', this.player.level);
+		bundle.put('player', this.player);
 
 		return $.post(this.API_URL + "save&id=" + id, { 
 			data: bundle.getData()})
@@ -152,22 +153,22 @@ Styx.Game = class
 		.done(data => {
 
 			const wm = this.get('window-manager');
-			const input = this.get('window-manager');
-			const currentLevel = this.player.level;
+			const input = this.get('input-manager');
 
 			input.paused = true;
 
 			const bundle = new Styx.Bundle(data);
 			const level = bundle.get('level');
 
-			currentLevel.remove(this.player);
-			level.setXY(20,10, 'actor', this.player);
+			this.player = bundle.get('player');
+
+			level.set(this.player.pos, 'actor', this.player);
 			wm.getPanel('level-map').level = level;
 			wm.render();
 			
 			input.paused = false;	  
 			
-			console.log('Level changed.');
+			console.log('Level loaded.');
 		})
 		.fail((jqxhr, textStatus, error) => { 
 			console.warn(`Load level failed.`); 
