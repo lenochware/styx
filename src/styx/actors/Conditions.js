@@ -14,7 +14,7 @@ Styx.actors.ConditionGroup = class
 		this.target = target;
 	}
 
-	add(className, duration, points = 0)
+	add(className, duration, points = 0, onadd = true)
 	{
 		var ClassObj = Styx.actors.conditions[className];
 
@@ -25,7 +25,7 @@ Styx.actors.ConditionGroup = class
 
 		var m = new ClassObj(this, className, duration, points);
 		this.members[className] = m;
-		m.onAdd();
+		if (onadd) m.onAdd();
 	}
 
 	remove(className)
@@ -61,6 +61,19 @@ Styx.actors.ConditionGroup = class
 		return _.map(this.members, m => m.name());
 	}
 
+	getArray()
+	{
+		return _.map(this.members, m => m.value());
+	}
+
+	setArray(values)
+	{
+		this.members = {};
+		for(let m of values) {
+			this.add(m.id, m.duration, m.points, false);
+		}
+	}
+
 }
 
 Styx.actors.Condition = class
@@ -84,6 +97,11 @@ Styx.actors.Condition = class
 	{
 		if (!this.target.isNear()) return;
 		this.game.message(m, cssClass, args);
+	}
+
+	value()
+	{
+		return {id: this.id, duration: this.duration, points: this.points};
 	}
 
 	onAdd() {}

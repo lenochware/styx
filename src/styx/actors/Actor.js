@@ -24,14 +24,16 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		bundle.put('_className_', 'Styx.actors.Actor');
 		bundle.put('_args_', [this.params]);
 		bundle.put('health', this.health);
+		bundle.put('conditions', this.conditions.getArray());
 		//target?
-		//conditions?
 		//time?
 	}
 
 	restoreFromBundle(bundle) {
 		super.restoreFromBundle(bundle);
 		this.health = bundle.get('health');
+		this.conditions = new Styx.actors.ConditionGroup(this);
+		this.conditions.setArray(bundle.get('conditions'));
 	}	
 
 	getConditions()
