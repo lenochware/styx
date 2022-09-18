@@ -34,7 +34,7 @@ Styx.Game = class
 		switch (className) {
 			case 'input-manager': return new Styx.ui.InputManager;
 			case 'renderer': return new Styx.ui.Renderer;
-			case 'player': return new Styx.actors.Player;
+			//case 'player': return new Styx.actors.Player;
 			case 'dungeon-base': return new Styx.DungeonBase;
 			case 'window-manager': return new Styx.ui.WindowManager;
 			case 'helpers': return new Styx.utils.TemplateHelpers;

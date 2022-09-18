@@ -12,7 +12,7 @@ game.load().then(function()
 	
 	var level = game.createLevelJson(game.data.level);
 	
-	player = game.get('player');
+	const player = new Styx.actors.Player;
 	player.params.name = 'Conan';
 
 	//player.conditions.add('Poisoned', 5);
@@ -43,6 +43,7 @@ game.load().then(function()
 
 function updateView()
 {
-	var view = wm.getPanel('level-map').view;
+	const player = game.player;
+	const view = wm.getPanel('level-map').view;
 	view.center(player.pos.x, player.pos.y).align(player.level.size);
 }

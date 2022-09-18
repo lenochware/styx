@@ -12,10 +12,6 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	{
 		super(params);
 
-		if (!this.is('neutral')) {
-			this.target = this.game.player;
-		}
-
 		if (this.is('slow')) {
 			this.tick = 14;
 		}
@@ -82,6 +78,15 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		}
 
 		super.damage(src, type, points);
+	}
+
+	attack(target = null)
+	{
+		if (!this.target && !this.is('neutral')) {
+			this.target = this.game.player;
+		}
+
+		super.attack(target);
 	}
 
 	walk()
