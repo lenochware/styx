@@ -36,6 +36,13 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 	showTileInfo(x, y)
 	{
 		var level = this.getPanel('level-map').level;
+		
+		if (!level.isVisited(x,y)) {
+			$("#object-info").html("");
+			$("#quick-message").html("");
+			return;
+		}
+
 		var obj = level.isVisible(x, y)? level.getXY(x, y, 'tile').getVisible() : level.getXY(x, y, 'tile');
 
 		var cmdRun = { command: 'run', label: "Run", key: "." };

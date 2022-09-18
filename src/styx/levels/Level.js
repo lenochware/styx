@@ -39,8 +39,7 @@ Styx.levels.Level = class extends Styx.GameObject
 		bundle.put('items', items);
 		bundle.put('actors', actors);
 		bundle.put('tiles', tiles);
-
-		//bundle.put('fov', this.fov);
+		bundle.put('visited', this.visited);
 	}
 
 	restoreFromBundle(bundle) {
@@ -66,7 +65,7 @@ Styx.levels.Level = class extends Styx.GameObject
 			this.set(obj.pos, 'item', obj);
 		}
 
-		//this.fov = bundle.get('fov');
+		this.visited = bundle.get('visited');
 	}
 
 	_createRect()
@@ -222,6 +221,11 @@ Styx.levels.Level = class extends Styx.GameObject
 	{
 		return this.fov[x + ',' + y]? true : false;
 	}
+
+	isVisited(x, y)
+	{
+		return this.visited[x + ',' + y]? true : false;
+	}	
 
 	remove(entity)
 	{
