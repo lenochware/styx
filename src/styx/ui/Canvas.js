@@ -16,7 +16,9 @@ Styx.ui.Canvas = class
 		this.ctx = canvas.getContext("2d");
 		this.ctx.fillStyle = 'rgb(0,0,0)';
 		this.ctx.textBaseline = "top";
-		//this.ctx.scale(2, 2);
+		
+		this.offset = {x:0,y:0};
+		this.scale = 1;
 
 		this.tileWidth = 12;
 		this.tileHeight = 18;
@@ -62,7 +64,19 @@ Styx.ui.Canvas = class
 
 	tilePos(screenX, screenY)
 	{
-		return {x: Math.floor(screenX / this.tileWidth), y: Math.floor(screenY / this.tileHeight) }
+		return {
+			x: Math.floor((screenX - this.offset.x) / (this.scale * this.tileWidth)), 
+			y: Math.floor((screenY - this.offset.y) / (this.scale * this.tileHeight))
+		}
 	}
 
+	resetTransform()
+	{
+		this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+	}
+
+	applyTransform()
+	{
+		this.ctx.setTransform(this.scale, 0, 0, this.scale, this.offset.x, this.offset.y);
+	};
 }

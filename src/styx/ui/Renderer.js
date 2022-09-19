@@ -13,6 +13,7 @@ Styx.ui.Renderer = class
 		this.game = game;
 		this.level = null;
 		this.view = null;
+		this.canvas = null;
 	}
 
 	computeFov()
@@ -53,8 +54,9 @@ Styx.ui.Renderer = class
 		}
 
 		this.canvas = panel.canvas;
-		this.canvas.clear();		
-
+		this.canvas.clear();
+		this.canvas.applyTransform();
+	
 		this.computeFov();
 
 		for (var y = 0; y < this.view.height; y++) {
