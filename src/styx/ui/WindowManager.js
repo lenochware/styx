@@ -131,6 +131,12 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 		});
 	}
 
+	zoom(factor)
+	{
+		const r = this.game.get('renderer');
+		r.canvas.scale += factor;
+	}
+
 	_renderSideBar(options)
 	{
 		var p = this.game.player;

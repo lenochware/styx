@@ -40,6 +40,8 @@ Styx.ui.InputManager = class
 				'Shift+ArrowRight': {command: 'move-view', dir: [1,0]},
 				'Shift+ArrowUp': {command: 'move-view', dir: [0,-1]},
 				'Shift+ArrowDown': {command: 'move-view', dir: [0,1]},
+				'+': {command: 'zoom', factor: 0.1},
+				'-': {command: 'zoom', factor: -0.1},
 			},
 			inventory: {
 			},
@@ -127,7 +129,11 @@ Styx.ui.InputManager = class
 			this.handle(command);
 			if (level) level.update();
 			
-			if (command.command == 'move-view') return;
+			if (command.command == 'move-view') 
+			{
+				e.preventDefault();
+				return;
+			}
 
 			this.wm.render();
 
@@ -231,6 +237,7 @@ Styx.ui.InputManager = class
 		switch(command.command) {
 			case 'game-menu': this.wm.openGameMenu(); break;
 			case 'move-view': this.wm.moveView(command.dir); break;
+			case 'zoom': this.wm.zoom(command.factor);
 		}
 	}
 
