@@ -12,6 +12,7 @@ Styx.ui.InputManager = class
 		this.game = game;
 		this.wm = this.game.get('window-manager');
 		this.paused = false;
+		this.mouse = null;
 
 		this.keyBinddings = {
 			player: {
@@ -59,12 +60,30 @@ Styx.ui.InputManager = class
 
 	init()
 	{
-		this.initMouse();
 		this.initKeyboard();
+		this.initMouse();
 	}
 
 	initMouse()
 	{
+		this.mouse = {
+			x: 0, y: 0, 
+			buttons: 0, 
+			deltaY: 0, 
+			clickX: 0, clickY: 0, 
+			offsetX: 0, offsetY: 0, 
+			hold: 0,
+			release: 0
+		};
+
+		const board = $('#level-map');
+
+		board.on('mousedown', e => this.getMouseButtons(e));
+		board.on('mouseup', e => this.mouseUp(e));
+		board.on('mousemove', e => this.getMousePos(e));
+		
+		$(window).bind('wheel', e => this.getWheel(e));		
+
 		$("body").on("click", ".command", (e) => {
 			var data = $(e.target).data();
 			if (_.isEmpty(data)) return;
@@ -83,7 +102,7 @@ Styx.ui.InputManager = class
 			});
 		});
 
-		$("#level-map").on("dblclick", (e) => {
+		board.on("dblclick", (e) => {
 			var panel = this.wm.getPanel('level-map');
 			var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
 			
@@ -93,27 +112,69 @@ Styx.ui.InputManager = class
 			});
 		});
 
-		$('#level-map').on('click',
+		board.on('click',
 			e => {
 				var panel = this.wm.getPanel('level-map');
 				var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
 				this.wm.showTileInfo(pos.x + panel.view.x, pos.y + panel.view.y);
 				this.markTile(panel, pos);
-			}			
+				const m = this.mouse;
+				if (m.offsetX || m.offsetY) {
+					panel.canvas.offset.x += m.offsetX;
+					panel.canvas.offset.y += m.offsetY;
+				}
+			}
 		);
+	}
+
+	getMouseButtons(e)
+	{
+		this.mouse.buttons = e.buttons;
+		this.mouse.clickX = this.mouse.x;
+		this.mouse.clickY = this.mouse.y;
+		this.mouse.hold = e.buttons;
+	}
+
+	mouseUp(e)
+	{
+		this.mouse.hold = 0;
+		this.mouse.release = 1;
+	}
+
+	getWheel(e)
+	{
+		this.mouse.deltaY = e.originalEvent.deltaY;
+	}
+
+	getMousePos(e)
+	{
+		// let scaleX = this.canvas.width() / this.canvas.screenWidth();
+		// let scaleY = this.canvas.height() / this.canvas.screenHeight();
+		let m = this.mouse;
+		
+		m.x = Math.floor(e.offsetX /* * scaleX */);
+		m.y = Math.floor(e.offsetY /* * scaleY */);
+
+		if (m.hold) {
+			m.offsetX = m.x - m.clickX;
+			m.offsetY = m.y - m.clickY;
+		}
+		else {
+			m.offsetX = m.offsetY = 0;
+		}
 	}
 
 	markTile(panel, pos)
 	{
-		  //refresh
-			this.wm._renderLevel(panel);
+		//refresh
+		this.wm._renderLevel(panel);
 
-			panel.canvas.rect(
-				pos.x * panel.canvas.tileWidth, 
-				pos.y * panel.canvas.tileHeight, 
-				panel.canvas.tileWidth, 
-				panel.canvas.tileHeight, 'red', false
-			);		
+		panel.canvas.rect(
+			pos.x * panel.canvas.tileWidth, 
+			pos.y * panel.canvas.tileHeight, 
+			panel.canvas.tileWidth, 
+			panel.canvas.tileHeight, 'red', false
+		);
 	}
 
 	initKeyboard()
