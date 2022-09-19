@@ -81,7 +81,7 @@ Styx.ui.InputManager = class
 		board.on('mousedown', e => this.getMouseButtons(e));
 		board.on('mouseup', e => this.mouseUp(e));
 		board.on('mousemove', e => this.getMousePos(e));
-		
+
 		$(window).bind('wheel', e => this.getWheel(e));		
 
 		$("body").on("click", ".command", (e) => {
@@ -115,14 +115,16 @@ Styx.ui.InputManager = class
 		board.on('click',
 			e => {
 				var panel = this.wm.getPanel('level-map');
-				var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
-				this.wm.showTileInfo(pos.x + panel.view.x, pos.y + panel.view.y);
-				this.markTile(panel, pos);
+
 				const m = this.mouse;
 				if (m.offsetX || m.offsetY) {
 					panel.canvas.offset.x += m.offsetX;
 					panel.canvas.offset.y += m.offsetY;
 				}
+
+				var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
+				this.wm.showTileInfo(pos.x + panel.view.x, pos.y + panel.view.y);
+				this.markTile(panel, pos);
 			}
 		);
 	}
