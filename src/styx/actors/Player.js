@@ -157,6 +157,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		if (this.getTile().item) {
 			this.game.info("There is no place to drop item.");
+			return;
 		}
 
 		var item = this.inventory.remove(key);
