@@ -13,6 +13,7 @@ Styx.ui.InputManager = class
 		this.wm = this.game.get('window-manager');
 		this.paused = false;
 		this.mouse = null;
+		this.tileSelected = null;
 
 		this.keyBinddings = {
 			player: {
@@ -84,49 +85,48 @@ Styx.ui.InputManager = class
 
 		$(window).bind('wheel', e => this.getWheel(e));		
 
-		$("body").on("click", ".command", (e) => {
-			var data = $(e.target).data();
-			if (_.isEmpty(data)) return;
-			var cmd = this.getCommand(data);
-			this.handle(cmd);
-			this.game.player.level.update();
-			this.wm.render();
+		$("body").on("click", ".command", e => this.commandClick(e));
+		$("body").on("click", ".tile-info", e => this.tileWindow(e));
+
+		board.on("dblclick", e => this.tileWindow(e));
+		board.on('click', e => this.tileClick(e));
+	}
+
+	commandClick(e)
+	{
+		var data = $(e.target).data();
+		if (_.isEmpty(data)) return;
+		var cmd = this.getCommand(data);
+		this.handle(cmd);
+		this.game.player.level.update();
+		this.wm.render();		
+	}
+
+	tileWindow(e)
+	{
+		var panel = this.wm.getPanel('level-map');
+		var pos = this.tileSelected;
+		
+		this.wm.openTileWindow({
+			level: panel.level,
+			pos: {x: pos.x + panel.view.x, y: pos.y + panel.view.y}
 		});
+	}
 
-		$("body").on("click", ".tile-info", (e) => {
-			var level = this.wm.getPanel('level-map').level;
-			var spos = $(e.target).data("pos");
-			this.wm.openTileWindow({
-				level: level,
-				pos: this.strToPos(spos)
-			});
-		});
+	tileClick(e)
+	{
+		var panel = this.wm.getPanel('level-map');
 
-		board.on("dblclick", (e) => {
-			var panel = this.wm.getPanel('level-map');
-			var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
-			
-			this.wm.openTileWindow({
-				level: panel.level,
-				pos: {x: pos.x + panel.view.x, y: pos.y + panel.view.y}
-			});
-		});
+		const m = this.mouse;
+		if (m.offsetX || m.offsetY) {
+			panel.canvas.offset.x += m.offsetX;
+			panel.canvas.offset.y += m.offsetY;
+		}
 
-		board.on('click',
-			e => {
-				var panel = this.wm.getPanel('level-map');
-
-				const m = this.mouse;
-				if (m.offsetX || m.offsetY) {
-					panel.canvas.offset.x += m.offsetX;
-					panel.canvas.offset.y += m.offsetY;
-				}
-
-				var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
-				this.wm.showTileInfo(pos.x + panel.view.x, pos.y + panel.view.y);
-				this.markTile(panel, pos);
-			}
-		);
+		var pos = panel.canvas.tilePos(e.offsetX, e.offsetY);
+		this.wm.showTileInfo(pos.x + panel.view.x, pos.y + panel.view.y);
+		this.markTile(panel, pos);
+		this.tileSelected = pos;
 	}
 
 	getMouseButtons(e)
@@ -167,7 +167,7 @@ Styx.ui.InputManager = class
 	}
 
 	markTile(panel, pos)
-	{
+	{		
 		//refresh
 		this.wm._renderLevel(panel);
 
