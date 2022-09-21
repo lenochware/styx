@@ -8,11 +8,13 @@ Styx.ui.Canvas = class
 {
 	constructor(containerId)
 	{
-		var canvas = document.createElement('canvas');
-		var container = $(containerId);
+		const container = $(containerId);
+
+		const canvas = document.createElement('canvas');
 		canvas.width = container.width();
 		canvas.height = container.height();
 		canvas.id = containerId + '-canvas';
+
 		this.ctx = canvas.getContext("2d");
 		this.ctx.fillStyle = 'rgb(0,0,0)';
 		this.ctx.textBaseline = "top";
@@ -23,7 +25,14 @@ Styx.ui.Canvas = class
 		this.tileWidth = 12;
 		this.tileHeight = 18;
 
+		this.element = canvas;
+
 		$(containerId).append(canvas);
+	}
+
+	focus()
+	{
+		this.element.focus();
 	}
 
 	clear()

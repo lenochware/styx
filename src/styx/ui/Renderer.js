@@ -51,6 +51,7 @@ Styx.ui.Renderer = class
 		if (!panel.canvas) {
 			panel.canvas = new Styx.ui.Canvas('#' + panel.container);
 			panel.canvas.setFont("bold 18px monospace");
+			//panel.canvas.focus();
 		}
 
 		this.canvas = panel.canvas;
