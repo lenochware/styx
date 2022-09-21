@@ -166,6 +166,11 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		return true;
 	}
 
+	isBuried()
+	{
+		return !this.canOccupy(this.getTile());
+	}
+	
 	findPath(pos)
 	{
 		if (!this.pos) return [];

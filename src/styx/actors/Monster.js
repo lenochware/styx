@@ -37,6 +37,10 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	update()
 	{
 		if (this.isDestroyed()) return;
+		if (this.isBuried()) {
+			this.time = this.game.time;
+			return;
+		}
 		
 		while (this.time + this.tick < this.game.time)
 		{

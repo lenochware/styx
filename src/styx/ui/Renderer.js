@@ -80,7 +80,7 @@ Styx.ui.Renderer = class
 			return;
 		}
 
-		if (tile.actor && tile.actor.isVisible()) r = tile.actor.getAttrib('render');
+		if (tile.actor && tile.actor.isVisible() && !tile.actor.isBuried()) r = tile.actor.getAttrib('render');
 		else if (tile.is("hiding")) r = tile.getAttrib('render');
 		else if (tile.item)  r = tile.item.getAttrib('render');
 		else r = tile.getAttrib('render');

@@ -66,12 +66,11 @@ Styx.levels.Tile = class extends Styx.GameObject
 			if (Styx.Random.bet(.2)) {
 				this.game.message("You destroyed {0}", "msg-info", this);
 				this.id = 'floor';
-				var buried = this.getAttrib('buried');
-				if (buried) {
-					if (!_.isArray(buried)) buried = [buried];
-					_.each(buried, id => actor.level.spawn(this.pos, id));
+				if (this.actor || this.item)
 					this.game.message("You found something!", "msg-info");
-				}
+				
+				if (this.actor)	
+					this.conditions.remove('Asleep');
 			}
 		}
 	}
