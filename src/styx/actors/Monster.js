@@ -109,6 +109,7 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 	{
 		if (!super.canOccupy(tile)) return false;
 		if (this.is('smart') && tile.isDangerous(this)) return false;
+		if (tile.is('exit')) return false;
 		return true;
 	}
 
