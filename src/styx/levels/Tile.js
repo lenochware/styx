@@ -63,16 +63,42 @@ Styx.levels.Tile = class extends Styx.GameObject
 
 		if (this.is('diggable')) {
 			this.game.message("You dig into {0}", "msg-info", this);
-			if (Styx.Random.bet(.2)) {
-				this.game.message("You destroyed {0}", "msg-info", this);
-				this.id = 'floor';
-				if (this.actor || this.item)
-					this.game.message("You found something!", "msg-info");
-				
-				if (this.actor)	
-					this.conditions.remove('Asleep');
-			}
+			if (Styx.Random.bet(.2)) this.destroy();
 		}
+	}
+
+	step(actor)
+	{
+		if (!actor.isPlayer()) return;
+		const click = this.getAttrib('click');
+		if (!click) return;
+		const tile = this.game.level.getXY(click.x, click.y, 'tile');
+		tile.click(this);
+	}
+
+	click(trigger)
+	{
+		if (!this.getAttrib('spawn')) return;
+		
+		let pos = Styx.Random.pick(
+			_.filter(this.surroundings(), pos => !this.game.level.get(pos, 'tile').is('blocking'))
+		);
+
+		if (pos) this.game.level.spawn(pos, this.getAttrib('spawn'));
+	}
+
+	destroy()
+	{
+		this.game.message("You destroyed {0}", "msg-info", this);
+
+		this.id = 'floor';
+		this.params = {};
+
+		if (this.actor || this.item)
+			this.game.message("You found something!", "msg-info");
+		
+		if (this.actor)	
+			this.conditions.remove('Asleep');
 	}
 
 	pickAttackId()
