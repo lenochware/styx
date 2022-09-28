@@ -16,6 +16,7 @@ Styx.Game = class
 		this.time = 0;
 		this.db = null;
 		this.player = null;
+		this.level = null;
 		this.API_URL = '../../lgen/?r=api/';
 	}
 
@@ -119,6 +120,17 @@ Styx.Game = class
 		return params;
 	}
 
+	setLevel(level, playerPos)
+	{
+		if (this.level) this.level.remove(this.player);
+
+		let tile = level.get(playerPos, 'tile');
+		if (tile.actor)	level.remove(tile.actor);
+		level.set(playerPos, 'actor', this.player);
+
+		this.level = level;
+	}
+
 	changeLevel(id)
 	{
 		var wm = this.get('window-manager');
@@ -144,8 +156,7 @@ Styx.Game = class
 			return;
 			}
 
-			currentLevel.remove(this.player);
-			level.set(exitFound.pos, 'actor', this.player);
+			this.setLevel(level, exitFound.pos);
 			wm.getPanel('level-map').level = level;
 			wm.render();
 			

@@ -10,7 +10,7 @@ var game = new Styx.Game();
 game.load().then(function() 
 {
 	
-	var level = game.createLevelJson(game.data.level);
+	const level = game.createLevelJson(game.data.level);
 	
 	const player = new Styx.actors.Player;
 	player.params.name = 'Conan';
@@ -20,9 +20,7 @@ game.load().then(function()
 
 	let pos = game.data.level['player-pos'] || _.sample(level.find('floor'));
 
-	let tile = level.get(pos, 'tile');
-	if (tile.actor)	level.remove(tile.actor);
-	level.set(tile.pos, 'actor', player);
+	game.setLevel(level, pos);
 
 	// var c = level.size.getPoint('center');
 	// level.set(c, 'actor', player);
@@ -38,7 +36,7 @@ game.load().then(function()
 	game.on('render', updateView);
 
 	wm.render();
-	
+
 	game.data.level = null;
 });
 
