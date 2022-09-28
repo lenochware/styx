@@ -79,81 +79,81 @@ Styx.Game = class
 		]).then(() => this.db = this.get('dungeon-base'));
 	}
 
-  createLevelJson(json)
-  {
-    let level = new Styx.levels.Level(json.id);
-    level.size.assign(0 , 0, json.width, json.height);
-    level.exits = json.exits;
-    level.clear('floor');
+	createLevelJson(json)
+	{
+		let level = new Styx.levels.Level(json.id);
+		level.size.assign(0 , 0, json.width, json.height);
+		level.exits = json.exits;
+		level.clear('floor');
 
-    for (let i = 0; i < level.size.width * level.size.height; i++)
-	{  
-      const tile = json.tiles[i];
+		for (let i = 0; i < level.size.width * level.size.height; i++)
+		{  
+			const tile = json.tiles[i];
 
-      if (tile[0]) {
-		const t = level.get(i, 'tile');
-		t.id = tile[0];
+			if (tile[0]) {
+			const t = level.get(i, 'tile');
+			t.id = tile[0];
 
-		if (tile[3]) {
-			t.params = {...this._getParams(level, json, i, 3), ...this._getParams(level, json, i, 0)};
+			if (tile[3]) {
+				t.params = {...this._getParams(level, json, i, 3), ...this._getParams(level, json, i, 0)};
+			}
+			else {
+				t.params = this._getParams(level, json, i, 0);
+			}
+			}
+
+			if (tile[1]) level.set(i, 'item', new Styx.items.Item(this._getParams(level, json, i, 1)));
+			if (tile[2]) level.set(i, 'actor', new Styx.actors.Monster(this._getParams(level, json, i, 2)));
 		}
-		else {
-			t.params = this._getParams(level, json, i, 0);
-		}
-	  }
 
-      if (tile[1]) level.set(i, 'item', new Styx.items.Item(this._getParams(level, json, i, 1)));
-      if (tile[2]) level.set(i, 'actor', new Styx.actors.Monster(this._getParams(level, json, i, 2)));
-    }
+		return level;
+	}
 
-    return level;
-  }
+	_getParams(level, json, i, attrib)
+	{
+		const id = json.tiles[i][attrib];
+		let pos = [i % level.size.width, Math.floor(i / level.size.width)].join(',');
+		if (!json.objects[pos]) return {id};
+		let params = json.objects[pos][attrib] || {};
+		params.id = id;
+		return params;
+	}
 
-  _getParams(level, json, i, attrib)
-  {
-	const id = json.tiles[i][attrib];
-	let pos = [i % level.size.width, Math.floor(i / level.size.width)].join(',');
-	if (!json.objects[pos]) return {id};
-	let params = json.objects[pos][attrib] || {};
-	params.id = id;
-	return params;
-  }
+	changeLevel(id)
+	{
+		var wm = this.get('window-manager');
+		var input = this.get('input-manager');
+		var currentLevel = this.player.level;
 
-  changeLevel(id)
-  {
-	var wm = this.get('window-manager');
-	var input = this.get('input-manager');
-	var currentLevel = this.player.level;
-	
-	input.paused = true;
-	this.loadJson('level', id).then(() => {
-	  const level = this.createLevelJson(this.data.level);
-	  this.data.level = null;
+		input.paused = true;
+		this.loadJson('level', id).then(() => {
+			const level = this.createLevelJson(this.data.level);
+			this.data.level = null;
 
-      var exitFound = null;
-      
-      for (let exit of _.values(level.exits)) {
-        if (exit.levelId == currentLevel.id) {
-          exitFound = exit;
-          break;
-        }
-      }
+			var exitFound = null;
+			
+			for (let exit of _.values(level.exits)) {
+			if (exit.levelId == currentLevel.id) {
+				exitFound = exit;
+				break;
+			}
+			}
 
-      if (!exitFound) {
-        console.warn('Missing exit in the level.');
-        return;
-      }
+			if (!exitFound) {
+			console.warn('Missing exit in the level.');
+			return;
+			}
 
-      currentLevel.remove(this.player);
-      level.set(exitFound.pos, 'actor', this.player);
-      wm.getPanel('level-map').level = level;
-      wm.render();
-      
-      input.paused = false;
-      
-      console.log('changeLevel');
-    });
-  }
+			currentLevel.remove(this.player);
+			level.set(exitFound.pos, 'actor', this.player);
+			wm.getPanel('level-map').level = level;
+			wm.render();
+			
+			input.paused = false;
+			
+			console.log('changeLevel');
+		});
+	}
 
 	saveLevel(id)
 	{
