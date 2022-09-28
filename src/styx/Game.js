@@ -86,14 +86,37 @@ Styx.Game = class
     level.exits = json.exits;
     level.clear('floor');
 
-    for (let i = 0; i < level.size.width * level.size.height; i++) {
-      let tile = json.tiles[i];
-      if (tile[0]) level.set(i, 'id', tile[0]);
-      if (tile[1]) level.set(i, 'item', new Styx.items.Item({id: tile[1]}));
-      if (tile[2]) level.set(i, 'actor', new Styx.actors.Monster({id: tile[2]}));
+    for (let i = 0; i < level.size.width * level.size.height; i++)
+	{  
+      const tile = json.tiles[i];
+
+      if (tile[0]) {
+		const t = level.get(i, 'tile');
+		t.id = tile[0];
+
+		if (tile[3]) {
+			t.params = {...this._getParams(level, json, i, 3), ...this._getParams(level, json, i, 0)};
+		}
+		else {
+			t.params = this._getParams(level, json, i, 0);
+		}
+	  }
+
+      if (tile[1]) level.set(i, 'item', new Styx.items.Item(this._getParams(level, json, i, 1)));
+      if (tile[2]) level.set(i, 'actor', new Styx.actors.Monster(this._getParams(level, json, i, 2)));
     }
 
     return level;
+  }
+
+  _getParams(level, json, i, attrib)
+  {
+	const id = json.tiles[i][attrib];
+	let pos = [i % level.size.width, Math.floor(i / level.size.width)].join(',');
+	if (!json.objects[pos]) return {id};
+	let params = json.objects[pos][attrib] || {};
+	params.id = id;
+	return params;
   }
 
   changeLevel(id)
@@ -104,7 +127,8 @@ Styx.Game = class
 	
 	input.paused = true;
 	this.loadJson('level', id).then(() => {
-      const level = this.createLevelJson(this.data.level);
+	  const level = this.createLevelJson(this.data.level);
+	  this.data.level = null;
 
       var exitFound = null;
       

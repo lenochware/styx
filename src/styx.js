@@ -38,6 +38,8 @@ game.load().then(function()
 	game.on('render', updateView);
 
 	wm.render();
+	
+	game.data.level = null;
 });
 
 
