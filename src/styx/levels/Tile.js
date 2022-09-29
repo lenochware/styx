@@ -84,7 +84,7 @@ Styx.levels.Tile = class extends Styx.GameObject
 			_.filter(this.surroundings(), pos => !this.game.level.get(pos, 'tile').is('blocking'))
 		);
 
-		if (pos) this.game.level.spawn(pos, this.getAttrib('spawn'));
+		if (pos) this.game.level.spawn(pos, this.getAttrib('spawn'), {tags: ['awake']});
 	}
 
 	destroy()

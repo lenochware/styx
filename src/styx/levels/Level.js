@@ -162,26 +162,30 @@ Styx.levels.Level = class extends Styx.GameObject
 		return true;
 	}
 
-	spawn(pos, id)
+	spawn(pos, id, params = {})
 	{
-		return this.spawnXY(pos.x, pos.y, id);
+		return this.spawnXY(pos.x, pos.y, id, params);
 	}
 
-	spawnXY(x, y, id)
+	spawnXY(x, y, id, params = {})
 	{
 		var categ = this.game.db.categoryOf(id);
 
 		if (categ == 'tiles') {
-			this.setXY(x, y, 'id', id);
+			const tile = this.getXY(x, y, 'tile');
+			tile.id = id;
+			if (params) tile.params = params;
 			return id;
 		}
 		else if (categ == 'actors') {
-			var obj = new Styx.actors.Monster({id: id});
+			params.id = id;
+			var obj = new Styx.actors.Monster(params);
 			var ok = this.setXY(x, y, 'actor', obj);
 			return ok? obj : null;
 		}
 		else if (categ == 'items') {
-			var obj = new Styx.items.Item({id: id});
+			params.id = id;
+			var obj = new Styx.items.Item(params);
 			var ok = this.setXY(x, y, 'item', obj);
 			return ok? obj : null;
 		}
