@@ -71,11 +71,16 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 		}
 
 		this.level.setXY(this.pos.x + dx, this.pos.y + dy, 'actor', this);
-		nextTile.step(this);
+		this.enter(nextTile);
 
 		this.spendTime();
 		return true;
 	}
+
+	enter(tile)
+	{
+		tile.step(this);
+	};
 
 	//leave(pos) {};
 

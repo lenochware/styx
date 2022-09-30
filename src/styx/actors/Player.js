@@ -104,10 +104,8 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		return true;
 	}
 
-	enter(pos)
+	enter(tile)
 	{
-		var tile = this.level.get(pos, 'tile');
-
 		if (tile.item) {
 			if (tile.item.is('useless') && Styx.Random.bet(0.3)) {
 				this.game.info("{0} falls apart.", tile.item);
@@ -124,7 +122,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		if (tile.item) {
 			this.game.info(
 				'You are on <span class="link tile-info" data-pos="{1}">{0}</span> (<span class="command" data-key="g"><kbd>G</kbd>et</span>).', 
-				tile.item.shortDesc(), pos.x + ',' + pos.y);
+				tile.item.shortDesc(), tile.pos.x + ',' + tile.pos.y);
 		}
 
 		if (tile.is('exit')) {
@@ -134,7 +132,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 			this.game.changeLevel(exit.levelId);
 		}
 
-		super.enter(pos);
+		super.enter(tile);
 	}
 
 	wear(key)
