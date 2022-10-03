@@ -162,6 +162,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	isVisible()
 	{
+		if (this.isBuried()) return false;
 		if (this.isPlayer() || this.distance(this.game.player) == 1) return true;
 		if (this.conditions.is('Invisible')) return false;
 		var tile = this.level.get(this.pos, 'tile');
@@ -171,7 +172,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 	isBuried()
 	{
-		return !this.canOccupy(this.getTile());
+		return this.getTile().is('blocking') && !this.is('ghost');
 	}
 	
 	findPath(pos)

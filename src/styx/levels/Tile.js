@@ -126,7 +126,7 @@ Styx.levels.Tile = class extends Styx.GameObject
 	{
 		var obj = null;
 		
-		if (this.actor && !this.actor.isPlayer()) obj = this.actor;
+		if (this.actor && this.actor.isVisible() && !this.actor.isPlayer()) obj = this.actor;
 		else if (this.is("hiding")) obj = this;
 		else if (this.item) obj = this.item;
 		else obj = this;
