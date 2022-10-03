@@ -95,8 +95,10 @@ Styx.actors.Condition = class
 
 	message(m, cssClass = "msg-info", ...args)
 	{
-		if (!this.target.isNear()) return;
-		this.game.message(m, cssClass, args);
+		const t = this.target;
+		if (t.level.isVisible(t.pos.x, t.pos.y)) {
+			this.game.message(m, cssClass, args);			
+		};
 	}
 
 	value()
