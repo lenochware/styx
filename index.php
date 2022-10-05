@@ -8,7 +8,8 @@ function scripts($files)
 {
 	$html = '';
 	foreach ($files as $file) {
-		$html .= "<script type=\"text/javascript\" src=\"".trim($file)."\"></script>\n";
+		$version = filemtime(trim($file));
+		$html .= "<script type=\"text/javascript\" src=\"".trim($file)."?v=$version\"></script>\n";
 	}
 	return $html;
 }
