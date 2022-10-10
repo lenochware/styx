@@ -21,6 +21,9 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.disturbed = false;
 		this.baseArmor = this.getAttrib('armor');
 
+		this.foodMax = this.getAttrib('food', 400);
+		this.food = this.foodMax;
+
 		var startItems = this.getAttrib('start-items');
 		if (startItems) this.inventory.fill(startItems);
 		this.inventory.updateOwner();
@@ -166,6 +169,12 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		var item = this.inventory.remove(key);
 		this.game.info("You eat {0}.", item);
+		this.addNum("food", item.getAttrib("points", 0));
+		this.conditions.remove('Hungry');
+
+		if (this.food >= this.foodMax) {
+			this.game.message("You are full!", "msg-good");
+		}
 		this.spendTime();
 	}
 
@@ -293,6 +302,17 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.level.updated = false;
 	}
 
+	update()
+	{
+		super.update();
+
+		this.addNum("food", -1);
+
+		if (this.food <= 0 && !this.conditions.is('Hungry')) {
+			this.conditions.add('Hungry', 10);
+		}
+	}
+
 	storeInBundle(bundle) {
 		super.storeInBundle(bundle);
 		bundle.put('_className_', 'Styx.actors.Player');
@@ -301,6 +321,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		bundle.put('gold', this.gold);
 		bundle.put('strength', this.strength);
 		bundle.put('lvl', this.lvl);
+		bundle.put('food', this.food);
 	}
 
 	restoreFromBundle(bundle) {
@@ -310,6 +331,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		this.gold = bundle.get('gold');
 		this.strength = bundle.get('strength');
 		this.lvl = bundle.get('lvl');
+		this.food = bundle.get('food');
 	}
 
 }

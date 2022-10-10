@@ -44,6 +44,8 @@ Styx.GameObject = class
 		if (attribMax in this && this[attrib] > this[attribMax]) {
 			this[attrib] = this[attribMax];
 		}
+
+		if (this[attrib] < 0) this[attrib] = 0;
 	}
 
 	addTag(tag)

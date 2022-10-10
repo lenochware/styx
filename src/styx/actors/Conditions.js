@@ -195,7 +195,21 @@ Styx.actors.conditions = {
 				if (level.get(pos, 'id') == 'floor') level.set(pos, 'id', 'blood_floor');
 			}
 		}
-	}
+	},
 
+	Hungry : class extends Styx.actors.Condition
+	{
+		onAdd()
+		{
+			var cssClass = this.target.isPlayer()? 'msg-warning' : 'msg-info';
+			this.message("You are starving!", cssClass, this.target);
+		}
+
+		update()
+		{
+			super.update();
+			this.target.damage(null, 'hungry', 1);
+		}
+	}	
 
 }
