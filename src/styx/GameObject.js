@@ -37,6 +37,15 @@ Styx.GameObject = class
 		this.params[attrib] = value;
 	}
 
+	addNum(attrib, num)
+	{
+		const attribMax = attrib+'Max';
+		this[attrib] += num;
+		if (attribMax in this && this[attrib] > this[attribMax]) {
+			this[attrib] = this[attribMax];
+		}
+	}
+
 	addTag(tag)
 	{
 		if (!this.params['tags']) this.params['tags'] = [];

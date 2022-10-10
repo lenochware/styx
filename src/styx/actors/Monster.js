@@ -73,8 +73,8 @@ Styx.actors.Monster = class extends Styx.actors.Actor
 		}
 
 		if (
-			src && src.is('actor') 
-			&& this.health < this.maxHealth / 3 
+			src && src.is('actor')
+			&& this.health < this.healthMax / 3
 			&& !this.is('fearless')
 			&& !this.conditions.is('Afraid')
 		) {

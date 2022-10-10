@@ -78,12 +78,8 @@ Styx.actors.Player = class extends Styx.actors.Actor
 		if (!this.canRest()) return;
 
 		if (Styx.Random.bet(.3)) {
-			this.health++;
+			this.addNum('health', 1);
 			this.game.message("You are sleeping...", "msg-info");
-		}
-
-		if (this.health > this.maxHealth) {
-			this.health = this.maxHealth;
 		}
 
 		this.spendTime();
@@ -91,7 +87,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 
 	canRest()
 	{
-		if (this.health == this.maxHealth) {
+		if (this.health == this.healthMax) {
 			this.game.info("You are in full condition now.");
 			return false;
 		}
@@ -272,7 +268,7 @@ Styx.actors.Player = class extends Styx.actors.Actor
 	{
 		switch(id) {
 			case 'hp':
-				this.maxHealth += 10;
+				this.healthMax += 10;
 			break;
 			case 'str':
 				this.strength += 10;

@@ -10,9 +10,9 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	constructor(params)
 	{
 		super('actors', params.id, params);
-		this.health = this.getAttrib('health', 10);
+		this.healthMax = this.getAttrib('health', 10);
+		this.health = this.healthMax;
 		this.armor = this.getAttrib('armor', 0);
-		this.maxHealth = this.health;
 		this.tick = 10;
 		this.target = null;
 		this.conditions = new Styx.actors.ConditionGroup(this);
@@ -227,7 +227,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 	{
 		var info = "";
 
-		// var hltPerc = this.health / this.maxHealth;
+		// var hltPerc = this.health / this.healthMax;
 		// if (hltPerc < 0.2) info = " (badly wounded)";
 		// else if (hltPerc < 0.8) info = " (somewhat wounded)";
 		// else info = "";
