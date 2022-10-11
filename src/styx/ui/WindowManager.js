@@ -107,6 +107,14 @@ Styx.ui.WindowManager = class extends Styx.ui.BaseWindowManager
 		});
 	}
 
+	openDungeonBase(pos)
+	{
+		this.openWindow('dbase', 600, 400, {
+			template: 'dbase',
+			pos: pos,
+			db: this.game.data["dungeon-base"]
+		});
+	}	
 
 	openItemWindow(options)
 	{

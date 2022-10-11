@@ -42,6 +42,7 @@ Styx.ui.InputManager = class
 				'Shift+ArrowRight': {command: 'move-view', dir: [1,0]},
 				'Shift+ArrowUp': {command: 'move-view', dir: [0,-1]},
 				'Shift+ArrowDown': {command: 'move-view', dir: [0,1]},
+				'e': {command: 'dbase'},
 				'+': {command: 'zoom', factor: 0.1},
 				'-': {command: 'zoom', factor: -0.1},
 			},
@@ -300,7 +301,8 @@ Styx.ui.InputManager = class
 		switch(command.command) {
 			case 'game-menu': this.wm.openGameMenu(); break;
 			case 'move-view': this.wm.moveView(command.dir); break;
-			case 'zoom': this.wm.zoom(command.factor);
+			case 'dbase': this.wm.openDungeonBase(this.tileSelected); break;
+			case 'zoom': this.wm.zoom(command.factor); break;
 		}
 	}
 
