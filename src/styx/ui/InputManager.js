@@ -225,10 +225,13 @@ Styx.ui.InputManager = class
 		var category = '';
 
 		var key = event.key;
-		var isCharKey = this.isCharKey(event);
 
-		if(!isCharKey) {
-			if (event.shiftKey) key = 'Shift+' + key;
+		if (key) {
+			var isCharKey = this.isCharKey(event);
+
+			if(!isCharKey) {
+				if (event.shiftKey) key = 'Shift+' + key;
+			}	
 		}
 
 		if (activeWindow) {
@@ -262,6 +265,10 @@ Styx.ui.InputManager = class
 			}
 		}
 
+		if (category == 'dbase') {
+			return {command: 'spawn', category: 'dbase', index: event.id };
+		}
+
 		var cmd = this.keyBinddings[category]? this.keyBinddings[category][key] : null;
 
 		if (!cmd) return {command: key, category: 'undefined' };
@@ -287,12 +294,16 @@ Styx.ui.InputManager = class
 			case 'inventory': this.handleInventoryCmd(command); break;
 			case 'use-list': this.handleUseListCmd(command); break;
 			case 'item-window': this.handleItemCmd(command); break;
+			case 'dbase': this.handleDbaseCmd(command); break;
 			case 'window': 
 				if (command.command == 'close-window') {
 					this.wm.closeWindow();
 				}
 			break;
-			case 'undefined': console.warn(`Undefined command '${command.command}'`); break;
+			case 'undefined': 
+			default:
+				console.warn(`Undefined command '${command.command}' (${command.category})`); 
+			break;
 		}
 	}
 
@@ -301,7 +312,7 @@ Styx.ui.InputManager = class
 		switch(command.command) {
 			case 'game-menu': this.wm.openGameMenu(); break;
 			case 'move-view': this.wm.moveView(command.dir); break;
-			case 'dbase': this.wm.openDungeonBase(this.tileSelected); break;
+			case 'dbase': this.wm.openDungeonBase(); break;
 			case 'zoom': this.wm.zoom(command.factor); break;
 		}
 	}
@@ -368,6 +379,11 @@ Styx.ui.InputManager = class
 		var cmd = cmds.getDefaultCommand();
 		cmd.key = command.key;
 		this.handleItemCmd(cmd);
+	}
+
+	handleDbaseCmd(command)
+	{
+		console.log(command, this.tileSelected);
 	}
 
 	handleItemCmd(command)
