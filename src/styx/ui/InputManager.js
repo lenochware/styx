@@ -266,7 +266,7 @@ Styx.ui.InputManager = class
 		}
 
 		if (category == 'dbase') {
-			return {command: 'spawn', category: 'dbase', index: event.id };
+			return {command: 'spawn', category: 'dbase', id: event.id };
 		}
 
 		var cmd = this.keyBinddings[category]? this.keyBinddings[category][key] : null;
@@ -383,7 +383,12 @@ Styx.ui.InputManager = class
 
 	handleDbaseCmd(command)
 	{
-		console.log(command, this.tileSelected);
+		const level = this.game.level;
+		const panel = this.wm.getPanel('level-map');
+		const pos = {x: this.tileSelected.x + panel.view.x, y: this.tileSelected.y + panel.view.y};
+		level.spawn(pos, command.id);
+		console.log(`Spawned ${command.id} at (${pos.x},${pos.y}).`);
+		this.wm.closeWindow();
 	}
 
 	handleItemCmd(command)
