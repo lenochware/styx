@@ -192,7 +192,7 @@ Styx.actors.conditions = {
 				var pos = this.target.pos;
 				var level = this.target.level;
 
-				if (level.get(pos, 'id') == 'floor') level.set(pos, 'id', 'blood_floor');
+				if (level.get(pos, 'id') == 'floor') level.set(pos, 'id', 'blood-floor');
 			}
 		}
 	},

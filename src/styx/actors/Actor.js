@@ -208,7 +208,7 @@ Styx.actors.Actor = class extends Styx.DungeonObject
 
 		var tile = this.getTile();
 		if (tile.is('floor')) {
-			this.level.set(tile.pos, 'id', 'blood_floor');
+			this.level.set(tile.pos, 'id', 'blood-floor');
 		}
 
 		this.health = 0;
