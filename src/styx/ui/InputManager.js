@@ -386,7 +386,17 @@ Styx.ui.InputManager = class
 		const level = this.game.level;
 		const panel = this.wm.getPanel('level-map');
 		const pos = {x: this.tileSelected.x + panel.view.x, y: this.tileSelected.y + panel.view.y};
-		level.spawn(pos, command.id);
+
+		if (!command.id /*command.id == 'null'*/) {
+			const tile = level.get(pos, 'tile');
+			level.remove(tile.actor);
+			level.remove(tile.item);
+			console.log(`Removed.`);
+			this.wm.closeWindow();
+			return;
+		}
+
+		level.spawn(pos, command.id, {}, true);
 		console.log(`Spawned ${command.id} at (${pos.x},${pos.y}).`);
 		this.wm.closeWindow();
 	}

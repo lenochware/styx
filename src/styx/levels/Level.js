@@ -162,31 +162,35 @@ Styx.levels.Level = class extends Styx.GameObject
 		return true;
 	}
 
-	spawn(pos, id, params = {})
+	spawn(pos, id, params = {}, replace = false)
 	{
-		return this.spawnXY(pos.x, pos.y, id, params);
+		return this.spawnXY(pos.x, pos.y, id, params, replace);
 	}
 
-	spawnXY(x, y, id, params = {})
+	spawnXY(x, y, id, params = {}, replace = false)
 	{
-		var categ = this.game.db.categoryOf(id);
+		const categ = this.game.db.categoryOf(id);
+		const tile = this.getXY(x, y, 'tile');
 
 		if (categ == 'tiles') {
-			const tile = this.getXY(x, y, 'tile');
 			tile.id = id;
 			if (params) tile.params = params;
 			return id;
 		}
 		else if (categ == 'actors') {
 			params.id = id;
-			var obj = new Styx.actors.Monster(params);
-			var ok = this.setXY(x, y, 'actor', obj);
+			if (replace && tile.actor) this.remove(tile.actor);
+
+			const obj = new Styx.actors.Monster(params);
+			let ok = this.setXY(x, y, 'actor', obj);
 			return ok? obj : null;
 		}
 		else if (categ == 'items') {
 			params.id = id;
-			var obj = new Styx.items.Item(params);
-			var ok = this.setXY(x, y, 'item', obj);
+			if (replace && tile.item) this.remove(tile.item);
+
+			const obj = new Styx.items.Item(params);
+			let ok = this.setXY(x, y, 'item', obj);
 			return ok? obj : null;
 		}
 
@@ -233,6 +237,7 @@ Styx.levels.Level = class extends Styx.GameObject
 
 	remove(entity)
 	{
+		if (!entity) return;
 		var pos = entity.pos.y * this.size.width + entity.pos.x;
 
 		if (entity.is('actor')) {
