@@ -105,7 +105,7 @@ Styx.levels.Level = class extends Styx.GameObject
 	getXY(x, y, attrib)
 	{
 		if (x < 0 || x >= this.size.width || y < 0 || y >= this.size.height) {
-			return new Styx.levels.Tile(x, y, 'null');
+			return new Styx.levels.Tile(x, y, 'permawall');
 		}
 		else {
 			var tile = this.tiles[y * this.size.width + x];

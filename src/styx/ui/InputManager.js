@@ -387,7 +387,9 @@ Styx.ui.InputManager = class
 		const panel = this.wm.getPanel('level-map');
 		const pos = {x: this.tileSelected.x + panel.view.x, y: this.tileSelected.y + panel.view.y};
 
-		if (!command.id /*command.id == 'null'*/) {
+		if (!command.id) command.id = this.prevId || 'none';
+
+		if (command.id == 'none') {
 			const tile = level.get(pos, 'tile');
 			level.remove(tile.actor);
 			level.remove(tile.item);
@@ -398,6 +400,7 @@ Styx.ui.InputManager = class
 
 		level.spawn(pos, command.id, {}, true);
 		console.log(`Spawned ${command.id} at (${pos.x},${pos.y}).`);
+		this.prevId = command.id;
 		this.wm.closeWindow();
 	}
 
